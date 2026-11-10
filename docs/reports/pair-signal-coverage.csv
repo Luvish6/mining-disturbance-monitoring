@@ -1,0 +1,4 @@
+candidate_id,polygon_pixels,before_signal_pixels,before_signal_fraction,after_signal_pixels,after_signal_fraction,common_signal_pixels,common_signal_fraction,common_signal_grid_area_m2,validated_common_usable_fraction,status,reason
+korpet-kml-v1,634,634,1.0,634,1.0,634,1.0,15850,unknown,NEEDS FURTHER REVIEW,"Complete common signal and close preliminary alignment, but March low contrast, local shadow interpretation, absolute positional uncertainty and provenance need independent review before labels."
+sumon-pohduna-kml-v1,1593,1593,1.0,1593,1.0,1593,1.0,39825,unknown,NEEDS FURTHER REVIEW,"Complete common signal; same regional alignment diagnostics as KORPET, not independent survey control. Human quality and paired surface interpretation remain pending."
+lumshnong-70ha-kml-v1,27410,0,0.0,0,0.0,0,0.0,0,unknown,REJECTED,No common recorded three-band signal. Not a cloud/shadow determination.

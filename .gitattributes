@@ -1,0 +1,8 @@
+* text=auto
+*.py text eol=lf
+*.js text eol=lf
+*.md text eol=lf
+.githooks/* text eol=lf
+
+# Preserve the preexisting README final blank line without changing the source.
+README.md whitespace=-blank-at-eof
