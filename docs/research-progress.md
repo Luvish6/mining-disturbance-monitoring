@@ -79,3 +79,7 @@ The [Phase 5C dashboard redesign](reports/phase5c-dashboard-redesign.md) adds a 
 ## Phase 6A model readiness
 
 The [model audit](reports/phase6a-model-readiness.md) verified synthetic model execution and identified the single-raster manifest and multi-source leakage checks as prerequisites for real supervised experiments. The [six-tile Earth Engine plan](reports/phase6a-multitile-plan.md) specifies an exploratory, bounded feature acquisition run. Real training remains blocked by independent reference admission.
+
+## Phase 6B multi-tile acquisition
+
+The [six-tile Earth Engine acquisition](reports/phase6b-multitile-acquisition.md) verified aligned 14-band feature and diagnostic rasters in both districts and all three frozen partitions. All 24,576 sampled cells met common support. The result is bounded exploratory feature QA. District coverage, independent reference admission and multi-source supervised ingestion remain separate gates.
