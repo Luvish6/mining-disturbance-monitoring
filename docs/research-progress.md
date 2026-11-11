@@ -91,3 +91,7 @@ The [multi-tile integration report](reports/phase6c-multitile-integration.md) re
 ## Phase 6D coverage and reference readiness
 
 The [Phase 6D readiness audit](reports/phase6d-reference-readiness.md) verified that the matching 500 m district coverage gate passed on descending orbit 77. The six exploratory tiles remain unregistered. Public archive and independent-record checks found no admissible seasonal reference pair or independently reviewed classes in any frozen partition.
+
+## Phase 6E research consolidation
+
+The [research consolidation](reports/phase6e-research-consolidation.md) and [supervisor briefing](reports/phase6e-supervisor-findings.md) reconcile the real feature and river support receipts with synthetic software verification. The study has demonstrated reproducible preprocessing and observation screening. Independent reference admission, supervised raster registration and held-out model validation remain open.
