@@ -87,3 +87,7 @@ The [six-tile Earth Engine acquisition](reports/phase6b-multitile-acquisition.md
 ## Phase 6C multi-tile integration
 
 The [multi-tile integration report](reports/phase6c-multitile-integration.md) records schema 2 source and mask reconstruction, frozen real spatial validation and exact RF/Siamese test support checks. All six Phase 6B rasters passed read-only structural checks. Supervised registration and independent reference admission remain pending.
+
+## Phase 6D coverage and reference readiness
+
+The [Phase 6D readiness audit](reports/phase6d-reference-readiness.md) verified that the matching 500 m district coverage gate passed on descending orbit 77. The six exploratory tiles remain unregistered. Public archive and independent-record checks found no admissible seasonal reference pair or independently reviewed classes in any frozen partition.

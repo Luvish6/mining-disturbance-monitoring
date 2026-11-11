@@ -30,7 +30,8 @@ def district_diagnostics_graph(stack, counts, districts, cfg):
     covered_area = validity.multiply(area).addBands(area.rename('total_area_m2'))
     kwargs = dict(collection=districts.select(['GAUL2_NAME']),
                   scale=cfg.coverage_scale_m, crs=cfg.analysis_crs,
-                  tileScale=2, maxPixelsPerRegion=100000)
+                  # Allow EE's district bounding-rectangle estimate at the default 500 m grid.
+                  tileScale=2, maxPixelsPerRegion=300000)
     areas = covered_area.reduceRegions(reducer=ee.Reducer.sum(), **kwargs)
     # A representative coarse-grid distribution, not a native-resolution histogram.
     distribution_reducer = (ee.Reducer.percentile([5, 50, 95], maxBuckets=128, maxRaw=1000)

@@ -22,7 +22,7 @@ class GraphTests(ApiTestCase):
         districts = ee.FeatureCollection([ee.Feature(ee.Geometry.Point([92, 25]).buffer(500),
                                                       {'GAUL2_NAME': 'test'})])
         graph = district_diagnostics_graph(stack, counts, districts, Phase2Config()).serialize()
-        assert 'maxPixelsPerRegion' in graph and '100000' in graph
+        assert 'maxPixelsPerRegion' in graph and '300000' in graph
         assert 'sameFootprint' in graph and 'false' in graph
         assert 'Reducer.percentile' in graph
 
