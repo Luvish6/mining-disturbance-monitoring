@@ -99,3 +99,7 @@ The [research consolidation](reports/phase6e-research-consolidation.md) and [sup
 ## Day 1 real multi-sensor change analysis
 
 The [Day 1 results](reports/phase7-day1-real-change.md) quantify signed changes, SAR–optical co-variation and terrain/count sensitivity over all 24,576 common-valid cells in the six saved Phase 6B tiles. These are descriptive observations. Independent reference admission and supervised validation remain open.
+
+## Day 2 spatial multi-sensor change patterns
+
+The [Day 2 analysis](reports/phase7-day2-spatial-patterns.md) found that directional SAR–optical overlap declined on every tile as thresholds tightened. One of 329 eligible low-level joint components retained a connected high-threshold core under the stated persistence rule. These are exploratory patterns.
