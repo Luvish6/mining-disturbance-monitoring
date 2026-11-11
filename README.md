@@ -1,6 +1,10 @@
-# Mining-Related Disturbance & River Degradation — Phases 1–2
+# Mining-Related Disturbance & River Degradation
 
 **Scope:** Phase 1 authentication, boundary validation and inventory; Phase 2 seasonal preprocessing and change features. This is **not** a trained detector or an operational alert system.
+
+## Demonstration
+
+Use the [offline Streamlit dashboard](docs/reports/phase5a-dashboard.md) to inspect saved real Sentinel layers and river feasibility diagnostics. See the [current research progress](docs/research-progress.md) for validation status.
 
 ## Setup (Windows PowerShell)
 

@@ -58,6 +58,10 @@ The [fixed-footprint pilot](reports/phase4b-leshka-spectral-pilot.md) matched fi
 
 The [Streamlit prototype](reports/phase5a-dashboard.md) integrates the existing Sentinel visualization, river observation support and Leshka feasibility receipts on loopback. Validated mining detection and river degradation findings remain unavailable.
 
+## Phase 5B integration audit
+
+The [integration audit](reports/phase5b-integration-audit.md) reproduced the live Phase 1 inventory and bounded Phase 2 smoke test. The dashboard was checked against Phase 3G and 4A/4B receipts, with genuine local screenshots and a [supervisor walkthrough](reports/phase5b-supervisor-demo.md). The bounded prototype is ready to demonstrate while scientific validation remains pending.
+
 ## Blockers and next steps
 
 1. Review March interpretability and November shadows independently; seek clearer/seasonally comparable evidence if needed. Establish documented image/boundary positional uncertainty under the existing <=30 m policy.

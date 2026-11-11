@@ -104,7 +104,7 @@ def satellite(root):
         selected = st.selectbox("Satellite layer", choices,
                                 format_func=lambda key: choices[key]["title"], key="satellite_layer")
         zoom = st.select_slider("Display magnification", (320, 480, 640),
-                                value=480, format_func=lambda size: f"{size // 32}× native grid")
+                                value=480, format_func=lambda size: f"{size // 32}× 30 m display grid")
         layer = choices[selected]
         st.caption(layer["period"])
         present_image(root, "satellite", selected + ".png", layer["title"], zoom)
