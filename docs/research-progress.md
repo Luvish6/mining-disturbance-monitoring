@@ -54,12 +54,16 @@ The [Sentinel-2 river feasibility pilot](reports/phase4a-river-feasibility.md) c
 
 The [fixed-footprint pilot](reports/phase4b-leshka-spectral-pilot.md) matched five date pairs across three months. Only 12 connected 10 m cells were common to every matched date, below the exploratory comparison floor. No seasonal contrast was reported. Local receipts retain dated diagnostics, fixed support and coarse station-cell rainfall.
 
+## Phase 5A local research dashboard
+
+The [Streamlit prototype](reports/phase5a-dashboard.md) integrates the existing Sentinel visualization, river observation support and Leshka feasibility receipts on loopback. Validated mining detection and river degradation findings remain unavailable.
+
 ## Blockers and next steps
 
 1. Review March interpretability and November shadows independently; seek clearer/seasonally comparable evidence if needed. Establish documented image/boundary positional uncertainty under the existing <=30 m policy.
 2. Verify persistent controls/band-dependent alignment and provider product-ID/footprint provenance. Sensitivity envelopes and numerical subpixel fits are not survey accuracy or confidence intervals.
 3. DN products are not calibrated reflectance; resolve calibration/atmospheric/illumination treatment before physical NDVI comparison.
 4. Obtain independent dated positive/negative reference evidence with conservative interiors, second review and adequate class/block support in frozen train/validation/test partitions. Do not manufacture labels or random-split pixels.
-5. Only after gates pass, train/evaluate real models and ablations, preserve artifacts and verify disturbance-layer valid support. Disturbance-linked river analysis and the Phase 5 dashboard remain deferred.
+5. Only after gates pass, train/evaluate real models and ablations, preserve artifacts and verify disturbance-layer valid support. Disturbance-linked river analysis and validated detection reporting remain deferred.
 
 The repository contains source/tests, templates and small original text/tables. Local imagery links in historical reports intentionally refer to excluded artifacts. No third-party imagery/geodata/document redistribution or blanket license is inferred. See [publication audit](publication-audit.md), [reports](reports/README.md) and [prompt archive](development-prompts/README.md).
