@@ -32,6 +32,10 @@ The [native-grid interpretability assessment](reports/phase3c-interpretability-a
 
 The [provenance reconciliation](reports/phase3d-provenance.md) verified both archive hashes and the second March footprint against the archived raster. Provider product-ID reconciliation remains open. The [evidence inventory and admission assessment](reports/phase3d-reference-evidence.md) found in-window IBM inspections for Lumshnong, but no admissible paired disturbance geometry or stable background reference. The checked application leads occupy one validation block and one shared test block. All remain UNKNOWN.
 
+## Phase 3E candidate discovery
+
+The [discovery and acquisition plan](reports/phase3e-candidate-discovery.md) records 27 UNKNOWN leads from a bounded Sentinel sample, nine per split. All have Landsat QA-pass point context in both windows. Independent high-resolution evidence and reference admission remain pending. Screening outputs are kept local and separate from the independent review workflow.
+
 ## Blockers and next steps
 
 1. Review March interpretability and November shadows independently; seek clearer/seasonally comparable evidence if needed. Establish documented image/boundary positional uncertainty under the existing <=30 m policy.
