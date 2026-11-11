@@ -14,6 +14,7 @@ from .spatial import block_for, partition
 
 TEMPORAL = ('VV', 'VH', 'NDVI', 'NDTI')
 FEATURES = ('dVV', 'dVH', 'dNDVI', 'dNDTI', 'elevation', 'slope')
+BAND_UNITS = ('dB', 'dB', '1', '1') * 3 + ('m', 'degree')
 BANDS = tuple(f'{t}_{b}' for t in ('before', 'after') for b in TEMPORAL) + FEATURES
 
 
@@ -30,7 +31,7 @@ def save_json(path, value):
 
 
 def prepare(raster, labels, output, patch_size=64, block_m=5000, buffer_m=120,
-            seed=42, synthetic=False, max_pixels=4_000_000):
+            seed=42, synthetic=False, max_pixels=4_000_000, boundary=None, coverage=None):
     """One bounded north-up UTM tile. No resampling or implicit nodata filling.
 
     Edge/cross-block polygons and patches are excluded. All temporal channels
@@ -38,6 +39,10 @@ def prepare(raster, labels, output, patch_size=64, block_m=5000, buffer_m=120,
     """
     if not isinstance(patch_size, int) or patch_size < 8 or patch_size % 4:
         raise ValueError('patch_size must be a multiple of 4, at least 8')
+    if not synthetic:
+        from .multitile import prepare_tiles
+        return prepare_tiles([raster], labels, output, patch_size, block_m, buffer_m,
+                             seed, synthetic, max_pixels, boundary, coverage)
     output = Path(output)
     if output.exists():
         raise ValueError('Choose a new output directory; datasets are immutable')
@@ -56,10 +61,6 @@ def prepare(raster, labels, output, patch_size=64, block_m=5000, buffer_m=120,
             raise ValueError('Tile exceeds bounded initial experiment size')
         if ds.tags().get('data_kind') != ('synthetic' if synthetic else 'real'):
             raise ValueError('Raster must declare data_kind real/synthetic')
-        if not synthetic:
-            from .admission import validate_real_manifest
-            validate_real_manifest(dict(resolution_m=a.a,crs=str(ds.crs),
-                label_provenance=[props for _,props in refs],raster_metadata=ds.tags()))
         project = Transformer.from_crs('EPSG:4326', ds.crs, always_xy=True).transform
         shapes, excluded_labels = [], []
         for geometry, props in refs:
@@ -70,39 +71,9 @@ def prepare(raster, labels, output, patch_size=64, block_m=5000, buffer_m=120,
                 shapes.append((projected, props['label']))
         if not shapes:
             raise ValueError('No reference polygons remain inside buffered blocks')
-        target = rasterize(shapes, out_shape=(ds.height, ds.width), transform=a,
-                           fill=255, dtype='uint8', all_touched=False)
         output.mkdir(parents=True)
-        records, counts = [], {s: [0, 0] for s in ('train', 'validation', 'test')}
-        quality = dict(unlabeled_pixels=int((target == 255).sum()), invalid_labeled_pixels=0,
-                       excluded_patch_labeled_pixels=0, edge_labeled_pixels=0,
-                       excluded_label_ids=excluded_labels)
-        for row in range(0, ds.height, patch_size):
-            for col in range(0, ds.width, patch_size):
-                y = target[row:row+patch_size, col:col+patch_size]
-                if y.shape != (patch_size, patch_size):
-                    quality['edge_labeled_pixels'] += int((y != 255).sum())
-                    continue
-                w = Window(col, row, patch_size, patch_size)
-                block = block_for(window_bounds(w, a), block_m, buffer_m)
-                if block is None:
-                    quality['excluded_patch_labeled_pixels'] += int((y != 255).sum())
-                    continue
-                x = ds.read(window=w).astype('float32')
-                valid = (ds.read_masks(window=w) > 0) & np.isfinite(x)
-                common = valid.all(axis=0)
-                quality['invalid_labeled_pixels'] += int(((y != 255) & ~common).sum())
-                mask = common & (y != 255)
-                if not mask.any():
-                    continue
-                split = partition(block, seed)
-                name = f'r{row}_c{col}.npz'
-                np.savez_compressed(output / name, before=x[:4], after=x[4:8],
-                                    features=x[8:], valid=valid, label=y, mask=mask)
-                counts[split] = (np.array(counts[split]) + np.bincount(y[mask], minlength=2)).tolist()
-                records.append(dict(path=name, sha256=digest(output / name), split=split,
-                                    block=block, row=row, col=col,
-                                    transform=list(ds.window_transform(w))[:6]))
+        records, counts, quality = tile_patches(ds, shapes, patch_size, block_m, buffer_m, seed, output)
+        quality['excluded_label_ids'] = excluded_labels
         manifest = dict(schema=1, data_kind='synthetic' if synthetic else 'real',
                         raster_sha256=digest(raster), labels_sha256=digest(labels),
                         label_provenance=[props for _, props in refs],
@@ -114,14 +85,73 @@ def prepare(raster, labels, output, patch_size=64, block_m=5000, buffer_m=120,
     return manifest
 
 
+def tile_patches(ds, shapes, patch_size, block_m, buffer_m, seed, output, tile_id=None, expected_root=None):
+    a = ds.transform
+    target = (rasterize(shapes, out_shape=ds.shape, transform=a, fill=255,
+                        dtype='uint8', all_touched=False) if shapes
+              else np.full(ds.shape, 255, dtype='uint8'))
+    records, counts = [], {s: [0, 0] for s in ('train', 'validation', 'test')}
+    quality = dict(unlabeled_pixels=int((target == 255).sum()), invalid_labeled_pixels=0,
+                   excluded_patch_labeled_pixels=0, edge_labeled_pixels=0)
+    for row in range(0, ds.height, patch_size):
+        for col in range(0, ds.width, patch_size):
+            y = target[row:row+patch_size, col:col+patch_size]
+            if y.shape != (patch_size, patch_size):
+                quality['edge_labeled_pixels'] += int((y != 255).sum())
+                continue
+            if not (y != 255).any():
+                continue
+            w = Window(col, row, patch_size, patch_size)
+            block = block_for(window_bounds(w, a), block_m, buffer_m)
+            if block is None:
+                quality['excluded_patch_labeled_pixels'] += int((y != 255).sum())
+                continue
+            x = ds.read(window=w).astype('float32')
+            valid = (ds.read_masks(window=w) > 0) & np.isfinite(x)
+            if ds.nodata is not None:
+                valid &= x != ds.nodata
+            common = valid.all(axis=0)
+            quality['invalid_labeled_pixels'] += int(((y != 255) & ~common).sum())
+            mask = common & (y != 255)
+            if not mask.any():
+                continue
+            split = partition(block, seed)
+            name = f'r{row}_c{col}'
+            if tile_id:
+                name = f'{tile_id}_{name}'
+            record = dict(path=f'{name}.npz', split=split, block=block, row=row, col=col,
+                          transform=list(ds.window_transform(w))[:6])
+            if tile_id:
+                record.update(tile_id=tile_id, patch_id=name)
+            arrays = dict(before=x[:4], after=x[4:8], features=x[8:], valid=valid, label=y, mask=mask)
+            root = expected_root if output is None else output
+            if output is None:
+                with np.load(root / record['path']) as saved:
+                    if set(saved.files) != set(arrays) or any(
+                        saved[k].dtype != v.dtype or not np.array_equal(saved[k], v, equal_nan=True)
+                        for k, v in arrays.items()
+                    ):
+                        raise ValueError('Patch values, labels or masks differ from verified sources')
+            else:
+                np.savez_compressed(root / record['path'], **arrays)
+            counts[split] = (np.array(counts[split]) + np.bincount(y[mask], minlength=2)).tolist()
+            records.append(dict(record, sha256=digest(root / record['path'])))
+    return records, counts, quality
+
+
 def read_manifest(path, require_splits=False):
     path = Path(path)
     m = json.loads(path.read_text(encoding='utf-8'))
+    if m.get('schema') == 2 and m.get('channels') == list(BANDS):
+        from .multitile import verify_manifest
+        return verify_manifest(path, m, require_splits)
     if m.get('schema') != 1 or m.get('channels') != list(BANDS):
         raise ValueError('Unsupported manifest schema/channel order')
     if m.get('data_kind') == 'real':
         from .admission import validate_real_manifest
         validate_real_manifest(m)
+        if require_splits:
+            raise ValueError('Rebuild legacy real manifests with original district and coverage evidence')
     seen, blocks = set(), {}
     for r in m['records']:
         p = (path.parent / r['path']).resolve()

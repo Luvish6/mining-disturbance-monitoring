@@ -1,5 +1,41 @@
 """Paired common-pixel evaluation, with block rather than pixel uncertainty."""
+from hashlib import sha256
+
 import numpy as np
+
+
+SUPPORT_FIELDS = ('ids', 'label', 'blocks', 'tiles')
+
+
+def pixel_support(record, arrays, flat=None):
+    """Use the manifest window and exact supervised-mask indices as pixel identity."""
+    if flat is None:
+        flat = np.flatnonzero(arrays['mask'])
+    patch = record.get('patch_id', record['path'])
+    return dict(ids=np.array([f'{patch}:{i}' for i in flat]),
+                label=arrays['label'].ravel()[flat],
+                blocks=np.full(len(flat), record['block']),
+                tiles=np.full(len(flat), record.get('tile_id', 'legacy-single-source')))
+
+
+def patch_mask_hash(arrays):
+    digest = sha256()
+    for key in ('valid', 'mask'):
+        digest.update(np.packbits(arrays[key]).tobytes())
+    return digest.hexdigest()
+
+
+def require_matching_support(rf, siamese):
+    """Reject mismatched masks, identities or labels before paired metrics."""
+    if any(key not in support for support in (rf, siamese) for key in SUPPORT_FIELDS):
+        raise ValueError('Evaluation receipt lacks pixel support fields')
+    ids = np.asarray(rf['ids'])
+    if ids.ndim != 1 or not ids.size or len(np.unique(ids)) != ids.size:
+        raise ValueError('Evaluation requires unique, nonempty pixel IDs')
+    for key in SUPPORT_FIELDS:
+        left, right = np.asarray(rf[key]), np.asarray(siamese[key])
+        if left.shape != ids.shape or not np.array_equal(left, right):
+            raise ValueError(f'RF/Siamese support mismatch: {key}')
 
 
 def metrics(y, probability, threshold=.5):

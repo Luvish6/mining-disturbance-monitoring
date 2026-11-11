@@ -184,6 +184,11 @@ def register_raster(raster, metadata, output, coverage_report=None):
             raise ValueError('Registration requires a bounded 14-band, north-up 30 m EPSG:32646 source')
         if any(src.descriptions) and tuple(src.descriptions)!=BANDS:
             raise ValueError('Existing band descriptions conflict with declared order')
+        from .data import BAND_UNITS
+        if meta['data_kind'] == 'real' and any(
+            unit is not None and unit != expected for unit, expected in zip(src.units, BAND_UNITS)
+        ):
+            raise ValueError('Source units conflict with the paired feature schema')
         if src.nodata is None:
             raise ValueError('Explicit source nodata required; never infer missing zeros')
         output.parent.mkdir(parents=True,exist_ok=True)
@@ -197,6 +202,8 @@ def register_raster(raster, metadata, output, coverage_report=None):
                     if any(rasterio.enums.MaskFlags.per_dataset in flags for flags in src.mask_flag_enums):
                         dst.write_mask(src.dataset_mask(window=window),window=window)
                 dst.descriptions=BANDS
+                if meta['data_kind'] == 'real':
+                    dst.units = BAND_UNITS
                 dst.update_tags(**src.tags())
                 dst.update_tags(data_kind=meta['data_kind'],provenance=json.dumps(meta,allow_nan=False))
         except Exception:

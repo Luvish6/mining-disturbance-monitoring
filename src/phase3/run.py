@@ -12,7 +12,7 @@ from sklearn.ensemble import RandomForestClassifier
 from . import VERSION
 from .data import prepare, read_manifest, fit_stats, normalized, digest, save_json
 from .model import SiameseUNet, masked_loss
-from .evaluate import shared_evaluation
+from .evaluate import SUPPORT_FIELDS, patch_mask_hash, pixel_support, require_matching_support, shared_evaluation
 
 
 class Patches(torch.utils.data.Dataset):
@@ -65,6 +65,7 @@ def train(manifest, output, epochs=30, patience=5, batch_size=4, width=16,
     weight = float(np.clip(count0/count1, 1, 20))
     metadata = dict(version=VERSION, manifest_sha256=digest(manifest), data_kind=m['data_kind'],
                     seed=seed, stats=stats, width=width, device=device, pos_weight=weight,
+                    selection_partition='validation', test_used_for_selection=False,
                     threshold=.5, threshold_selection='fixed a priori; test unused',
                     torch_version=str(torch.__version__), epochs_requested=epochs,
                     batch_size=batch_size, learning_rate=.001, patience=patience)
@@ -122,13 +123,40 @@ def train(manifest, output, epochs=30, patience=5, batch_size=4, width=16,
     return metadata
 
 
-def infer(manifest, run, output, split='test'):
+def verify_standalone_support(manifest, dataset, directory):
+    directory = Path(directory)
+    receipt = json.loads((directory / 'evaluation.json').read_text())
+    pixels = directory / 'common_test_pixels.npz'
+    if (receipt.get('manifest_sha256') != digest(manifest) or receipt.get('partition') != 'test'
+            or receipt.get('data_kind') != dataset['data_kind']
+            or receipt.get('selection_partition') != 'validation'
+            or receipt.get('common_pixels_sha256') != digest(pixels)):
+        raise ValueError('Standalone RF evaluation receipt differs from the frozen test dataset')
+    support, hashes = [], []
+    for record in dataset['records']:
+        if record['split'] == 'test':
+            with np.load(Path(manifest).parent / record['path']) as patch:
+                support.append(pixel_support(record, patch))
+                hashes.append(patch_mask_hash(patch))
+    expected = {key: np.concatenate([row[key] for row in support]) for key in SUPPORT_FIELDS}
+    with np.load(pixels) as saved:
+        require_matching_support(saved, expected)
+        if 'mask_hashes' not in saved or not np.array_equal(saved['mask_hashes'], hashes):
+            raise ValueError('RF/Siamese support mismatch: masks')
+
+
+def infer(manifest, run, output, split='test', rf_evaluation=None):
     """Evaluate once after model selection. Only load trusted locally-created runs."""
+    if split not in ('validation', 'test') or (rf_evaluation is not None and split != 'test'):
+        raise ValueError('Evaluation requires validation or test; standalone RF parity requires test')
     m = read_manifest(manifest, require_splits=True)
     run = Path(run)
     meta = json.loads((run / 'run.json').read_text())
     if digest(manifest) != meta['manifest_sha256']:
         raise ValueError('Dataset differs from frozen training manifest')
+    if m['schema'] == 2 and (meta.get('selection_partition') != 'validation'
+                            or meta.get('test_used_for_selection') is not False):
+        raise ValueError('Paired model selection must use validation only')
     checkpoint = torch.load(run / 'best.pt', map_location='cpu', weights_only=True)
     if checkpoint['metadata'] != meta:
         raise ValueError('Checkpoint metadata mismatch')
@@ -138,8 +166,11 @@ def infer(manifest, run, output, split='test'):
         raise ValueError('RF metadata mismatch')
     model = SiameseUNet(width=meta['width']); model.load_state_dict(checkpoint['state_dict']); model.eval()
     forest = artifact['model']
+    if rf_evaluation is not None:
+        verify_standalone_support(manifest, m, rf_evaluation)
     output = new_directory(output)
-    targets, rf_probs, sn_probs, blocks, ids = [], [], [], [], []
+    mask_hashes = []
+    rf_support, sn_support, rf_probs, sn_probs = [], [], [], []
     for r in m['records']:
         if r['split'] != split:
             continue
@@ -148,11 +179,13 @@ def infer(manifest, run, output, split='test'):
             with torch.no_grad():
                 p = model(torch.from_numpy(a)[None], torch.from_numpy(b)[None]).sigmoid()[0, 0].numpy()
             mask = z['mask']
+            mask_hashes.append(patch_mask_hash(z))
             rf = np.full(mask.shape, np.nan, dtype='float32')
             rf[mask] = forest.predict_proba(z['features'][:, mask].T)[:, list(forest.classes_).index(1)]
-            targets.extend(z['label'][mask].tolist()); rf_probs.extend(rf[mask].tolist()); sn_probs.extend(p[mask].tolist())
-            blocks.extend([r['block']]*int(mask.sum()))
-            ids.extend([f"{r['path']}:{i}" for i in np.flatnonzero(mask)])
+            rf_support.append(pixel_support(r, z, np.flatnonzero(mask.ravel())))
+            sn_support.append(pixel_support(r, z, np.ravel_multi_index(np.nonzero(mask), mask.shape)))
+            rf_probs.extend(rf[mask].tolist())
+            sn_probs.extend(p[mask].tolist())
             # Probability maps preserve valid imagery beyond labeled support.
             common = z['valid'].all(axis=0)
             rf_map = np.full(mask.shape, np.nan, dtype='float32')
@@ -169,11 +202,16 @@ def infer(manifest, run, output, split='test'):
                 ds.descriptions = ('siamese_probability', 'rf_probability', 'siamese_binary', 'rf_binary',
                                    'reference_label', 'common_valid', 'before_NDVI', 'after_NDVI')
                 ds.update_tags(data_kind=m['data_kind'], interpretation='mining-related disturbance screening')
-    report = shared_evaluation(targets, rf_probs, sn_probs, blocks, meta['threshold'])
+    rf_pixels = {key: np.concatenate([row[key] for row in rf_support]) for key in SUPPORT_FIELDS}
+    sn_pixels = {key: np.concatenate([row[key] for row in sn_support]) for key in SUPPORT_FIELDS}
+    require_matching_support(rf_pixels, sn_pixels)
+    report = shared_evaluation(sn_pixels['label'], rf_probs, sn_probs, sn_pixels['blocks'], meta['threshold'])
+    report['standalone_rf_support_verified'] = rf_evaluation is not None
     report.update(data_kind=m['data_kind'], manifest_sha256=digest(manifest), partition=split,
                   exclusions=m['quality'], class_counts_by_partition=m['counts'])
     save_json(output / 'evaluation.json', report)
-    np.savez_compressed(output / 'common_pixels.npz', ids=ids, label=targets, rf=rf_probs, siamese=sn_probs, blocks=blocks)
+    np.savez_compressed(output / 'common_pixels.npz', **sn_pixels, mask_hashes=mask_hashes,
+                        rf=rf_probs, siamese=sn_probs)
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -197,6 +235,10 @@ def main():
     p.add_argument('--buffer-m', type=float, default=120)
     p.add_argument('--seed', type=int, default=42)
     p.add_argument('--synthetic', action='store_true')
+    p.add_argument('--boundary', help='Original unsimplified GAUL district snapshot')
+    p.add_argument('--coverage', help='Successful matching Phase 2 district coverage receipt')
+    p.add_argument('--additional-raster', action='append', default=[],
+                   help='Additional schema 2 source. Repeat for each tile.')
     t = sub.add_parser('train')
     t.add_argument('manifest'); t.add_argument('output')
     t.add_argument('--epochs', type=int, default=30); t.add_argument('--patience', type=int, default=5)
@@ -206,7 +248,13 @@ def main():
     i = sub.add_parser('infer')
     i.add_argument('manifest'); i.add_argument('run'); i.add_argument('output')
     i.add_argument('--split', choices=['validation', 'test'], default='test')
+    i.add_argument('--rf-evaluation', help='Standalone RF test output to verify sample parity against')
     args = vars(parser.parse_args()); command = args.pop('command')
+    if command == 'prepare':
+        additional = args.pop('additional_raster')
+        if additional:
+            from .multitile import prepare_tiles
+            return prepare_tiles([args.pop('raster'), *additional], **args)
     {'prepare': prepare, 'train': train, 'infer': infer}[command](**args)
 
 

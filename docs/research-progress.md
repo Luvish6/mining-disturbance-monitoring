@@ -83,3 +83,7 @@ The [model audit](reports/phase6a-model-readiness.md) verified synthetic model e
 ## Phase 6B multi-tile acquisition
 
 The [six-tile Earth Engine acquisition](reports/phase6b-multitile-acquisition.md) verified aligned 14-band feature and diagnostic rasters in both districts and all three frozen partitions. All 24,576 sampled cells met common support. The result is bounded exploratory feature QA. District coverage, independent reference admission and multi-source supervised ingestion remain separate gates.
+
+## Phase 6C multi-tile integration
+
+The [multi-tile integration report](reports/phase6c-multitile-integration.md) records schema 2 source and mask reconstruction, frozen real spatial validation and exact RF/Siamese test support checks. All six Phase 6B rasters passed read-only structural checks. Supervised registration and independent reference admission remain pending.

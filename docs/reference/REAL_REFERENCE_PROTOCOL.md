@@ -65,6 +65,7 @@ after_evidence_date: actual YYYY-MM-DD in [2024-11-01, 2025-04-01)
 spatial_accuracy_m: documented finite positional error in [0, 30]
 second_reviewer: actual identifier distinct from reviewer
 evidence_urls: nonempty list of actual independent evidence URLs
+evidence_group_id: reviewed identifier shared by polygons from the same independent evidence group
 ```
 
 These are a conservative initial admission policy for the 30 m experiment, not
@@ -93,7 +94,7 @@ The commands below are implemented but **were not run on real data**:
 ```powershell
 cd <PROJECT_ROOT>
 $py='<PROJECT_PARENT>\.venv\Scripts\python.exe'
-& $py -B phase3.py prepare data\paired-v2.tif data\labels\reviewed-v2.geojson data\dataset_v2
+& $py -B phase3.py prepare data\paired-v2.tif data\labels\reviewed-v2.geojson data\dataset_v2 --boundary data\original-gaul.geojson --coverage outputs\phase2_report.json
 & $py -B -m src.phase3.rf_experiments fit data\dataset_v2\manifest.json outputs\rf_v1
 & $py -B -m src.phase3.rf_experiments evaluate data\dataset_v2\manifest.json outputs\rf_v1 outputs\rf_v1_test
 & $py -B -m src.phase3.rf_experiments map data\paired-v2.tif outputs\rf_v1 outputs\rf_v1_small_tile.tif --evaluation outputs\rf_v1_test\evaluation.json

@@ -10,30 +10,35 @@ import sklearn
 from sklearn.ensemble import RandomForestClassifier
 from config.phase2_settings import ABLATIONS
 from .data import FEATURES,BANDS,read_manifest,digest,save_json
-from .evaluate import metrics
+from .evaluate import SUPPORT_FIELDS, metrics, patch_mask_hash, pixel_support
 
 
 def indices(experiment):
     return [FEATURES.index(name) for name in ABLATIONS[experiment]]
 
 
-def samples(manifest,split,cap=None,seed=42):
+def samples(manifest,split,cap=None,seed=42,include_support=False):
     m=read_manifest(manifest,require_splits=True)
     records=[r for r in m['records'] if r['split']==split]
     count=sum(m['counts'][split]); rng=np.random.default_rng(seed)
     selected=np.sort(rng.choice(count,min(cap,count),replace=False)) if cap else None
-    xs,ys,ids,blocks=[],[],[],[]; offset=0
+    xs, support, mask_hashes = [], [], []
+    offset = 0
     for r in records:
         with np.load(Path(manifest).parent/r['path']) as z:
             flat=np.flatnonzero(z['mask']); n=len(flat)
             local=np.arange(n) if selected is None else selected[(selected>=offset)&(selected<offset+n)]-offset
             if len(local):
                 xs.append(z['features'].reshape(6,-1)[:,flat[local]].T)
-                ys.append(z['label'].ravel()[flat[local]])
-                ids.extend(f"{r['path']}:{p}" for p in flat[local]); blocks.extend([r['block']]*len(local))
+                support.append(pixel_support(r, z, flat[local]))
+                if include_support:
+                    mask_hashes.append(patch_mask_hash(z))
             offset+=n
     if not xs: raise ValueError('No valid supervised pixels')
-    return np.concatenate(xs),np.concatenate(ys),np.array(ids),np.array(blocks)
+    pixels = {key: np.concatenate([row[key] for row in support]) for key in SUPPORT_FIELDS}
+    if include_support:
+        return np.concatenate(xs), dict(pixels, mask_hashes=np.array(mask_hashes))
+    return np.concatenate(xs), pixels['label'], pixels['ids'], pixels['blocks']
 
 
 def fit(manifest,output,seed=42,max_train_pixels=100000,synthetic_smoke=False):
@@ -84,7 +89,10 @@ def evaluate(manifest,run,output):
     m=read_manifest(manifest,require_splits=True)
     meta=json.loads((Path(run)/'run.json').read_text())
     if digest(manifest)!=meta['manifest_sha256']: raise ValueError('Frozen dataset changed')
-    x,y,ids,blocks=samples(manifest,'test')
+    if meta.get('selection_partition') != 'validation' or meta.get('test_used_for_selection') is not False:
+        raise ValueError('RF model selection must use validation only')
+    x, support = samples(manifest, 'test', include_support=True)
+    y, blocks = support['label'], support['blocks']
     output=Path(output); output.mkdir(parents=True,exist_ok=False)
     result=dict(data_kind=m['data_kind'],partition='test',selection_partition='validation',
                 test_pixels=len(y),test_class_counts=np.bincount(y,minlength=2).tolist(),
@@ -102,8 +110,10 @@ def evaluate(manifest,run,output):
     result['selected_experiment']=meta['selected_experiment']
     result['fusion_f1_differences']={name:result['experiments']['fused']['overall']['classes'][1]['f1']-
         result['experiments'][name]['overall']['classes'][1]['f1'] for name in ('sar','optical')}
+    pixels = output/'common_test_pixels.npz'
+    np.savez_compressed(pixels, **support, **probabilities)
+    result['common_pixels_sha256'] = digest(pixels)
     save_json(output/'evaluation.json',result)
-    np.savez_compressed(output/'common_test_pixels.npz',ids=ids,label=y,blocks=blocks,**probabilities)
     return result
 
 
