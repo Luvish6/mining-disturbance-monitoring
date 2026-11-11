@@ -50,6 +50,10 @@ The [bounded Earth Engine visualization](reports/phase3g-visualization.md) verif
 
 The [Sentinel-2 river feasibility pilot](reports/phase4a-river-feasibility.md) checked four Lukha/Myntdu station neighbourhoods. Leshka was the only site with repeated screened interior water pixels in both windows. It is a candidate for a separate impoundment-aware spectral pilot. No seasonal river condition or mining association was estimated.
 
+## Phase 4B Leshka spectral pilot
+
+The [fixed-footprint pilot](reports/phase4b-leshka-spectral-pilot.md) matched five date pairs across three months. Only 12 connected 10 m cells were common to every matched date, below the exploratory comparison floor. No seasonal contrast was reported. Local receipts retain dated diagnostics, fixed support and coarse station-cell rainfall.
+
 ## Blockers and next steps
 
 1. Review March interpretability and November shadows independently; seek clearer/seasonally comparable evidence if needed. Establish documented image/boundary positional uncertainty under the existing <=30 m policy.
