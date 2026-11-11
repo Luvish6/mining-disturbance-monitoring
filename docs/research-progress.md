@@ -71,3 +71,7 @@ The [integration audit](reports/phase5b-integration-audit.md) reproduced the liv
 5. Only after gates pass, train/evaluate real models and ablations, preserve artifacts and verify disturbance-layer valid support. Disturbance-linked river analysis and validated detection reporting remain deferred.
 
 The repository contains source/tests, templates and small original text/tables. Local imagery links in historical reports intentionally refer to excluded artifacts. No third-party imagery/geodata/document redistribution or blanket license is inferred. See [publication audit](publication-audit.md), [reports](reports/README.md) and [prompt archive](development-prompts/README.md).
+
+### Phase 5C dashboard redesign
+
+The [Phase 5C dashboard redesign](reports/phase5c-dashboard-redesign.md) adds a study overview, paired satellite previews and station-level river diagnostics from the existing local products. The Leshka comparison remains withheld under the Phase 4B evidence gate.

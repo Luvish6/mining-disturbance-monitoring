@@ -15,7 +15,24 @@ PRODUCTS = {
     "river": ("phase4a_river_feasibility", "phase4a_river.py"),
     "leshka": ("phase4b_leshka_spectral_pilot", "phase4b_leshka.py"),
 }
-PAGES = ("Satellite change", "River observations", "Leshka feasibility", "Provenance & limits")
+PAGES = ("Overview", "Satellite Change Explorer", "River Monitoring",
+         "Leshka Feasibility", "Data Quality & Methodology")
+SEASONS = ("Nov 2023 – Mar 2024", "Nov 2024 – Mar 2025")
+THEME = """
+<style>
+:root { color-scheme: dark; }
+.stApp, [data-testid="stHeader"] { background: #0c1421; color: #e6edf7; }
+[data-testid="stSidebar"], [data-testid="stMetric"] { background: #152235; }
+.stApp h1, .stApp h2, .stApp h3, [data-testid="stMetricValue"] { color: #f2f7ff; }
+.stApp [data-testid="stCaptionContainer"] p { color: #aebed2; }
+[data-testid="stSidebar"] label, [data-testid="stWidgetLabel"] label,
+[data-testid="stMetricLabel"], [data-testid="stExpander"] summary { color: #dce8f6; }
+[data-testid="stMetric"] { padding: 1rem; border: 1px solid #30455d; border-radius: .65rem; }
+.stApp a { color: #7cdacf; }
+.stApp [data-testid="stMainBlockContainer"] { max-width: 84rem; padding-top: 3.5rem; }
+[data-testid="stExpander"] details { border-color: #30455d; }
+</style>
+"""
 STATUS = (
     "No admitted real mining positive or negative labels.",
     "No real trained mining classifier or held-out accuracy.",
@@ -70,33 +87,80 @@ def unavailable(product, filename):
         st.caption("Phase 4B requires the Phase 4A receipt. The daily ledger can be rebuilt with the saved local verifier.")
 
 
+@st.cache_data(show_spinner=False)
+def cached_product(loader_name, path, signature, args, _loader):
+    return _loader(path, *args)
+
+
 def read_product(root, product, filename, loader, *args):
     path = root / PRODUCTS[product][0] / filename
     try:
-        return loader(path, *args)
+        stat = path.stat()
+        return cached_product(loader.__name__, path, (stat.st_mtime_ns, stat.st_size), args, loader)
     except (OSError, ValueError, TypeError, KeyError):
         unavailable(product, filename)
         return None
 
 
+@st.cache_data(show_spinner=False)
+def image_bytes(path, signature, zoom):
+    with Image.open(path) as image:
+        if zoom:
+            target = max(zoom, image.width)
+            image = image.resize((target, target), Image.Resampling.NEAREST)
+        buffer = BytesIO()
+        image.save(buffer, format="PNG")
+    return buffer.getvalue()
+
+
 def present_image(root, product, filename, caption, width):
     path = root / PRODUCTS[product][0] / filename
     try:
-        with Image.open(path) as image:
-            if product == "satellite":
-                target = max(width, image.width)
-                image = image.resize((target, target), Image.Resampling.NEAREST)
-            buffer = BytesIO()
-            image.save(buffer, format="PNG")
+        stat = path.stat()
+        content = image_bytes(path, (stat.st_mtime_ns, stat.st_size),
+                              width if product == "satellite" else None)
     except (OSError, ValueError):
         unavailable(product, filename)
         return
-    st.image(buffer.getvalue(), caption=caption, width=width)
+    with st.container(width=width):
+        st.image(content, caption=caption, width="stretch")
+
+
+def overview(root):
+    st.header("Study overview")
+    st.write("Explore real satellite observations over the Jaintia Hills and the feasibility of river spectral monitoring.")
+    layers = read_product(root, "satellite", "index.html", viewer_layers)
+    receipt = read_product(root, "river", "receipt.json", object_file)
+    for col, label, value in zip(st.columns(3), ("Study districts", "Satellite layers", "River stations"),
+                                 (2, len(layers) if layers else "Unavailable",
+                                  len(receipt["stations"]) if receipt and "stations" in receipt else "Unavailable")):
+        col.metric(label, value)
+    st.caption("East and West Jaintia Hills · Meghalaya")
+    st.subheader("Observation windows")
+    st.write(f"Before · {SEASONS[0]}  |  After · {SEASONS[1]}")
+    st.subheader("Explore the evidence")
+    for page, description in zip(PAGES[1:], (
+        "Sentinel-2 optical composites and vegetation indices alongside Sentinel-1 radar backscatter.",
+        "Dated Sentinel-2 coverage and screened water support across the Lukha and Myntdu stations.",
+        "Fixed-footprint support, exclusions and coarse station-cell rainfall.",
+        "Collections, acquisition dates, preprocessing rules and local receipts.",
+    )):
+        with st.container(border=True):
+            st.markdown(f"**{page}**")
+            st.write(description)
+            st.button(f"Open {page}", key=f"open_{page}", on_click=select_page, args=(page,))
+    st.caption("Workflow · Local satellite products → quality screening → exploratory visualization → independent reference review pending.")
+
+
+def select_page(page):
+    st.session_state.page = page
 
 
 def satellite(root):
-    st.header("Satellite change")
+    st.header("Satellite Change Explorer")
     st.caption("REAL OBSERVATIONS · Phase 3G bounded Sentinel tile")
+    st.write(f"Before · {SEASONS[0]}  |  After · {SEASONS[1]}")
+    st.caption("The 960 m demonstration tile uses a 30 m display grid. Magnification enlarges the saved pixels.")
     receipt = read_product(root, "satellite", "receipt.json", object_file)
     layers = read_product(root, "satellite", "index.html", viewer_layers)
     if layers:
@@ -107,7 +171,17 @@ def satellite(root):
                                 value=480, format_func=lambda size: f"{size // 32}× 30 m display grid")
         layer = choices[selected]
         st.caption(layer["period"])
-        present_image(root, "satellite", selected + ".png", layer["title"], zoom)
+        stem, _, suffix = selected.rpartition("_")
+        before, after = f"{stem}_before", f"{stem}_after"
+        if suffix in ("before", "after") and before in choices and after in choices and st.checkbox(
+            "Compare before and after", value=True, key="compare_satellite"
+        ):
+            for col, key in zip(st.columns(2), (before, after)):
+                with col:
+                    st.caption(choices[key]["period"])
+                    present_image(root, "satellite", key + ".png", choices[key]["title"], zoom)
+        else:
+            present_image(root, "satellite", selected + ".png", layer["title"], zoom)
         if layer["colors"]:
             gradient = ",".join(layer["colors"])
             st.markdown(
@@ -117,6 +191,8 @@ def satellite(root):
         st.caption(layer["legend"])
     if receipt:
         st.subheader("Preprocessing support")
+        st.metric("Common valid display pixels", receipt.get("valid_pixels", {}).get("common_valid", "Unavailable"),
+                  help="Pixels supported by the saved common-valid mask on the display grid.")
         st.caption("Pixel counts describe preprocessing support for the demonstration tile.")
         st.dataframe([{"Layer": key, "Valid pixels": value}
                       for key, value in receipt.get("valid_pixels", {}).items()], hide_index=True)
@@ -126,7 +202,7 @@ def satellite(root):
 
 
 def river(root):
-    st.header("River observations")
+    st.header("River Monitoring")
     st.caption("HEURISTIC SCREENING · Phase 4A water-pixel support on real Sentinel-2 granules")
     receipt = read_product(root, "river", "receipt.json", object_file)
     if not receipt or not receipt.get("stations"):
@@ -149,30 +225,46 @@ def river(root):
         st.warning("No seasonal diagnostics in this station receipt.")
         return
     season = st.radio("Season", list(seasons), horizontal=True, key="river_season")
-    diagnostic = st.selectbox("Date support", ("All joined granules", "Valid corridor", "Screened water", "Screened interior"),
-                              key="water_support")
-    field = {"All joined granules": "available", "Valid corridor": "existing_valid",
-             "Screened water": "water", "Screened interior": "core_10m"}[diagnostic]
-    records = [r for r in seasons[season].get("scenes", [])
-               if diagnostic == "All joined granules" or r.get(field, 0) > 0]
-    if records:
-        st.dataframe([{k: r.get(k) for k in ("acquired_utc", "id", "existing_valid",
-                       "water", "core_10m", "cloud", "shadow")} for r in records], hide_index=True)
-    else:
-        st.info("No granules meet the selected screen in this window.")
-    if seasons[season].get("water_dates", 0):
+    selected_season = seasons[season]
+    metrics = ("unique_joined_dates", "water_dates", "core_dates")
+    for col, field in zip(st.columns(3), metrics):
+        col.metric(fields[field], selected_season.get(field, "Unavailable"))
+    if all(isinstance(selected_season.get(field), int) for field in fields):
+        st.bar_chart([{"Screen": label, "Dates": selected_season[field]} for field, label in fields.items()],
+                     x="Screen", y="Dates", horizontal=True, x_label="Distinct UTC dates")
+    st.caption("A date without screened water support may reflect masking or limited spatial support. River flow remains unknown.")
+    with st.expander("Advanced Satellite Diagnostics", expanded=True):
+        river_granules(selected_season)
+    if selected_season.get("water_dates", 0):
         present_image(root, "river", f"{key}/{season}_example.png",
                       "Selected dated example · blue screened water · gold heuristic interior", 750)
     st.caption("River lines guide corridor selection. Screened pixels may contain mixed banks, shallow water or residual shadow.")
 
 
+def river_granules(season):
+    diagnostic = st.selectbox("Date support", ("All joined granules", "Valid corridor", "Screened water", "Screened interior"),
+                              key="water_support")
+    field = {"All joined granules": "available", "Valid corridor": "existing_valid",
+             "Screened water": "water", "Screened interior": "core_10m"}[diagnostic]
+    records = [r for r in season.get("scenes", [])
+               if diagnostic == "All joined granules" or r.get(field, 0) > 0]
+    if records:
+        fields = {"acquired_utc": "Acquired UTC", "id": "Granule ID",
+                  "existing_valid": "Valid corridor pixels", "water": "Screened water pixels",
+                  "core_10m": "Interior 10 m pixels", "cloud": "Cloud pixels", "shadow": "Shadow pixels"}
+        st.dataframe([{label: r.get(key) for key, label in fields.items()} for r in records], hide_index=True)
+    else:
+        st.info("No granules meet the selected screen in this window.")
+
+
 def leshka(root):
-    st.header("Leshka feasibility")
+    st.header("Leshka Feasibility")
     st.caption("HEURISTIC SCREENING · Phase 4B fixed-footprint comparison readiness")
     receipt = read_product(root, "leshka", "receipt.json", object_file)
     if receipt:
         if receipt.get("reportable") is False:
             st.warning("Seasonal spectral contrast unavailable. The Phase 4B comparison screen did not pass.")
+            st.caption("The pilot requires sufficient common interior-water support on the same footprint in both windows.")
         else:
             st.info("This prototype displays feasibility diagnostics only. No seasonal spectral contrast or water-quality trend is shown.")
         cols = st.columns(3)
@@ -213,7 +305,7 @@ def leshka(root):
 
 
 def provenance(root):
-    st.header("Provenance & limits")
+    st.header("Data Quality & Methodology")
     st.markdown(
         "**Real observations** are locally saved Sentinel measurements and acquisition receipts. "
         "**Heuristic screening** describes mask-based support. "
@@ -249,14 +341,16 @@ def provenance(root):
 
 
 def main():
-    st.set_page_config(page_title="Jaintia Hills research dashboard", layout="wide")
+    st.set_page_config(page_title="Mining & River Intelligence", layout="wide")
+    st.markdown(THEME, unsafe_allow_html=True)
     root = Path(os.environ.get("RESEARCH_DASHBOARD_OUTPUTS", Path(__file__).resolve().parents[1] / "outputs"))
-    st.title("Jaintia Hills research dashboard")
-    st.caption("Phase 5A · Offline research prototype")
+    st.title("Mining & River Intelligence")
+    st.caption("Satellite-Based Environmental Monitoring — Meghalaya · Research Prototype")
     with st.sidebar:
+        st.subheader("Research Prototype")
         page = st.radio("Research pages", PAGES, key="page")
     st.warning("**Research validation status**\n\n" + "\n".join(f"- {line}" for line in STATUS))
-    dict(zip(PAGES, (satellite, river, leshka, provenance)))[page](root)
+    dict(zip(PAGES, (overview, satellite, river, leshka, provenance)))[page](root)
 
 
 if __name__ == "__main__":

@@ -63,18 +63,20 @@ def test_navigation_and_scientific_guardrails(products):
     assert "No admitted real mining positive or negative labels" in status
     assert "No real trained mining classifier or held-out accuracy" in status
     assert "No validated river degradation or mining-to-river causal attribution" in status
+    assert app.header[0].value == "Study overview"
+    app.button(key="open_Satellite Change Explorer").click().run()
     app.selectbox(key="satellite_layer").select("dVV").run()
     assert not app.exception and any("test dB" in c.value for c in app.caption)
-    app.radio(key="page").set_value("River observations").run()
+    app.radio(key="page").set_value("River Monitoring").run()
     app.selectbox(key="station").select("Myntdu-Leshka-3379").run()
     app.selectbox(key="water_support").select("Screened interior").run()
     assert not app.exception and any("No granules meet" in i.value for i in app.info)
-    app.radio(key="page").set_value("Leshka feasibility").run()
+    app.radio(key="page").set_value("Leshka Feasibility").run()
     assert not app.exception
     assert any("comparison screen did not pass" in w.value for w in app.warning)
     assert all("common_red" not in frame.value.columns for frame in app.dataframe)
     assert not any("DO_NOT_RENDER" in str(frame.value) for frame in app.dataframe)
-    app.radio(key="page").set_value("Provenance & limits").run()
+    app.radio(key="page").set_value("Data Quality & Methodology").run()
     assert not app.exception
     assert any("Synthetic fixtures" in item.value for item in app.markdown)
 
@@ -82,7 +84,7 @@ def test_navigation_and_scientific_guardrails(products):
 def test_missing_and_unreadable_outputs(monkeypatch, tmp_path):
     monkeypatch.setenv("RESEARCH_DASHBOARD_OUTPUTS", str(tmp_path))
     app = AppTest.from_file(str(APP)).run()
-    for page in ("Satellite change", "River observations", "Leshka feasibility", "Provenance & limits"):
+    for page in ("Satellite Change Explorer", "River Monitoring", "Leshka Feasibility", "Data Quality & Methodology"):
         app.radio(key="page").set_value(page).run()
         assert not app.exception
         assert any("Local evidence unavailable" in w.value for w in app.warning)
@@ -90,6 +92,6 @@ def test_missing_and_unreadable_outputs(monkeypatch, tmp_path):
     corrupt = tmp_path / "phase4a_river_feasibility" / "receipt.json"
     corrupt.parent.mkdir()
     corrupt.write_text("{invalid", encoding="utf-8")
-    app.radio(key="page").set_value("River observations").run()
+    app.radio(key="page").set_value("River Monitoring").run()
     assert not app.exception
     assert any("unreadable" in w.value for w in app.warning)
