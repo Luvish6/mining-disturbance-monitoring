@@ -36,6 +36,10 @@ The [provenance reconciliation](reports/phase3d-provenance.md) verified both arc
 
 The [discovery and acquisition plan](reports/phase3e-candidate-discovery.md) records 27 UNKNOWN leads from a bounded Sentinel sample, nine per split. All have Landsat QA-pass point context in both windows. Independent high-resolution evidence and reference admission remain pending. Screening outputs are kept local and separate from the independent review workflow.
 
+## Phase 3F archive availability pilot
+
+The [six-site archive pilot](reports/phase3f-archive-pilot.md) found actual Resourcesat signal on both dates at three sites and verified no usable reference-interpretation pair. Public archive search receipts and reviewer imagery are local. Additional authorized scene search and positional documentation remain pending.
+
 ## Blockers and next steps
 
 1. Review March interpretability and November shadows independently; seek clearer/seasonally comparable evidence if needed. Establish documented image/boundary positional uncertainty under the existing <=30 m policy.
