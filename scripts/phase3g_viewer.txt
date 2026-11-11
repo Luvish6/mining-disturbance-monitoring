@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jaintia Hills · Seasonal satellite tile</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,sans-serif;background:#111916;color:#edf0e9}
+body{margin:0 auto;max-width:1000px;padding:24px}
+header{border-bottom:1px solid #43534a;margin-bottom:20px}
+h1{font-size:clamp(1.5rem,4vw,2.45rem);margin:0}
+p{line-height:1.5} a{color:#ade1bb}
+main{display:grid;grid-template-columns:minmax(240px,1fr) minmax(0,2fr);gap:24px}
+aside{background:#1d2a24;border:1px solid #43534a;border-radius:10px;padding:16px;align-self:start}
+label{display:block;margin-bottom:8px} select,button{font:inherit;padding:8px;border-radius:6px}
+select{width:100%;background:#111916;color:inherit}
+#viewport{height:min(68vw,630px);min-height:260px;overflow:auto;background:#252e29;border:1px solid #43534a}
+#map{display:block;width:100%;height:auto;image-rendering:pixelated}
+#swatch{height:12px;border-radius:3px}
+small{display:block;margin-top:12px;color:#bdc9bd}
+@media(max-width:700px){main{grid-template-columns:1fr}}
+</style>
+<header>
+<h1>Jaintia Hills seasonal satellite tile</h1>
+<p>Real Sentinel observations · 960 m × 960 m · 30 m grid · north up</p>
+</header>
+<main>
+<aside>
+<label for="layer">Satellite layer</label>
+<select id="layer"></select>
+<p id="period" aria-live="polite"></p>
+<div id="swatch"></div>
+<p id="legend"></p>
+<button id="zoom" type="button" aria-pressed="false">Magnify</button>
+<p>Changes are exploratory. Clouds, shadows, moisture, seasonality and terrain can affect the signal. This viewer contains no mining classifications.</p>
+<small>Transparent cells indicate NoData. Valid masks and observation counts describe preprocessing support.</small>
+<p><a href="tile.tif">GeoTIFF</a> · <a href="receipt.json">Source and settings receipt</a></p>
+</aside>
+<section aria-label="Map">
+<div id="viewport"><img id="map" width="32" height="32" alt=""></div>
+<small>EPSG:32646 extent (west, south, east, north in metres) __BOUNDS__</small>
+</section>
+</main>
+<script>
+const layers = __LAYERS__;
+const select = document.getElementById("layer");
+const map = document.getElementById("map");
+const zoom = document.getElementById("zoom");
+for (const [index, layer] of layers.entries()) select.add(new Option(layer.title, index));
+function render() {
+  const layer = layers[Number(select.value)];
+  map.src = layer.key + ".png";
+  map.alt = layer.title;
+  document.getElementById("period").textContent = layer.period;
+  document.getElementById("legend").textContent = layer.legend;
+  const swatch = document.getElementById("swatch");
+  swatch.hidden = !layer.colors.length;
+  swatch.style.background = layer.colors.length ? "linear-gradient(90deg," + layer.colors.join(",") + ")" : "";
+}
+select.addEventListener("change", render);
+zoom.addEventListener("click", () => {
+  const pressed = zoom.getAttribute("aria-pressed") === "true";
+  zoom.setAttribute("aria-pressed", String(!pressed));
+  zoom.textContent = pressed ? "Magnify" : "Fit width";
+  map.style.width = pressed ? "100%" : "200%";
+});
+render();
+</script>
+</html>

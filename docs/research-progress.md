@@ -42,6 +42,10 @@ The [six-site archive pilot](reports/phase3f-archive-pilot.md) found actual Reso
 
 The [no-cost public-data follow-up](reports/phase3f-public-data.md) verified two-window Landsat QA context at all six pilot points and found three single-season Wayback metadata leads. No independently verified reference pair was established. Processing and visualization checks can continue without Planet or IBM.
 
+## Phase 3G real satellite visualization
+
+The [bounded Earth Engine visualization](reports/phase3g-visualization.md) verified a 32 × 32 real Sentinel tile, with 23 selectable local layers and common preprocessing support in all 1,024 cells. The viewer has no classifier, reference labels or accuracy results.
+
 ## Blockers and next steps
 
 1. Review March interpretability and November shadows independently; seek clearer/seasonally comparable evidence if needed. Establish documented image/boundary positional uncertainty under the existing <=30 m policy.
