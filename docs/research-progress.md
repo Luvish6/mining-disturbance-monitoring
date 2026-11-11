@@ -26,6 +26,8 @@ Full current suite: **103 collected, 103 passed, 0 failed, 0 skipped (34.32 s)**
 
 On 11 November 2026, project-supplied screenshot observations for KORPET and Sumon Pohduna were recorded as preliminary and non-independent. Mining-related change remains unconfirmed at both sites. Native-resolution comparison windows were verified against the archived DN bands and retained locally. See the [review record and checklist](reports/phase3c-preliminary-visual-review.md).
 
+The [native-grid interpretability assessment](reports/phase3c-interpretability-assessment.md) found weaker March contrast and local detail, November dark terrain, and patch-dependent relative offsets. KORPET and Sumon Pohduna both remain **NEEDS FURTHER REVIEW**. Heuristic overlays are retained locally. Cloud, shadow and jointly usable fractions remain unknown.
+
 ## Blockers and next steps
 
 1. Review March interpretability and November shadows independently; seek clearer/seasonally comparable evidence if needed. Establish documented image/boundary positional uncertainty under the existing <=30 m policy.
