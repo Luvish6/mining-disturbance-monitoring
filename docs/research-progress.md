@@ -22,6 +22,10 @@ Inspected uninitialized local Git and confirmed the named public remote had no r
 
 Full current suite: **103 collected, 103 passed, 0 failed, 0 skipped (34.32 s)** using the existing environment/isolated temp directory. Synthetic training fixtures ran only as existing tests; no real model training/evaluation. Initial commit uses actual current date/time; push is verified through real remote receipts, not asserted in advance here. No historical commits/backdates are created.
 
+## Phase 3C preliminary visual review
+
+On 11 November 2026, project-supplied screenshot observations for KORPET and Sumon Pohduna were recorded as preliminary and non-independent. Mining-related change remains unconfirmed at both sites. Native-resolution comparison windows were verified against the archived DN bands and retained locally. See the [review record and checklist](reports/phase3c-preliminary-visual-review.md).
+
 ## Blockers and next steps
 
 1. Review March interpretability and November shadows independently; seek clearer/seasonally comparable evidence if needed. Establish documented image/boundary positional uncertainty under the existing <=30 m policy.
