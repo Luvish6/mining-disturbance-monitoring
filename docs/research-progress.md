@@ -75,3 +75,7 @@ The repository contains source/tests, templates and small original text/tables. 
 ### Phase 5C dashboard redesign
 
 The [Phase 5C dashboard redesign](reports/phase5c-dashboard-redesign.md) adds a study overview, paired satellite previews and station-level river diagnostics from the existing local products. The Leshka comparison remains withheld under the Phase 4B evidence gate.
+
+## Phase 6A model readiness
+
+The [model audit](reports/phase6a-model-readiness.md) verified synthetic model execution and identified the single-raster manifest and multi-source leakage checks as prerequisites for real supervised experiments. The [six-tile Earth Engine plan](reports/phase6a-multitile-plan.md) specifies an exploratory, bounded feature acquisition run. Real training remains blocked by independent reference admission.
