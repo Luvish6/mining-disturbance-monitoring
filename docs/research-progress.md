@@ -115,3 +115,7 @@ The [Day 4 report](reports/phase7-day4-dashboard-planet.md) documents the offlin
 ## Day 5 dashboard polish
 
 The [Day 5 dashboard report](reports/phase7-day5-dashboard.md) documents the map-first offline explorer, page layouts and desktop verification.
+
+## Phase 8 Stage C river workspace
+
+The [React River Intelligence and Leshka Feasibility views](reports/phase8-stage-c.md) use the saved Phase 4 observation ledgers and geographic products. The Leshka seasonal contrast remains withheld under the fixed-footprint support gate.
