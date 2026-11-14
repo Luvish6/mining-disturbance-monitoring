@@ -1,4 +1,5 @@
 """Compare Phase 10H with a deterministic per-patch robust RGB normalization."""
+from contextlib import ExitStack
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -55,19 +56,8 @@ def diagnostics(y, score):
     return dict(**result, fpr=fp / (fp + tn), average_precision=float(average_precision_score(y, score)) if y.any() else None)
 
 
-def run(root):
-    output = root / "rf_normalized_v1"
-    if output.exists():
-        raise ValueError("Choose a new run directory")
-    cache = root / "rf_positive_cache_v1"
-    reference = json.loads((root / "rf_positive_v1/metrics.json").read_text())
-    prior = json.loads((root / "rf_validation_diagnostics_v1.json").read_text())
-    contents = (root / "rf_positive_v1/rf.pkl").read_bytes()
-    if sha256(contents).hexdigest() != prior["model_sha256"]:
-        raise ValueError("Baseline model hash mismatch")
-    baseline = pickle.loads(contents)
+def frozen_inputs(cache, reference):
     splits, transfers = {}, {}
-    from contextlib import ExitStack
     with ExitStack() as stack:
         readers = {}
         for split, sites in (("train", TRAIN), ("val", VAL)):
@@ -88,6 +78,21 @@ def run(root):
         for split, (source, parquet, selection) in readers.items():
             splits[split] = reconstruct(parquet, selection, cache)
             transfers[split] = BUDGET - source.budget
+    return splits, transfers
+
+
+def run(root):
+    output = root / "rf_normalized_v1"
+    if output.exists():
+        raise ValueError("Choose a new run directory")
+    cache = root / "rf_positive_cache_v1"
+    reference = json.loads((root / "rf_positive_v1/metrics.json").read_text())
+    prior = json.loads((root / "rf_validation_diagnostics_v1.json").read_text())
+    contents = (root / "rf_positive_v1/rf.pkl").read_bytes()
+    if sha256(contents).hexdigest() != prior["model_sha256"]:
+        raise ValueError("Baseline model hash mismatch")
+    baseline = pickle.loads(contents)
+    splits, transfers = frozen_inputs(cache, reference)
     x, y, counts = sample_training(splits["train"][1])
     if counts != reference["training_counts"]:
         raise ValueError("Training allocation differs from baseline")
