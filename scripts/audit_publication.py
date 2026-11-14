@@ -55,6 +55,10 @@ def main():
             continue
         allowed = name in ROOT_FILES or (path.parts[0] in ALLOWED_DIRS and
                    (path.suffix.lower() in TEXT_SUFFIXES or path.parts[0] == '.githooks'))
+        if path.parts[0] == 'frontend':
+            allowed = (name in {'frontend/.gitignore', 'frontend/index.html', 'frontend/package.json',
+                                'frontend/package-lock.json', 'frontend/tsconfig.json'}
+                       or (path.parts[1:2] == ('src',) and path.suffix in {'.ts', '.tsx', '.css'}))
         if not allowed: failures.append((name, 'outside reviewed source/docs publication scope'))
         if (path.suffix.lower() in BLOCKED_SUFFIXES or
             any(p in {'__pycache__', '.venv', 'secrets', 'credentials', 'raw', 'licensed_imagery', 'restricted'} for p in path.parts) or
