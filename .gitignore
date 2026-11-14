@@ -101,3 +101,4 @@ raw/
 
 # Empty legacy local installer placeholder
 /INSTALL_AUDIT.py
+/.private_planet_review/

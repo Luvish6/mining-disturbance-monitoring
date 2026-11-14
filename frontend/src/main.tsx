@@ -7,6 +7,7 @@ import '@fontsource/inter/600.css';
 import './style.css';
 import {Explorer} from './explorer';
 import {River} from './river';
+import {PlanetReview} from './planet';
 
 type Tile = {id: string; valid: number; total: number};
 type Data = {area: number; seasons: Record<string, Record<string, number>>; tiles: Tile[]; stations: number};
@@ -27,6 +28,7 @@ function App() {
   const [hash, setHash] = useState(location.hash);
   const explorer = hash.startsWith('#explorer');
   const rivers = hash.startsWith('#river');
+  const review = hash === '#review';
   useEffect(() => {
     const route = () => setHash(location.hash);
     addEventListener('hashchange', route);
@@ -52,20 +54,20 @@ function App() {
   const inventory = data?.seasons[season];
   return <div className="app">
     <header className="global"><div className="brand"><b>MEGHALAYA</b><small>Mining &amp; River Intelligence Portal</small></div>
-      {!explorer && !rivers && <><label className="control"><MapPin size={16}/><select aria-label="Study area" value={district} onChange={e => setDistrict(e.target.value)}>
+      {!explorer && !rivers && !review && <><label className="control"><MapPin size={16}/><select aria-label="Study area" value={district} onChange={e => setDistrict(e.target.value)}>
         <option value="All districts">Jaintia Hills, Meghalaya</option>{districts.map(name => <option key={name}>{name}</option>)}
       </select></label>
       <label className="control search"><Search size={17}/><input aria-label="Filter district or tile" placeholder="Find a district or tile" value={query} onChange={e => setQuery(e.target.value)}/></label></>}
       <span className="workspace">Research workspace</span><span className="source">{data ? 'Sources indexed' : 'Local receipts unavailable'}</span>
-      <a className="method" onClick={event=>{if(rivers){event.preventDefault();const details=document.querySelector<HTMLDetailsElement>("#river-methodology");if(details){details.open=true;details.scrollIntoView();details.querySelector("summary")?.focus();}}}} href={explorer?"#explorer-methodology":rivers?"#river-methodology":"#methodology"}><CircleHelp size={16}/> Methodology</a><span className="badge neutral">Research preview</span>
+      <a className="method" onClick={event=>{if(rivers||review){event.preventDefault();const details=document.querySelector<HTMLDetailsElement>(review?"#review-methodology":"#river-methodology");if(details){details.open=true;details.scrollIntoView();details.querySelector("summary")?.focus();}}}} href={explorer?"#explorer-methodology":rivers?"#river-methodology":review?"#review-methodology":"#methodology"}><CircleHelp size={16}/> Methodology</a><span className="badge neutral">Research preview</span>
     </header>
     <nav className={'rail'+(drawer ? ' expanded' : '')} aria-label="Workspace">
-      {nav.map(([name, Icon], index) => index < 3 ?
-        <a key={name} href={["#overview","#explorer","#rivers"][index]} aria-current={index===(rivers?2:explorer?1:0)?"page":undefined}><Icon size={20}/><span>{name}</span></a> :
-        <button key={name} disabled title={name+' is outside Stage C'}><Icon size={20}/><span>{name}</span></button>)}
+      {nav.map(([name, Icon], index) => index < 4 ?
+        <a key={name} href={["#overview","#explorer","#rivers","#review"][index]} aria-current={index===(review?3:rivers?2:explorer?1:0)?"page":undefined}><Icon size={20}/><span>{name}</span></a> :
+        <button key={name} disabled title={name+' is outside Stage D'}><Icon size={20}/><span>{name}</span></button>)}
       <button className="nav-menu" onClick={() => setDrawer(!drawer)} aria-label="Toggle navigation" aria-expanded={drawer}><Menu size={19}/></button>
     </nav>
-    <main id={explorer?"explorer":rivers?"rivers":"overview"}>{explorer ? <Explorer/> : rivers ? <River pilotView={hash==="#rivers-leshka"}/> : <>
+    <main id={explorer?"explorer":rivers?"rivers":review?"review":"overview"}>{explorer ? <Explorer/> : rivers ? <River pilotView={hash==="#rivers-leshka"}/> : review ? <PlanetReview/> : <>
       <div className="toolbar"><Grid2X2 size={18}/><b>Overview</b><span>/</span><span>Regional monitoring</span>
         <label className="season"><select aria-label="Inventory window" value={season} onChange={e => setSeason(e.target.value)}>
           <option value="2023-24">Nov 2023 — Mar 2024</option><option value="2024-25">Nov 2024 — Mar 2025</option>
