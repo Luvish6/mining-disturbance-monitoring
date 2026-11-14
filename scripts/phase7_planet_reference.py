@@ -127,8 +127,8 @@ def common_clear(scenes, bounds):
     _, before, first, _ = scenes[0]
     _, after, second, _ = scenes[1]
     row, col = np.nonzero(before)
-    x, y = first * (col + .5, row + .5)
-    u, v = (~second) * (x, y)
+    x, y = first @ (col + .5, row + .5)
+    u, v = (~second) @ (x, y)
     ix, iy = np.floor(u).astype(int), np.floor(v).astype(int)
     inside = ((x >= bounds[0]) & (x < bounds[2]) & (y >= bounds[1]) & (y < bounds[3])
               & (ix >= 0) & (ix < after.shape[1]) & (iy >= 0) & (iy < after.shape[0]))

@@ -4,6 +4,8 @@
 
 ## Demonstration
 
+The [Phase 8 local release guide](docs/reports/phase8-stage-e1.md) covers the React portal, private loopback review, Windows launch commands and live walkthrough.
+
 Use the [offline Streamlit dashboard](docs/reports/phase5a-dashboard.md) to inspect saved real Sentinel layers and river feasibility diagnostics. See the [current research progress](docs/research-progress.md) for validation status.
 
 ## Setup (Windows PowerShell)
@@ -122,4 +124,3 @@ This helper samples all six bands once at the explicit 30 m UTM grid and derives
 SAR-only coverage under cloud-limited conditions is a separate analysis from the common-footprint main comparison. Dry-season composites cannot demonstrate monsoon performance; add a separately defined cloud-season evaluation before making that claim. The conservative SCL 4/5/6 policy remains unchanged; reported optical fractions expose the resulting support rather than silently relaxing the mask.
 
 Coverage API references: [bounded district reductions](https://developers.google.com/earth-engine/apidocs/ee-image-reduceregions), [extended-footprint zero filling](https://developers.google.com/earth-engine/apidocs/ee-image-unmask), [masked point sampling](https://developers.google.com/earth-engine/apidocs/ee-image-sampleregions).
-
