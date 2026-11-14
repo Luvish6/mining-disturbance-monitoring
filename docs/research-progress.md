@@ -103,3 +103,7 @@ The [Day 1 results](reports/phase7-day1-real-change.md) quantify signed changes,
 ## Day 2 spatial multi-sensor change patterns
 
 The [Day 2 analysis](reports/phase7-day2-spatial-patterns.md) found that directional SAR–optical overlap declined on every tile as thresholds tightened. One of 329 eligible low-level joint components retained a connected high-threshold core under the stated persistence rule. These are exploratory patterns.
+
+## Day 3 reference decision
+
+The [focused evidence ledger](reports/phase7-day3-reference-decision.md) records zero admissible pairs and a NO-GO for supervised fitting. The deadline-cycle archive search is closed.
