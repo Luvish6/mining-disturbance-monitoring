@@ -11,6 +11,8 @@ from PIL import Image
 import streamlit as st
 
 PRODUCTS = {
+    "day1": ("phase7_real_change_analysis", "phase7_real_change.py"),
+    "day2": ("phase7_day2_spatial_patterns", "phase7_day2_spatial.py"),
     "satellite": ("phase3g_visualization", "phase3g_visualization.py"),
     "river": ("phase4a_river_feasibility", "phase4a_river.py"),
     "leshka": ("phase4b_leshka_spectral_pilot", "phase4b_leshka.py"),
@@ -81,6 +83,10 @@ def viewer_layers(path):
 def unavailable(product, filename):
     folder, script = PRODUCTS[product]
     st.warning(f"Local evidence unavailable or unreadable ({folder}/{filename}).")
+    if product in ("day1", "day2"):
+        st.caption("Restore the saved Phase 7 result or rebuild it offline from Phase 6B.")
+        st.code(f"python -B -m scripts.{Path(script).stem} --output outputs/{folder}")
+        return
     st.caption("Restore the existing output or regenerate it separately with Earth Engine. Use a new destination if the original folder already exists.")
     st.code(f"python -B scripts/{script} --output outputs/{folder}", language="powershell")
     if product == "leshka":
@@ -199,6 +205,76 @@ def satellite(root):
         st.dataframe([{"Layer": key, "Minimum": value[0], "Maximum": value[1]}
                       for key, value in receipt.get("count_ranges", {}).items()], hide_index=True)
     st.info("Change layers are exploratory. Atmosphere, shadows, terrain, moisture and seasonal vegetation can affect the signal.")
+
+
+def spatial_results(root):
+    st.subheader("Six-tile seasonal change")
+    st.info("Exploratory satellite change patterns. Mining activity is unverified.")
+    st.caption("Nov 2023–Mar 2024 versus Nov 2024–Mar 2025 · after minus before · 30 m grid")
+    fields = ("tile", "district", "split", "level", "comparison", "valid_cells",
+              "joint", "radar_only", "optical_only", "neither", "jaccard")
+    rows = read_product(root, "day2", "overlap.csv", table_file, fields)
+    if not rows:
+        return
+    district = st.selectbox("District", sorted({r["district"] for r in rows}), key="phase7_district")
+    tiles = sorted({r["tile"] for r in rows if r["district"] == district
+                    and re.fullmatch(r"(east|west)-[0-9]+-[0-9]+", r["tile"])})
+    if not tiles:
+        st.warning("No verified tile IDs in the selected district.")
+        return
+    tile = st.selectbox("Change tile", tiles, key="phase7_tile")
+    selected = [r for r in rows if r["tile"] == tile]
+    st.caption(f"Frozen partition · {selected[0]['split']}")
+    present_image(root, "day2", f"{tile}_patterns.png",
+                  "Saved signed VV, VH, NDVI and NDTI maps with directional overlap panels.", 1100)
+    st.caption("Radar decrease in VV or VH. Optical decrease in NDVI or increase in NDTI. "
+               "Low, middle and high cutoffs are 1/2/3 dB and 0.03/0.06/0.09 optical units.")
+    comparisons = sorted({r["comparison"] for r in selected})
+    comparison = st.selectbox("Overlap comparison", comparisons,
+                              index=comparisons.index("directional_unions") if "directional_unions" in comparisons else 0)
+    order = {"low": 1, "middle": 2, "high": 3}
+    data = sorted((r for r in selected if r["comparison"] == comparison),
+                  key=lambda row: order.get(row["level"], 4))
+    try:
+        graph = [{"Threshold": f"{order[r['level']]} · {r['level']}",
+                  "Jaccard": float(r["jaccard"]) if r["jaccard"] else None} for r in data]
+    except (KeyError, ValueError):
+        unavailable("day2", "overlap.csv")
+        return
+    if any(r["Jaccard"] is not None for r in graph):
+        st.bar_chart(graph, x="Threshold", y="Jaccard")
+    st.caption("Jaccard is intersection divided by union. These descriptive thresholds were used for sensitivity analysis.")
+    st.dataframe([{key: row[key] for key in fields[3:] if key not in ("block", "comparison")}
+                  for row in data], hide_index=True)
+    components = read_product(root, "day2", "pattern_sizes.csv", table_file,
+                              ("tile", "level", "pattern", "components", "largest_cells"))
+    if components:
+        st.dataframe([{k: r[k] for k in ("level", "components", "largest_cells")}
+                      for r in components if r["tile"] == tile and r["pattern"] == "joint"], hide_index=True)
+    for filename, title, columns in (
+        ("distributions.csv", "Signed change statistics",
+         ("band", "unit", "n", "median", "p05", "p95")),
+        ("support.csv", "Observation quality",
+         ("field", "footprint_n", "supported_n", "excluded_n", "count_min", "count_median", "count_max")),
+    ):
+        st.subheader(title)
+        records = read_product(root, "day1", filename, table_file, ("scope", "group", *columns))
+        if records:
+            st.dataframe([{key: r[key] for key in columns} for r in records
+                          if r["scope"] == "tile" and r["group"] == tile], hide_index=True)
+    st.caption("Support counts describe the local preprocessing masks. Land NDTI is a relative red–green index.")
+
+
+def satellite_explorer(root):
+    legacy, spatial = st.tabs(["Phase 3G demonstration tile", "Phase 7 six-tile results"])
+    with legacy:
+        satellite(root)
+    with spatial:
+        if (root / PRODUCTS["day2"][0]).exists():
+            spatial_results(root)
+        else:
+            st.caption("Phase 7 outputs are unavailable. Restore them or run the offline rebuild.")
+            st.code("python -B -m scripts.phase7_day2_spatial --output outputs/phase7_day2_spatial_patterns")
 
 
 def river(root):
@@ -350,7 +426,7 @@ def main():
         st.subheader("Research Prototype")
         page = st.radio("Research pages", PAGES, key="page")
     st.warning("**Research validation status**\n\n" + "\n".join(f"- {line}" for line in STATUS))
-    dict(zip(PAGES, (overview, satellite, river, leshka, provenance)))[page](root)
+    dict(zip(PAGES, (overview, satellite_explorer, river, leshka, provenance)))[page](root)
 
 
 if __name__ == "__main__":

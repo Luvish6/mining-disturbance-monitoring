@@ -107,3 +107,7 @@ The [Day 2 analysis](reports/phase7-day2-spatial-patterns.md) found that directi
 ## Day 3 reference decision
 
 The [focused evidence ledger](reports/phase7-day3-reference-decision.md) records zero admissible pairs and a NO-GO for supervised fitting. The deadline-cycle archive search is closed.
+
+## Day 4 dashboard and Planet preparation
+
+The [Day 4 report](reports/phase7-day4-dashboard-planet.md) documents the offline six-tile dashboard integration and the local PlanetScope comparison preflight. Real Planet comparison and independent reference admission remain pending.
