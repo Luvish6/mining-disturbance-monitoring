@@ -20,3 +20,8 @@ def test_saved_overlap_view(tmp_path, monkeypatch):
     assert not app.exception
     assert app.selectbox(key="phase7_tile").value == "west-82-563"
     assert any("Mining activity is unverified" in item.value for item in app.info)
+
+    app.selectbox(key="phase7_layer").select("Directional overlap").run()
+    app.selectbox(key="phase7_threshold").select("middle").run()
+    assert not app.exception
+    assert any("Middle-threshold results" in item.value for item in app.caption)

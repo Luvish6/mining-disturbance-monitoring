@@ -1,4 +1,4 @@
-"""Local Streamlit dashboard for existing Phase 3G and Phase 4 evidence."""
+"""Offline dashboard for saved satellite and river evidence."""
 import csv
 from datetime import datetime, timezone
 from io import BytesIO
@@ -30,8 +30,11 @@ THEME = """
 [data-testid="stSidebar"] label, [data-testid="stWidgetLabel"] label,
 [data-testid="stMetricLabel"], [data-testid="stExpander"] summary { color: #dce8f6; }
 [data-testid="stMetric"] { padding: 1rem; border: 1px solid #30455d; border-radius: .65rem; }
+.st-key-portal_header { background: #152235; border-top: 3px solid #63c7bb;
+    padding: .75rem 1.3rem .9rem; border-radius: .6rem; }
+.st-key-portal_header h1 { font-size: clamp(1.7rem, 3vw, 2.55rem); padding: .15rem 0; }
 .stApp a { color: #7cdacf; }
-.stApp [data-testid="stMainBlockContainer"] { max-width: 84rem; padding-top: 3.5rem; }
+.stApp [data-testid="stMainBlockContainer"] { max-width: 84rem; padding-top: 2.6rem; }
 [data-testid="stExpander"] details { border-color: #30455d; }
 </style>
 """
@@ -137,21 +140,29 @@ def overview(root):
     st.write("Explore real satellite observations over the Jaintia Hills and the feasibility of river spectral monitoring.")
     layers = read_product(root, "satellite", "index.html", viewer_layers)
     receipt = read_product(root, "river", "receipt.json", object_file)
-    for col, label, value in zip(st.columns(3), ("Study districts", "Satellite layers", "River stations"),
-                                 (2, len(layers) if layers else "Unavailable",
-                                  len(receipt["stations"]) if receipt and "stations" in receipt else "Unavailable")):
+    overlap_path = root / PRODUCTS["day2"][0] / "overlap.csv"
+    rows = read_product(root, "day2", "overlap.csv", table_file,
+                        ("tile", "level", "comparison", "valid_cells")) if overlap_path.is_file() else []
+    support = {r["tile"]: int(r["valid_cells"]) for r in rows or []
+               if r["level"] == "low" and r["comparison"] == "directional_unions"
+               and r["valid_cells"].isdigit()}
+    metrics = (("Study districts", 2), ("Phase 7 tiles", len(support) if support else "Unavailable"),
+               ("Common-valid cells", f"{sum(support.values()):,}" if support else "Unavailable"),
+               ("River stations", len(receipt["stations"]) if receipt and "stations" in receipt else "Unavailable"))
+    for col, (label, value) in zip(st.columns(4), metrics):
         col.metric(label, value)
-    st.caption("East and West Jaintia Hills · Meghalaya")
+    st.caption(f"East and West Jaintia Hills · {len(layers) if layers else 'Unavailable'} Phase 3G demonstration layers")
+    st.info("Common-valid cells meet the saved preprocessing masks within the sampled footprints.")
     st.subheader("Observation windows")
     st.write(f"Before · {SEASONS[0]}  |  After · {SEASONS[1]}")
     st.subheader("Explore the evidence")
-    for page, description in zip(PAGES[1:], (
+    for col, page, description in zip(st.columns(4), PAGES[1:], (
         "Sentinel-2 optical composites and vegetation indices alongside Sentinel-1 radar backscatter.",
         "Dated Sentinel-2 coverage and screened water support across the Lukha and Myntdu stations.",
         "Fixed-footprint support, exclusions and coarse station-cell rainfall.",
         "Collections, acquisition dates, preprocessing rules and local receipts.",
     )):
-        with st.container(border=True):
+        with col, st.container(border=True):
             st.markdown(f"**{page}**")
             st.write(description)
             st.button(f"Open {page}", key=f"open_{page}", on_click=select_page, args=(page,))
@@ -163,7 +174,7 @@ def select_page(page):
 
 
 def satellite(root):
-    st.header("Satellite Change Explorer")
+    st.subheader("Phase 3G demonstration tile")
     st.caption("REAL OBSERVATIONS · Phase 3G bounded Sentinel tile")
     st.write(f"Before · {SEASONS[0]}  |  After · {SEASONS[1]}")
     st.caption("The 960 m demonstration tile uses a 30 m display grid. Magnification enlarges the saved pixels.")
@@ -207,6 +218,25 @@ def satellite(root):
     st.info("Change layers are exploratory. Atmosphere, shadows, terrain, moisture and seasonal vegetation can affect the signal.")
 
 
+@st.cache_data(show_spinner=False)
+def focused_map(path, signature, layer, level):
+    """Render a saved panel without re-running any satellite or threshold analysis."""
+    # Day 2 sheets are 1800 × 1200 with a fixed 2 × 3 annotated layout.
+    panels = {"dVV": (0, 0), "dVH": (1, 0), "dNDVI": (2, 0), "dNDTI": (0, 1),
+              "Directional overlap low": (1, 1), "Directional overlap high": (2, 1)}
+    if layer == "Directional overlap":
+        layer = f"{layer} {level}"
+    with Image.open(path) as saved:
+        if saved.size != (1800, 1200):
+            raise ValueError("Unexpected Day 2 panel dimensions")
+        col, row = panels[layer]
+        panel = saved.crop((600 * col, 96 if row == 0 else 651,
+                            600 * (col + 1), 560 if row == 0 else 1090))
+        buffer = BytesIO()
+        panel.save(buffer, "PNG")
+    return buffer.getvalue()
+
+
 def spatial_results(root):
     st.subheader("Six-tile seasonal change")
     st.info("Exploratory satellite change patterns. Mining activity is unverified.")
@@ -216,17 +246,36 @@ def spatial_results(root):
     rows = read_product(root, "day2", "overlap.csv", table_file, fields)
     if not rows:
         return
-    district = st.selectbox("District", sorted({r["district"] for r in rows}), key="phase7_district")
+    district_col, tile_col, layer_col, threshold_col = st.columns(4)
+    district = district_col.selectbox("District", sorted({r["district"] for r in rows}), key="phase7_district")
     tiles = sorted({r["tile"] for r in rows if r["district"] == district
                     and re.fullmatch(r"(east|west)-[0-9]+-[0-9]+", r["tile"])})
     if not tiles:
         st.warning("No verified tile IDs in the selected district.")
         return
-    tile = st.selectbox("Change tile", tiles, key="phase7_tile")
+    tile = tile_col.selectbox("Change tile", tiles, key="phase7_tile")
+    layer = layer_col.selectbox("Map layer", ("All layers", "dVV", "dVH", "dNDVI", "dNDTI", "Directional overlap"),
+                               key="phase7_layer")
+    level = threshold_col.selectbox("Threshold", ("low", "middle", "high"),
+                                    format_func=str.title, key="phase7_threshold")
     selected = [r for r in rows if r["tile"] == tile]
     st.caption(f"Frozen partition · {selected[0]['split']}")
-    present_image(root, "day2", f"{tile}_patterns.png",
-                  "Saved signed VV, VH, NDVI and NDTI maps with directional overlap panels.", 1100)
+    filename = f"{tile}_patterns.png"
+    with st.container(border=True):
+        if layer == "All layers" or (layer == "Directional overlap" and level == "middle"):
+            present_image(root, "day2", filename, "Saved Day 2 map sheet · EPSG:32646 · north up", 1100)
+            if layer == "Directional overlap":
+                st.caption("The saved map sheet contains low and high overlays. Middle-threshold results are shown below.")
+        else:
+            path = root / PRODUCTS["day2"][0] / filename
+            try:
+                stat = path.stat()
+                st.image(focused_map(path, (stat.st_mtime_ns, stat.st_size), layer, level),
+                         caption=f"{tile} · EPSG:32646 · north up", width=690)
+                if layer == "Directional overlap":
+                    st.caption("Grey · neither | Blue · radar only | Amber · optical only | Purple · both")
+            except (OSError, ValueError):
+                unavailable("day2", filename)
     st.caption("Radar decrease in VV or VH. Optical decrease in NDVI or increase in NDTI. "
                "Low, middle and high cutoffs are 1/2/3 dB and 0.03/0.06/0.09 optical units.")
     comparisons = sorted({r["comparison"] for r in selected})
@@ -242,7 +291,18 @@ def spatial_results(root):
         unavailable("day2", "overlap.csv")
         return
     if any(r["Jaccard"] is not None for r in graph):
-        st.bar_chart(graph, x="Threshold", y="Jaccard")
+        import altair as alt
+        chart = alt.Chart(alt.Data(values=graph)).mark_bar(color="#59bdb2").encode(
+            x=alt.X("Threshold:N", title="Descriptive cutoff"),
+            y=alt.Y("Jaccard:Q", title="Intersection / union", scale=alt.Scale(domain=[0, 1])),
+            tooltip=[alt.Tooltip("Threshold:N"), alt.Tooltip("Jaccard:Q", format=".3f")],
+        ).properties(height=210)
+        st.altair_chart(chart)
+    selected_row = next((r for r in data if r["level"] == level), None)
+    if selected_row:
+        for col, label, key in zip(st.columns(3), ("Joint cells", "Radar only", "Optical only"),
+                                   ("joint", "radar_only", "optical_only")):
+            col.metric(label, selected_row[key], help=f"{level.title()} cutoff")
     st.caption("Jaccard is intersection divided by union. These descriptive thresholds were used for sensitivity analysis.")
     st.dataframe([{key: row[key] for key in fields[3:] if key not in ("block", "comparison")}
                   for row in data], hide_index=True)
@@ -262,19 +322,25 @@ def spatial_results(root):
         if records:
             st.dataframe([{key: r[key] for key in columns} for r in records
                           if r["scope"] == "tile" and r["group"] == tile], hide_index=True)
+    with st.expander("How to read the satellite layers"):
+        st.write("Sentinel-1 synthetic aperture radar (SAR) measures microwave backscatter in VV and VH, "
+                 "reported in decibels. Sentinel-2 NDVI compares near-infrared and red reflectance. "
+                 "NDTI compares red and green reflectance. Both indices are unitless. "
+                 "Vegetation, moisture, terrain and atmosphere can influence the observed differences.")
     st.caption("Support counts describe the local preprocessing masks. Land NDTI is a relative red–green index.")
 
 
 def satellite_explorer(root):
-    legacy, spatial = st.tabs(["Phase 3G demonstration tile", "Phase 7 six-tile results"])
-    with legacy:
-        satellite(root)
+    st.header("Satellite Change Explorer")
+    spatial, legacy = st.tabs(["Phase 7 six-tile results", "Phase 3G demonstration tile"])
     with spatial:
         if (root / PRODUCTS["day2"][0]).exists():
             spatial_results(root)
         else:
             st.caption("Phase 7 outputs are unavailable. Restore them or run the offline rebuild.")
             st.code("python -B -m scripts.phase7_day2_spatial --output outputs/phase7_day2_spatial_patterns")
+    with legacy:
+        satellite(root)
 
 
 def river(root):
@@ -292,10 +358,9 @@ def river(root):
          **{heading: values.get(field) for field, heading in fields.items()}}
         for key, station in stations.items() for season, values in station.get("seasons", {}).items()
     ]
-    st.dataframe(summary, hide_index=True)
     key = st.selectbox("Monitoring station", list(stations),
                        format_func=lambda k: STATION_NAMES.get(k, k), key="station")
-    st.caption("Counts above use distinct UTC dates. The dated inspection below lists individual granules, including repeat dates.")
+    st.caption("The station summaries count distinct UTC dates. The dated inspection below lists individual granules, including repeat dates.")
     seasons = stations[key].get("seasons", {})
     if not seasons:
         st.warning("No seasonal diagnostics in this station receipt.")
@@ -309,7 +374,9 @@ def river(root):
         st.bar_chart([{"Screen": label, "Dates": selected_season[field]} for field, label in fields.items()],
                      x="Screen", y="Dates", horizontal=True, x_label="Distinct UTC dates")
     st.caption("A date without screened water support may reflect masking or limited spatial support. River flow remains unknown.")
-    with st.expander("Advanced Satellite Diagnostics", expanded=True):
+    with st.expander("All station and season summaries"):
+        st.dataframe(summary, hide_index=True)
+    with st.expander("Dated satellite observations"):
         river_granules(selected_season)
     if selected_season.get("water_dates", 0):
         present_image(root, "river", f"{key}/{season}_example.png",
@@ -348,16 +415,25 @@ def leshka(root):
                 (receipt.get("common_pixels"), receipt.get("analysis_rules", {}).get("minimum_common_pixels"),
                  len(receipt["matched_pairs"]) if "matched_pairs" in receipt else None)):
             col.metric(label, "Unavailable" if value is None else value)
-        st.dataframe([{"Footprint test": label, "Cells": receipt.get(key)}
-                      for key, label in (("strict_pixels", "Stricter NDWI"), ("wider_pixels", "Wider clearance"),
-                                         ("historical_pixels", "Historical water occurrence"))], hide_index=True)
-        if receipt.get("native_support"):
-            st.dataframe([{"Scene": scene, "Whole SCL cells (20 m)": v.get("SCL"),
-                           "Whole B11 cells (20 m)": v.get("B11")}
-                          for scene, v in receipt["native_support"].items()], hide_index=True)
-        if receipt.get("matched_pairs"):
-            st.dataframe([{"Before date": a, "After date": b} for a, b in receipt["matched_pairs"]], hide_index=True)
         present_image(root, "leshka", "fixed_water_support.png", "Yellow outlines the screened fixed footprint.", 580)
+        with st.expander("Footprint sensitivity and matched dates"):
+            leshka_support(receipt)
+    leshka_observations(root)
+
+
+def leshka_support(receipt):
+    st.dataframe([{"Footprint test": label, "Cells": receipt.get(key)}
+                  for key, label in (("strict_pixels", "Stricter NDWI"), ("wider_pixels", "Wider clearance"),
+                                     ("historical_pixels", "Historical water occurrence"))], hide_index=True)
+    if receipt.get("native_support"):
+        st.dataframe([{"Scene": scene, "Whole SCL cells (20 m)": v.get("SCL"),
+                       "Whole B11 cells (20 m)": v.get("B11")}
+                      for scene, v in receipt["native_support"].items()], hide_index=True)
+    if receipt.get("matched_pairs"):
+        st.dataframe([{"Before date": a, "After date": b} for a, b in receipt["matched_pairs"]], hide_index=True)
+
+
+def leshka_observations(root):
     rows = read_product(root, "leshka", "observations.csv", table_file,
                         ("acquired_utc", "status", "core_10m", "rain_1d_mm", "rain_3d_mm", "rain_7d_mm"))
     if rows:
@@ -389,7 +465,7 @@ def provenance(root):
         "**Unavailable results** have no displayed substitute.")
     for product, title in (("satellite", "Phase 3G satellite"), ("river", "Phase 4A river"),
                            ("leshka", "Phase 4B Leshka")):
-        with st.expander(title, expanded=product == "satellite"):
+        with st.expander(title):
             st.code(f"outputs/{PRODUCTS[product][0]}/receipt.json")
             receipt = read_product(root, product, "receipt.json", object_file)
             if not receipt:
@@ -420,12 +496,16 @@ def main():
     st.set_page_config(page_title="Mining & River Intelligence", layout="wide")
     st.markdown(THEME, unsafe_allow_html=True)
     root = Path(os.environ.get("RESEARCH_DASHBOARD_OUTPUTS", Path(__file__).resolve().parents[1] / "outputs"))
-    st.title("Mining & River Intelligence")
-    st.caption("Satellite-Based Environmental Monitoring — Meghalaya · Research Prototype")
+    with st.container(key="portal_header"):
+        st.caption("MEGHALAYA  /  ENVIRONMENTAL MONITORING")
+        st.title("Mining & River Intelligence")
+        st.caption("Satellite observation portal · B.Tech research prototype")
     with st.sidebar:
-        st.subheader("Research Prototype")
+        st.subheader("Monitoring portal")
+        st.caption("East & West Jaintia Hills")
         page = st.radio("Research pages", PAGES, key="page")
-    st.warning("**Research validation status**\n\n" + "\n".join(f"- {line}" for line in STATUS))
+    with st.expander("Research validation status", expanded=page == "Overview"):
+        st.warning(" ".join(STATUS))
     dict(zip(PAGES, (overview, satellite_explorer, river, leshka, provenance)))[page](root)
 
 

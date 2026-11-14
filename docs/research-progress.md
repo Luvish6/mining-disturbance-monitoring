@@ -111,3 +111,7 @@ The [focused evidence ledger](reports/phase7-day3-reference-decision.md) records
 ## Day 4 dashboard and Planet preparation
 
 The [Day 4 report](reports/phase7-day4-dashboard-planet.md) documents the offline six-tile dashboard integration and the local PlanetScope comparison preflight. Real Planet comparison and independent reference admission remain pending.
+
+## Day 5 dashboard polish
+
+The [Day 5 dashboard report](reports/phase7-day5-dashboard.md) documents the map-first offline explorer, page layouts and desktop verification.
