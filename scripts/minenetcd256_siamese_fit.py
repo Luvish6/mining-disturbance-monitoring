@@ -22,8 +22,8 @@ def verify_rows(records, selection, sites):
         raise ValueError("Frozen rows disagree")
 
 
-def score(y, p):
-    result = metrics(y, p, .5)
+def score(y, p, threshold=.5):
+    result = metrics(y, p, threshold)
     tn, fp = result["confusion_matrix"][0]
     result.update(fpr=fp / (tn + fp) if tn + fp else None,
                   average_precision=float(average_precision_score(y, p)) if np.any(y) else None)

@@ -51,7 +51,7 @@ def fingerprint(image):
     return sha256(image.tobytes()).hexdigest()
 
 
-def test_rows(parquet, roster, excluded):
+def test_rows(parquet, roster, excluded, target_sites=TARGET_SITES):
     """Select the first five rows of each of the first three new domains; use no masks."""
     selected = {}
     for group in range(parquet.num_row_groups):
@@ -59,12 +59,12 @@ def test_rows(parquet, roster, excluded):
         for index, site in enumerate(domains):
             if site not in roster:
                 raise ValueError("Shard contains an unofficial test site")
-            if site in excluded or (site not in selected and len(selected) == TARGET_SITES):
+            if site in excluded or (site not in selected and len(selected) == target_sites):
                 continue
             rows = selected.setdefault(site, [])
             if len(rows) < PATCHES:
                 rows.append((group, index))
-        if len(selected) == TARGET_SITES and all(len(rows) == PATCHES for rows in selected.values()):
+        if len(selected) == target_sites and all(len(rows) == PATCHES for rows in selected.values()):
             return selected
     raise ValueError("Insufficient unseen test domains in bounded shard")
 
@@ -114,14 +114,16 @@ def train(root, out, roster, resume=False):
                                     artifact_hashes={"rf":digest(rf_path), "siamese":digest(best)})
 
 
-def evaluate(out, roster, excluded, seen, best, forest):
+def evaluate(out, roster, excluded, seen, best, forest, thresholds=None, target_sites=TARGET_SITES, require_both=True):
+    thresholds = {"rf": .5, "siamese": .5} if thresholds is None else thresholds
     url = f"https://huggingface.co/datasets/{DATASET}/resolve/{REVISION}/data/{SHARDS['test']}"
-    model = SiameseUNet(channels=3,width=16).eval()
-    model.load_state_dict(torch.load(best, weights_only=True, map_location="cpu")["model"])
+    if "siamese" in thresholds:
+        model = SiameseUNet(channels=3,width=16).eval()
+        model.load_state_dict(torch.load(best, weights_only=True, map_location="cpu")["model"])
     targets, rf, unet, records = [], [], [], []
     with TestSource(url, BUDGET) as source:
         parquet = pq.ParquetFile(source)
-        selection = test_rows(parquet, roster, excluded)
+        selection = test_rows(parquet, roster, excluded, target_sites)
         selection_path = out/"test_selection.json"
         if selection_path.is_file() and json.loads(json.dumps(selection)) != read(selection_path):
             raise ValueError("Frozen test selection changed")
@@ -143,10 +145,12 @@ def evaluate(out, roster, excluded, seen, best, forest):
                     valid = np.isin(mask, [0,255])
                     y = mask[valid] == 255
                     targets.append(y)
-                    rf.append(forest.predict_proba((b.astype("int16")-a)[valid])[:,1])
-                    with torch.inference_mode():
-                        tensors = [torch.from_numpy(image.transpose(2,0,1)).float().div_(255)[None] for image in (a,b)]
-                        unet.append(model(*tensors).sigmoid()[0,0].numpy()[valid])
+                    if "rf" in thresholds:
+                        rf.append(forest.predict_proba((b.astype("int16")-a)[valid])[:,1])
+                    if "siamese" in thresholds:
+                        with torch.inference_mode():
+                            tensors = [torch.from_numpy(image.transpose(2,0,1)).float().div_(255)[None] for image in (a,b)]
+                            unet.append(model(*tensors).sigmoid()[0,0].numpy()[valid])
                     name = f"test-{group}-{index}.npz"
                     np.savez_compressed(out/name, before=a, after=b, mask=mask)
                     records.append(dict(site=site, row_group=group, row=index, file=name, sha256=digest(out/name),
@@ -155,15 +159,17 @@ def evaluate(out, roster, excluded, seen, best, forest):
                                                        for k in ("imageA","imageB","label")}))
         transferred = BUDGET - source.budget
     pooled = np.concatenate(targets)
-    if len(np.unique(pooled)) != 2:
+    if require_both and len(np.unique(pooled)) != 2:
         raise ValueError("Frozen test sample lacks both classes")
     results = {}
     for name, probabilities in (("rf",rf),("siamese",unet)):
-        results[name] = {"pooled":score(pooled,np.concatenate(probabilities))}
+        if name not in thresholds:
+            continue
+        results[name] = {"pooled":score(pooled,np.concatenate(probabilities),thresholds[name])}
         for site in selection:
             chosen = [i for i, rec in enumerate(records) if rec["site"] == site]
             results[name][site] = score(np.concatenate([targets[i] for i in chosen]),
-                                        np.concatenate([probabilities[i] for i in chosen]))
+                                        np.concatenate([probabilities[i] for i in chosen]),thresholds[name])
     return records, results, transferred
 
 
