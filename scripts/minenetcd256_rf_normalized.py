@@ -56,7 +56,7 @@ def diagnostics(y, score):
     return dict(**result, fpr=fp / (fp + tn), average_precision=float(average_precision_score(y, score)) if y.any() else None)
 
 
-def frozen_inputs(cache, reference):
+def frozen_inputs(cache, reference, reconstruct_split=reconstruct):
     splits, transfers = {}, {}
     with ExitStack() as stack:
         readers = {}
@@ -76,7 +76,7 @@ def frozen_inputs(cache, reference):
                 raise ValueError("Required source data exceeds existing transfer cap")
             readers[split] = source, parquet, selection
         for split, (source, parquet, selection) in readers.items():
-            splits[split] = reconstruct(parquet, selection, cache)
+            splits[split] = reconstruct_split(parquet, selection, cache)
             transfers[split] = BUDGET - source.budget
     return splits, transfers
 
