@@ -1,0 +1,32 @@
+# Research completion sprint
+
+Use the next five to ten days to assemble the paper evidence from frozen outputs. The land-screening and downstream spectral analyses are both core contributions. The RGB benchmark and Indian SSL ablation answer distinct questions.
+
+## Completion matrix
+
+| Workflow | Status | Evidence and publication boundary |
+| --- | --- | --- |
+| Sentinel-1/2 preprocessing and feature stacks | DONE | Phase 2 records orbit, optical join, seasons and observation support. Phase 6B supplies six aligned 30 m stacks with 14 features, diagnostic rasters, source IDs and hashes. Publish sampled support and preprocessing as descriptive evidence. These rasters alone do not establish supervised registration. [Acquisition](phase6b-multitile-acquisition.md) |
+| External U-Net and RF training/evaluation | DONE | Official mine-site splits, frozen thresholds and original binary-mask receipts. On identical 10-site validation windows U-Net F1/FPR were .101/4.04% and balanced RF .141/17.28%. Report initial and fresh test subsets separately. Site IDs do not establish geographic distance between crops. [Benchmark](final-model-experiment-consolidation.md) |
+| Indian Phase 15C screening | DONE | Three Gevra review candidates from 1,021 eligible cells and zero retained Bhubaneswari candidates from 1,024. Publish coverage, screening settings and exploratory polygons where rights permit. Both sites remain UNKNOWN. [Screening](phase15c-unsupervised-screening.md) |
+| Indian SSL ablation | DONE | Four development and four calibration blocks, then scene-disjoint replicas at two held-out sites. Ranking repeatability moved in opposite directions across sites, review area increased at both and the promotion rule failed. Phase 15C remains primary. [Ablation](indian-multisensor-ssl-pilot.md) |
+| Brahmani and Meghalaya river analysis | DONE | Brahmani used 16 matched pairs across five months and 93/75 fixed connected cells. The median downstream-minus-upstream NDTI moved from +.0644 to −.0162. Leshka's 12 cells were below 25, so its contrast stayed withheld. CHIRPS is coarse station-cell rainfall. [River results](downstream-river-consolidation.md) |
+| Mining-to-river linkage | EXTERNAL EVIDENCE BLOCKED | Historical outlet and mapped flow support a possible Bhubaneswari route through Bangaru Jhor. The active study-period outlet and confluence relative to the retained reach footprints remain unresolved. No measured degradation or mine attribution. |
+| Georeferenced alerts and provenance | DONE | Review-only records preserve geometry, dates, quality and inputs. Operational gates remain closed with zero operational alerts. [Alert contract](phase14b-alert-screen.md) |
+| Indian supervised change detection | EXTERNAL EVIDENCE BLOCKED | NO-GO pending independent two-window positives and controls, two reviewers, documented ≤30 m suitability, usage rights and sufficient spatially separate class support. Benchmark RGB results cannot validate Indian Sentinel inference. |
+| Paper evidence bundle | NEEDS FIX | Results and methods are spread across phase reports and private receipts. A single claim-to-cell evidence index and paper figures are pending. The existing representative RGB reproduction command can request Parquet ranges despite the saved validation patches, so the paper package should identify the cached primary evidence and any online fallback explicitly. |
+
+## Remaining tasks in priority order
+
+1. **Days 1–2.** Build an offline evidence index from `outputs/phase6b_multitile/verified_summary.json`, `outputs/external_minenetcd256/{heldout_v1,improve_holdout_v1,representative_val_v1}/metrics.json`, `outputs/phase15c_{gevra,bhubaneswari}/receipt.json`, `outputs/indian_ssl_pilot_v1/{manifest,metrics}.json` and `outputs/phase12d_brahmani/comparison.csv`. Write sanitized `docs/reports/paper-evidence-index.md` with per-table inputs, run revision, local receipt hashes, denominators, rounding and offline reproduction steps. Acceptance: a second reader can trace every headline number to a frozen field or row, including the initial and fresh RGB splits.
+2. **Days 2–5.** Prepare paper figures and tables privately under `outputs/paper_evidence/` using the evidence index, [model outline](final-model-experiment-consolidation.md) and [river consolidation](downstream-river-consolidation.md). Acceptance: figures and captions carry observation windows, units, sample sizes, exclusions and uncertainty. Separate RGB classification, Indian screening/SSL and river spectral results. Review publication rights before releasing any spatial asset.
+3. **In parallel, external.** Use `docs/reports/phase15e-indian-dataset-integration.md` and `docs/reference/REAL_REFERENCE_PROTOCOL.md` to request independently dated actual-work polygons or orthorectified imagery, quality masks, CRS, accuracy and rights for Gevra and separate controls in both windows. Acceptance: neutral two-reviewer decisions and class support across independent spatial blocks before reconsidering NO-GO.
+4. **In parallel, external.** Follow the outlet request in `docs/reports/downstream-river-consolidation.md`. Acceptance: dated georeferenced documentation establishes the active outlet, direction and confluence relative to SW3 and 2416 during both windows. Route confirmation alone supports an exposure hypothesis. Attribution would additionally need time-matched discharge and field water-quality evidence and a design addressing other sources.
+
+## Code freeze
+
+Freeze when the targeted feature/schema, split, screening, SSL, river, adapter and alert regressions and staged publication audit pass on the recorded commit. Record the exact commands alongside the evidence index. Acceptance also requires source/metric hashes for the frozen datasets, reconciled paper table denominators against receipts, no changes to historical outputs or dashboard behavior, and a final read confirming UNKNOWN candidates, Indian supervised NO-GO and zero operational alerts. External evidence gaps remain explicit in the paper and do not delay the descriptive/benchmark code freeze. Reopen code only for a reproduced defect that changes scientific results, provenance or publication safety.
+
+## Next Codex prompt
+
+> Build the offline paper evidence index in task 1 from the current frozen receipts. Verify headline cells and denominators, preserve run/scene provenance, and document offline replay versus any required online fallback. Run targeted checks and publish sanitized documentation only. Do not train models, fetch imagery or alter frozen outputs.
