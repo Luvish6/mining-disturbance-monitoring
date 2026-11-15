@@ -233,8 +233,8 @@ def validate_scene_rows(metadata):
             raise ValueError("S2/cloud scene join provenance mismatch")
 
 
-def validate_pixels(data, scene_limits):
-    if data.shape != (len(SCHEMA), SIZE, SIZE) or data.dtype != np.float32 or not np.isfinite(data).all():
+def validate_pixels(data, scene_limits, *, size=SIZE, cfg=CFG):
+    if data.shape != (len(SCHEMA), size, size) or data.dtype != np.float32 or not np.isfinite(data).all():
         raise ValueError("Unexpected pixel schema")
     features = data[:14]
     counts, seasonal, common = data[14:18], data[18:22], data[22]
@@ -242,7 +242,7 @@ def validate_pixels(data, scene_limits):
                   (counts <= np.array(scene_limits)[:, None, None])):
         raise ValueError("Observation counts outside scene provenance")
     for mask, count, channels in zip(seasonal, counts, ((0, 1), (4, 5), (2, 3), (6, 7))):
-        if not np.array_equal(mask, count >= CFG.min_observations) or not all(
+        if not np.array_equal(mask, count >= cfg.min_observations) or not all(
             np.array_equal(features[c] != NODATA, mask) for c in channels
         ):
             raise ValueError("Seasonal mask mismatch")
@@ -258,7 +258,7 @@ def validate_pixels(data, scene_limits):
         raise ValueError("Unexpected SRTM terrain support or slope units")
     if not np.array_equal(common, (features != NODATA).all(axis=0)):
         raise ValueError("Common footprint mismatch")
-    return dict(denominator=SIZE**2, valid_cells={name: int(mask.sum())
+    return dict(denominator=size**2, valid_cells={name: int(mask.sum())
                 for name, mask in zip(COVERAGE_BANDS, data[18:])},
                 count_ranges={name: [int(count.min()), int(count.max())]
                               for name, count in zip(COUNT_BANDS, counts)},
