@@ -30,7 +30,7 @@ def score(y, p):
     return result
 
 
-def run(root):
+def run(root, output=None):
     began = monotonic()
     deadline = began + SECONDS
     torch.manual_seed(42)
@@ -41,7 +41,7 @@ def run(root):
     datasets = {s: RGBPairs(cache, s) for s in ("train", "val")}
     for split, sites in (("train", TRAIN), ("val", VAL)):
         verify_rows(datasets[split].records, rf["selections"][split], sites)
-    output = root / "siamese_fit_v1"
+    output = output or root / "siamese_fit_v1"
     output.mkdir(exist_ok=True)
     identity = {"manifest": digest(cache / "manifest.json"), "seed": 42, "batch": 1,
                 "epochs": EPOCHS, "lr": .001, "width": 16, "precision": "float32", "pos_weight": 1.,
