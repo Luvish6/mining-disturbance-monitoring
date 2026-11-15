@@ -90,10 +90,13 @@ def observations(entries, base, rules):
                 raise ValueError("Expected bounded north-up metre grid")
             if region_crs.setdefault(region, crs) != crs:
                 raise ValueError("All observations in a region must share a CRS")
-            if not {"disturbance_probability", "common_valid"} <= set(src.descriptions):
+            tags = src.tags()
+            exploratory = tags.get("data_kind") == "exploratory"
+            score_band = "anomaly_score" if exploratory else "disturbance_probability"
+            if not {score_band, "common_valid"} <= set(src.descriptions):
                 raise ValueError("Missing probability or valid-data band")
             p, mask = src.read([src.descriptions.index(band)+1 for band in
-                                ("disturbance_probability", "common_valid")], masked=True)
+                                (score_band, "common_valid")], masked=True)
             mask_values = mask.compressed()
             if not np.isin(mask_values, [0, 1]).all():
                 raise ValueError("Invalid binary mask")
@@ -101,7 +104,6 @@ def observations(entries, base, rules):
             scores = p.astype(float).filled(np.nan)
             valid = claimed & np.isfinite(scores) & (scores >= 0) & (scores <= 1)
             coverage = float(valid.mean())
-            tags = src.tags()
             validated, receipts = validation(entry, base, tags, source_hash)
             evidence, feature_hash = {}, None
             if entry.get("features"):
@@ -114,12 +116,13 @@ def observations(entries, base, rules):
                     for band in INDICATORS:
                         evidence[band] = features.read(BANDS.index(band)+1, masked=True).astype(float).filled(np.nan)
             evidence_bound = feature_hash is not None and feature_hash == entry.get("features_sha256")
-            status = ("NOT_VALIDATED" if not validated else "REVIEW_REQUIRED"
+            status = ("REVIEW_REQUIRED" if exploratory else "NOT_VALIDATED" if not validated else "REVIEW_REQUIRED"
                       if coverage < rules.min_coverage or np.any(claimed & ~valid) or not evidence_bound
                       else "ALERT_ELIGIBLE")
             run = dict(region_id=region, before_date=before.isoformat(), after_date=after.isoformat(),
                        raster_sha256=source_hash, features_sha256=feature_hash, model_sha256=tags.get("model_sha256"),
                        data_kind=tags.get("data_kind", "unknown"), crs=crs.to_string(), transform=list(grid)[:6],
+                       score_type=score_band, evidence_status="UNKNOWN" if exploratory else "UNCONFIRMED",
                        grid_cells=int(valid.size), valid_cells=int(valid.sum()), coverage=coverage,
                        invalid_claimed_cells=int((claimed & ~valid).sum()), status=status, **receipts)
             runs.append(run)
@@ -210,7 +213,7 @@ def run(manifest, output):
     features = consolidate(candidates, region_crs, rules)
     collection = dict(type="FeatureCollection", features=features)
     report = dict(data=collection, sha256=digest(manifest), rules=asdict(rules), observations=receipts,
-                  interpretation="Screening priority and uncalibrated model scores. Human evidence status unconfirmed.")
+                  interpretation="Screening priority and uncalibrated scores. Exploratory anomaly scores are unitless, never operational.")
     with TemporaryDirectory(dir=output.parent) as stage:
         directory = Path(stage) / "alerts"
         directory.mkdir()
