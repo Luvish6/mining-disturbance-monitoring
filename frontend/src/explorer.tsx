@@ -24,27 +24,92 @@ type Candidate = {
   id: string; state: string; district: string; longitude: number; latitude: number;
   status: 'UNKNOWN'; common: number; changes: Record<string, number>; source: string;
 };
+type ReviewPolygon = {
+  id: string; rings: number[][][]; longitude: number; latitude: number;
+  area: number; score: number; status: 'REVIEW_REQUIRED'; evidence: 'UNKNOWN';
+};
+type Site = {
+  crs: string; bounds: number[]; shape: number[]; windows: string[][];
+  scenes: Record<string, Record<string, {id: string; acquired_utc: string}[]>>;
+  observation_counts: {eligible_cells: number; grid_cells: number; seasonal_count_ranges: Record<string, number[]>};
+  settings: {min_robust_z: number; minimum_area_m2: number};
+  candidates: ReviewPolygon[]; operational_alerts: number; uncertainty: string; source_sha256: string;
+};
+const siteModes = {optical:'Sentinel-2 false colour', VV:'Sentinel-1 VV', VH:'Sentinel-1 VH', anomaly:'Cross-sensor anomaly score'};
+const legends = {optical:'B8 / B4 / B3 · reflectance stretch 0–0.35', VV:'Greyscale · −25 to 0 dB',
+  VH:'Greyscale · −32 to −5 dB', anomaly:'Dark to light · 0 to 1 · unitless tile-relative score'};
+function SiteMap({site}: {site: string}) {
+  const {result, failed} = useSnapshot<Site>('india-sites/'+site);
+  const [mode, setMode] = useState<keyof typeof siteModes>('optical');
+  const [season, setSeason] = useState('before');
+  const [candidate, setCandidate] = useState('');
+  const [showPolygons, setShowPolygons] = useState(true);
+  if (!result) return <p role="status">{failed?'Local site imagery and screening results unavailable.':'Loading saved site observations…'}</p>;
+  const d = result.data;
+  const chosen = d.candidates.find(row=>row.id===candidate);
+  const [height,width] = d.shape;
+  const layer = mode==='anomaly' ? mode : mode+'_'+season;
+  return <>
+    <div className="explorer-map" role="region" aria-label="Georeferenced site imagery and review polygons">
+      <div className="explorer-map-head"><span>{site} · {siteModes[mode]}</span><span>{d.crs} · North ↑</span></div>
+      <svg width="70%" style={{maxHeight:'68%'}} viewBox={'0 0 '+width+' '+height} aria-label="Native 30 m raster and candidate outlines">
+        <image href={localSnapshot+'india-sites/'+site+'/'+layer+'.png'} width={width} height={height} style={{imageRendering:'pixelated'}}/>
+        {showPolygons && d.candidates.map(row=><path key={row.id} aria-label="Review candidate outline"
+          d={row.rings.map(ring=>'M'+ring.map(([x,y])=>x.toFixed(3)+','+y.toFixed(3)).join(' L')+' Z').join(' ')}
+          fill="none" stroke={row.id===candidate?'#fff':'#ffc16e'} strokeWidth={0.16}/>)}
+      </svg>
+      <div className="explorer-legend"><span>{legends[mode]}</span><span>Amber outlines · REVIEW_REQUIRED</span></div>
+      <div className="explorer-coords">Bounds (m) · {d.bounds.join(' / ')}</div>
+    </div>
+    <div className="explorer-periods"><div>
+      <label>Display layer <select value={mode} onChange={e=>setMode(e.target.value as keyof typeof siteModes)}>
+        {Object.entries(siteModes).map(([key,title])=><option key={key} value={key}>{title}</option>)}</select></label>
+      <label>Observation window <select value={season} disabled={mode==='anomaly'} onChange={e=>setSeason(e.target.value)}>
+        {d.windows.map(([start,end],i)=><option key={start} value={i===0?'before':'after'}>{start} → {end} (exclusive)</option>)}</select></label>
+      <label><input type="checkbox" checked={showPolygons} onChange={e=>setShowPolygons(e.target.checked)}/> Review outlines</label>
+    </div></div>
+    <div className="explorer-periods"><div>
+      <strong>{d.candidates.length} retained screening candidates · {d.operational_alerts} operational alerts</strong>
+      {d.candidates.length===0 && <p>No polygons met the screen in this window. Mining activity remains unknown.</p>}
+      {d.candidates.length>0 && <label>Review candidate <select value={candidate} onChange={e=>setCandidate(e.target.value)}>
+        <option value="">Choose a candidate</option>{d.candidates.map((r,i)=><option key={r.id} value={r.id}>Candidate {i+1}</option>)}</select></label>}
+      {chosen && <p>{chosen.status} · {chosen.evidence} · {chosen.longitude.toFixed(6)}° E, {chosen.latitude.toFixed(6)}° N · {chosen.area.toLocaleString()} m² · mean anomaly {chosen.score.toFixed(3)}</p>}
+      <p>{d.observation_counts.eligible_cells} / {d.observation_counts.grid_cells} eligible 30 m cells. Minimum departure {d.settings.min_robust_z} robust units in each sensor; connected area ≥ {d.settings.minimum_area_m2.toLocaleString()} m².</p>
+      <details id="explorer-methodology"><summary>Observation dates, source and uncertainty</summary>
+        <p>{d.uncertainty}. Dates below identify source scenes for seasonal composites.</p>
+        <p style={{overflowWrap:'anywhere'}}>Source TIFF SHA-256 {d.source_sha256}. Anomaly TIFF SHA-256 {result.sha256}.</p>
+        <ul>{Object.entries(d.observation_counts.seasonal_count_ranges).map(([key,counts])=><li key={key}>{key.replaceAll('_',' ')}: {counts.join('–')}</li>)}</ul>
+        {Object.entries(d.scenes).map(([when,sensors])=><details key={when}><summary>{when} scene inventory</summary>
+          <ul>{Object.values(sensors).flat().map(row=><li key={row.id} style={{overflowWrap:'anywhere'}}>{row.acquired_utc} · {row.id}</li>)}</ul>
+        </details>)}
+      </details>
+    </div></div>
+  </>;
+}
+
 function CandidateExplorer({toggle}: {toggle: () => void}) {
   const {result, failed} = useSnapshot<Candidate[]>('india-candidates');
   const [state, setState] = useState('');
   const [id, setId] = useState('');
   const candidates = result?.data ?? [];
   const activeState = state || candidates[0]?.state || '';
+  const [showSite, setShowSite] = useState(false);
   const selected = candidates.find(c=>c.state===activeState && c.id===id) ?? candidates.find(c=>c.state===activeState);
   return <>
     <div className="toolbar"><Layers size={18}/><b>Satellite Explorer</b><button onClick={toggle}>Meghalaya tiles</button><span className="badge neutral">Indian discovery leads</span></div>
     <div className="explorer">
       <aside className="explorer-analysis">
-        <label>State<select value={activeState} onChange={e=>setState(e.target.value)}>
+        <label>State<select value={activeState} onChange={e=>{setState(e.target.value);setShowSite(false);}}>
           {[...new Set(candidates.map(c=>c.state))].map(name=><option key={name}>{name}</option>)}
         </select></label>
-        <label>Candidate<select value={selected?.id ?? ''} onChange={e=>setId(e.target.value)}>
+        <label>Candidate<select value={selected?.id ?? ''} onChange={e=>{setId(e.target.value);setShowSite(false);}}>
           {candidates.filter(c=>c.state===activeState).map(c=><option key={c.id}>{c.id}</option>)}
         </select></label>
-        {result && <a href={localSnapshot+'india-candidates.csv'} download>Download candidate CSV</a>}
+        {selected && ['gevra','bhubaneswari'].includes(selected.id) && <button onClick={()=>setShowSite(!showSite)}>{showSite?'Show candidate locations':'Inspect saved site observations'}</button>}
+        {result && <p><a href={localSnapshot+'india-candidates.csv'} download>Download candidate CSV</a></p>}
       </aside>
       <section className="explorer-main">
-        <div className="explorer-map" role="region" aria-label="Candidate locations">
+        {showSite && selected ? <SiteMap key={selected.id} site={selected.id}/> : <div className="explorer-map" role="region" aria-label="Candidate locations">
           <div className="explorer-map-head"><span>Phase 11C candidate locations</span><span>WGS84 · North ↑</span></div>
           {selected ? <svg width="90%" viewBox="0 0 240 160" aria-label="Candidate points on longitude and latitude axes">
             <path d="M20 15V140H225" fill="none" stroke="currentColor"/>
@@ -58,10 +123,10 @@ function CandidateExplorer({toggle}: {toggle: () => void}) {
               onClick={()=>{setState(c.state);setId(c.id);}}
               onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setState(c.state);setId(c.id);}}}><title>{c.id}</title></circle>)}
           </svg> : <p role="status">{failed?'Candidate snapshot unavailable. Run python -B -m scripts.phase13_data.':'Loading candidate snapshot…'}</p>}
-        </div>
+        </div>}
       </section>
       <aside className="explorer-details">
-        <h2>Evidence status</h2><p>Indian model performance: <strong>NOT VALIDATED</strong></p>
+        <h2>Evidence status</h2><p>Indian supervised training: <strong>NO-GO</strong>. Model performance: <strong>NOT VALIDATED</strong>.</p>
         {selected && <><h3>{selected.id}</h3><p>{selected.state}{selected.district && ' · '+selected.district} · <strong>{selected.status}</strong></p>
           <p>{selected.latitude.toFixed(6)}° N · {selected.longitude.toFixed(6)}° E</p>
           <p>{selected.common.toLocaleString()} common-valid 30 m cells. Screening medians, after minus before.</p>
@@ -71,6 +136,7 @@ function CandidateExplorer({toggle}: {toggle: () => void}) {
             <p>Phase 11C candidate CSV SHA-256</p><code style={{overflowWrap:'anywhere'}}>{result?.sha256}</code>
           </details></>}
         <p className="notice">Exploratory screening. Independent reference admission pending.</p>
+        <p><a href="#rivers-brahmani">Open Brahmani river indicators</a></p>
       </aside>
     </div>
   </>;

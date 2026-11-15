@@ -67,7 +67,7 @@ function App() {
         <button key={name} disabled title={name+' is outside Stage D'}><Icon size={20}/><span>{name}</span></button>)}
       <button className="nav-menu" onClick={() => setDrawer(!drawer)} aria-label="Toggle navigation" aria-expanded={drawer}><Menu size={19}/></button>
     </nav>
-    <main id={explorer?"explorer":rivers?"rivers":review?"review":"overview"}>{explorer ? <Explorer/> : rivers ? <River pilotView={hash==="#rivers-leshka"}/> : review ? <PlanetReview/> : <>
+    <main id={explorer?"explorer":rivers?"rivers":review?"review":"overview"}>{explorer ? <Explorer/> : rivers ? <River key={hash} pilotView={hash==="#rivers-leshka"} brahmaniView={hash==="#rivers-brahmani"}/> : review ? <PlanetReview/> : <>
       <div className="toolbar"><Grid2X2 size={18}/><b>Overview</b><span>/</span><span>Regional monitoring</span>
         <label className="season"><select aria-label="Inventory window" value={season} onChange={e => setSeason(e.target.value)}>
           <option value="2023-24">Nov 2023 — Mar 2024</option><option value="2024-25">Nov 2024 — Mar 2025</option>

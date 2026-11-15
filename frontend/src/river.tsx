@@ -105,11 +105,11 @@ function Brahmani({season}: {season: Season}) {
   </>;
 }
 
-export function River({pilotView}: {pilotView: boolean}) {
+export function River({pilotView, brahmaniView}: {pilotView: boolean; brahmaniView?: boolean}) {
   const [data, setData] = useState<Data>();
   const [failed, setFailed] = useState(false);
   const [id, setId] = useState('Lukha-Khaddum-4315');
-  const [region, setRegion] = useState('meghalaya');
+  const [region, setRegion] = useState(brahmaniView?'brahmani':'meghalaya');
   const brahmani = !pilotView && region==='brahmani';
   const [season, setSeason] = useState<Season>('before');
   useEffect(()=>{
