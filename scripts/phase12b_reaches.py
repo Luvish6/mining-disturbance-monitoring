@@ -9,7 +9,7 @@ import numpy as np
 from pyproj import Transformer
 from rasterio import Affine
 from shapely import transform
-from shapely.geometry import mapping, shape
+from shapely.geometry import Point, mapping, shape
 
 from phase4a_river import (
     AFTER, BEFORE, BANDS, CRS, RIVERS, SIZE, STEP, Phase2Config,
@@ -45,15 +45,16 @@ def fixed_support(seasons):
     return pairs, largest_component(np.logical_and.reduce(masks)) if masks else None
 
 
-def screen_reach(geometry):
-    project = Transformer.from_crs(4326, CRS, always_xy=True)
+def screen_reach(geometry, crs=CRS, anchor=None):
+    project = Transformer.from_crs(4326, crs, always_xy=True)
     line = transform(shape(geometry), project.transform, interleaved=False)
-    point = line.interpolate(0.5, normalized=True)
+    point = (line.interpolate(0.5, normalized=True) if anchor is None
+             else line.interpolate(line.project(Point(*project.transform(*anchor)))))
     left = round(point.x/STEP)*STEP-SIZE*STEP/2
     top = round(point.y/STEP)*STEP+SIZE*STEP/2
     affine = Affine(STEP, 0, left, 0, -STEP, top)
     extent = [left, top-SIZE*STEP, left+SIZE*STEP, top]
-    region = ee.Geometry.Rectangle(extent, CRS, False)
+    region = ee.Geometry.Rectangle(extent, crs, False)
     corridor = geometry_mask([mapping(line.buffer(80).intersection(point.buffer(260)))],
                              out_shape=(SIZE, SIZE), transform=affine, invert=True)
     cfg = Phase2Config()
@@ -69,7 +70,7 @@ def screen_reach(geometry):
         dated, water_dates, valid_dates = {}, set(), set()
         inventory[name] = []
         if ids:
-            bands = fetch(joined.map(lambda img: scene_bands(img, cfg).clip(region)).toBands(), affine)
+            bands = fetch(joined.map(lambda img: scene_bands(img, cfg).clip(region)).toBands(), affine, crs)
             if len(bands) != len(ids)*len(BANDS):
                 raise ValueError("Scene band count mismatch")
             for index, (scene, millis) in enumerate(zip(ids, info["times"], strict=True)):
@@ -86,18 +87,27 @@ def screen_reach(geometry):
                 if eligible.any():
                     score = (metrics["core_10m"], scene)
                     if day not in dated or score > dated[day][:2]:
-                        dated[day] = (*score, eligible)
+                        dated[day] = (*score, eligible, data[2].copy(), data[1].copy())
         seasons.append(dated)
         counts.update({name+"_valid_dates": len(valid_dates), name+"_water_dates": len(water_dates),
                        name+"_interior_dates": len(dated)})
     pairs, mask = fixed_support(seasons)
     count = int(mask.sum()) if mask is not None else 0
     months = len({a.month for a, _ in pairs})
-    lon, lat = Transformer.from_crs(CRS, 4326, always_xy=True).transform(point.x, point.y)
+    spectra = []
+    if count >= 25 and months >= 2:
+        for before, after in pairs:
+            values = []
+            for season, day in zip(seasons, (before, after), strict=True):
+                red, green = (band[mask].astype(float) for band in season[day][3:])
+                values.append(float(np.median((red-green)/(red+green))))
+            spectra.append(dict(before=before.isoformat(), after=after.isoformat(),
+                                before_ndti=values[0], after_ndti=values[1]))
+    lon, lat = Transformer.from_crs(crs, 4326, always_xy=True).transform(point.x, point.y)
     return dict(longitude=lon, latitude=lat, corridor_cells=int(corridor.sum()), **counts,
                 matched_pairs=len(pairs), matched_months=months, common_cells=count,
                 spectral_support="PASSES" if count >= 25 and months >= 2 else "INSUFFICIENT DATA"), mask, affine, dict(
-                    extent=extent, scenes=inventory,
+                    extent=extent, scenes=inventory, spectra=spectra,
                     matched=[[a.isoformat(), b.isoformat()] for a,b in pairs])
 
 

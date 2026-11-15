@@ -44,21 +44,21 @@ NODATA = -9999
 BANDS = ("B2", "B3", "B4", "B8", "scl", "cloud", "existing_valid")
 
 
-def fetch(image, affine):
+def fetch(image, affine, crs=CRS):
     url = image.toInt16().unmask(NODATA, sameFootprint=False).getDownloadURL(
-        dict(format="GEO_TIFF", crs=CRS, crs_transform=list(affine)[:6], dimensions=[SIZE, SIZE]))
+        dict(format="GEO_TIFF", crs=crs, crs_transform=list(affine)[:6], dimensions=[SIZE, SIZE]))
     with requests.get(url, timeout=(15, 180)) as response:
         if response.status_code != 200:
             raise RuntimeError(f"Earth Engine download returned HTTP {response.status_code}")
         content = response.content
     with MemoryFile(content) as mem, mem.open() as src:
-        if (src.crs.to_string(), src.transform, src.shape) != (CRS, affine, (SIZE, SIZE)):
+        if (src.crs.to_string(), src.transform, src.shape) != (crs, affine, (SIZE, SIZE)):
             raise ValueError("Unexpected raster grid")
         return src.read()
 
 
-def save_raster(path, data, affine, names):
-    with rasterio.open(path, "w", driver="GTiff", crs=CRS, transform=affine,
+def save_raster(path, data, affine, names, crs=CRS):
+    with rasterio.open(path, "w", driver="GTiff", crs=crs, transform=affine,
                        width=SIZE, height=SIZE, count=len(data), dtype=data.dtype,
                        nodata=NODATA, compress="deflate") as dst:
         dst.write(data)
