@@ -1,0 +1,14 @@
+# Phase 15A — Indian training-data recovery
+
+**NO-GO.** Accepted Indian positive polygons: 0. Accepted Indian negative polygons: 0. No experiment manifest was created. The existing 14-band loader still requires independently reviewed polygons, dated window evidence, positional error ≤30 m, registered common-valid feature pixels, and geographic separation with both classes in train, validation and test. The Meghalaya boundaries, dates and splits were preserved.
+
+Downloaded the publisher README and two validation GeoPackages only (468,000 bytes combined) from [Zenodo record 17034288](https://zenodo.org/records/17034288). All publisher MD5 and length checks passed. Both layers declare EPSG:4326. The published [study](https://www.nature.com/articles/s41893-025-01668-9) specifies ODbL for the database and DbCL for individual contents. Source imagery access and reuse must be established separately. The annual prediction archives were excluded.
+
+| File | Released Indian evidence | Admission decision |
+| --- | --- | --- |
+| validation_polygons.gpkg | 18 India-coded hand-validated polygons out of 200. Publisher associates them with 2019 imagery. Attribute fields include country and ID, with no per-feature capture date. | Single-epoch mining footprints lack paired change or independently delineated unchanged polygons. |
+| validation_points.gpkg | 14 India-coded Maus reference points out of 200. Annual 2023→2024 labels: eight 0→0 and six 1→1. Annual 2016→2024 labels: eight 0→0, two 0→1, four 1→1. | Candidate locations only. Annual point labels do not establish dates, paired polygon geometry, positional error, or excavation attribution and do not establish the frozen seasonal comparison. |
+
+Reproduce counts with SQLite: group `hand_validated_mining_polygons` with `ISO3_CODE='IND'`, and group `validation_points_for_publish` with `iso_a3='IND'` by the two quoted year columns. Counts use publisher country codes. The [original preparation repository](https://github.com/p0017/Mapping-Mining-Areas) traces source polygons to [Maus v2](https://doi.pangaea.de/10.1594/PANGAEA.942325) and [Tang and Werner](https://doi.org/10.1038/s43247-023-00805-6). Those inventories supply historical footprint context, with no verified date-paired Indian change polygons for this experiment.
+
+**Next acquisition:** Send one targeted request to [CMPDI Geomatics](https://www.cmpdi.co.in/en/geomatics-1) and SECL for Gevra's actual-work maps covering both frozen windows. Request native dated WGS84 or documented-CRS vectors, underlying scene or survey IDs and dates, spatial error evidence, independently readable stable-control imagery or polygons, and written reviewer/use permissions. If only alternative dates are available, preserve the original study and qualify them under a separately frozen experiment. Follow Phase 14A review and block-support requirements before any fitting.
