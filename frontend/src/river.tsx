@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {MapPin, Route} from 'lucide-react';
 import './river.css';
+import {localSnapshot, useSnapshot} from './research-data';
 
 type Season = 'before' | 'after';
 type Row = Record<string, string | number>;
@@ -67,10 +68,49 @@ function Preview({file, label}: {file?: string; label: string}) {
     : <p>No saved preview is available for this selection.</p>;
 }
 
+function Brahmani({season}: {season: Season}) {
+  const {result, failed} = useSnapshot<{summary: Row; dates: Row[]}>('brahmani');
+  if (!result) return <section className="river-center" role="status"><p>{failed?'Brahmani snapshot unavailable. Run python -B -m scripts.phase13_data.':'Loading Brahmani snapshot…'}</p></section>;
+  const {summary, dates} = result.data;
+  const observations = dates.filter(row=>row.season===season);
+  const series = [['upstream_ndti','Upstream SW3'],['downstream_ndti','Downstream 2416'],['downstream_minus_upstream','Downstream − upstream']];
+  const value = (row: Row, key: string) => row[key] == null || row[key] === '' ? 'Unavailable' : Number(row[key]).toFixed(4);
+  return <>
+    <section className="river-center">
+      <h2>Brahmani matched-reach comparison</h2><p className="notice">{summary.status} · NDTI is a unitless red–green spectral indicator.</p>
+      <div className="river-metrics">
+        <div><strong>{summary.matched_pairs}</strong>Matched date pairs</div><div><strong>{summary.matched_months}</strong>Matched months</div>
+        <div><strong>{summary.upstream_cells} / {summary.downstream_cells}</strong>Connected 10 m cells, upstream / downstream</div>
+      </div>
+      {summary.status==='DESCRIPTIVE ONLY' && <>
+        <h3>Seasonal medians</h3>
+        <EvidenceTable rows={series.map(([key,label])=>({label,before:value(summary,'before_'+key+'_median'),after:value(summary,'after_'+key+'_median'),change:value(summary,key+'_seasonal_change')}))}
+          fields={ [['label','Series'],['before','Before'],['after','After'],['change','After − before']] }/>
+        <h3>Same-date reach differences</h3>
+        <ul className="river-bars" aria-label="Downstream minus upstream NDTI; bars show magnitude relative to the displayed season maximum">
+          {observations.map(row=><li key={row.date}><span>{row.date}</span><div aria-hidden="true"><i style={{width:100*Math.abs(Number(row.downstream_minus_upstream))/Math.max(.0001,...observations.map(item=>Math.abs(Number(item.downstream_minus_upstream))))+'%'}}/></div><strong>{value(row,'downstream_minus_upstream')}</strong></li>)}
+        </ul>
+        <details><summary>Matched observations and antecedent CHIRPS rainfall</summary><EvidenceTable rows={observations}
+          fields={[['date','UTC date'],...series,...['upstream','downstream'].flatMap(reach=>[1,3,7].map(days=>[reach+'_rain_'+days+'d_mm',reach+' '+days+'d (mm)']))]}/></details>
+      </>}
+    </section>
+    <aside className="river-assessment">
+      <h2>Reach assessment</h2>
+      <p>Identical UTC dates and fixed Phase 12C masks. The seasonal gate requires 25 connected cells at each reach and two matched months.</p>
+      <p>CHIRPS describes coarse station cells. Discharge: {summary.discharge}. Mine drainage connection: {summary.mine_connectivity}.</p>
+      <details><summary>Sources and uncertainty</summary><p>{summary.source_collections}</p><p>{summary.uncertainty}</p>
+        <p>Comparison CSV SHA-256</p><code style={{overflowWrap:'anywhere'}}>{result.sha256}</code></details>
+      <p><a href={localSnapshot+'brahmani.csv'} download>Download matched comparison CSV</a></p>
+    </aside>
+  </>;
+}
+
 export function River({pilotView}: {pilotView: boolean}) {
   const [data, setData] = useState<Data>();
   const [failed, setFailed] = useState(false);
   const [id, setId] = useState('Lukha-Khaddum-4315');
+  const [region, setRegion] = useState('meghalaya');
+  const brahmani = !pilotView && region==='brahmani';
   const [season, setSeason] = useState<Season>('before');
   useEffect(()=>{
     const controller = new AbortController();
@@ -93,10 +133,13 @@ export function River({pilotView}: {pilotView: boolean}) {
     <div className="toolbar"><Route size={18}/><b>{pilotView?'Leshka Feasibility':'River Intelligence'}</b><span>/</span><span>Regional monitoring</span><span className="badge neutral">Feasibility</span></div>
     <div className="river-workspace">
       <aside className="river-catalog">
-        <h1>River monitoring</h1><p>Sentinel-2 observation support in the Lukha and Myntdu study windows.</p>
+        <h1>River monitoring</h1><p>{brahmani?'Matched Sentinel-2 observations on the Brahmani in Odisha.':'Sentinel-2 observation support in the Lukha and Myntdu study windows.'}</p>
         <a href="#rivers" aria-current={!pilotView?'page':undefined}>Station monitoring</a>
         <a href="#rivers-leshka" aria-current={pilotView?'page':undefined}>Leshka Feasibility</a>
-        {data && !pilotView && <>
+        {!pilotView && <label>Region<select value={region} onChange={e=>setRegion(e.target.value)}>
+          <option value="meghalaya">Meghalaya</option><option value="brahmani">Odisha · Brahmani</option>
+        </select></label>}
+        {data && !pilotView && !brahmani && <>
           <h2>Monitoring stations</h2>
           {Object.keys(data.river.stations).map(key=><button key={key} aria-pressed={key===id} onClick={()=>setId(key)}>
             <strong>{name(key)}</strong><small>{key.split('-')[0]} · CPCB {key.split('-')[2]}</small>
@@ -108,7 +151,7 @@ export function River({pilotView}: {pilotView: boolean}) {
         {data && <small>{data.periods[season].join(' → ')} UTC · end exclusive</small>}
         <p className="notice">Satellite screening only. Water chemistry and mining-related impacts remain unverified.</p>
       </aside>
-      {!data ? <section className="river-center" role="status"><p>{failed?<>Local Phase 4 results unavailable. Run <code>python -B -m scripts.phase8_river_data</code> from the project root using the saved outputs.</>:'Loading saved Phase 4 results…'}</p></section> :
+      {brahmani ? <Brahmani season={season}/> : !data ? <section className="river-center" role="status"><p>{failed?<>Local Phase 4 results unavailable. Run <code>python -B -m scripts.phase8_river_data</code> from the project root using the saved outputs.</>:'Loading saved Phase 4 results…'}</p></section> :
         pilotView && pilot ? <section className="river-center">
           <h2>Fixed-footprint assessment</h2>
           <p className="notice">{pilot.reportable ? 'See the Phase 4B report for the admitted analysis.' : 'Seasonal spectral comparison withheld. The common support fell below the pilot minimum.'}</p>
@@ -139,7 +182,7 @@ export function River({pilotView}: {pilotView: boolean}) {
           <details><summary>Dated observations and quality flags</summary><EvidenceTable rows={record.scenes} fields={granules}/></details>
           <details><summary>Saved dated reach preview</summary><Preview key={id+season} file={record.preview} label="Phase 4A dated example · blue screened water · gold screened interior"/></details>
         </section> : <section className="river-center"><p>Station observations are unavailable.</p></section>}
-      {data && station && pilot && <aside className="river-assessment">
+      {!brahmani && data && station && pilot && <aside className="river-assessment">
         <h2>{pilotView?'Comparison assessment':'Reach assessment'}</h2>
         {pilotView ? <>
           <h3>Myntdu · Leshka</h3><p>The sampled waterbody may be a reservoir or backwater influenced by hydropower operations. Independent boundary, stage and release records were unavailable.</p>

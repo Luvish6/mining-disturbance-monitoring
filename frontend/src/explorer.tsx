@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {Crosshair, Layers, Minus, PanelLeft, Plus} from 'lucide-react';
 import './explorer.css';
+import {localSnapshot, useSnapshot} from './research-data';
 
 const bands = ['dVV', 'dVH', 'dNDVI', 'dNDTI'] as const;
 const levels = ['low', 'middle', 'high'] as const;
@@ -19,7 +20,64 @@ const overlapNames = ['Neither', 'SAR only', 'Optical only', 'Both'];
 const overlapFields = ['neither', 'radar_only', 'optical_only', 'joint'];
 const rgb = (color: number[]) => 'rgb('+color.join(',')+')';
 
+type Candidate = {
+  id: string; state: string; district: string; longitude: number; latitude: number;
+  status: 'UNKNOWN'; common: number; changes: Record<string, number>; source: string;
+};
+function CandidateExplorer({toggle}: {toggle: () => void}) {
+  const {result, failed} = useSnapshot<Candidate[]>('india-candidates');
+  const [state, setState] = useState('');
+  const [id, setId] = useState('');
+  const candidates = result?.data ?? [];
+  const activeState = state || candidates[0]?.state || '';
+  const selected = candidates.find(c=>c.state===activeState && c.id===id) ?? candidates.find(c=>c.state===activeState);
+  return <>
+    <div className="toolbar"><Layers size={18}/><b>Satellite Explorer</b><button onClick={toggle}>Meghalaya tiles</button><span className="badge neutral">Indian discovery leads</span></div>
+    <div className="explorer">
+      <aside className="explorer-analysis">
+        <label>State<select value={activeState} onChange={e=>setState(e.target.value)}>
+          {[...new Set(candidates.map(c=>c.state))].map(name=><option key={name}>{name}</option>)}
+        </select></label>
+        <label>Candidate<select value={selected?.id ?? ''} onChange={e=>setId(e.target.value)}>
+          {candidates.filter(c=>c.state===activeState).map(c=><option key={c.id}>{c.id}</option>)}
+        </select></label>
+        {result && <a href={localSnapshot+'india-candidates.csv'} download>Download candidate CSV</a>}
+      </aside>
+      <section className="explorer-main">
+        <div className="explorer-map" role="region" aria-label="Candidate locations">
+          <div className="explorer-map-head"><span>Phase 11C candidate locations</span><span>WGS84 · North ↑</span></div>
+          {selected ? <svg width="90%" viewBox="0 0 240 160" aria-label="Candidate points on longitude and latitude axes">
+            <path d="M20 15V140H225" fill="none" stroke="currentColor"/>
+            <text x="17" y="153" fill="currentColor" fontSize="9">80° E</text>
+            <text x="199" y="153" fill="currentColor" fontSize="9">95° E</text>
+            <text x="22" y="22" fill="currentColor" fontSize="9">28° N</text>
+            <text x="22" y="136" fill="currentColor" fontSize="9">18° N</text>
+            {candidates.map(c=><circle key={c.id} cx={20+(c.longitude-80)*205/15} cy={15+(28-c.latitude)*12.5}
+              fill={c.id===selected.id?'#ffc16e':'#72d7d7'} r={c.id===selected.id?4:2.5}
+              role="button" tabIndex={0} aria-label={c.id} aria-pressed={c.id===selected.id}
+              onClick={()=>{setState(c.state);setId(c.id);}}
+              onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setState(c.state);setId(c.id);}}}><title>{c.id}</title></circle>)}
+          </svg> : <p role="status">{failed?'Candidate snapshot unavailable. Run python -B -m scripts.phase13_data.':'Loading candidate snapshot…'}</p>}
+        </div>
+      </section>
+      <aside className="explorer-details">
+        <h2>Evidence status</h2><p>Indian model performance: <strong>NOT VALIDATED</strong></p>
+        {selected && <><h3>{selected.id}</h3><p>{selected.state}{selected.district && ' · '+selected.district} · <strong>{selected.status}</strong></p>
+          <p>{selected.latitude.toFixed(6)}° N · {selected.longitude.toFixed(6)}° E</p>
+          <p>{selected.common.toLocaleString()} common-valid 30 m cells. Screening medians, after minus before.</p>
+          <dl>{Object.entries(selected.changes).map(([band,value])=><div key={band}><dt>{band}</dt><dd>{value.toFixed(4)} {band==='dVV'||band==='dVH'?'dB':'unitless'}</dd></div>)}</dl>
+          <details><summary>Source and provenance</summary>
+            {selected.source.startsWith('https://') ? <p><a href={selected.source} target="_blank" rel="noreferrer">Site location document</a></p> : <p>Local source: {selected.source}</p>}
+            <p>Phase 11C candidate CSV SHA-256</p><code style={{overflowWrap:'anywhere'}}>{result?.sha256}</code>
+          </details></>}
+        <p className="notice">Exploratory screening. Independent reference admission pending.</p>
+      </aside>
+    </div>
+  </>;
+}
+
 export function Explorer() {
+  const [india, setIndia] = useState(false);
   const [data, setData] = useState<Data>();
   const [failed, setFailed] = useState(false);
   const [district, setDistrict] = useState('');
@@ -71,9 +129,10 @@ export function Explorer() {
       frame.data[offset+3] = 255;
     });
     ctx.putImageData(frame, 0, 0);
-  }, [tile, layer, limit, categories]);
+  }, [tile, layer, limit, categories, india]);
+  if (india) return <CandidateExplorer toggle={()=>setIndia(false)}/>;
   return <>
-    <div className="toolbar"><Layers size={18}/><b>Satellite Explorer</b><span>/</span><span>Regional monitoring</span><span className="badge neutral">Exploratory</span></div>
+    <div className="toolbar"><Layers size={18}/><b>Satellite Explorer</b><button onClick={()=>setIndia(true)}>Indian candidates</button><span>/</span><span>Regional monitoring</span><span className="badge neutral">Exploratory</span></div>
     <div className={'explorer'+(collapsed?' analysis-closed':'')}>
       <aside className="explorer-analysis">
         <button className="explorer-toggle" aria-expanded={!collapsed} aria-label="Toggle analysis" onClick={()=>setCollapsed(!collapsed)}><PanelLeft size={17}/>{!collapsed && 'Analysis'}</button>
