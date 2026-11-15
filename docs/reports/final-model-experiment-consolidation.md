@@ -2,7 +2,7 @@
 
 ## Contribution
 
-The project provides reproducible, provenance-linked Indian Sentinel-1/Sentinel-2 disturbance screening with observation support, a review-only workflow and a separate river spectral feasibility pilot. A site-disjoint RGB benchmark measures the performance and failure modes of two supervised model families. An Indian label-free ablation tests repeatability on scene-disjoint composites. These experiments address different questions and use different outcome measures.
+The project provides reproducible, provenance-linked Indian Sentinel-1/Sentinel-2 disturbance screening with observation support, a review-only workflow and a parallel downstream river degradation monitoring framework. A site-disjoint RGB benchmark measures the performance and failure modes of two supervised model families. An Indian label-free ablation tests repeatability on scene-disjoint composites. These experiments address different questions and use different outcome measures.
 
 ## Supervised RGB benchmark
 
@@ -46,6 +46,7 @@ Send only neutral search windows and admissible evidence to two independent revi
 ## Paper outline and claim boundaries
 
 1. **Introduction.** Explain the need for traceable screening and independent evidence admission. State that mine-specific legality, downstream causality and operational detection are unverified.
-2. **Data and methods.** Describe provenance and split rules, distinguish RGB benchmark training from Sentinel processing and describe the full-season baseline and replica ablation separately.
-3. **Results.** Report the RGB held-out and cross-site results, Indian retained candidates and SSL repeatability in distinct tables. Present Brahmani matched-date NDTI as an optional separate descriptive feasibility result, with rainfall context and unverified mine drainage.
-4. **Limitations and conclusion.** Discuss site and class concentration, missing crop georeferencing, lack of admitted Indian labels, and spectral and hydrological confounding. Conclude that the prototype produces review leads and uncertainty-aware observations. Validation of Indian accuracy, mining attribution, pollution measurements and deployment requires new evidence.
+2. **Data and methods.** Specify the land-disturbance screen and RGB benchmark splits as one core method and the matched-date downstream river design as the other. Explain the water-support gates, flow routing and rainfall context.
+3. **Land-disturbance results.** Report RGB benchmark performance, Indian review leads and SSL repeatability in separate tables.
+4. **Downstream river degradation monitoring results.** Present Brahmani matched-date NDTI and contrast the withheld Lukha/Myntdu results. Separate spectral observations, antecedent rainfall and candidate-to-reach linkage. See the [river consolidation](downstream-river-consolidation.md).
+5. **Limitations and conclusion.** Discuss site and class concentration, missing crop georeferencing, lack of admitted Indian labels, and spectral and hydrological confounding. Conclude that the prototype produces review leads and uncertainty-aware observations. Validation of Indian accuracy, mining attribution, pollution measurements and deployment requires new evidence.
