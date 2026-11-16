@@ -21,12 +21,12 @@ from config.settings import BEFORE, AFTER
 from src import optical_preprocessing as optical, sar_preprocessing as sar
 from src.change_features import build_stack
 from src.coverage_diagnostics import COUNT_BANDS, COVERAGE_BANDS, validity_image
+from scripts.satellite_previews import OPTICAL, RADAR, render
 from src.gee_setup import initialize
 from src.study_area import get_study_area, verify_boundary
 
 SIZE = 32
 NODATA = -9999
-OPTICAL = ("B8", "B4", "B3")
 SEASONS = (("before", BEFORE), ("after", AFTER))
 CENTER = (92.35, 25.35)
 
@@ -136,15 +136,13 @@ def save_layers(arrays, output):
 
     for label, season in SEASONS:
         period = f"{season.start} to {season.end} (end exclusive)"
-        rgb = np.stack([arrays[f"{band}_{label}"] for band in OPTICAL], axis=-1)
-        alpha = np.all(rgb != NODATA, axis=-1)
-        rgba = np.dstack((np.clip(rgb / .35, 0, 1), alpha))
-        save(f"optical_{label}", f"Sentinel-2 false colour · {label}", period, rgba,
-             "RGB = B8 / B4 / B3; shared surface reflectance stretch 0–0.35")
-    specs = {"VV": (-25, 0, "gray", "dB"), "VH": (-32, -5, "gray", "dB"),
-             "NDVI": (-.2, .9, "YlGn", "index"), "NDTI": (-.4, .4, "BrBG_r", "index")}
+        rgba = render(arrays, "optical", label, NODATA)
+        save(f"optical_{label}", f"Sentinel-2 false colour Â· {label}", period, rgba,
+             "RGB = B8 / B4 / B3; shared surface reflectance stretch 0â€“0.35")
+    specs = {band: (*stretch, "gray", "dB") for band, stretch in RADAR.items()}
+    specs.update(NDVI=(-.2, .9, "YlGn", "index"), NDTI=(-.4, .4, "BrBG_r", "index"))
     periods = {label: f"{s.start} to {s.end} (end exclusive)" for label, s in SEASONS}
-    periods["change"] = f"After minus before · {periods['after']} / {periods['before']}"
+    periods["change"] = f"After minus before Â· {periods['after']} / {periods['before']}"
     for key, values in arrays.items():
         band, _, label = key.partition("_")
         if band in OPTICAL:
@@ -162,10 +160,13 @@ def save_layers(arrays, output):
             lo, hi, cmap, unit = specs[band]
             period = label
         palette = matplotlib.colormaps[cmap]
-        rgba = palette(np.clip((values - lo) / (hi - lo), 0, 1))
-        rgba[..., 3] = values != NODATA
+        if band in RADAR:
+            rgba = render(arrays, band, label, NODATA)
+        else:
+            rgba = palette(np.clip((values - lo) / (hi - lo), 0, 1))
+            rgba[..., 3] = values != NODATA
         colors = [matplotlib.colors.to_hex(palette(v)) for v in (0., .5, 1.)]
-        save(key, key.replace("_", " "), periods[period], rgba, f"{lo:g} to {hi:g} · {unit}", colors)
+        save(key, key.replace("_", " "), periods[period], rgba, f"{lo:g} to {hi:g} Â· {unit}", colors)
     return layers
 
 

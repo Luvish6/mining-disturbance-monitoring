@@ -2,7 +2,6 @@
 from datetime import datetime, timezone
 import json
 from pathlib import Path
-import shutil
 
 import matplotlib
 import matplotlib.image
@@ -12,10 +11,8 @@ from pyproj import Transformer
 from shapely import transform
 from shapely.geometry import box, mapping, shape
 
+from scripts.satellite_previews import SITES, verify as verify_previews
 from src.phase3.data import digest
-
-SITES = ("gevra", "bhubaneswari")
-PREVIEWS = tuple(f"{band}_{season}" for band in ("optical", "VV", "VH") for season in ("before", "after"))
 
 
 def read(path):
@@ -49,8 +46,9 @@ def build_site(outputs, local, site):
     context = outputs/"phase15b_annotation"/site/"coordinator"/"provenance.json"
     feature_receipt = outputs/f"phase16a_{site}"/"receipt.json"
     inventory = base.parent/"inventory.json"
+    preview_folder = outputs/"phase18b_previews"/site
     required = (screen/"receipt.json", screen/"anomaly.tif", screen/"candidates/alerts.geojson",
-                base/"tile.tif", context, *(base/f"{band}.png" for band in PREVIEWS), feature_receipt, inventory)
+                base/"tile.tif", context, feature_receipt, inventory, preview_folder/"manifest.json")
     if not all(path.is_file() for path in required):
         return None
     report, provenance = read(required[0]), read(context)
@@ -82,6 +80,7 @@ def build_site(outputs, local, site):
                 instant = datetime.fromisoformat(scene["acquired_utc"])
                 if instant.tzinfo is None or not start <= instant.astimezone(timezone.utc).date().isoformat() < end:
                     raise ValueError("Scene acquisition falls outside its composite window")
+    preview_hash, previews = verify_previews(outputs, preview_folder, site)
     features = read(required[2])["features"]
     if len(features) != report["candidate_count"] or any(f["properties"]["region_id"] != site for f in features):
         raise ValueError("Candidate inventory disagrees")
@@ -99,12 +98,8 @@ def build_site(outputs, local, site):
         candidates = review_polygons(features, grid.bounds, grid.crs, grid.transform, scores_hash)
         assets = local/site
         assets.mkdir(parents=True, exist_ok=True)
-        for band in PREVIEWS:
-            preview = base/f"{band}.png"
-            frame = matplotlib.image.imread(preview)
-            if frame.shape[:2] != grid.shape:
-                raise ValueError("Preview dimensions disagree with the source grid")
-            shutil.copyfile(preview, assets/preview.name)
+        for filename, content in previews.items():
+            (assets/filename).write_bytes(content)
         rgba = matplotlib.colormaps["magma"](np.clip(score, 0, 1))
         rgba[..., 3] = valid
         matplotlib.image.imsave(assets/"anomaly.png", rgba)
@@ -112,15 +107,16 @@ def build_site(outputs, local, site):
                     windows=report["windows"], scenes=provenance["scenes"], observation_counts=report["coverage"],
                     settings=report["settings"], uncertainty=report["uncertainty"], processing=provenance["processing"],
                     candidates=candidates, anomaly_sha256=scores_hash, source_sha256=report["cache_sha256"],
-                    alert_geojson_sha256=digest(required[2]), status="EXPLORATORY", operational_alerts=0)
+                    preview_manifest_sha256=preview_hash, alert_geojson_sha256=digest(required[2]), status="EXPLORATORY", operational_alerts=0)
 
 
 def main():
     target = Path("frontend/public/local/india-sites")
     target.mkdir(parents=True, exist_ok=True)
     for site in SITES:
+        (target/f"{site}.json").unlink(missing_ok=True)
+    for site in SITES:
         path = target/f"{site}.json"
-        path.unlink(missing_ok=True)
         result = build_site(Path("outputs"), target, site)
         if result is None:
             print(f"{site}: saved site products unavailable")
