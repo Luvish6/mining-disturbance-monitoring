@@ -184,9 +184,9 @@ def verify(manifest):
         raise ValueError("Invalid, over-cap or altered acquisition manifest")
 
 
-def acquire(manifest, out):
+def acquire(manifest, out, *, source_factory=GuardedSource, resume=False):
     verify(manifest)
-    out.mkdir()
+    out.mkdir(exist_ok=resume)
     remaining = manifest["acquisition_bytes"]
     records, fingerprints = [], {}
     for split, shards in SOURCES.items():
@@ -195,7 +195,7 @@ def acquire(manifest, out):
             if not rows:
                 continue
             url = f"https://huggingface.co/datasets/{DATASET}/resolve/{REVISION}/data/{shard}"
-            with GuardedSource(url, remaining) as source:
+            with source_factory(url, remaining) as source:
                 metadata, start, footer_hash = footer(source)
                 receipt = manifest["sources"][shard]
                 if (source.size, footer_hash) != (receipt["size"], receipt["footer_sha256"]):
