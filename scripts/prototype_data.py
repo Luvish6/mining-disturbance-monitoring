@@ -47,21 +47,37 @@ def build_site(outputs, local, site):
     screen = outputs/f"phase15c_{site}"
     base = outputs/"phase11c_india_discovery"/site
     context = outputs/"phase15b_annotation"/site/"coordinator"/"provenance.json"
+    feature_receipt = outputs/f"phase16a_{site}"/"receipt.json"
+    inventory = base.parent/"inventory.json"
     required = (screen/"receipt.json", screen/"anomaly.tif", screen/"candidates/alerts.geojson",
-                base/"tile.tif", context, *(base/f"{band}.png" for band in PREVIEWS))
+                base/"tile.tif", context, *(base/f"{band}.png" for band in PREVIEWS), feature_receipt, inventory)
     if not all(path.is_file() for path in required):
         return None
     report, provenance = read(required[0]), read(context)
+    features_receipt = read(feature_receipt)
+    inventory_hash = digest(inventory)
+    if (digest(feature_receipt) != report["feature_receipt_sha256"]
+            or features_receipt["raster_sha256"] != report["features_sha256"]
+            or features_receipt["cache_sha256"] != report["cache_sha256"]
+            or features_receipt["source_receipt_sha256"] != inventory_hash
+            or provenance["inventory_sha256"] != inventory_hash
+            or features_receipt["windows"] != report["windows"]
+            or features_receipt["region_id"] != site
+            or features_receipt["processing"] != provenance["processing"]):
+        raise ValueError("Feature and scene provenance disagree")
     scores_hash = digest(required[1])
     if (scores_hash != report["anomaly_sha256"]
             or provenance["tile_sha256"] != report["cache_sha256"] or digest(base/"tile.tif") != report["cache_sha256"]
             or provenance["windows"] != report["windows"] or report["region_id"] != site):
         raise ValueError("Site input hashes or observation windows disagree")
-    for season, (start, end) in zip(("before", "after"), report["windows"], strict=True):
+    for season, (start, end), original in zip(
+            ("before", "after"), report["windows"], features_receipt["scene_sources"], strict=True):
         for sensor in ("s1", "s2"):
             scenes = provenance["scenes"][season][sensor]
-            if not scenes:
-                raise ValueError("Missing scene inventory")
+            expected = [dict(id=key, acquired_utc=datetime.fromtimestamp(ms / 1000, timezone.utc).isoformat())
+                        for key, ms in zip(original[f"{sensor}_ids"], original[f"{sensor}_time_start_ms"], strict=True)]
+            if not scenes or scenes != expected:
+                raise ValueError("Scene inventory differs from feature provenance")
             for scene in scenes:
                 instant = datetime.fromisoformat(scene["acquired_utc"])
                 if instant.tzinfo is None or not start <= instant.astimezone(timezone.utc).date().isoformat() < end:
@@ -103,10 +119,10 @@ def main():
     target = Path("frontend/public/local/india-sites")
     target.mkdir(parents=True, exist_ok=True)
     for site in SITES:
-        result = build_site(Path("outputs"), target, site)
         path = target/f"{site}.json"
+        path.unlink(missing_ok=True)
+        result = build_site(Path("outputs"), target, site)
         if result is None:
-            path.unlink(missing_ok=True)
             print(f"{site}: saved site products unavailable")
         else:
             path.write_text(json.dumps(dict(data=result, sha256=result["anomaly_sha256"]), allow_nan=False),

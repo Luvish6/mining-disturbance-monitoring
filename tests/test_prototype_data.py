@@ -29,3 +29,33 @@ def test_review_outline_uses_exact_pixel_coordinates_and_review_gate():
 
 def test_missing_site_has_no_zero_count_placeholder(tmp_path):
     assert build_site(tmp_path, tmp_path, "gevra") is None
+
+
+def test_portal_removes_previous_snapshot_on_provenance_error(tmp_path, monkeypatch):
+    from scripts import prototype_data
+
+    monkeypatch.chdir(tmp_path)
+    target = tmp_path / "frontend/public/local/india-sites"
+    target.mkdir(parents=True)
+    snapshot = target / "gevra.json"
+    snapshot.write_text("old")
+
+    def reject(*args):
+        raise ValueError("Scene inventory differs")
+
+    monkeypatch.setattr(prototype_data, "build_site", reject)
+    with pytest.raises(ValueError, match="Scene inventory"):
+        prototype_data.main()
+    assert not snapshot.exists()
+
+
+def test_meghalaya_snapshot_removed_when_source_missing(tmp_path, monkeypatch):
+    from scripts import phase8_river_data
+
+    monkeypatch.chdir(tmp_path)
+    snapshot = tmp_path / "frontend/public/local/river.json"
+    snapshot.parent.mkdir(parents=True)
+    snapshot.write_text("old")
+    with pytest.raises(FileNotFoundError):
+        phase8_river_data.main()
+    assert not snapshot.exists()

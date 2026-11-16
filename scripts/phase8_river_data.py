@@ -28,6 +28,7 @@ def main():
     river = Path("outputs/phase4a_river_feasibility")
     leshka = Path("outputs/phase4b_leshka_spectral_pilot")
     target = Path("frontend/public/local")
+    (target / "river.json").unlink(missing_ok=True)
     a = json.loads((river / "receipt.json").read_text())
     b = json.loads((leshka / "receipt.json").read_text())
     observations = load_csv(leshka / "observations.csv")
