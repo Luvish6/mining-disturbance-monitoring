@@ -1,0 +1,23 @@
+# Phase 20C — SmallMinesDS training gate
+
+**NO-GO.** A 2022-only footprint benchmark remains plausible. The release evidence does not certify geographic independence or the encoding of delivered 2022 VV/VH. No split, threshold or training run was frozen. TEST imagery and labels remained sealed. This decision preserves the Indian supervised NO-GO.
+
+## Publisher evidence
+
+The paper describes a 1,280 m fishnet over five southwestern Ghana districts and a 70:30 histogram-binned split based on mining fraction. The release calls its second split TEST. Neither the described split procedure nor the public split CSV schema establishes mine or district separation. The four geographic blocks described in the paper were used for annotation processing. The public code tree contains experiment scripts and figures. The reviewed release metadata provides patch names, split, foreground percentage and bin, with no patch-to-mine, district or footprint index. [Publisher paper](https://elib.dlr.de/221107/) · [Publisher code](https://github.com/DLR-MF-DAS/SmallMinesDS) · [Revision-pinned split metadata](https://huggingface.co/datasets/ellaampy/SmallMinesDS/tree/0cb168b807206d9d34c0d1bd3c81097e69bb889b/data_splits)
+
+The labels represent single-date artisanal and small-scale gold mining extent. The authors describe Sentinel-2 mean-shift segments, manual seed labeling, RF-assisted propagation using optical bands and DEM, and visual cross-checking and corrections using historical high-resolution Google basemaps. Their workflow diagram describes cross-checking by two annotators. Patch-level reference dates, adjudication records and positional error were not established. Because optical features helped generate the masks, any eventual sensor comparison would measure agreement with these benchmark annotations and could favor optical inputs. [Publisher paper, Section II-B](https://elib.dlr.de/221107/)
+
+## Sample checks and radar
+
+The [Phase 20A inspection](phase20a-smallminesds-feasibility.md) confirmed 10 m EPSG:32630 footprints and exact image/mask grid agreement for two TRAIN IDs in both years. The two footprints are disjoint, do not touch and are about 6,893 m apart edge to edge. This establishes geometry for those patches only. Distance alone cannot identify distinct mine complexes. The 2022 development roster has 1,491 TRAIN patches, with 980 reporting nonzero foreground and 511 reporting zero in the CSV. The two inspected TRAIN masks contain 5,920 foreground and 26,848 background pixels in total. Neither patch counts nor the two sampled masks establish support across independent groups.
+
+Section II-A describes terrain-corrected Planetary Computer Sentinel-1, speckle filtering and conversion with 10 log10 to dB. The 2016 TRAIN samples have negative radar values (about −21.42 to −2.71), consistent with dB. Both inspected 2022 TRAIN samples have positive fractions (about 0.0084 to 0.599), despite the paper's dB description. TIFF scales and offsets do not resolve this discrepancy. The samples suggest a different encoding but cannot prove linear power or consistency over the 2022 release. No conversion was applied. [Publisher paper, Section II-A](https://elib.dlr.de/221107/)
+
+## Conditions for a frozen geographic split
+
+Obtain an authoritative 2022 footprint index spanning publisher TRAIN and TEST, mine-complex IDs or boundaries, and an export statement confirming stored VV/VH units and their conversion. Use TEST footprint metadata only. Group intersecting or touching footprints and all patches linked to the same documented mine complex. Quarantine publisher TRAIN groups that share a complex with TEST or fall within a prespecified geographic buffer. Use the same separation between TRAIN and validation. A one-tile-width (1,280 m) edge buffer is a candidate minimum and must be increased if documented mine extents require it. Freeze group assignment by a stable seed-42 hash before checking grouped TRAIN/validation support. Require both classes across multiple certified development groups and enough independent TEST groups for meaningful coverage. Do not use TEST labels for these decisions.
+
+Only after these gates pass, freeze a 2022 RF and single-date U-Net comparison with optical-only, SAR-only and fused inputs on identical valid support, excluding DEM. Fit normalization on TRAIN, choose thresholds on validation, cap total CPU training at 30 minutes and evaluate the frozen configuration once on sealed TEST. This is a conditional design.
+
+Five focused assertions passed for sampled footprint area, overlap and adjacency, edge distance and TRAIN support arithmetic. No additional raster payload was requested.
