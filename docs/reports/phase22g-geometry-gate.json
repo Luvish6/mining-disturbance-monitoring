@@ -1,0 +1,68 @@
+{
+  "accepted_existing": {
+    "train": 24,
+    "validation": 15
+  },
+  "accepted_new": {
+    "train": 0,
+    "validation": 0
+  },
+  "blocked": [
+    {
+      "group_id": "ccbc1e5e594e4bd7",
+      "positive_reasons": [
+        "ADM1_FULL_FOOTPRINT_BUFFER"
+      ],
+      "split": "train",
+      "state": "Andhra Pradesh"
+    },
+    {
+      "group_id": "5d5b8a0dbfbd36fe",
+      "positive_reasons": [
+        "ADM1_FULL_FOOTPRINT_BUFFER"
+      ],
+      "split": "train",
+      "state": "Gujarat"
+    },
+    {
+      "group_id": "fea0a4894929f3d9",
+      "positive_reasons": [
+        "ADM1_FULL_FOOTPRINT_BUFFER"
+      ],
+      "split": "train",
+      "state": "West Bengal"
+    },
+    {
+      "group_id": "ec8fb774e2a0a3b8",
+      "positive_reasons": [
+        "ADM1_FULL_FOOTPRINT_BUFFER"
+      ],
+      "split": "validation",
+      "state": "Odisha"
+    }
+  ],
+  "blocked_groups": 4,
+  "cached_patches": 39,
+  "earth_engine_metadata_calls": 0,
+  "gate": "STOP_GEOMETRY",
+  "metadata_cap": 450,
+  "new_groups": 41,
+  "new_tiff_cap": 150,
+  "new_tiff_responses": 0,
+  "original_normalization_sha256": "254b9a1e362ff64203146806959f6db383fbfdf3a180f00781522a0f34bf3dbe",
+  "original_plan_sha256": "b3aecfd62e4e7d838430b4ca60f15c11e3b71ce7add8db0c2a4287e43f04b459",
+  "per_role": {
+    "train": {
+      "BLOCKED_POSITIVE": 3,
+      "GEOMETRY_CANDIDATES_ONLY": 31
+    },
+    "validation": {
+      "BLOCKED_POSITIVE": 1,
+      "GEOMETRY_CANDIDATES_ONLY": 6
+    }
+  },
+  "preregistered_proposal_sha256": "7aa19308fb2c9e85dd7a5f359ef7972a523eb6e32a87f81e273d0617ae318eda",
+  "receipt_sha256": "025118c6fc3263f67d72ecbeb063e3311284ee62360d492642fb6013cc3a9b51",
+  "split_sha256": "603bcaf9a2aa817dd42d7cdd7a09906c6f8bd80e3bba58da00f8cdf75baebb60",
+  "test_sealed": true
+}
