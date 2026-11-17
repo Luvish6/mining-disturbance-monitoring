@@ -67,6 +67,8 @@ def test_correct_source_and_deterministic_pngs(tiles):
     pixels = previews.rgba(verified["optical_before.png"])
     assert pixels[0, 0].tolist() == [18, 36, 54, 255]
     assert pixels[0, 1].tolist() == [0, 0, 0, 0]
+    previews.build(tiles, folder, site)
+    assert previews.verify(tiles, folder, site) == (digest, verified)
     second = tiles/"rerender"
     previews.build(tiles, second, site)
     assert previews.verify(tiles, second, site) == (digest, verified)

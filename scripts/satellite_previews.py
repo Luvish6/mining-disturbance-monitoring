@@ -114,7 +114,7 @@ def expected(outputs, site):
 
 def build(outputs, output, site):
     manifest, renders = expected(outputs, site)
-    output.mkdir(parents=True)
+    output.mkdir(parents=True, exist_ok=True)
     for filename, content in renders.items():
         (output / filename).write_bytes(content)
     (output / "manifest.json").write_text(json.dumps(manifest, sort_keys=True, indent=2) + "\n", encoding="utf-8")

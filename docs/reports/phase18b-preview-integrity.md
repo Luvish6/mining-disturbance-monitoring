@@ -22,3 +22,7 @@ npm --prefix frontend run build
 ```
 
 Keep the bundles under ignored `outputs/phase18b_previews/` and the populated production build local. Use the current Python environment for byte-identical PNG reproduction. Encoder differences can require regenerating both the bundle and snapshot from the same frozen raster. No preview-integrity blocker remains for the verified sites. Fifteen targeted tests passed, covering deterministic output, correct pixels, wrong-site and swapped-season files, pixel alterations, CRS/affine mismatch, missing inputs and stale snapshot handling. The React production build and publication audit passed.
+
+## Repeat regeneration
+
+Reverification found that the offline builder refused an existing bundle directory. It now supports rebuilding in place. A regression test verifies that repeating the build produces the same manifest and PNG bytes. All twelve built Explorer previews matched the verified bundles after the fix.
