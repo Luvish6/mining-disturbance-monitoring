@@ -1,0 +1,91 @@
+{
+  "counts": {
+    "train": 120,
+    "validation": 33
+  },
+  "full_target": {
+    "train": 126,
+    "validation": 36
+  },
+  "geometry_go": false,
+  "manifest_sha256": "00f87cbbe5f26a5166165582bacff8492f89f928d13750b5f991d01bbcc503ea",
+  "new_earth_engine_requests": 0,
+  "original_receipt_sha256": "025118c6fc3263f67d72ecbeb063e3311284ee62360d492642fb6013cc3a9b51",
+  "recovery": [
+    {
+      "group_id": "ccbc1e5e594e4bd7",
+      "old_reasons": [
+        "ADM1_FULL_FOOTPRINT_BUFFER"
+      ],
+      "relocation": {
+        "checked_windows": 0,
+        "exhausted": true,
+        "rejection_counts": {
+          "ADM1_CENTER_GUARD_NECESSARY": 1931
+        },
+        "total_centers": 1931
+      },
+      "split": "train",
+      "state": "Andhra Pradesh",
+      "status": "MISSING_POSITIVE"
+    },
+    {
+      "group_id": "5d5b8a0dbfbd36fe",
+      "old_reasons": [
+        "ADM1_FULL_FOOTPRINT_BUFFER"
+      ],
+      "relocation": {
+        "checked_windows": 1790,
+        "exhausted": false,
+        "positive_grid_cells": 6111,
+        "rejection_counts": {
+          "ADM1_CENTER_GUARD_NECESSARY": 13110,
+          "ADM1_FULL_FOOTPRINT_BUFFER": 1789
+        },
+        "total_centers": 23848
+      },
+      "split": "train",
+      "state": "Gujarat",
+      "status": "COMPLETE_GEOMETRY_TRIPLE"
+    },
+    {
+      "group_id": "fea0a4894929f3d9",
+      "old_reasons": [
+        "ADM1_FULL_FOOTPRINT_BUFFER"
+      ],
+      "relocation": {
+        "checked_windows": 0,
+        "exhausted": true,
+        "rejection_counts": {
+          "ADM1_CENTER_GUARD_NECESSARY": 1448
+        },
+        "total_centers": 1448
+      },
+      "split": "train",
+      "state": "West Bengal",
+      "status": "MISSING_POSITIVE"
+    },
+    {
+      "group_id": "ec8fb774e2a0a3b8",
+      "old_reasons": [
+        "ADM1_FULL_FOOTPRINT_BUFFER"
+      ],
+      "relocation": {
+        "checked_windows": 48,
+        "exhausted": true,
+        "rejection_counts": {
+          "ADM1_CENTER_GUARD_NECESSARY": 4599,
+          "ADM1_FULL_FOOTPRINT_BUFFER": 48
+        },
+        "total_centers": 4647
+      },
+      "split": "validation",
+      "state": "Odisha",
+      "status": "MISSING_POSITIVE"
+    }
+  ],
+  "required_slots_sha256": "f4184c760b08efb7ca2d074540f6965e0f5971fbcf832ebedce610d0890a95bb",
+  "split_sha256": "603bcaf9a2aa817dd42d7cdd7a09906c6f8bd80e3bba58da00f8cdf75baebb60",
+  "test_sealed": true,
+  "training_runs": 0
+}
