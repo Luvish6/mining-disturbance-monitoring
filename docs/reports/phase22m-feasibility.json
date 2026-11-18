@@ -1,0 +1,42 @@
+{
+  "status": "BLOCKED_BEFORE_PREREGISTRATION",
+  "sites": [
+    {
+      "id": "korpet-kml-v1",
+      "center_utm": [
+        406486.61520714307,
+        2789136.040706923
+      ],
+      "split": "test",
+      "bounds": [
+        405540,
+        2788170,
+        407460,
+        2790090
+      ],
+      "source_sha256": "6dc47a3ebecb0fd1e7185073da6a440a8af822308120ca8abf4553481ee3bfba"
+    },
+    {
+      "id": "sumon-pohduna-kml-v1",
+      "center_utm": [
+        406648.6823030093,
+        2789528.531587062
+      ],
+      "split": "test",
+      "bounds": [
+        405690,
+        2788560,
+        407610,
+        2790480
+      ],
+      "source_sha256": "903bc6cb07a5f7dfaf8a86544a5dbe622e30dbd76ebca836b3215c15c9654eff"
+    }
+  ],
+  "distance_m": 424.63494269145747,
+  "overlap_m2": 2708100.0,
+  "overlap_fraction": 0.734619140625,
+  "earth_engine_requests": 0,
+  "imagery_bytes": 0,
+  "crosscheck": "BLOCKED_INPUT_GRID_CONTRACT",
+  "test_imagery_access": false
+}
