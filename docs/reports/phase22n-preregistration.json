@@ -1,0 +1,145 @@
+{
+  "control_context": {
+    "esri_source_capture_reported": "2021-02-23",
+    "esri_wayback_versions": [
+      "2024-09-19",
+      "2026-05-28"
+    ],
+    "google_earth_selected_date": "2024-04-26",
+    "observations": "User reports green vegetation and extensive brown patches; no obvious large excavation in screenshots, full square unverified; contextual evidence only."
+  },
+  "date": "2026-11-18",
+  "eligible_aois": [
+    {
+      "anchor": [
+        92.7178365971532,
+        25.2919334050181
+      ],
+      "guard": {
+        "block": "94:559",
+        "bounds": [
+          470640.0,
+          2796330.0,
+          472560.0,
+          2798250.0
+        ],
+        "center_distance_to_test_buffer_boundary_m": 2183.6363636362366,
+        "center_inside_nearest_test_buffer": false,
+        "center_nearest_test_buffer": "94:558",
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 1210.0,
+        "split": "train",
+        "test_buffer_overlap_m2": 0,
+        "test_intersections": []
+      },
+      "id": "east-94-559-c74",
+      "source": "existing Phase22L TRAIN development lead"
+    }
+  ],
+  "planned_requests": 0,
+  "planned_response_bytes": 0,
+  "processing": "Reuse verified Phase22L cache only; no new acquisition; preserve exact seasonal graph and rule.",
+  "rejected_aois": [
+    {
+      "anchor": [
+        92.36492230074244,
+        25.16639280941408
+      ],
+      "guard": {
+        "block": null,
+        "bounds": [
+          435030.0,
+          2782560.0,
+          436950.0,
+          2784480.0
+        ],
+        "center_distance_to_test_buffer_boundary_m": 9255.64162469834,
+        "center_inside_nearest_test_buffer": false,
+        "center_nearest_test_buffer": "88:554",
+        "district_contained": true,
+        "eligible": false,
+        "rectangle_test_buffer_distance_m": 7996.155326155189,
+        "split": null,
+        "test_buffer_overlap_m2": 0,
+        "test_intersections": []
+      },
+      "id": "lumshnong-70ha-kml-v1",
+      "source": "existing Phase22M-R validation mining-context metadata"
+    },
+    {
+      "anchor": [
+        92.8486306,
+        25.3517647
+      ],
+      "guard": {
+        "block": null,
+        "bounds": [
+          483810.0,
+          2802960.0,
+          485730.0,
+          2804880.0
+        ],
+        "center_distance_to_test_buffer_boundary_m": 350.87791437393753,
+        "center_inside_nearest_test_buffer": true,
+        "center_nearest_test_buffer": "96:560",
+        "district_contained": false,
+        "eligible": false,
+        "rectangle_test_buffer_distance_m": 0.0,
+        "split": null,
+        "test_buffer_overlap_m2": 2515200.0,
+        "test_intersections": [
+          "96:560",
+          "97:561"
+        ]
+      },
+      "id": "proposed-forest-control",
+      "source": "user specified; proposed forest context, NOT verified mining-free"
+    }
+  ],
+  "request_cap": 60,
+  "response_body_byte_cap": 100000000,
+  "review": {
+    "control_status": "candidate in proposed control AOI, UNKNOWN pending review.",
+    "reviewer_fields": "blank",
+    "status": "candidate disturbance, UNKNOWN - not validated.",
+    "verdicts": [
+      "excavation",
+      "other",
+      "uncertain"
+    ]
+  },
+  "selection_rule": "Original cached TRAIN lead and source-backed Lumshnong development location, plus exact user control; no relocation or substitutions; full footprint must be inside verified districts and one frozen 120m buffered TRAIN/VAL core, and disjoint from all full TEST blocks expanded by 120m.",
+  "source_hashes": {
+    "docs/reports/phase22m-recovery-selection.json": "bfe84598b24d2bbcc3084807193aa2c358f9f78a03c2638a087b9fc62e069883",
+    "outputs/phase11b_reference_packages/east-94-559-c74.json": "c66f425fa6d9a3c823d57d018427075658660dc84db569f95a84a7d061b66c48",
+    "outputs\\phase22l_temporal_pilot\\receipt.json": "e0e706d182c2ee460934cbbe940dd787f1f6cddddb4bcb3fb62e37946f7b6875",
+    "outputs\\phase22l_temporal_pilot\\seasonal.tif": "65e3aa2a5d97c7494faf05941312e780b00579b4b15b255124820d6968de3cfa",
+    "outputs\\phase6b_multitile\\districts.json": "1f9844e9e07354f25d3934f4eb1d05f408514e29149a65655bd2c9d96486be56",
+    "outputs\\phase6b_multitile\\roster.json": "b459a32e27912ecae9140ce883daee49d4b8c71a3a8d4bf01d46ee0115f48dde",
+    "scripts/phase22l_temporal.py": "a3c0cad5049e8c9bc7a7e3dd70b318e5d2393b2313341324f3186ce54a004cb5",
+    "src/phase3/spatial.py": "f4eba78abecac3788f793c4053bafe3769466edf90e9fab9b59dc4828631376b"
+  },
+  "temporal_rule": {
+    "after": [
+      "2024-11-01",
+      "2025-04-01"
+    ],
+    "before": [
+      "2023-11-01",
+      "2024-04-01"
+    ],
+    "connectivity": 8,
+    "dBSI_gt": 0.1,
+    "dNDVI_lte": -0.3,
+    "grid_m": 30,
+    "minimum_observations": 2,
+    "ndvi_descriptive_lt": 0.2,
+    "shape": [
+      64,
+      64
+    ]
+  },
+  "unet": "DEFERRED: native 10m B3/B4/B8 contract cannot be satisfied by Phase22L 30m stack; no inference.",
+  "version": 1
+}
