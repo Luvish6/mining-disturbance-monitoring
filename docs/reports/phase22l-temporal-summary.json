@@ -1,0 +1,109 @@
+{
+  "after_valid_cells": 4096,
+  "area_m2": 8100,
+  "bands": [
+    "before_B4",
+    "before_B3",
+    "before_B2",
+    "before_NDVI",
+    "before_BSI",
+    "before_NDWI",
+    "before_count",
+    "after_B4",
+    "after_B3",
+    "after_B2",
+    "after_NDVI",
+    "after_BSI",
+    "after_NDWI",
+    "after_count",
+    "slope"
+  ],
+  "before_valid_cells": 4096,
+  "block": "94:559",
+  "bsi": "((B11+B4)-(B8+B2))/((B11+B4)+(B8+B2)); B11 native 20m sampled on 30m output",
+  "candidate_cells": 9,
+  "candidates": 6,
+  "collections": [
+    "COPERNICUS/S2_SR_HARMONIZED",
+    "COPERNICUS/S2_CLOUD_PROBABILITY",
+    "USGS/SRTMGL1_003"
+  ],
+  "counts": {
+    "after": [
+      23,
+      55
+    ],
+    "before": [
+      13,
+      38
+    ]
+  },
+  "denominator": 4096,
+  "eligible_cells": 4096,
+  "grid": {
+    "affine": [
+      30.0,
+      0.0,
+      470640.0,
+      0.0,
+      -30.0,
+      2798250.0
+    ],
+    "bounds": [
+      470640,
+      2796330,
+      472560,
+      2798250
+    ],
+    "crs": "EPSG:32646",
+    "size": 64
+  },
+  "quality": "SCL 4/5 land, cloud probability<40, scene cloud<=80; dark and water screen; residual terrain shadow unresolved",
+  "raster_sha256": "65e3aa2a5d97c7494faf05941312e780b00579b4b15b255124820d6968de3cfa",
+  "raw_sha256": "f4d42208719d4897c2fd03ee5e5b39c655771102b707aad06d9a7a4a2ef416c1",
+  "reference_status": "UNKNOWN",
+  "response_bytes": 199682,
+  "rule": {
+    "NDWI_lt": 0,
+    "dBSI_gt": 0.1,
+    "dNDVI_lte": -0.3,
+    "min_brightness": 0.04,
+    "min_observations": 2
+  },
+  "seasons": {
+    "after": [
+      "2024-11-01",
+      "2025-04-01"
+    ],
+    "before": [
+      "2023-11-01",
+      "2024-04-01"
+    ]
+  },
+  "slope_context_candidate_deg": [
+    7.202466011047363,
+    20.75459098815918
+  ],
+  "source_split": "train",
+  "status": "EXPLORATORY",
+  "source_counts": {
+    "after": {
+      "joined_assets": 59,
+      "unique_utc_capture_days": 29,
+      "scene_id_list_sha256": "040b0c1c2aefe243b27a40029fbdef57baeb452eb5557c29d829850fda84ebb5"
+    },
+    "before": {
+      "joined_assets": 52,
+      "unique_utc_capture_days": 28,
+      "scene_id_list_sha256": "4284511654352c10a0e90a3c4fc5507be251dd60f89101c7aa609d3c2a941d08"
+    }
+  },
+  "components_pixels": [
+    3,
+    1,
+    1,
+    2,
+    1,
+    1
+  ]
+}
