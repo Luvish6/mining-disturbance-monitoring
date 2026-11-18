@@ -265,7 +265,17 @@ def recover_results(action,paired,ids,changed,out):
                 row[arm]=r
         if len(row)>1:
             pairs.append(row)
+    partial = []
+    for seed in (42,43,44):
+        for arm in BANDS:
+            checkpoint = out / f"unet-{arm}-{seed}.pt"
+            receipt = out / f"unet-{arm}-{seed}.json"
+            if checkpoint.exists() and not receipt.exists():
+                partial.append(dict(seed=seed,arm=arm,status="PARTIAL_CHECKPOINT_WITHOUT_RECEIPT",
+                                    checkpoint_sha256=digest(checkpoint.read_bytes())))
     return dict(pairs=pairs,summary=aggregate_pairs(pairs),recovered_without_refit=True,
+        partial_artifacts=partial,cpu_accounting_verified=False,
+        cpu_accounting_limitation="Per-arm receipts omit interrupted and duplicate-fit CPU usage; remaining budget is unverified",
         sum_arm_cpu_seconds=sum(r[k].get("cpu_seconds",0) for r in pairs for k in BANDS if k in r))
 
 
@@ -278,6 +288,10 @@ def run(action):
     target=out/f"{model}-results.json"
     if target.exists():
         raise ValueError("Phase 22I result already exists")
+    if not recover:
+        pattern = "rf-*.joblib" if model == "rf" else "unet-*"
+        if any(out.glob(pattern)):
+            raise ValueError("Existing completed or partial fit artifacts; use recovery without refitting")
     if recover:
         data=recover_results(model,paired,ids,changed,out)
     elif model=="rf":

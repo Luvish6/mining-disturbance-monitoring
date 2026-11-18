@@ -1,0 +1,1533 @@
+{
+  "checkpoints": [
+    {
+      "checkpoint": "outputs/phase22h_maus/models/unet-42.pt",
+      "expanded_val": {
+        "per_group": {
+          "2796ae2ca88e": {
+            "background_only": {
+              "fp": 324,
+              "fpr": 0.0098876953125,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32444,
+                324
+              ],
+              [
+                4422,
+                480
+              ]
+            ],
+            "f1": 0.16824395373291273,
+            "fpr": 0.0098876953125,
+            "iou": 0.09184845005740529,
+            "precision": 0.5970149253731343,
+            "recall": 0.09791921664626684,
+            "support": 4902
+          },
+          "617c0407394a": {
+            "background_only": {
+              "fp": 11878,
+              "fpr": 0.36248779296875,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                20890,
+                11878
+              ],
+              [
+                0,
+                3025
+              ]
+            ],
+            "f1": 0.33746095493083444,
+            "fpr": 0.36248779296875,
+            "iou": 0.2029792659196135,
+            "precision": 0.2029792659196135,
+            "recall": 1.0,
+            "support": 3025
+          },
+          "6f1f04f0186a": {
+            "background_only": {
+              "fp": 10059,
+              "fpr": 0.306976318359375,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                22709,
+                10059
+              ],
+              [
+                0,
+                11921
+              ]
+            ],
+            "f1": 0.7032830889944249,
+            "fpr": 0.306976318359375,
+            "iou": 0.5423566878980892,
+            "precision": 0.5423566878980892,
+            "recall": 1.0,
+            "support": 11921
+          },
+          "80841a98d8fa": {
+            "background_only": {
+              "fp": 1130,
+              "fpr": 0.03448486328125,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                31638,
+                1130
+              ],
+              [
+                813,
+                15571
+              ]
+            ],
+            "f1": 0.9412724799758199,
+            "fpr": 0.03448486328125,
+            "iou": 0.8890601804270869,
+            "precision": 0.9323393808753967,
+            "recall": 0.95037841796875,
+            "support": 16384
+          },
+          "92f7ca7599a6": {
+            "background_only": {
+              "fp": 310,
+              "fpr": 0.00946044921875,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32458,
+                310
+              ],
+              [
+                10009,
+                4312
+              ]
+            ],
+            "f1": 0.45526051839729714,
+            "fpr": 0.00946044921875,
+            "iou": 0.29471669742327933,
+            "precision": 0.9329294677628732,
+            "recall": 0.3010962921583688,
+            "support": 14321
+          },
+          "b058a970af58": {
+            "background_only": {
+              "fp": 16937,
+              "fpr": 0.516876220703125,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                15831,
+                16937
+              ],
+              [
+                2711,
+                960
+              ]
+            ],
+            "f1": 0.08902077151335312,
+            "fpr": 0.516876220703125,
+            "iou": 0.046583850931677016,
+            "precision": 0.053640274906408894,
+            "recall": 0.26150912557886136,
+            "support": 3671
+          },
+          "b7849af3967f": {
+            "background_only": {
+              "fp": 424,
+              "fpr": 0.012939453125,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32344,
+                424
+              ],
+              [
+                374,
+                604
+              ]
+            ],
+            "f1": 0.6021934197407777,
+            "fpr": 0.012939453125,
+            "iou": 0.43081312410841655,
+            "precision": 0.5875486381322957,
+            "recall": 0.6175869120654397,
+            "support": 978
+          },
+          "bcbd9acd6243": {
+            "background_only": {
+              "fp": 1493,
+              "fpr": 0.045562744140625,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                31275,
+                1493
+              ],
+              [
+                0,
+                4790
+              ]
+            ],
+            "f1": 0.8651675246094103,
+            "fpr": 0.045562744140625,
+            "iou": 0.7623746617857712,
+            "precision": 0.7623746617857712,
+            "recall": 1.0,
+            "support": 4790
+          },
+          "ddc26d250831": {
+            "background_only": {
+              "fp": 840,
+              "fpr": 0.025634765625,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                31928,
+                840
+              ],
+              [
+                1302,
+                1253
+              ]
+            ],
+            "f1": 0.5391566265060241,
+            "fpr": 0.025634765625,
+            "iou": 0.36907216494845363,
+            "precision": 0.5986622073578596,
+            "recall": 0.4904109589041096,
+            "support": 2555
+          },
+          "e6559f64d504": {
+            "background_only": {
+              "fp": 2485,
+              "fpr": 0.075836181640625,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                30283,
+                2485
+              ],
+              [
+                5,
+                16379
+              ]
+            ],
+            "f1": 0.9293576940535633,
+            "fpr": 0.075836181640625,
+            "iou": 0.8680375218612539,
+            "precision": 0.8682675996607294,
+            "recall": 0.99969482421875,
+            "support": 16384
+          },
+          "f35c8ae0451a": {
+            "background_only": {
+              "fp": 3555,
+              "fpr": 0.10849992369906913,
+              "pixels": 32765
+            },
+            "confusion": [
+              [
+                29210,
+                3555
+              ],
+              [
+                8396,
+                2631
+              ]
+            ],
+            "f1": 0.30569918085168185,
+            "fpr": 0.10849992369906913,
+            "iou": 0.1804279248388424,
+            "precision": 0.42531522793404464,
+            "recall": 0.23859617302983585,
+            "support": 11027
+          }
+        },
+        "per_state": {
+          "Odisha": {
+            "background_only": {
+              "fp": 49435,
+              "fpr": 0.1371499119144391,
+              "pixels": 360445
+            },
+            "confusion": [
+              [
+                311010,
+                49435
+              ],
+              [
+                28032,
+                61926
+              ]
+            ],
+            "f1": 0.6152027379432642,
+            "fpr": 0.1371499119144391,
+            "groups": 11,
+            "iou": 0.44425473302102686,
+            "patches": 33,
+            "precision": 0.556083368504234,
+            "recall": 0.6883879143600347,
+            "support": 89958
+          }
+        },
+        "pooled": {
+          "background_only": {
+            "fp": 49435,
+            "fpr": 0.1371499119144391,
+            "pixels": 360445
+          },
+          "confusion": [
+            [
+              311010,
+              49435
+            ],
+            [
+              28032,
+              61926
+            ]
+          ],
+          "f1": 0.6152027379432642,
+          "fpr": 0.1371499119144391,
+          "iou": 0.44425473302102686,
+          "precision": 0.556083368504234,
+          "recall": 0.6883879143600347,
+          "support": 89958
+        },
+        "threshold": 0.2
+      },
+      "original_val": {
+        "per_group": {
+          "617c0407394a": {
+            "background_only": {
+              "fp": 11878,
+              "fpr": 0.36248779296875,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                20890,
+                11878
+              ],
+              [
+                0,
+                3025
+              ]
+            ],
+            "f1": 0.33746095493083444,
+            "fpr": 0.36248779296875,
+            "iou": 0.2029792659196135,
+            "precision": 0.2029792659196135,
+            "recall": 1.0,
+            "support": 3025
+          },
+          "6f1f04f0186a": {
+            "background_only": {
+              "fp": 10059,
+              "fpr": 0.306976318359375,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                22709,
+                10059
+              ],
+              [
+                0,
+                11921
+              ]
+            ],
+            "f1": 0.7032830889944249,
+            "fpr": 0.306976318359375,
+            "iou": 0.5423566878980892,
+            "precision": 0.5423566878980892,
+            "recall": 1.0,
+            "support": 11921
+          },
+          "b058a970af58": {
+            "background_only": {
+              "fp": 16937,
+              "fpr": 0.516876220703125,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                15831,
+                16937
+              ],
+              [
+                2711,
+                960
+              ]
+            ],
+            "f1": 0.08902077151335312,
+            "fpr": 0.516876220703125,
+            "iou": 0.046583850931677016,
+            "precision": 0.053640274906408894,
+            "recall": 0.26150912557886136,
+            "support": 3671
+          },
+          "ddc26d250831": {
+            "background_only": {
+              "fp": 840,
+              "fpr": 0.025634765625,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                31928,
+                840
+              ],
+              [
+                1302,
+                1253
+              ]
+            ],
+            "f1": 0.5391566265060241,
+            "fpr": 0.025634765625,
+            "iou": 0.36907216494845363,
+            "precision": 0.5986622073578596,
+            "recall": 0.4904109589041096,
+            "support": 2555
+          },
+          "f35c8ae0451a": {
+            "background_only": {
+              "fp": 3555,
+              "fpr": 0.10849992369906913,
+              "pixels": 32765
+            },
+            "confusion": [
+              [
+                29210,
+                3555
+              ],
+              [
+                8396,
+                2631
+              ]
+            ],
+            "f1": 0.30569918085168185,
+            "fpr": 0.10849992369906913,
+            "iou": 0.1804279248388424,
+            "precision": 0.42531522793404464,
+            "recall": 0.23859617302983585,
+            "support": 11027
+          }
+        },
+        "per_state": {
+          "Odisha": {
+            "background_only": {
+              "fp": 43269,
+              "fpr": 0.26409785335424846,
+              "pixels": 163837
+            },
+            "confusion": [
+              [
+                120568,
+                43269
+              ],
+              [
+                12409,
+                19790
+              ]
+            ],
+            "f1": 0.4155031598395935,
+            "fpr": 0.26409785335424846,
+            "groups": 5,
+            "iou": 0.2622303492871151,
+            "patches": 15,
+            "precision": 0.31383307695967266,
+            "recall": 0.6146153607254884,
+            "support": 32199
+          }
+        },
+        "pooled": {
+          "background_only": {
+            "fp": 43269,
+            "fpr": 0.26409785335424846,
+            "pixels": 163837
+          },
+          "confusion": [
+            [
+              120568,
+              43269
+            ],
+            [
+              12409,
+              19790
+            ]
+          ],
+          "f1": 0.4155031598395935,
+          "fpr": 0.26409785335424846,
+          "iou": 0.2622303492871151,
+          "precision": 0.31383307695967266,
+          "recall": 0.6146153607254884,
+          "support": 32199
+        },
+        "threshold": 0.2
+      },
+      "seed": 42,
+      "selected_epoch": 4,
+      "sha256": "27941c66a6fea1b2733f37549bff3865019bb38b9bbae8df5e2fdc5734edfe3b",
+      "threshold": 0.2
+    },
+    {
+      "checkpoint": "outputs/phase22h_maus/models/unet-43.pt",
+      "expanded_val": {
+        "per_group": {
+          "2796ae2ca88e": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                4902,
+                0
+              ]
+            ],
+            "f1": 0.0,
+            "fpr": 0.0,
+            "iou": 0.0,
+            "precision": null,
+            "recall": 0.0,
+            "support": 4902
+          },
+          "617c0407394a": {
+            "background_only": {
+              "fp": 1488,
+              "fpr": 0.04541015625,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                31280,
+                1488
+              ],
+              [
+                139,
+                2886
+              ]
+            ],
+            "f1": 0.7801054196513042,
+            "fpr": 0.04541015625,
+            "iou": 0.6394859295368934,
+            "precision": 0.6598079561042524,
+            "recall": 0.9540495867768595,
+            "support": 3025
+          },
+          "6f1f04f0186a": {
+            "background_only": {
+              "fp": 182,
+              "fpr": 0.00555419921875,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32586,
+                182
+              ],
+              [
+                0,
+                11921
+              ]
+            ],
+            "f1": 0.9924242424242424,
+            "fpr": 0.00555419921875,
+            "iou": 0.9849624060150376,
+            "precision": 0.9849624060150376,
+            "recall": 1.0,
+            "support": 11921
+          },
+          "80841a98d8fa": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                0,
+                16384
+              ]
+            ],
+            "f1": 1.0,
+            "fpr": 0.0,
+            "iou": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "support": 16384
+          },
+          "92f7ca7599a6": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                0,
+                14321
+              ]
+            ],
+            "f1": 1.0,
+            "fpr": 0.0,
+            "iou": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "support": 14321
+          },
+          "b058a970af58": {
+            "background_only": {
+              "fp": 16384,
+              "fpr": 0.5,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                16384,
+                16384
+              ],
+              [
+                3671,
+                0
+              ]
+            ],
+            "f1": 0.0,
+            "fpr": 0.5,
+            "iou": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 3671
+          },
+          "b7849af3967f": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                978,
+                0
+              ]
+            ],
+            "f1": 0.0,
+            "fpr": 0.0,
+            "iou": 0.0,
+            "precision": null,
+            "recall": 0.0,
+            "support": 978
+          },
+          "bcbd9acd6243": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                30,
+                4760
+              ]
+            ],
+            "f1": 0.9968586387434555,
+            "fpr": 0.0,
+            "iou": 0.9937369519832986,
+            "precision": 1.0,
+            "recall": 0.9937369519832986,
+            "support": 4790
+          },
+          "ddc26d250831": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                2549,
+                6
+              ]
+            ],
+            "f1": 0.004685669660288949,
+            "fpr": 0.0,
+            "iou": 0.0023483365949119373,
+            "precision": 1.0,
+            "recall": 0.0023483365949119373,
+            "support": 2555
+          },
+          "e6559f64d504": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                0,
+                16384
+              ]
+            ],
+            "f1": 1.0,
+            "fpr": 0.0,
+            "iou": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "support": 16384
+          },
+          "f35c8ae0451a": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32765
+            },
+            "confusion": [
+              [
+                32765,
+                0
+              ],
+              [
+                11027,
+                0
+              ]
+            ],
+            "f1": 0.0,
+            "fpr": 0.0,
+            "iou": 0.0,
+            "precision": null,
+            "recall": 0.0,
+            "support": 11027
+          }
+        },
+        "per_state": {
+          "Odisha": {
+            "background_only": {
+              "fp": 18054,
+              "fpr": 0.05008808556090388,
+              "pixels": 360445
+            },
+            "confusion": [
+              [
+                342391,
+                18054
+              ],
+              [
+                23296,
+                66662
+              ]
+            ],
+            "f1": 0.7632732976859751,
+            "fpr": 0.05008808556090388,
+            "groups": 11,
+            "iou": 0.6171721660556234,
+            "patches": 33,
+            "precision": 0.7868879550498135,
+            "recall": 0.741034705084595,
+            "support": 89958
+          }
+        },
+        "pooled": {
+          "background_only": {
+            "fp": 18054,
+            "fpr": 0.05008808556090388,
+            "pixels": 360445
+          },
+          "confusion": [
+            [
+              342391,
+              18054
+            ],
+            [
+              23296,
+              66662
+            ]
+          ],
+          "f1": 0.7632732976859751,
+          "fpr": 0.05008808556090388,
+          "iou": 0.6171721660556234,
+          "precision": 0.7868879550498135,
+          "recall": 0.741034705084595,
+          "support": 89958
+        },
+        "threshold": 0.4
+      },
+      "original_val": {
+        "per_group": {
+          "617c0407394a": {
+            "background_only": {
+              "fp": 1488,
+              "fpr": 0.04541015625,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                31280,
+                1488
+              ],
+              [
+                139,
+                2886
+              ]
+            ],
+            "f1": 0.7801054196513042,
+            "fpr": 0.04541015625,
+            "iou": 0.6394859295368934,
+            "precision": 0.6598079561042524,
+            "recall": 0.9540495867768595,
+            "support": 3025
+          },
+          "6f1f04f0186a": {
+            "background_only": {
+              "fp": 182,
+              "fpr": 0.00555419921875,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32586,
+                182
+              ],
+              [
+                0,
+                11921
+              ]
+            ],
+            "f1": 0.9924242424242424,
+            "fpr": 0.00555419921875,
+            "iou": 0.9849624060150376,
+            "precision": 0.9849624060150376,
+            "recall": 1.0,
+            "support": 11921
+          },
+          "b058a970af58": {
+            "background_only": {
+              "fp": 16384,
+              "fpr": 0.5,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                16384,
+                16384
+              ],
+              [
+                3671,
+                0
+              ]
+            ],
+            "f1": 0.0,
+            "fpr": 0.5,
+            "iou": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 3671
+          },
+          "ddc26d250831": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                2549,
+                6
+              ]
+            ],
+            "f1": 0.004685669660288949,
+            "fpr": 0.0,
+            "iou": 0.0023483365949119373,
+            "precision": 1.0,
+            "recall": 0.0023483365949119373,
+            "support": 2555
+          },
+          "f35c8ae0451a": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32765
+            },
+            "confusion": [
+              [
+                32765,
+                0
+              ],
+              [
+                11027,
+                0
+              ]
+            ],
+            "f1": 0.0,
+            "fpr": 0.0,
+            "iou": 0.0,
+            "precision": null,
+            "recall": 0.0,
+            "support": 11027
+          }
+        },
+        "per_state": {
+          "Odisha": {
+            "background_only": {
+              "fp": 18054,
+              "fpr": 0.11019488882242717,
+              "pixels": 163837
+            },
+            "confusion": [
+              [
+                145783,
+                18054
+              ],
+              [
+                17386,
+                14813
+              ]
+            ],
+            "f1": 0.45532228813819814,
+            "fpr": 0.11019488882242717,
+            "groups": 5,
+            "iou": 0.2947684715340378,
+            "patches": 15,
+            "precision": 0.4506952262147443,
+            "recall": 0.46004534302307526,
+            "support": 32199
+          }
+        },
+        "pooled": {
+          "background_only": {
+            "fp": 18054,
+            "fpr": 0.11019488882242717,
+            "pixels": 163837
+          },
+          "confusion": [
+            [
+              145783,
+              18054
+            ],
+            [
+              17386,
+              14813
+            ]
+          ],
+          "f1": 0.45532228813819814,
+          "fpr": 0.11019488882242717,
+          "iou": 0.2947684715340378,
+          "precision": 0.4506952262147443,
+          "recall": 0.46004534302307526,
+          "support": 32199
+        },
+        "threshold": 0.4
+      },
+      "seed": 43,
+      "selected_epoch": 9,
+      "sha256": "d90dc2be46c4701cebcf641a6fafff928f983a3d3ed8132c2eaa49d1aa956f90",
+      "threshold": 0.4
+    },
+    {
+      "checkpoint": "outputs/phase22h_maus/models/unet-44.pt",
+      "expanded_val": {
+        "per_group": {
+          "2796ae2ca88e": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                4805,
+                97
+              ]
+            ],
+            "f1": 0.038807761552310464,
+            "fpr": 0.0,
+            "iou": 0.019787841697266422,
+            "precision": 1.0,
+            "recall": 0.019787841697266422,
+            "support": 4902
+          },
+          "617c0407394a": {
+            "background_only": {
+              "fp": 5374,
+              "fpr": 0.16400146484375,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                27394,
+                5374
+              ],
+              [
+                10,
+                3015
+              ]
+            ],
+            "f1": 0.5282985806903803,
+            "fpr": 0.16400146484375,
+            "iou": 0.35897130610787,
+            "precision": 0.3593992132554536,
+            "recall": 0.996694214876033,
+            "support": 3025
+          },
+          "6f1f04f0186a": {
+            "background_only": {
+              "fp": 880,
+              "fpr": 0.02685546875,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                31888,
+                880
+              ],
+              [
+                0,
+                11921
+              ]
+            ],
+            "f1": 0.9644041744195453,
+            "fpr": 0.02685546875,
+            "iou": 0.9312553706741661,
+            "precision": 0.9312553706741661,
+            "recall": 1.0,
+            "support": 11921
+          },
+          "80841a98d8fa": {
+            "background_only": {
+              "fp": 62,
+              "fpr": 0.00189208984375,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32706,
+                62
+              ],
+              [
+                124,
+                16260
+              ]
+            ],
+            "f1": 0.9943129700972299,
+            "fpr": 0.00189208984375,
+            "iou": 0.9886902590295512,
+            "precision": 0.9962014459012376,
+            "recall": 0.992431640625,
+            "support": 16384
+          },
+          "92f7ca7599a6": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                91,
+                14230
+              ]
+            ],
+            "f1": 0.9968127210955834,
+            "fpr": 0.0,
+            "iou": 0.9936456951330215,
+            "precision": 1.0,
+            "recall": 0.9936456951330215,
+            "support": 14321
+          },
+          "b058a970af58": {
+            "background_only": {
+              "fp": 14539,
+              "fpr": 0.443695068359375,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                18229,
+                14539
+              ],
+              [
+                3303,
+                368
+              ]
+            ],
+            "f1": 0.03961675099580149,
+            "fpr": 0.443695068359375,
+            "iou": 0.020208676551345416,
+            "precision": 0.024686388944791037,
+            "recall": 0.10024516480523019,
+            "support": 3671
+          },
+          "b7849af3967f": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                214,
+                764
+              ]
+            ],
+            "f1": 0.8771526980482205,
+            "fpr": 0.0,
+            "iou": 0.7811860940695297,
+            "precision": 1.0,
+            "recall": 0.7811860940695297,
+            "support": 978
+          },
+          "bcbd9acd6243": {
+            "background_only": {
+              "fp": 0,
+              "fpr": 0.0,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32768,
+                0
+              ],
+              [
+                0,
+                4790
+              ]
+            ],
+            "f1": 1.0,
+            "fpr": 0.0,
+            "iou": 1.0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "support": 4790
+          },
+          "ddc26d250831": {
+            "background_only": {
+              "fp": 16,
+              "fpr": 0.00048828125,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32752,
+                16
+              ],
+              [
+                1627,
+                928
+              ]
+            ],
+            "f1": 0.5304372677907974,
+            "fpr": 0.00048828125,
+            "iou": 0.3609490470633995,
+            "precision": 0.9830508474576272,
+            "recall": 0.36320939334637964,
+            "support": 2555
+          },
+          "e6559f64d504": {
+            "background_only": {
+              "fp": 836,
+              "fpr": 0.0255126953125,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                31932,
+                836
+              ],
+              [
+                1,
+                16383
+              ]
+            ],
+            "f1": 0.9750915096866352,
+            "fpr": 0.0255126953125,
+            "iou": 0.9513937282229965,
+            "precision": 0.9514489807770486,
+            "recall": 0.99993896484375,
+            "support": 16384
+          },
+          "f35c8ae0451a": {
+            "background_only": {
+              "fp": 1371,
+              "fpr": 0.04184343048985198,
+              "pixels": 32765
+            },
+            "confusion": [
+              [
+                31394,
+                1371
+              ],
+              [
+                10385,
+                642
+              ]
+            ],
+            "f1": 0.09846625766871166,
+            "fpr": 0.04184343048985198,
+            "iou": 0.05178254557186643,
+            "precision": 0.31892697466467956,
+            "recall": 0.05822073093316405,
+            "support": 11027
+          }
+        },
+        "per_state": {
+          "Odisha": {
+            "background_only": {
+              "fp": 23078,
+              "fpr": 0.06402641179652929,
+              "pixels": 360445
+            },
+            "confusion": [
+              [
+                337367,
+                23078
+              ],
+              [
+                20560,
+                69398
+              ]
+            ],
+            "f1": 0.7608011664492365,
+            "fpr": 0.06402641179652929,
+            "groups": 11,
+            "iou": 0.6139459995045826,
+            "patches": 33,
+            "precision": 0.750443358276742,
+            "recall": 0.7714488983747971,
+            "support": 89958
+          }
+        },
+        "pooled": {
+          "background_only": {
+            "fp": 23078,
+            "fpr": 0.06402641179652929,
+            "pixels": 360445
+          },
+          "confusion": [
+            [
+              337367,
+              23078
+            ],
+            [
+              20560,
+              69398
+            ]
+          ],
+          "f1": 0.7608011664492365,
+          "fpr": 0.06402641179652929,
+          "iou": 0.6139459995045826,
+          "precision": 0.750443358276742,
+          "recall": 0.7714488983747971,
+          "support": 89958
+        },
+        "threshold": 0.6
+      },
+      "original_val": {
+        "per_group": {
+          "617c0407394a": {
+            "background_only": {
+              "fp": 5374,
+              "fpr": 0.16400146484375,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                27394,
+                5374
+              ],
+              [
+                10,
+                3015
+              ]
+            ],
+            "f1": 0.5282985806903803,
+            "fpr": 0.16400146484375,
+            "iou": 0.35897130610787,
+            "precision": 0.3593992132554536,
+            "recall": 0.996694214876033,
+            "support": 3025
+          },
+          "6f1f04f0186a": {
+            "background_only": {
+              "fp": 880,
+              "fpr": 0.02685546875,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                31888,
+                880
+              ],
+              [
+                0,
+                11921
+              ]
+            ],
+            "f1": 0.9644041744195453,
+            "fpr": 0.02685546875,
+            "iou": 0.9312553706741661,
+            "precision": 0.9312553706741661,
+            "recall": 1.0,
+            "support": 11921
+          },
+          "b058a970af58": {
+            "background_only": {
+              "fp": 14539,
+              "fpr": 0.443695068359375,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                18229,
+                14539
+              ],
+              [
+                3303,
+                368
+              ]
+            ],
+            "f1": 0.03961675099580149,
+            "fpr": 0.443695068359375,
+            "iou": 0.020208676551345416,
+            "precision": 0.024686388944791037,
+            "recall": 0.10024516480523019,
+            "support": 3671
+          },
+          "ddc26d250831": {
+            "background_only": {
+              "fp": 16,
+              "fpr": 0.00048828125,
+              "pixels": 32768
+            },
+            "confusion": [
+              [
+                32752,
+                16
+              ],
+              [
+                1627,
+                928
+              ]
+            ],
+            "f1": 0.5304372677907974,
+            "fpr": 0.00048828125,
+            "iou": 0.3609490470633995,
+            "precision": 0.9830508474576272,
+            "recall": 0.36320939334637964,
+            "support": 2555
+          },
+          "f35c8ae0451a": {
+            "background_only": {
+              "fp": 1371,
+              "fpr": 0.04184343048985198,
+              "pixels": 32765
+            },
+            "confusion": [
+              [
+                31394,
+                1371
+              ],
+              [
+                10385,
+                642
+              ]
+            ],
+            "f1": 0.09846625766871166,
+            "fpr": 0.04184343048985198,
+            "iou": 0.05178254557186643,
+            "precision": 0.31892697466467956,
+            "recall": 0.05822073093316405,
+            "support": 11027
+          }
+        },
+        "per_state": {
+          "Odisha": {
+            "background_only": {
+              "fp": 22180,
+              "fpr": 0.13537845541605376,
+              "pixels": 163837
+            },
+            "confusion": [
+              [
+                141657,
+                22180
+              ],
+              [
+                15325,
+                16874
+              ]
+            ],
+            "f1": 0.4736361977741288,
+            "fpr": 0.13537845541605376,
+            "groups": 5,
+            "iou": 0.31030360984939037,
+            "patches": 15,
+            "precision": 0.4320684180877759,
+            "recall": 0.524053542035467,
+            "support": 32199
+          }
+        },
+        "pooled": {
+          "background_only": {
+            "fp": 22180,
+            "fpr": 0.13537845541605376,
+            "pixels": 163837
+          },
+          "confusion": [
+            [
+              141657,
+              22180
+            ],
+            [
+              15325,
+              16874
+            ]
+          ],
+          "f1": 0.4736361977741288,
+          "fpr": 0.13537845541605376,
+          "iou": 0.31030360984939037,
+          "precision": 0.4320684180877759,
+          "recall": 0.524053542035467,
+          "support": 32199
+        },
+        "threshold": 0.6
+      },
+      "seed": 44,
+      "selected_epoch": 10,
+      "sha256": "36c6ba2129c15ac723d8663acd73335db577ef62bb03228452efaa94d4f675be",
+      "threshold": 0.6
+    }
+  ],
+  "contract": {
+    "architecture": "StaticUNet width16 GroupNorm; one model per seed; no ensemble rule frozen",
+    "input": "float32 NCHW, 3 channels, 128x128, north-up 10m local UTM",
+    "output": "N1HW logits; sigmoid probability and per-seed cutoff; mask invalid cells out",
+    "preprocessing": "2019 Q1 masked median harmonized S2 surface reflectance /10000; normalize with frozen TRAIN mean/SD; invalid context zero after normalization",
+    "validity": "At least two observations, 70% valid window; observation count is QA only"
+  },
+  "experiment": "Phase22H",
+  "features": [
+    "B3",
+    "B4",
+    "B8"
+  ],
+  "licensing": {
+    "checkpoint_publication": "Excluded from Git by AGENTS.md",
+    "imagery": "Copernicus Sentinel terms; imagery and model artifacts retained locally under repository publication rules",
+    "labels": "Maus v2 PANGAEA.942325 CC BY-SA 4.0; retain attribution and review derived-artifact obligations"
+  },
+  "limitations": [
+    "Weak unverified Maus positives and negatives; unmapped mines possible",
+    "Validation is 33 Odisha patches in 11 groups reused for selection",
+    "No independently verified accuracy; temporal Indian model remains NO-GO",
+    "TEST sealed; per-seed thresholds preserved; independent validation pending"
+  ],
+  "manifest_sha256": "00f87cbbe5f26a5166165582bacff8492f89f928d13750b5f991d01bbcc503ea",
+  "normalization": {
+    "canonical_sha256": "a11728dd5d0b6e8b6f78731017c9dce936dfa565a0e7bb5c26535fa7602e02ba",
+    "fit_scope": "TRAIN valid pixels only",
+    "hash_encoding": "UTF-8 sorted compact JSON plus LF",
+    "source": "outputs/phase22h_maus/dataset.json",
+    "source_sha256": "e11c4b1b5e544dcb47658a392f4481c6fd4de9df4e57569f90a3e7ec16351407",
+    "values": {
+      "bands": [
+        "B3",
+        "B4",
+        "B8"
+      ],
+      "mean": [
+        0.09584670996019246,
+        0.11636299079030837,
+        0.21642206880020914
+      ],
+      "sd": [
+        0.038406924587149664,
+        0.05444499178071571,
+        0.06321435748531043
+      ]
+    }
+  },
+  "schema_version": 1,
+  "split_sha256": "603bcaf9a2aa817dd42d7cdd7a09906c6f8bd80e3bba58da00f8cdf75baebb60",
+  "status": "PROVISIONAL_WEAK_LABEL_OPTICAL_BASELINE",
+  "variation": {
+    "f1": {
+      "mean": 0.7130924006928252,
+      "sample_sd": 0.08478394549164373
+    },
+    "fpr": {
+      "mean": 0.0837548030906241,
+      "sample_sd": 0.046763740967687414
+    },
+    "iou": {
+      "mean": 0.558457632860411,
+      "sample_sd": 0.09891576611666647
+    },
+    "precision": {
+      "mean": 0.6978048939435965,
+      "sample_sd": 0.12407979383498687
+    },
+    "recall": {
+      "mean": 0.7336238392731422,
+      "sample_sd": 0.0420234751708099
+    }
+  }
+}

@@ -1,0 +1,17 @@
+# Phase 22J — Provisional optical model freeze
+
+The Phase 22H single-date B3/B4/B8 width-16 U-Net is frozen as a provisional weak-label baseline. All three seeds and their selected checkpoints, thresholds, normalization and validation metrics are retained in the [machine-readable registry](phase22j-model-registry.json). No single seed or ensemble was newly selected. Seeds 42/43/44 keep thresholds 0.20/0.40/0.60 and epochs 4/9/10. Checkpoint hashes were verified against the actual local weights. The normalization hash uses explicitly recorded canonical JSON encoding and is bound to the original dataset receipt hash.
+
+Agreement with unverified Maus v2 weak labels - NOT independently verified Indian accuracy.
+
+Expanded-validation mean ± sample SD across the three seeds is F1 0.7131 ± 0.0848, IoU 0.5585 ± 0.0989 and FPR 0.0838 ± 0.0468. The same 33 Odisha validation patches in 11 groups were used for epoch/threshold selection and reporting. These scores remain selection-biased weak-label agreement. The original 15-window subset also participated in selection. Weak background can contain unmapped mining.
+
+Phase 22I recovery dispatch is scoring-only. Fresh fit actions now fail closed if any matching completed or partial artifact exists, even when the final aggregate receipt is missing. This prevents a restart from duplicating a completed fit or overwriting an interrupted checkpoint. Recovery reports partial checkpoints without receipts explicitly, excludes incomplete seed pairs from paired means and marks CPU accounting unverified. It cannot infer remaining compute allowance from missing receipts. The existing Phase 22I duplicate-fit incident and inability to certify combined CPU use remain recorded. No historical receipts or checkpoints were changed.
+
+## Independent-validation handoff
+
+Use the [blank review template](phase22j-independent-review-template.csv) in two isolated reviewer packages. A coordinator maintains the private neutral-ID/location crosswalk and usage-rights records. Supply each reviewer independently dated, georeferenced and lawfully viewable evidence with capture timestamps, source IDs, CRS, uncertainty and valid coverage. Withhold model probabilities, thresholds, predicted outlines, weak Maus target masks, evaluation scores, split identity and the other reviewer's decisions.
+
+Reviewers independently draw conservative mining-footprint or non-mining polygons, record UNKNOWN or REJECT where needed, document confidence and alternatives, and provide source evidence and positional suitability ≤30 m. Each reviewer records their identity, review time and declared conflicts. A separate adjudicator preserves both original decisions and resolves agreement or leaves UNKNOWN. Usage rights must cover both reviewers. The template's class meaning is the historical 2019 static footprint target. It cannot create temporal change labels. A coordinator checks geographic and source independence before admission, records reviewed positives and hard negatives, then freezes a new reference manifest before scoring. No independently reviewed labels or independent accuracy scores were produced here.
+
+The registry records Maus CC BY-SA attribution and imagery terms. Checkpoints and imagery remain local under project publication policy. No training, recalibration, Earth Engine operation or TEST evaluation ran in Phase 22J. The independent evidence, reviewer decisions, positional checks and adjudication remain outstanding.

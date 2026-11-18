@@ -73,3 +73,34 @@ def test_rf_recovery_dispatch_is_scoring_only(tmp_path,monkeypatch):
     training.run("rf-recover")
     assert calls==["rf"]
     assert (tmp_path/"models"/"rf-results.json").exists()
+
+
+@pytest.mark.parametrize("action,artifact", [("rf","rf-F1.joblib"),
+                                           ("unet","unet-F2-44.pt"),
+                                           ("unet","unet-F1-42.json")])
+def test_existing_fit_artifacts_prevent_duplicate_fitting(tmp_path,monkeypatch,action,artifact):
+    monkeypatch.setattr(training,"DEST",tmp_path)
+    monkeypatch.setattr(training,"inputs",lambda:({"F1":{}},{},set(),True))
+    out=tmp_path/"models"
+    out.mkdir()
+    (out/artifact).write_bytes(b"existing fit")
+    monkeypatch.setattr(training,"rf_run",lambda *_:pytest.fail("duplicate RF fit"))
+    monkeypatch.setattr(training,"unet_run",lambda *_:pytest.fail("duplicate U-Net fit"))
+    with pytest.raises(ValueError,match="partial fit artifacts"):
+        training.run(action)
+
+
+def test_unet_recovery_reports_partial_and_unknown_cpu(tmp_path,monkeypatch):
+    import json
+    base=tmp_path/"baseline"
+    (base/"models").mkdir(parents=True)
+    (base/"models"/"unet-results.json").write_text(json.dumps({"runs":[]}))
+    monkeypatch.setattr(training,"BASE",base)
+    out=tmp_path/"outputs"
+    out.mkdir()
+    (out/"unet-F2-44.pt").write_bytes(b"partial")
+    result=training.recover_results("unet",{},set(),True,out)
+    assert result["summary"]["completed_seeds"]==[]
+    assert result["partial_artifacts"][0]["status"]=="PARTIAL_CHECKPOINT_WITHOUT_RECEIPT"
+    assert result["cpu_accounting_verified"] is False
+    assert "unverified" in result["cpu_accounting_limitation"]
