@@ -1,0 +1,140 @@
+{
+  "status": "STOP_INCOMPLETE_SOURCE_BACKED_ROSTER",
+  "requirements": {
+    "mining_context": 3,
+    "forest_context": 1,
+    "farmland_context": 1,
+    "river_context": 1
+  },
+  "documented_mining_context": 1,
+  "mining_context_deficit": 2,
+  "forest_context_verified": 0,
+  "farmland_context_verified": 0,
+  "frozen_aoi_count": 0,
+  "all_six_buffer_verified": false,
+  "test_access": false,
+  "imagery_requests": 0,
+  "earth_engine_requests": 0,
+  "mining_locations": [
+    {
+      "id": "lumshnong-70ha-kml-v1",
+      "split": "validation",
+      "source": "https://environmentclearance.nic.in/auth/FORM_A_PDF.aspx?cat_id=IA%2FML%2FMIN%2F63217%2F2017&pid=Found"
+    }
+  ],
+  "development_locators": [
+    {
+      "id": "east-94-559-c74",
+      "split": "train",
+      "context": "change",
+      "source_sha256": "c66f425fa6d9a3c823d57d018427075658660dc84db569f95a84a7d061b66c48",
+      "mining_context_documented": false
+    },
+    {
+      "id": "lumshnong-70ha-kml-v1",
+      "split": "validation",
+      "context": "existing mining-location lead",
+      "source_sha256": "d51061263c1b2c189858fcc0888f23404c0a6b881dad9e66fd0baf33b7c45feb",
+      "mining_context_documented": true
+    },
+    {
+      "id": "R007",
+      "split": "train",
+      "context": "change",
+      "source_sha256": "aba4858eaa49044d2b9b9f06d688694c88dbcd3c55a8a8c72b2e6ca61a934cd2",
+      "mining_context_documented": false
+    },
+    {
+      "id": "R008",
+      "split": "train",
+      "context": "background",
+      "source_sha256": "41da2eaaec78782229a8f8b23da6763c22e549214581594e8bedfafe2bb9bca7",
+      "mining_context_documented": false
+    },
+    {
+      "id": "R009",
+      "split": "train",
+      "context": "alternative_disturbance",
+      "source_sha256": "fd18e75754ab99ed906b5e6de6f7b76d9ff87e046fb079805b10283ea80e1153",
+      "mining_context_documented": false
+    },
+    {
+      "id": "R013",
+      "split": "train",
+      "context": "change",
+      "source_sha256": "7ca4147bef354a121cb864e1667f7d81953fde3cd87cfd9e642fdd1739ec1fbf",
+      "mining_context_documented": false
+    },
+    {
+      "id": "R014",
+      "split": "train",
+      "context": "background",
+      "source_sha256": "0d19c43634cd3aa570796d928f4e6956e12741d8192ed80215d04ca9966f080f",
+      "mining_context_documented": false
+    },
+    {
+      "id": "R015",
+      "split": "train",
+      "context": "alternative_disturbance",
+      "source_sha256": "55670b116cfae1518355d1154a94e2a86ed0415177a5a4f4780bac81316ee6d1",
+      "mining_context_documented": false
+    },
+    {
+      "id": "R025",
+      "split": "train",
+      "context": "background",
+      "source_sha256": "6365998d57568f7b5d67a9d82a29b0596bb04b9cf1adeebc42faa8f0066f7165",
+      "mining_context_documented": false
+    },
+    {
+      "id": "R026",
+      "split": "train",
+      "context": "change",
+      "source_sha256": "d46bde8a1fc7e248ea53a38752deb9229b33154029e2a58d2187b9b14e5590a7",
+      "mining_context_documented": false
+    },
+    {
+      "id": "R027",
+      "split": "train",
+      "context": "alternative_disturbance",
+      "source_sha256": "bcad0300f03f69c3cfb0cbb809f3aaff3ca252b1066872e21f77f5ac98d3d789",
+      "mining_context_documented": false
+    }
+  ],
+  "river_location_metadata": [
+    {
+      "id": "Lukha-Khaddum-4315",
+      "coordinates": [
+        92.422355,
+        25.224359
+      ],
+      "full_aoi_split_and_buffer_status": "UNCHECKED"
+    },
+    {
+      "id": "Lukha-Sunapur-3376",
+      "coordinates": [
+        92.361445,
+        25.108633
+      ],
+      "full_aoi_split_and_buffer_status": "UNCHECKED"
+    },
+    {
+      "id": "Myntdu-Mihmyntdu-4316",
+      "coordinates": [
+        92.204576,
+        25.434337
+      ],
+      "full_aoi_split_and_buffer_status": "UNCHECKED"
+    },
+    {
+      "id": "Myntdu-Leshka-3379",
+      "coordinates": [
+        92.19829,
+        25.268735
+      ],
+      "full_aoi_split_and_buffer_status": "UNCHECKED"
+    }
+  ],
+  "river_metadata_sha256": "93732fe3a6292e95d26538f7d5763d2bbbad4a26432ba2ab11c30deb30caad0b",
+  "detection_status": "candidate disturbance, UNKNOWN - not validated."
+}
