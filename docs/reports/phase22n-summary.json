@@ -1,0 +1,38 @@
+{
+  "anchor": [
+    92.7178365971532,
+    25.2919334050181
+  ],
+  "aoi_id": "east-94-559-c74",
+  "block": "94:559",
+  "cache_raster_sha256": "65e3aa2a5d97c7494faf05941312e780b00579b4b15b255124820d6968de3cfa",
+  "cache_receipt_sha256": "e0e706d182c2ee460934cbbe940dd787f1f6cddddb4bcb3fb62e37946f7b6875",
+  "candidate_before_ndvi_lt_020_fraction": 0.0,
+  "candidate_cells": 9,
+  "candidate_clusters": 6,
+  "candidate_hectares": 0.8099999999999999,
+  "control_metrics": null,
+  "control_status": "INELIGIBLE; no measurements",
+  "coverage_percent": 100.0,
+  "earth_engine_requests": 0,
+  "eligible_before_ndvi_lt_020_fraction": 0.0,
+  "eligible_cells": 4096,
+  "independent_capture_days": {
+    "after": 29,
+    "before": 28
+  },
+  "plan_sha256": "ff80e9605f1a46e8536ad30c4341f8f72073180169b02712e0f44a6bf8d42742",
+  "private_products": "outputs/phase22n_temporal/: comparison.png, clusters.geojson, review.csv, results.json, product_hashes.json",
+  "quality": "SCL 4/5 land, cloud probability<40, scene cloud<=80; dark and water screen; residual terrain shadow unresolved",
+  "response_body_bytes": 0,
+  "review_verdicts": [
+    "excavation",
+    "other",
+    "uncertain"
+  ],
+  "slope_range_deg": [
+    7.202466011047363,
+    20.75459098815918
+  ],
+  "status": "candidate disturbance, UNKNOWN - not validated."
+}
