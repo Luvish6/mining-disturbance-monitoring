@@ -1,0 +1,28 @@
+{
+  "aoi": "east-94-559-c74 (Phase 22L/22N TRAIN development AOI; full-footprint guard passed in 22N)",
+  "budget": {
+    "max_bytes": 2000000,
+    "max_requests": 8
+  },
+  "date": "2026-11-20",
+  "inputs": {
+    "outputs\\phase22l_temporal_pilot\\change.tif": "8df15e5865cd83b117292907137ea3cea36335f6bacf3a815079e0a09b5b3fb6",
+    "outputs\\phase22l_temporal_pilot\\receipt.json": "e0e706d182c2ee460934cbbe940dd787f1f6cddddb4bcb3fb62e37946f7b6875",
+    "outputs\\phase6b_multitile\\east-94-559\\diagnostics.tif": "c7aeaf21c8d9ef3ff1e88ffd64a0c97264adbb16e85b94e46c78fc33a153bb24",
+    "outputs\\phase6b_multitile\\east-94-559\\features.tif": "6535e971eeb636456e959576cdce1bc2316164e8299342f9e3189f189cf73310"
+  },
+  "interpretation": "SAR co-change is multi-sensor corroboration of UNKNOWN candidates, not validation",
+  "optical_rule_unchanged": "NDVI decrease <= -0.30 and BSI increase > +0.10 (Phase 22L)",
+  "phase": "22P",
+  "rules": {
+    "background": "Phase 22L eligible cells with valid SAR in both seasons, excluding candidate cells",
+    "caveat": "cells are spatially autocorrelated; permutation p-values are descriptive, not confirmatory",
+    "change": "dVV = after_VV - before_VV, dVH = after_VH - before_VH (dB)",
+    "cluster_level": "six 8-connected cluster means vs 10,000 random draws of six background cells (seed 43)",
+    "co_change": "candidate cell with dVH or dVV outside the background 5th-95th percentile range",
+    "permutation": "10,000 random draws of n_candidate cells from the SAR-valid eligible pool, seed 42; p = (1 + #|null| >= |obs|) / (1 + draws)",
+    "reproduction_gate": "on cells shared with Phase 6B tile east-94-559, |dVV|,|dVH| differences <= 0.01 dB else STOP",
+    "sar": "Phase 2 sar.seasonal: S1 GRD IW 10 m, DESCENDING, relative orbit 77 (as Phase 6B), linear-power 20 m circular focal mean, seasonal median in dB, >=2 observations per season",
+    "statistic": "median(candidate) - median(background), per polarisation; two-sided"
+  }
+}
