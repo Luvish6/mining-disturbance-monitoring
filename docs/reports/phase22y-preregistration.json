@@ -1,0 +1,60 @@
+{
+  "associations": {
+    "covariates": [
+      "hard-commodities probability (22R drivers)",
+      "2024/25 GFC loss in cluster",
+      "cluster dVH minus AOI background (22X)",
+      "mean slope",
+      "Lumshnong blocks 87:556/87:557"
+    ],
+    "shares": "class shares with AOI-bootstrap 95% CI (AOI = sampling unit)",
+    "test": "mean(PERSISTENT) - mean(other), class labels permuted within AOI, 10000 draws, seed 48"
+  },
+  "budget": {
+    "max_bytes": 6000000,
+    "max_requests": 70
+  },
+  "classes": {
+    "PARTIAL": "otherwise",
+    "PERSISTENT": "NDVI(follow-up) - NDVI(2023-24) <= -0.30 AND BSI(follow-up) - BSI(2023-24) > +0.10",
+    "RECOVERING": "NDVI(follow-up) - NDVI(2023-24) >= -0.10",
+    "unit": "cluster mean over its cells observed in the follow-up season; UNOBSERVED if < 50% of cells observed"
+  },
+  "clusters": "the 174 SAR-tested Phase 22X clusters (8-connected candidates of the unchanged 22L rule); no new detection",
+  "date": "2026-11-20",
+  "follow_up_season": [
+    "2025-26",
+    "2025-11-01",
+    "2026-04-01"
+  ],
+  "interpretation": "PERSISTENT = non-revegetating, mining-COMPATIBLE disturbance for review priority; roads, construction, quarries, dumps and slow fallows are all compatible; not a mining label",
+  "not_done": "no threshold tuning, no model training, no TEST access, no accuracy metrics",
+  "optical": "unchanged Phase 22L seasonal_graph (SCL 4/5, cloud prob < 40, NDWI < 0, brightness >= 0.04, >= 2 obs) for the follow-up season on the identical 22X AOI grids",
+  "phase": "22Y",
+  "source": {
+    "aois": [
+      "80:559",
+      "83:557",
+      "83:561",
+      "83:563",
+      "84:558",
+      "85:565",
+      "86:555",
+      "86:561",
+      "87:556",
+      "87:557",
+      "87:563",
+      "87:564",
+      "88:556",
+      "88:558",
+      "88:563",
+      "88:564",
+      "88:567",
+      "89:557",
+      "91:556",
+      "91:558"
+    ],
+    "phase22x_preregistration_sha256": "d711fcfd5f95c93fca8e686514901eb037b8386f56c2e46b0238873355910da9",
+    "phase22x_summary_sha256": "265b3ef04e7630ec04564fd18f4218a644138949d48c4d8ff7992188d1674d96"
+  }
+}
