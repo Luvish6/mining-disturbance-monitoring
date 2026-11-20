@@ -1,0 +1,514 @@
+{
+  "aois": {
+    "80:559": {
+      "bounds": [
+        401550,
+        2796540,
+        403470,
+        2798460
+      ],
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "80:559",
+        "bounds": [
+          401550,
+          2796540,
+          403470,
+          2798460
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 1430.0,
+        "split": "validation",
+        "test_intersections": []
+      },
+      "split": "validation"
+    },
+    "83:557": {
+      "bounds": [
+        416550,
+        2786550,
+        418470,
+        2788470
+      ],
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "83:557",
+        "bounds": [
+          416550,
+          2786550,
+          418470,
+          2788470
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 1430.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "83:561": {
+      "bounds": [
+        416550,
+        2806530,
+        418470,
+        2808450
+      ],
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "83:561",
+        "bounds": [
+          416550,
+          2806530,
+          418470,
+          2808450
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 2008.2,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "83:563": {
+      "bounds": [
+        416550,
+        2816550,
+        418470,
+        2818470
+      ],
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "83:563",
+        "bounds": [
+          416550,
+          2816550,
+          418470,
+          2818470
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6567.6,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "84:558": {
+      "bounds": [
+        421530,
+        2791530,
+        423450,
+        2793450
+      ],
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "84:558",
+        "bounds": [
+          421530,
+          2791530,
+          423450,
+          2793450
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 2022.3,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "85:565": {
+      "bounds": [
+        426540,
+        2826540,
+        428460,
+        2828460
+      ],
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "85:565",
+        "bounds": [
+          426540,
+          2826540,
+          428460,
+          2828460
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6575.2,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "86:555": {
+      "bounds": [
+        431550,
+        2776530,
+        433470,
+        2778450
+      ],
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "86:555",
+        "bounds": [
+          431550,
+          2776530,
+          433470,
+          2778450
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6563.2,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "86:561": {
+      "bounds": [
+        431550,
+        2806530,
+        433470,
+        2808450
+      ],
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "86:561",
+        "bounds": [
+          431550,
+          2806530,
+          433470,
+          2808450
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 2008.2,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "87:556": {
+      "bounds": [
+        436530,
+        2781540,
+        438450,
+        2783460
+      ],
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "87:556",
+        "bounds": [
+          436530,
+          2781540,
+          438450,
+          2783460
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6577.3,
+        "split": "validation",
+        "test_intersections": []
+      },
+      "split": "validation"
+    },
+    "87:557": {
+      "bounds": [
+        436530,
+        2786550,
+        438450,
+        2788470
+      ],
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "87:557",
+        "bounds": [
+          436530,
+          2786550,
+          438450,
+          2788470
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6567.6,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "87:563": {
+      "bounds": [
+        436530,
+        2816550,
+        438450,
+        2818470
+      ],
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "87:563",
+        "bounds": [
+          436530,
+          2816550,
+          438450,
+          2818470
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 1430.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "87:564": {
+      "bounds": [
+        436530,
+        2821530,
+        438450,
+        2823450
+      ],
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "87:564",
+        "bounds": [
+          436530,
+          2821530,
+          438450,
+          2823450
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6410.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "88:556": {
+      "bounds": [
+        441540,
+        2781540,
+        443460,
+        2783460
+      ],
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "88:556",
+        "bounds": [
+          441540,
+          2781540,
+          443460,
+          2783460
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6420.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "88:558": {
+      "bounds": [
+        441540,
+        2791530,
+        443460,
+        2793450
+      ],
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "88:558",
+        "bounds": [
+          441540,
+          2791530,
+          443460,
+          2793450
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 1430.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "88:563": {
+      "bounds": [
+        441540,
+        2816550,
+        443460,
+        2818470
+      ],
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "88:563",
+        "bounds": [
+          441540,
+          2816550,
+          443460,
+          2818470
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 2015.3,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "88:564": {
+      "bounds": [
+        441540,
+        2821530,
+        443460,
+        2823450
+      ],
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "88:564",
+        "bounds": [
+          441540,
+          2821530,
+          443460,
+          2823450
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6565.4,
+        "split": "validation",
+        "test_intersections": []
+      },
+      "split": "validation"
+    },
+    "88:567": {
+      "bounds": [
+        441540,
+        2836530,
+        443460,
+        2838450
+      ],
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "88:567",
+        "bounds": [
+          441540,
+          2836530,
+          443460,
+          2838450
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 2015.3,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "89:557": {
+      "bounds": [
+        446550,
+        2786550,
+        448470,
+        2788470
+      ],
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "89:557",
+        "bounds": [
+          446550,
+          2786550,
+          448470,
+          2788470
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6567.6,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "91:556": {
+      "bounds": [
+        456540,
+        2781540,
+        458460,
+        2783460
+      ],
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "91:556",
+        "bounds": [
+          456540,
+          2781540,
+          458460,
+          2783460
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6420.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    },
+    "91:558": {
+      "bounds": [
+        456540,
+        2791530,
+        458460,
+        2793450
+      ],
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "91:558",
+        "bounds": [
+          456540,
+          2791530,
+          458460,
+          2793450
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 1430.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "split": "train"
+    }
+  },
+  "background": "eligible, SAR-valid cells > 60 m from candidates (Phase 22R background_mask)",
+  "budget": {
+    "max_bytes": 10000000,
+    "max_requests": 160
+  },
+  "date": "2026-11-20",
+  "estimands": {
+    "density": "candidate ha per 100 eligible ha per AOI; mean over AOIs with AOI-bootstrap 95% CI (AOI = sampling unit), overall and per district",
+    "products": "Phase 22R H1 (2024/25 GFC loss) and H2 (hard-commodities probability) on all sampled clusters",
+    "sar": "pooled stratified shape-preserving translation permutation of cluster mean dVH (and dVV) minus own-AOI background (Phase 22R translation_null, seed 46); per-AOI direction reported descriptively"
+  },
+  "frame": {
+    "eligible_blocks": {
+      "East Jaintia Hills": 59,
+      "West Jaintia Hills": 54
+    },
+    "rule": "non-TEST seed-42 5 km blocks whose centred 1,920 m AOI passes the full-footprint guard and lies wholly in one district; earlier AOI blocks excluded"
+  },
+  "interpretation": "landscape-scale screening statistics; candidates UNKNOWN; not mining, legality or river evidence",
+  "not_done": "no threshold change, no model training, no TEST access, no accuracy metrics",
+  "null_outcomes": "AOIs with zero candidates, missing SAR or masked products are reported as measured; none replaced",
+  "optical": "unchanged Phase 22L seasonal_graph + select_candidates (NDVI drop <= -0.30, BSI rise > +0.10, >=2 obs/season)",
+  "phase": "22X",
+  "products": {
+    "drivers": "projects/landandcarbon/assets/wri_gdm_drivers_forest_loss_1km/v1_2_2001_2024",
+    "hansen": "UMD/hansen/global_forest_change_2025_v1_13",
+    "rule": "Phase 22R sampling and statistics unchanged"
+  },
+  "sampling": "10 per district in sha256('22X:'+block) order; AOI fixed at block centre; no relocation or replacement",
+  "sar": "Phase 2 sar.seasonal, DESCENDING relative orbit 77, 20 m focal mean, seasonal median dB, >=2 obs/season (Phase 6B/22P graph), same request as optical"
+}
