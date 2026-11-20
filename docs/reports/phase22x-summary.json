@@ -1,0 +1,391 @@
+{
+  "aois": {
+    "80:559": {
+      "background_cells": 3996,
+      "candidate_cells": 18,
+      "candidate_ha": 1.6199999999999999,
+      "clusters": 1,
+      "clusters_with_2024_25_loss": 0,
+      "dVH_candidate_median_minus_background_db": -1.7548561096191406,
+      "dVV_candidate_median_minus_background_db": -1.835902452468872,
+      "density_ha_per_100ha": 0.439453125,
+      "district": "West Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "validation"
+    },
+    "83:557": {
+      "background_cells": 4011,
+      "candidate_cells": 5,
+      "candidate_ha": 0.44999999999999996,
+      "clusters": 3,
+      "clusters_with_2024_25_loss": 1,
+      "dVH_candidate_median_minus_background_db": -0.9005403518676758,
+      "dVV_candidate_median_minus_background_db": -1.2322473526000977,
+      "density_ha_per_100ha": 0.1220703125,
+      "district": "West Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "83:561": {
+      "background_cells": 4003,
+      "candidate_cells": 14,
+      "candidate_ha": 1.26,
+      "clusters": 2,
+      "clusters_with_2024_25_loss": 1,
+      "dVH_candidate_median_minus_background_db": -3.1745448112487793,
+      "dVV_candidate_median_minus_background_db": -2.0914342403411865,
+      "density_ha_per_100ha": 0.3420473979965795,
+      "district": "West Jaintia Hills",
+      "eligible_cells": 4093,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "83:563": {
+      "background_cells": 3625,
+      "candidate_cells": 45,
+      "candidate_ha": 4.05,
+      "clusters": 15,
+      "clusters_with_2024_25_loss": 4,
+      "dVH_candidate_median_minus_background_db": -1.4820423126220703,
+      "dVV_candidate_median_minus_background_db": -1.1898765563964844,
+      "density_ha_per_100ha": 1.0999755560987534,
+      "district": "West Jaintia Hills",
+      "eligible_cells": 4091,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "84:558": {
+      "background_cells": 4006,
+      "candidate_cells": 9,
+      "candidate_ha": 0.8099999999999999,
+      "clusters": 3,
+      "clusters_with_2024_25_loss": 1,
+      "dVH_candidate_median_minus_background_db": -0.933382511138916,
+      "dVV_candidate_median_minus_background_db": 0.22141194343566895,
+      "density_ha_per_100ha": 0.2197265625,
+      "district": "East Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "85:565": {
+      "background_cells": 3611,
+      "candidate_cells": 60,
+      "candidate_ha": 5.3999999999999995,
+      "clusters": 15,
+      "clusters_with_2024_25_loss": 9,
+      "dVH_candidate_median_minus_background_db": -1.5711913108825684,
+      "dVV_candidate_median_minus_background_db": -1.7450106143951416,
+      "density_ha_per_100ha": 1.46484375,
+      "district": "West Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "86:555": {
+      "background_cells": 4095,
+      "candidate_cells": 0,
+      "candidate_ha": 0.0,
+      "clusters": 0,
+      "density_ha_per_100ha": 0.0,
+      "district": "East Jaintia Hills",
+      "eligible_cells": 4096,
+      "sar_valid_fraction": 1.0,
+      "split": "train",
+      "status": "ZERO_CANDIDATES"
+    },
+    "86:561": {
+      "background_cells": 4023,
+      "candidate_cells": 5,
+      "candidate_ha": 0.44999999999999996,
+      "clusters": 3,
+      "clusters_with_2024_25_loss": 1,
+      "dVH_candidate_median_minus_background_db": -1.315871238708496,
+      "dVV_candidate_median_minus_background_db": -0.3249788284301758,
+      "density_ha_per_100ha": 0.1220703125,
+      "district": "East Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "87:556": {
+      "background_cells": 3235,
+      "candidate_cells": 164,
+      "candidate_ha": 14.76,
+      "clusters": 29,
+      "clusters_with_2024_25_loss": 10,
+      "dVH_candidate_median_minus_background_db": -1.7985224723815918,
+      "dVV_candidate_median_minus_background_db": -0.700613260269165,
+      "density_ha_per_100ha": 4.005862237420615,
+      "district": "East Jaintia Hills",
+      "eligible_cells": 4094,
+      "hard_commodity_dominant_cells_in_aoi": 1873,
+      "sar_valid_fraction": 1.0,
+      "split": "validation"
+    },
+    "87:557": {
+      "background_cells": 3499,
+      "candidate_cells": 47,
+      "candidate_ha": 4.2299999999999995,
+      "clusters": 25,
+      "clusters_with_2024_25_loss": 3,
+      "dVH_candidate_median_minus_background_db": -0.7973442077636719,
+      "dVV_candidate_median_minus_background_db": -0.22180795669555664,
+      "density_ha_per_100ha": 1.1477411477411479,
+      "district": "East Jaintia Hills",
+      "eligible_cells": 4095,
+      "hard_commodity_dominant_cells_in_aoi": 820,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "87:563": {
+      "background_cells": 3857,
+      "candidate_cells": 16,
+      "candidate_ha": 1.44,
+      "clusters": 11,
+      "clusters_with_2024_25_loss": 1,
+      "dVH_candidate_median_minus_background_db": -0.6152448654174805,
+      "dVV_candidate_median_minus_background_db": -0.8017429113388062,
+      "density_ha_per_100ha": 0.390625,
+      "district": "West Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "87:564": {
+      "background_cells": 3811,
+      "candidate_cells": 56,
+      "candidate_ha": 5.04,
+      "clusters": 9,
+      "clusters_with_2024_25_loss": 7,
+      "dVH_candidate_median_minus_background_db": -1.3699026107788086,
+      "dVV_candidate_median_minus_background_db": -1.089277982711792,
+      "density_ha_per_100ha": 1.3671875,
+      "district": "West Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "88:556": {
+      "background_cells": 3499,
+      "candidate_cells": 46,
+      "candidate_ha": 4.14,
+      "clusters": 15,
+      "clusters_with_2024_25_loss": 6,
+      "dVH_candidate_median_minus_background_db": -1.852663516998291,
+      "dVV_candidate_median_minus_background_db": -1.730168342590332,
+      "density_ha_per_100ha": 1.1422895455674198,
+      "district": "East Jaintia Hills",
+      "eligible_cells": 4027,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "88:558": {
+      "background_cells": 3248,
+      "candidate_cells": 270,
+      "candidate_ha": 24.3,
+      "clusters": 9,
+      "clusters_with_2024_25_loss": 7,
+      "dVH_candidate_median_minus_background_db": -2.767597198486328,
+      "dVV_candidate_median_minus_background_db": -2.5367014408111572,
+      "density_ha_per_100ha": 6.666666666666667,
+      "district": "East Jaintia Hills",
+      "eligible_cells": 4050,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "88:563": {
+      "background_cells": 3928,
+      "candidate_cells": 31,
+      "candidate_ha": 2.79,
+      "clusters": 4,
+      "clusters_with_2024_25_loss": 4,
+      "dVH_candidate_median_minus_background_db": -0.4277224540710449,
+      "dVV_candidate_median_minus_background_db": -0.7218574285507202,
+      "density_ha_per_100ha": 0.757020757020757,
+      "district": "West Jaintia Hills",
+      "eligible_cells": 4095,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "88:564": {
+      "background_cells": 3794,
+      "candidate_cells": 61,
+      "candidate_ha": 5.49,
+      "clusters": 6,
+      "clusters_with_2024_25_loss": 3,
+      "dVH_candidate_median_minus_background_db": -0.9128866195678711,
+      "dVV_candidate_median_minus_background_db": -0.6920971870422363,
+      "density_ha_per_100ha": 1.4892578125,
+      "district": "West Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "validation"
+    },
+    "88:567": {
+      "background_cells": 3457,
+      "candidate_cells": 100,
+      "candidate_ha": 9.0,
+      "clusters": 13,
+      "clusters_with_2024_25_loss": 8,
+      "dVH_candidate_median_minus_background_db": -2.4237194061279297,
+      "dVV_candidate_median_minus_background_db": -2.3715083599090576,
+      "density_ha_per_100ha": 2.44140625,
+      "district": "West Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "89:557": {
+      "background_cells": 3796,
+      "candidate_cells": 34,
+      "candidate_ha": 3.06,
+      "clusters": 10,
+      "clusters_with_2024_25_loss": 3,
+      "dVH_candidate_median_minus_background_db": -1.7039766311645508,
+      "dVV_candidate_median_minus_background_db": -1.0016794204711914,
+      "density_ha_per_100ha": 0.830078125,
+      "district": "East Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    },
+    "91:556": {
+      "background_cells": 4053,
+      "candidate_cells": 0,
+      "candidate_ha": 0.0,
+      "clusters": 0,
+      "density_ha_per_100ha": 0.0,
+      "district": "East Jaintia Hills",
+      "eligible_cells": 4062,
+      "sar_valid_fraction": 1.0,
+      "split": "train",
+      "status": "ZERO_CANDIDATES"
+    },
+    "91:558": {
+      "background_cells": 4071,
+      "candidate_cells": 1,
+      "candidate_ha": 0.09,
+      "clusters": 1,
+      "clusters_with_2024_25_loss": 0,
+      "dVH_candidate_median_minus_background_db": -4.138891220092773,
+      "dVV_candidate_median_minus_background_db": -3.4443283081054688,
+      "density_ha_per_100ha": 0.0244140625,
+      "district": "East Jaintia Hills",
+      "eligible_cells": 4096,
+      "hard_commodity_dominant_cells_in_aoi": 0,
+      "sar_valid_fraction": 1.0,
+      "split": "train"
+    }
+  },
+  "cloud_usage": {
+    "requests": 61,
+    "response_bytes": 6913630
+  },
+  "clusters_tested": 174,
+  "density": {
+    "by_district": {
+      "East Jaintia Hills": {
+        "aois": 10,
+        "aois_with_candidates": 8,
+        "ci95": [
+          0.32658459268152923,
+          2.8800198584364023
+        ],
+        "mean": 1.4158848659895849
+      },
+      "West Jaintia Hills": {
+        "aois": 10,
+        "aois_with_candidates": 10,
+        "ci95": [
+          0.590807256810774,
+          1.4332588513694424
+        ],
+        "mean": 0.991388746111609
+      }
+    },
+    "overall": {
+      "aois": 20,
+      "aois_with_candidates": 18,
+      "ci95": [
+        0.6174293444665095,
+        1.9754453365209812
+      ],
+      "mean": 1.2036368060505969
+    }
+  },
+  "interpretation": "landscape screening; candidates UNKNOWN; not mining, legality or river evidence; no accuracy",
+  "phase": "22X",
+  "preregistration_sha256": "d711fcfd5f95c93fca8e686514901eb037b8386f56c2e46b0238873355910da9",
+  "products_H1": {
+    "clusters_with_recent_loss": [
+      69,
+      174
+    ],
+    "fraction": 0.39655172413793105,
+    "translation_null": {
+      "null_median": 0.022988505747126436,
+      "null_p2_5": 0.005747126436781609,
+      "null_p97_5": 0.04597701149425287,
+      "p_two_sided": 9.999000099990002e-05
+    },
+    "wilson95": [
+      0.32685485398001746,
+      0.470717817430946
+    ]
+  },
+  "products_H2": {
+    "aois": 18,
+    "hard_commodity_dominant_cells_total": 2693,
+    "mean_cluster_probability": 0.12232421252038553,
+    "translation_null": {
+      "null_median": 0.09569540485754621,
+      "null_p2_5": 0.0841116814851815,
+      "null_p97_5": 0.1080989204643707,
+      "p_two_sided": 9.999000099990002e-05
+    }
+  },
+  "sar_dvh": {
+    "aois": 18,
+    "aois_negative_direction": [
+      18,
+      18
+    ],
+    "clusters": 174,
+    "mean_cluster_minus_background_db": -1.4519435363596682,
+    "translation_null": {
+      "null_median": -0.007387457290508565,
+      "null_p2_5": -0.1392341001944984,
+      "null_p97_5": 0.12549394660123425,
+      "p_two_sided": 9.999000099990002e-05
+    }
+  },
+  "sar_dvv": {
+    "aois": 18,
+    "clusters": 174,
+    "mean_cluster_minus_background_db": -1.1174005107818632,
+    "translation_null": {
+      "null_median": 0.006139573424565465,
+      "null_p2_5": -0.12153851112602601,
+      "null_p97_5": 0.14555018773842068,
+      "p_two_sided": 9.999000099990002e-05
+    }
+  }
+}
