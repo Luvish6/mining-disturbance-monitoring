@@ -113,10 +113,16 @@ def acquire():
         rect = ee.Geometry.Rectangle(list(BBOX), "EPSG:4326", False)
         if not (OUT / "reaches.json").exists():
             fc = ee.FeatureCollection(FFR_ASSET).filterBounds(rect).map(lambda f: f.select(["GOID", "NDOID", "UPLAND_SKM"]))
+            # A FeatureCollection nested in ee.Dictionary serializes metadata only (22O/23A incident): fetch directly.
             gate(3_000_000)
-            info = ee.Dictionary(dict(reaches=fc, dir_projection=ee.Image(DIR_ASSET).projection())).getInfo()
-            log(dict(request="reaches_and_projection", response_bytes=len(json.dumps(info).encode())))
-            save(OUT / "reaches.json", info)
+            reaches = fc.getInfo()
+            log(dict(request="reaches", response_bytes=len(json.dumps(reaches).encode())))
+            gate(10_000)
+            proj = ee.Image(DIR_ASSET).projection().getInfo()
+            log(dict(request="dir_projection", response_bytes=len(json.dumps(proj).encode())))
+            if abs(proj["transform"][0] - RES) > 1e-9 or proj["crs"] != "EPSG:4326":
+                raise ValueError(f"DIR is not the expected native 3 arc-second grid: {proj}")
+            save(OUT / "reaches.json", dict(reaches=reaches, dir_projection=proj))
         info = json.loads((OUT / "reaches.json").read_bytes())
         if "features" not in info["reaches"]:
             raise ValueError("Reach collection did not expand to features")

@@ -1,0 +1,71 @@
+{
+  "ambiguous_snaps": 1,
+  "cloud_usage": {
+    "reaches": 2558,
+    "requests": 5,
+    "response_bytes": 1123960
+  },
+  "clusters": 174,
+  "interpretation": "DEM-routed exposure geometry only; no effect, degradation or causation; clusters UNKNOWN",
+  "not_reaching_monitored_station": 77,
+  "path_km_median": 0.99,
+  "paths_crossing_test_blocks": 0,
+  "per_station": {
+    "Lukha-Khaddum-4315": {
+      "classes": {
+        "PARTIAL": 4,
+        "PERSISTENT": 1,
+        "RECOVERING": 6
+      },
+      "persistent": 1,
+      "status": "LINKED",
+      "upstream_clusters": 11,
+      "upstream_ha": 24.66
+    },
+    "Lukha-Sunapur-3376": {
+      "classes": {
+        "PARTIAL": 32,
+        "PERSISTENT": 28,
+        "RECOVERING": 20
+      },
+      "persistent": 28,
+      "status": "LINKED",
+      "upstream_clusters": 80,
+      "upstream_ha": 47.07
+    },
+    "Myntdu-Leshka-3379": {
+      "classes": {
+        "PARTIAL": 6,
+        "PERSISTENT": 8,
+        "RECOVERING": 3
+      },
+      "persistent": 8,
+      "status": "LINKED",
+      "upstream_clusters": 17,
+      "upstream_ha": 5.31
+    },
+    "Myntdu-Mihmyntdu-4316": {
+      "classes": {
+        "PARTIAL": 5,
+        "PERSISTENT": 7,
+        "RECOVERING": 3
+      },
+      "persistent": 7,
+      "status": "LINKED",
+      "upstream_clusters": 15,
+      "upstream_ha": 4.05
+    }
+  },
+  "persistent_reaching_station": 36,
+  "phase": "23A-linkage",
+  "preregistration_sha256": "44ff1f1b55395cf7ef004e7c765cf488d1dd301df735a3b8cef525fdfc7a5375",
+  "reaching_any_station": 97,
+  "routed": 174,
+  "stations_missing_in_reaches": [],
+  "unrouted": 0,
+  "unrouted_reasons": {
+    "LEFT_BBOX": 0,
+    "MAX_STEPS": 0,
+    "SINK_OR_NODATA": 0
+  }
+}

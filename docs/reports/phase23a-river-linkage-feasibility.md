@@ -86,3 +86,42 @@ The realistic river contribution is an **exposure map plus official records**:
 - Water-specific atmospheric correction.
 
 Without these, even a successful linkage and records pilot yields **co-location and description, not causation**.
+
+## Stage 2 — drainage-linkage pilot results (approved; run 2026-11-21)
+
+**Records.** The preregistration is `a9555a4` ([phase23a-linkage-preregistration.json](phase23a-linkage-preregistration.json)). Results are in [phase23a-linkage-summary.json](phase23a-linkage-summary.json). Code is in `scripts/phase23a_linkage.py` and tests in `tests/test_phase23a_linkage.py`. The per-cluster routes stay local in `outputs/phase23a_linkage/`.
+
+**Usage.** 5 Earth Engine requests and 1,123,960 bytes, against a cap of 6 requests and 6 MB.
+- One request was wasted: an `ee.Dictionary` wrapping the reach FeatureCollection returned only metadata. It is recorded in the ledger, and the code now fetches the collection directly.
+- The native 3-arc-second D8 grid was verified, so no direction codes were resampled.
+- 2,558 FFR reaches were returned.
+
+**Routing.** All **174 of 174** clusters routed, with no sink, bbox exit or step-limit failures. The median D8 path to the first mapped reach is 0.99 km. One snap was ambiguous (88:558/C005). No path crossed a TEST block.
+
+| Monitored station reach | Upstream clusters | Upstream cluster area (ha) | PERSISTENT / PARTIAL / RECOVERING | Status |
+|---|---|---|---|---|
+| Lukha · Khaddum 4315 | 11 | 24.7 | 1 / 4 / 6 | LINKED |
+| Lukha · Sunapur 3376 (downstream of Khaddum) | **80** | 47.1 | **28** / 32 / 20 | LINKED |
+| Myntdu · Mihmyntdu 4316 | 15 | 4.1 | 7 / 5 / 3 | LINKED |
+| Myntdu · Leshka 3379 (downstream of Mihmyntdu) | 17 | 5.3 | 8 / 6 / 3 | LINKED |
+
+Counts are cumulative down the main stem: Sunapur includes Khaddum's 11 clusters, and Leshka includes Mihmyntdu's 15. **77 clusters** route to reaches that reach none of the four monitored stations: other tributaries, or reaches leaving the district.
+
+**Lumshnong.** Of the 28 persistent Lumshnong clusters:
+- **22 enter the Lukha *between* Khaddum and Sunapur**;
+- 1 passes Khaddum;
+- 5 reach no monitored station.
+
+This agrees with the MSPCB narrative of Lumshnong-area streams feeding the Lunar–Lukha system. It gives a DEM-supported **upstream/downstream bracket**: Khaddum is weakly exposed (1 persistent cluster upstream) and Sunapur is strongly exposed (28).
+
+### Interpretation and limits
+
+The disturbance clusters **can be linked to river reaches through modelled drainage paths**, not just straight-line distance. Khaddum–Sunapur forms the most defensible exposure bracket in the study area.
+
+This is **exposure geometry, not impact**:
+- **DEM resolution.** The 90 m DEM routing cannot resolve 30 m clusters' local drainage, roads or culverts.
+- **Karst.** Lumshnong is limestone karst, where subsurface flow can bypass surface routes.
+- **Station position.** Each station's reach is the nearest mapped line to the CPCB coordinate (27–101 m away). If a sampling point lies below a confluence, the bracket changes.
+- **Cluster status.** The clusters remain UNKNOWN land disturbance.
+
+The bracket's *river observations* still fail at 10 m (Sunapur: 1/0 interior dates). So the defensible next step is **official station records** (CPCB/MSPCB) at Khaddum vs Sunapur and Mihmyntdu vs Leshka, reported descriptively. That needs your approval to locate and download them. No degradation or causal claim is supported.
