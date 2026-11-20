@@ -23,3 +23,15 @@ def test_group_bootstrap_paired_difference_sign():
     ci, d = group_bootstrap({"x": bad, "y": good}, draws=200)
     assert ci["y"]["f1"][0] > ci["x"]["f1"][1]
     assert d["y-minus-x"]["share_resamples_positive"] == 1.0
+
+
+def test_lock_prevents_concurrent_acquisition_and_budget_reads_disk(tmp_path):
+    import json, pytest
+    from scripts.phase22w_ablation import acquire_lock, ledger_usage
+    lock = acquire_lock(tmp_path / ".lock")
+    with pytest.raises(SystemExit):
+        acquire_lock(tmp_path / ".lock")
+    lock.unlink()
+    led = tmp_path / "ledger.jsonl"
+    led.write_text("\n".join(json.dumps(dict(response_bytes=b)) for b in (0, 10, 0, 5)) + "\n")
+    assert ledger_usage(led) == (4, 15)

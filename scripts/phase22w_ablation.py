@@ -129,15 +129,37 @@ def acquire():
     avail = json.loads(AVAIL.read_bytes())["counts"]
     rows = {r["patch_id"]: r for p in MANIFESTS.values() for r in json.loads(p.read_bytes())["patches"]}
     OUT.mkdir(parents=True, exist_ok=True)
-    ledger = [json.loads(l) for l in LEDGER.read_text().splitlines()] if LEDGER.exists() else []
-    used = lambda: (len(ledger), sum(x.get("response_bytes", 0) for x in ledger))
+    lock = acquire_lock(OUT / ".acquire.lock")  # one writer only (Phase 22W duplicate-run incident)
+    try:
+        _acquire(plan, avail, rows, ee, requests, MemoryFile, Phase2Config, Season, initialize, sar)
+    finally:
+        lock.unlink(missing_ok=True)
+
+
+def acquire_lock(path):
+    import os
+    try:
+        os.close(os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY))
+    except FileExistsError:
+        raise SystemExit(f"Another acquisition holds {path}; refusing to run concurrently") from None
+    return path
+
+
+def ledger_usage(path=None):
+    """Budget is always computed from the shared on-disk ledger, never from process memory."""
+    path = path or LEDGER
+    rows = [json.loads(l) for l in path.read_text().splitlines()] if path.exists() else []
+    return len(rows), sum(x.get("response_bytes", 0) for x in rows)
+
+
+def _acquire(plan, avail, rows, ee, requests, MemoryFile, Phase2Config, Season, initialize, sar):
+    used = ledger_usage
     initialize()
     cfg, season = Phase2Config(), Season("2019-Q1", *plan["window"])
     dem = ee.Image("USGS/SRTMGL1_003").select("elevation")
     terrain = dem.resample("bilinear").rename("elevation").addBands(ee.Terrain.slope(dem).resample("bilinear").rename("slope"))
 
     def log(entry):
-        ledger.append(entry)
         with LEDGER.open("a") as fh:
             fh.write(json.dumps(entry) + "\n")
 
