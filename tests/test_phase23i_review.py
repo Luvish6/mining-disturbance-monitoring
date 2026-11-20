@@ -34,3 +34,15 @@ def test_published_manifest_is_blinded_and_train_val_only():
     assert not any(k in rows[0] for k in ("x", "y", "row", "col", "key", "lon", "lat"))
     design = json.loads(Path("docs/reports/phase23i-sample-design.json").read_text())
     assert design["strata"]["PURPOSIVE_TIER1"]["sampled"] == 0
+
+
+def test_10m_chip_bounds_and_count_packing():
+    from scripts.phase23i_review import chip10_bounds, pack_counts, unpack_counts
+    b = chip10_bounds(441555.0, 2791555.0)
+    assert b[2] - b[0] == 640 and b[3] - b[1] == 640 and all(v % 10 == 0 for v in b)
+    c = (np.array([0, 5, 40]), np.array([3, 31, 2]), np.array([1, 0, 31]))
+    p = pack_counts(*c)
+    assert p.max() <= 32767
+    u = unpack_counts(p)
+    assert list(u[0]) == [0, 5, 31] and list(u[1]) == [3, 31, 2] and list(u[2]) == [1, 0, 31]
+    assert [int(x) for x in unpack_counts(np.array([-9999]))[0]] == [0]

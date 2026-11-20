@@ -108,3 +108,31 @@ The 2025–26 panel is used only to describe persistence, not to decide `visible
 ## Status
 
 The workflow is ready for reviewers. The 30 m chips exist now, and option A would add the 10 m chips once approved. No review has been performed.
+
+## Addendum — 10 m chip acquisition (approved; 2026-11-21)
+
+**Usage.** Option A was run under the exclusive lock with a dedicated shared ledger (`outputs/phase23i_review/ledger10.jsonl`, local): **61 Earth Engine requests and 2,115,817 bytes**, against caps of 61 requests and 3 MB. That was 1 batched metadata request plus 30 × (URL + download). No retries were needed.
+
+**Guard.** Before any request, every 640 m chip footprint was checked offline and found clear of all buffered TEST blocks and inside the districts.
+
+**Graph.** Each item is a 64 × 64 grid at 10 m in EPSG:32646, north-up, centred on the frozen item position. Per season, the image is a median of B4/B3/B2 over:
+- cloud probability < 40;
+- SCL 4/5/6;
+- B2/B3/B4 present.
+
+The seasons are 2023–24, 2024–25 and 2025–26, using the same half-open windows. The per-season observation counts are packed into one band, saturating at 31.
+
+**Rendering.** The fixed 0–0.30 stretch is identical across all seasons and items. Invalid pixels are grey, and the identical 90 m marker is unchanged.
+
+**Provenance.** The contributing Sentinel-2 scene IDs, which encode acquisition date and time, are stored per item and season in `s2_10m/metadata.json` (local). Each season has 24–131 scenes per item.
+
+**Quality.** **All 30 items were usable**: 100% of pixels had at least 2 valid observations in every season. None was flagged, none unavailable, and none substituted.
+
+**Interface.** `review_A.html` and `review_B.html` were regenerated to show `chips10/`. The **reviewer orders are unchanged**, because they come from the same hash of neutral IDs. The adjudication copies with candidate boundaries are in `adjudication10/` (local).
+
+**Limitations.**
+- The images are still **seasonal composites, not single scenes**. Mixed dates can blend transient conditions.
+- The 10 m pages omit Sentinel-1. The 30 m chips in `chips/` keep the VV context, should reviewers need it.
+- Candidates were detected on the 30 m grid. Their boundaries, in the adjudication copy only, are 30 m cell outlines drawn on 10 m imagery.
+
+No review was started, and no labels exist.

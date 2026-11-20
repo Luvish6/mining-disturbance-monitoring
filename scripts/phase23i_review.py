@@ -200,6 +200,7 @@ def render():
 
 def sheet():
     items = json.loads((OUT / "crosswalk.json").read_bytes())
+    chips = "chips10" if (OUT / "chips10").exists() else "chips"
     cols = ["review_id", "reviewer_id", "review_time_utc", "visible_disturbance", "change_type", "image_quality",
             "reviewer_confidence", "mining_attribution", "notes"]
     for rv, salt in (("A", "orderA"), ("B", "orderB")):
@@ -210,8 +211,183 @@ def sheet():
                 w.writerow([it["review_id"], rv, "", "", "", "", "", "UNKNOWN", ""])
         ids = [it["review_id"] for it in order]
         (OUT / f"review_{rv}.html").write_text(HTML.replace("__IDS__", json.dumps(ids)).replace("__RV__", rv)
-                                               .replace("__SCHEMA__", json.dumps(SCHEMA)), encoding="utf-8")
+                                               .replace("__SCHEMA__", json.dumps(SCHEMA))
+                                               .replace("chips/${id}", chips + "/${id}"), encoding="utf-8")
     print("sheets and interfaces written for reviewers A and B")
+
+
+# ------------------------------------------------------------------ 10 m review chips (approved acquisition)
+SEASONS10 = (("before", "2023-11-01", "2024-04-01"), ("after", "2024-11-01", "2025-04-01"),
+             ("follow", "2025-11-01", "2026-04-01"))
+PX10, STEP10, NODATA10 = 64, 10, -9999
+BUDGET10 = dict(max_requests=61, max_bytes=3_000_000)
+LEDGER10 = OUT / "ledger10.jsonl"
+CACHE10 = OUT / "s2_10m"
+
+
+def chip10_bounds(x, y):
+    left = round((x - PX10 * STEP10 / 2) / STEP10) * STEP10
+    bottom = round((y - PX10 * STEP10 / 2) / STEP10) * STEP10
+    return [left, bottom, left + PX10 * STEP10, bottom + PX10 * STEP10]
+
+
+def pack_counts(c1, c2, c3):
+    """Three per-season observation counts (saturated at 31) packed into one int16 band."""
+    sat = lambda c: np.clip(np.nan_to_num(c), 0, 31).astype(np.int32)
+    return sat(c1) + 32 * sat(c2) + 1024 * sat(c3)
+
+
+def unpack_counts(v):
+    v = np.asarray(v).astype(np.int32)
+    v = np.where(v < 0, 0, v)
+    return v % 32, (v // 32) % 32, v // 1024
+
+
+def guard10(items):
+    from shapely.geometry import box
+    from scripts.phase22n_temporal import guards
+    area, protected = guards()
+    for it in items:
+        b = box(*chip10_bounds(it["x"], it["y"]))
+        if any(b.intersects(g) for _, g in protected) or not area.covers(b):
+            raise ValueError(f"{it['review_id']}: 10 m chip intersects TEST buffer or leaves districts")
+
+
+def acquire10():
+    import ee
+    import requests
+    from rasterio.io import MemoryFile
+    from config.phase2_settings import Phase2Config
+    from config.settings import Season
+    from scripts.phase22w_ablation import acquire_lock, ledger_usage
+    from src.gee_setup import initialize
+    from src.optical_preprocessing import collections
+    items = json.loads((OUT / "crosswalk.json").read_bytes())
+    guard10(items)  # offline full-footprint check before any request
+    CACHE10.mkdir(parents=True, exist_ok=True)
+    lock = acquire_lock(OUT / ".acquire.lock")
+    try:
+        def gate(planned):
+            n, b = ledger_usage(LEDGER10)
+            if n + 1 > BUDGET10["max_requests"] or b + planned > BUDGET10["max_bytes"]:
+                raise SystemExit(f"Budget stop: {n} requests, {b} bytes")
+
+        def log(e):
+            with LEDGER10.open("a") as fh:
+                fh.write(json.dumps(e) + "\n")
+
+        initialize()
+        cfg = Phase2Config()
+
+        def masked(img):
+            prob = ee.Image(img.get("clouds")).select("probability")
+            scl = img.select("SCL")
+            ok = (prob.lt(cfg.cloud_probability).And(scl.eq(4).Or(scl.eq(5)).Or(scl.eq(6)))
+                  .And(img.select(["B2", "B3", "B4"]).mask().reduce(ee.Reducer.min())))
+            return img.select(["B4", "B3", "B2"]).updateMask(ok)
+
+        def graph(region):
+            parts, counts, meta = [], [], {}
+            for name, start, end in SEASONS10:
+                _, joined = collections(region, Season(name, start, end), cfg)
+                col = joined.map(masked)
+                parts.append(col.median().rename([f"{name}_B4", f"{name}_B3", f"{name}_B2"]))
+                counts.append(col.select("B4").count().unmask(0))
+                meta[name] = dict(ids=joined.aggregate_array("system:index"))  # S2 IDs encode acquisition date/time
+            packed = counts[0].min(31).add(counts[1].min(31).multiply(32)).add(counts[2].min(31).multiply(1024)).rename("packed_count")
+            img = ee.Image.cat(parts).toInt16().unmask(NODATA10, False).addBands(packed.toInt16())
+            return img, meta
+
+        regions = {it["review_id"]: ee.Geometry.Rectangle(chip10_bounds(it["x"], it["y"]), "EPSG:32646", False) for it in items}
+        if not (CACHE10 / "metadata.json").exists():
+            gate(400_000)
+            info = ee.Dictionary({rid: ee.Dictionary(graph(g)[1]) for rid, g in regions.items()}).getInfo()
+            log(dict(request="metadata", response_bytes=len(json.dumps(info).encode())))
+            save(CACHE10 / "metadata.json", info)
+        for it in items:
+            rid = it["review_id"]
+            target = CACHE10 / f"{rid}.npy"
+            if target.exists():
+                continue
+            x0, y0, x1, y1 = chip10_bounds(it["x"], it["y"])
+            img, _ = graph(regions[rid])
+            gate(0)
+            url = img.getDownloadURL(dict(format="GEO_TIFF", crs="EPSG:32646", crs_transform=[STEP10, 0, x0, 0, -STEP10, y1],
+                                          dimensions=[PX10, PX10]))
+            log(dict(item=rid, request="url", response_bytes=0))
+            gate(90_000)
+            with requests.get(url, timeout=(15, 180)) as r:
+                log(dict(item=rid, request="download", response_bytes=len(r.content), status=r.status_code))
+                if r.status_code != 200:
+                    print(rid, "HTTP", r.status_code, "- flagged, not retried")
+                    continue
+                content = r.content
+            with MemoryFile(content) as mem, mem.open() as src:
+                if src.shape != (PX10, PX10) or src.count != 10 or abs(src.transform.a - STEP10) > 1e-9:
+                    print(rid, "unexpected grid - flagged")
+                    continue
+                np.save(target, src.read())
+        n, b = ledger_usage(LEDGER10)
+        save(OUT / "acquisition10.json", dict(requests=n, response_bytes=b, items_cached=len(list(CACHE10.glob("R*.npy")))))
+        print("requests", n, "bytes", b)
+    finally:
+        lock.unlink(missing_ok=True)
+
+
+def render10():
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Rectangle
+    aois = load_aois()
+    items = json.loads((OUT / "crosswalk.json").read_bytes())
+    meta = json.loads((CACHE10 / "metadata.json").read_bytes())
+    (OUT / "chips10").mkdir(exist_ok=True)
+    (OUT / "adjudication10").mkdir(exist_ok=True)
+    quality = []
+    for it in items:
+        rid = it["review_id"]
+        f = CACHE10 / f"{rid}.npy"
+        if not f.exists():
+            quality.append(dict(review_id=rid, status="UNAVAILABLE"))
+            continue
+        v = np.load(f).astype(float)
+        refl = np.where(v[:9] == NODATA10, np.nan, v[:9] / 10000)
+        counts = unpack_counts(v[9])
+        x0, y0, x1, y1 = chip10_bounds(it["x"], it["y"])
+        valid = [float(np.mean(c >= 2)) for c in counts]
+        flags = [n for n, fr in zip(("before", "after", "follow"), valid) if fr < 0.8]
+        quality.append(dict(review_id=rid, status="FLAG_LOW_VALIDITY" if flags else "OK",
+                            valid_fraction=dict(zip(("before", "after", "follow"), valid)), low_validity_seasons=flags,
+                            scenes={s: len(meta[rid][s]["ids"]) for s in ("before", "after", "follow")}))
+        a = aois[it["aoi"]]
+        ax0, ay1 = a["meta"]["bounds"][0], a["meta"]["bounds"][3]
+        xs = x0 + (np.arange(PX10) + .5) * STEP10
+        ys = y1 - (np.arange(PX10) + .5) * STEP10
+        ci = np.floor((xs - ax0) / a["step"]).astype(int)
+        ri = np.floor((ay1 - ys) / a["step"]).astype(int)
+        R, C = np.meshgrid(ri, ci, indexing="ij")
+        inside = (R >= 0) & (R < 64) & (C >= 0) & (C < 64)
+        cand = np.zeros((PX10, PX10), bool)
+        cand[inside] = a["cand"][R[inside], C[inside]]
+        mr = int(round((y1 - it["y"]) / STEP10)) - 4
+        mc = int(round((it["x"] - x0) / STEP10)) - 4
+        for blinded in (True, False):
+            fig, axes = plt.subplots(1, 3, figsize=(10.5, 3.8), layout="constrained")
+            for k, (ax, lab) in enumerate(zip(axes, ("2023-24 dry season", "2024-25 dry season", "2025-26 dry season"))):
+                ax.imshow(to_rgb([refl[3 * k], refl[3 * k + 1], refl[3 * k + 2]]), interpolation="nearest")
+                ax.set_title(f"{lab} (valid {valid[k]:.0%})", fontsize=8)
+                ax.add_patch(Rectangle((mc - .5, mr - .5), 9, 9, fill=False, ec="yellow", lw=1.2))
+                if not blinded and cand.any():
+                    ax.contour(cand.astype(float), levels=[.5], colors="cyan", linewidths=.8)
+                ax.set_xticks([])
+                ax.set_yticks([])
+            fig.suptitle(f"{rid} | Sentinel-2 10 m seasonal median (cloud prob < 40, SCL 4/5/6); fixed stretch 0-0.30; "
+                         "grey = invalid; box = 90 m review marker", fontsize=8)
+            fig.savefig(OUT / ("chips10" if blinded else "adjudication10") / f"{rid}.png", dpi=110)
+            plt.close(fig)
+    save(OUT / "chip10_quality.json", quality)
+    print({s: sum(q["status"] == s for q in quality) for s in ("OK", "FLAG_LOW_VALIDITY", "UNAVAILABLE")})
 
 
 HTML = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
@@ -245,7 +421,8 @@ show();
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__)
     g = ap.add_mutually_exclusive_group(required=True)
-    for fl in ("--sample", "--render", "--sheet"):
+    for fl in ("--sample", "--render", "--sheet", "--acquire10", "--render10"):
         g.add_argument(fl, action="store_true")
     a = ap.parse_args()
-    (sample if a.sample else render if a.render else sheet)()
+    {"sample": sample, "render": render, "sheet": sheet, "acquire10": acquire10, "render10": render10}[
+        next(k for k, v in vars(a).items() if v)]()
