@@ -1,0 +1,167 @@
+{
+  "aois": {
+    "east-90-562": {
+      "background_cells": 3966,
+      "candidate_cells": 5,
+      "clusters": 5,
+      "eligible_cells": 4091,
+      "frozen_masks_sha256": "b926fa08f574c26ed31f0e00b19e6d4e969369e0ddd8f30dc952120c3a591407",
+      "guard": {
+        "block": "90:562",
+        "bounds": [
+          451530.0,
+          2811540.0,
+          453450.0,
+          2813460.0
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 2015.3,
+        "split": "validation",
+        "test_intersections": []
+      },
+      "source": "outputs\\phase22q_multi_aoi\\east-90-562_s2.npy",
+      "source_sha256": "615913f2d7121a718d9df0a5c5f5d0c12aa562479686b75f9afb2098c84f2d11"
+    },
+    "east-94-559-c74": {
+      "background_cells": 3937,
+      "candidate_cells": 9,
+      "clusters": 6,
+      "eligible_cells": 4096,
+      "frozen_masks_sha256": "4e35531b970958db30f73beabe58d7aefa2b03f56f8e035863b9ead0eff67947",
+      "guard": {
+        "block": "94:559",
+        "bounds": [
+          470640.0,
+          2796330.0,
+          472560.0,
+          2798250.0
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 1210.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "source": "outputs/phase22l_temporal_pilot/change.tif",
+      "source_sha256": "8df15e5865cd83b117292907137ea3cea36335f6bacf3a815079e0a09b5b3fb6"
+    },
+    "west-82-563": {
+      "background_cells": 4071,
+      "candidate_cells": 1,
+      "clusters": 1,
+      "eligible_cells": 4096,
+      "frozen_masks_sha256": "327eac735a5abac72e968f61c73433df4358a3e5cbdd6f362a7e68fb05169222",
+      "guard": {
+        "block": "82:563",
+        "bounds": [
+          411540.0,
+          2816550.0,
+          413460.0,
+          2818470.0
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6420.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "source": "outputs\\phase22q_multi_aoi\\west-82-563_s2.npy",
+      "source_sha256": "39e579c691e0326ce348f7408143d0b453b653bfce0374357bd0f23a1d6e72a6"
+    },
+    "west-85-563": {
+      "background_cells": 3965,
+      "candidate_cells": 6,
+      "clusters": 6,
+      "eligible_cells": 4089,
+      "frozen_masks_sha256": "4f923053ecaa53043e709a977df0e4d7df8e80ca99732188d36efbedd08daba9",
+      "guard": {
+        "block": "85:563",
+        "bounds": [
+          426540.0,
+          2816550.0,
+          428460.0,
+          2818470.0
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 1430.0,
+        "split": "validation",
+        "test_intersections": []
+      },
+      "source": "outputs\\phase22q_multi_aoi\\west-85-563_s2.npy",
+      "source_sha256": "cba5e96bc7195729efa5448f3b15d6785ab3ab54277b58322103c8ef12899c00"
+    }
+  },
+  "background": "eligible AOI cells more than 2 cells (60 m, Chebyshev) from any candidate cell",
+  "budget": {
+    "max_bytes": 1000000,
+    "max_requests": 8
+  },
+  "date": "2026-11-20",
+  "exclusions": {
+    "not_tuned": "22L rule thresholds unchanged; no classifier trained",
+    "test": "all TEST blocks/tiles; never opened"
+  },
+  "forbidden_metrics": "no mining precision, recall, F1 or accuracy",
+  "hypotheses": {
+    "H1": "clusters overlap GFC loss in 2024 or 2025 (lossyear 24/25) more often than shape-preserving random placements",
+    "H2": "clusters have higher mean hard-commodities probability than random placements",
+    "context": "loss before 2024 (lossyear 1-23) and treecover2000 reported descriptively"
+  },
+  "interpretation": "independent-product agreement; candidates remain UNKNOWN; not mining or loss confirmation",
+  "limitations": [
+    "1 km driver cells are larger than the 1.92 km AOI's internal structure: candidates and background share few cells, so H2 has very low power and is expected to be near null",
+    "drivers describe 2001-2024 dominant driver, not the 2023-25 seasonal change; hard commodities include energy infrastructure",
+    "GFC loss needs prior tree cover and Landsat-scale stand-replacement; small, partial or non-forest change is missed",
+    "GFC annual years do not match the Nov-Mar seasons; 2024 and 2025 are pooled",
+    "east-90-562 and west-85-563 share Sentinel-2 acquisitions; cells within AOIs are spatially dependent"
+  ],
+  "null_outcomes": "zero overlap, equal or lower agreement, masked driver cells and AOIs without driver data are reported as measured",
+  "phase": "22R",
+  "products": {
+    "catalog_verified": "Earth Engine catalog pages read 2026-11-20; asset metadata re-checked by the first acquisition request",
+    "drivers": {
+      "asset": "projects/landandcarbon/assets/wri_gdm_drivers_forest_loss_1km/v1_2_2001_2024",
+      "bands": [
+        "classification",
+        "probability_2"
+      ],
+      "citation": "Sims et al. 2025 ERL 20:074027",
+      "classes": {
+        "1": "Permanent agriculture",
+        "2": "Hard commodities",
+        "3": "Shifting cultivation",
+        "4": "Logging",
+        "5": "Wildfire",
+        "6": "Settlements and infrastructure",
+        "7": "Other natural disturbances"
+      },
+      "coverage": "dominant driver of GFC v1.12 loss 2001-2024",
+      "licence": "CC-BY-4.0",
+      "native_m": 1111.95,
+      "probability_scale": "0-250, x0.004"
+    },
+    "hansen": {
+      "asset": "UMD/hansen/global_forest_change_2025_v1_13",
+      "bands": [
+        "lossyear",
+        "treecover2000",
+        "datamask"
+      ],
+      "citation": "Hansen et al. 2013 Science 342:850; GFC v1.13",
+      "coverage": "2000-2025",
+      "licence": "CC-BY-4.0",
+      "lossyear": "1-25 = 2001-2025; 0/no loss masked -> unmasked to 0",
+      "native_m": 27.83
+    }
+  },
+  "sampling": "both products sampled on the frozen 30 m EPSG:32646 AOI grids by Earth Engine default nearest-neighbour reprojection (cell-centre rule); 1 km driver cells identified locally from the driver projection",
+  "total_clusters": 18,
+  "uncertainty": "shape-preserving translation permutation within each AOI's background, stratified by AOI, 10000 draws, seed 46; two-sided p around the null median; Wilson 95% CI for cluster fractions",
+  "units": {
+    "drivers_effective": "distinct 1 km driver cells",
+    "primary": "cluster (n=18)",
+    "secondary": "30 m cell (descriptive)"
+  }
+}
