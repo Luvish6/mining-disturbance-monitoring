@@ -1,0 +1,82 @@
+{
+  "aois": {
+    "east-90-562": {
+      "district": "East Jaintia Hills",
+      "guard": {
+        "block": "90:562",
+        "bounds": [
+          451530,
+          2811540,
+          453450,
+          2813460
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 2015.3,
+        "split": "validation",
+        "test_intersections": []
+      },
+      "sar_diagnostics_sha256": "b6116af663d5a41223b64b52f01f51c128b68fe84ce2da043b2e8df55712f6f4",
+      "sar_features_sha256": "8ef7ca307673458779ff0b7592059618d887d5c64ae2ca1743c6fb12b4feb5a3"
+    },
+    "west-82-563": {
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "82:563",
+        "bounds": [
+          411540,
+          2816550,
+          413460,
+          2818470
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6420.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "sar_diagnostics_sha256": "3a7de9fa491eedd8c27a7d34cff3b99060d2aa8626965f10fbc6c07faae09159",
+      "sar_features_sha256": "3c70e414233a96432c1d590a5a72fcbd5f0c3e6fb971e9cfe357a26961d6d12d"
+    },
+    "west-85-563": {
+      "district": "West Jaintia Hills",
+      "guard": {
+        "block": "85:563",
+        "bounds": [
+          426540,
+          2816550,
+          428460,
+          2818470
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 1430.0,
+        "split": "validation",
+        "test_intersections": []
+      },
+      "sar_diagnostics_sha256": "ae5d0f8558ebb50db375ff8ba464cfd32542d4150781790edcb9eff1976c4617",
+      "sar_features_sha256": "2a4e304137a182838585c9d4e070e2c3ba44523cc71b8ac3d74b1abfc061c974"
+    }
+  },
+  "budget": {
+    "max_bytes": 5000000,
+    "max_requests": 20
+  },
+  "date": "2026-11-20",
+  "excluded": {
+    "east-91-561": "TEST tile in Phase 6B roster: never opened or processed",
+    "east-94-559": "overlaps the Phase 22L/22P AOI (1,938 shared cells): not independent",
+    "west-81-557": "TEST tile in Phase 6B roster: never opened or processed"
+  },
+  "interpretation": "descriptive corroboration of UNKNOWN candidates; zero candidates is a measured outcome",
+  "optical": "unchanged Phase 22L seasonal_graph + select_candidates: NDVI decrease <= -0.30, BSI increase > +0.10, >=2 obs/season, NDWI<0, brightness>=0.04, SCL 4/5, cloud prob<40",
+  "phase": "22Q",
+  "sar": "cached Phase 6B dVV/dVH (orbit 77, same graph reproduced to 1.8e-6 dB in Phase 22P); SAR-valid = sar_before_valid & sar_after_valid",
+  "selection": "all non-TEST Phase 6B roster tiles (coverage-selected in Phase 6B, before any disturbance detection), minus the tile overlapping the Phase 22L AOI; no relocation, no additions",
+  "statistics": {
+    "per_aoi": "Phase 22P cell-level permutation (seed 42) and 5-95 co-change, only if >= 3 candidate cells",
+    "pooled_primary": "stratified permutation over the new AOIs (seed 44): mean of candidate dVH minus own-AOI background median",
+    "pooled_secondary": "same, adding the Phase 22L AOI from the 22P cache"
+  },
+  "validation_split_note": "VAL tiles are used for evaluation only; no rule, threshold or parameter is fitted or tuned"
+}
