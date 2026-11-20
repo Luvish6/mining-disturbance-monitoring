@@ -1,0 +1,47 @@
+{
+  "budget": {
+    "max_bytes": 6000000,
+    "max_requests": 6
+  },
+  "data": {
+    "bbox_wgs84": [
+      91.93,
+      24.98,
+      92.85,
+      25.8
+    ],
+    "expected_bytes": 3086336,
+    "flow_direction": "WWF/HydroSHEDS/03DIR band b1, native 3 arc-second EPSG:4326 grid (no reprojection: D8 codes are not resampled)",
+    "grid": {
+      "cols": 1104,
+      "north": 25.8,
+      "rows": 984,
+      "west": 91.93
+    },
+    "reaches": "WWF/HydroSHEDS/v1/FreeFlowingRivers: GOID, NDOID, UPLAND_SKM, line geometry"
+  },
+  "date": "2026-11-20",
+  "failure": {
+    "station_exposure": "a station with < 3 upstream clusters is INSUFFICIENT_EXPOSURE",
+    "unrouted": "SINK_OR_NODATA, LEFT_BBOX or > 3000 steps -> UNROUTED, reported"
+  },
+  "guards": "static DEM-derived hydrography only; only non-TEST 22X clusters are routed; TEST blocks crossed are recorded, nothing from TEST is read; mining attribution UNKNOWN",
+  "inputs": {
+    "phase22x_prereg": "d711fcfd5f95c93fca8e686514901eb037b8386f56c2e46b0238873355910da9",
+    "phase22z_summary": "2f55aafc90a209dfa8b46d50ca93bfc69a9cb4c107ac293fd97dcf0e2af0cfa7"
+  },
+  "method": {
+    "downstream": "follow NDOID from the snapped reach; record every monitored station reach on the chain",
+    "route": "ESRI D8 steps on the DIR grid until a cell centre lies within 90 m of an FFR reach line",
+    "snap": "nearest reach at the stop cell; AMBIGUOUS if a second reach is within 90 m too (nearest still used, flagged)",
+    "start": "each of the 174 SAR-tested 22X cluster centroids (cell-mean, local only)",
+    "stations": {
+      "Lukha-Khaddum-4315": 4103404,
+      "Lukha-Sunapur-3376": 4110349,
+      "Myntdu-Leshka-3379": 4100220,
+      "Myntdu-Mihmyntdu-4316": 4090610
+    }
+  },
+  "phase": "23A-linkage",
+  "reporting": "per station: upstream clusters, area and 22Y persistence classes; per cluster: path length, snapped reach, AMBIGUOUS flag, TEST-block crossings (geometry only); no causal or degradation claim"
+}
