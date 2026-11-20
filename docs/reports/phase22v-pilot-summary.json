@@ -1,0 +1,162 @@
+{
+  "all_pass": false,
+  "availability_all_patches": {
+    "train": {
+      "best_orbit_scene_count_min_median_max": [
+        0,
+        7.0,
+        11
+      ],
+      "by_state": {
+        "Andhra Pradesh": {
+          "descending_ok": 9,
+          "patches": 9
+        },
+        "Bihār": {
+          "descending_ok": 3,
+          "patches": 3
+        },
+        "Chhattīsgarh": {
+          "descending_ok": 12,
+          "patches": 12
+        },
+        "Goa": {
+          "descending_ok": 0,
+          "patches": 12
+        },
+        "Gujarāt": {
+          "descending_ok": 12,
+          "patches": 12
+        },
+        "Haryāna": {
+          "descending_ok": 3,
+          "patches": 3
+        },
+        "Karnātaka": {
+          "descending_ok": 12,
+          "patches": 12
+        },
+        "Madhya Pradesh": {
+          "descending_ok": 12,
+          "patches": 12
+        },
+        "Mahārāshtra": {
+          "descending_ok": 12,
+          "patches": 12
+        },
+        "Rājasthān": {
+          "descending_ok": 12,
+          "patches": 12
+        },
+        "Telangāna": {
+          "descending_ok": 12,
+          "patches": 12
+        },
+        "West Bengal": {
+          "descending_ok": 9,
+          "patches": 9
+        }
+      },
+      "complete_groups": [
+        36,
+        40
+      ],
+      "descending_single_orbit_ge2": 108,
+      "patches": 120
+    },
+    "validation": {
+      "best_orbit_scene_count_min_median_max": [
+        7,
+        7.0,
+        8
+      ],
+      "by_state": {
+        "Odisha": {
+          "descending_ok": 33,
+          "patches": 33
+        }
+      },
+      "complete_groups": [
+        11,
+        11
+      ],
+      "descending_single_orbit_ge2": 33,
+      "patches": 33
+    }
+  },
+  "availability_note": "scene-count metadata only (1 request); no imagery or VAL outcomes read",
+  "cloud_usage": {
+    "requests": 9,
+    "response_bytes": 402692
+  },
+  "patches": {
+    "27d4727c90101266-pos": {
+      "ascending_scenes": 8,
+      "count_range": [
+        7,
+        7
+      ],
+      "in_db_range_fraction": 1.0,
+      "joint_valid_fraction": 0.999755859375,
+      "orbit": 121,
+      "orbit_histogram": {
+        "121.0": 7
+      },
+      "passes": true,
+      "s2_valid_fraction": 0.999755859375,
+      "sar_valid_fraction": 1.0,
+      "state": "Bihār",
+      "status": "ACQUIRED",
+      "vh_below_vv_fraction": 1.0,
+      "weak_class": "positive"
+    },
+    "56642b9feb1004b3-3000-6": {
+      "ascending_scenes": 0,
+      "state": "Goa",
+      "status": "NO_DESCENDING_COVERAGE",
+      "weak_class": "background"
+    },
+    "b27df62851d5b686-6000-2": {
+      "ascending_scenes": 0,
+      "count_range": [
+        2,
+        2
+      ],
+      "in_db_range_fraction": 1.0,
+      "joint_valid_fraction": 1.0,
+      "orbit": 34,
+      "orbit_histogram": {
+        "34.0": 2
+      },
+      "passes": true,
+      "s2_valid_fraction": 1.0,
+      "sar_valid_fraction": 1.0,
+      "state": "Rājasthān",
+      "status": "ACQUIRED",
+      "vh_below_vv_fraction": 1.0,
+      "weak_class": "background"
+    },
+    "dfced0ef05569446-pos": {
+      "ascending_scenes": 0,
+      "count_range": [
+        7,
+        7
+      ],
+      "in_db_range_fraction": 1.0,
+      "joint_valid_fraction": 0.99945068359375,
+      "orbit": 92,
+      "orbit_histogram": {
+        "92.0": 7
+      },
+      "passes": true,
+      "s2_valid_fraction": 0.99945068359375,
+      "sar_valid_fraction": 1.0,
+      "state": "Telangāna",
+      "status": "ACQUIRED",
+      "vh_below_vv_fraction": 1.0,
+      "weak_class": "positive"
+    }
+  },
+  "phase": "22V",
+  "preregistration_sha256": "d5d24dfa1f34222f22cfb4373d087f0d34ac3618a5627b92bbe4b6609f1bbaeb"
+}
