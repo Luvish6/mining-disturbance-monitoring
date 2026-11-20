@@ -99,7 +99,39 @@ GEE initialization calls are not counted. getInfo byte counts are serialized JSO
    Describe the river component in the paper as a feasibility study only.
 6. **Model results to keep separate.** The MineNetCD held-out RF (Phase 17G, pooled F1 0.246) and the Maus weak-label U-Net (VAL F1 0.713 ± 0.085) are benchmark and weak-label results. They are not Meghalaya accuracy.
 
+## Update: Phase 22Q completed (multi-AOI replication, done after the first handoff commit)
+
+| SHA | Purpose |
+|---|---|
+| `e362a54` | 22Q preregistration |
+| (next commit) | 22Q results and this update |
+
+**Files:** `scripts/phase22q_multi_aoi.py`, `tests/test_phase22q_multi_aoi.py` (3 tests pass), `docs/reports/phase22q-preregistration.json`, `docs/reports/phase22q-summary.json` and `docs/reports/phase22q-multi-aoi-sar.md`.
+
+**AOIs:** all non-TEST Phase 6B tiles: east-90-562 (VAL), west-82-563 (TRAIN) and west-85-563 (VAL). TEST tiles were excluded unopened. east-94-559 was excluded because it overlaps the Phase 22L AOI.
+
+**Method:** the unchanged 22L rule, with SAR taken from the cached 6B dVV/dVH.
+
+**Results:**
+
+| AOI | Candidate cells | dVH difference from background | p | dVV |
+|---|---|---|---|---|
+| east-90-562 | 5 | −1.97 dB | 0.003 | not distinct |
+| west-85-563 | 6 | −1.49 dB | 0.012 | not distinct |
+| west-82-563 | 1 | not tested (TOO_FEW_CANDIDATES) | — | — |
+
+- **Pooled, new AOIs only (12 cells):** −1.77 dB, p = 1.0×10⁻⁴. These p-values are descriptive only, because neighbouring cells are spatially autocorrelated.
+- **Data independence:** east-90-562 and west-85-563 share Sentinel-2 tile T46RDP, so their acquisitions are the same.
+
+**Cloud use:** 9 requests and 623,267 bytes.
+
+**What this changes:** the S1–S2 VH agreement now replicates across 3 AOIs. It is still not mining validation.
+
 ## Recommended next Codex task
+
+*Updated after 22Q.* The most valuable next step is gap 1: a blind two-reviewer verdict on the 6 + 5 + 6 + 1 = 18 candidate clusters, plus matched random background cells, using dated very-high-resolution imagery. This turns the corroborated candidates into the first measured precision estimate. The original recommendation below has now been carried out as 22Q.
+
+Original recommendation:
 
 Extend Phase 22P to ≥3 new preregistered, guard-passing TRAIN/VAL AOIs, which addresses gaps 2 and 3:
 1. Preregister the AOI roster with the Phase 22N full-footprint `check()`.

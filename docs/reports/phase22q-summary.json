@@ -1,0 +1,169 @@
+{
+  "aois": {
+    "east-90-562": {
+      "block": "90:562",
+      "candidate_slope_deg": [
+        1.8543341159820557,
+        10.88375186920166
+      ],
+      "cells": {
+        "background": 4086,
+        "candidate_ha": 0.44999999999999996,
+        "candidates": 5,
+        "clusters": 5,
+        "eligible": 4091,
+        "sar_valid_candidates": 5,
+        "sar_valid_eligible": 4091,
+        "total": 4096
+      },
+      "co_change_outside_5_95": [
+        2,
+        5
+      ],
+      "dVH": {
+        "background_median_db": -0.9597397446632385,
+        "candidate_median_db": -2.930673837661743,
+        "candidate_percentile_ranks": [
+          78.0,
+          0.4,
+          64.9,
+          6.9,
+          3.8
+        ],
+        "median_difference_db": -1.9709340929985046,
+        "permutation_p_two_sided": 0.0029997000299970002
+      },
+      "dVV": {
+        "background_median_db": -0.6869592666625977,
+        "candidate_median_db": -1.084842562675476,
+        "candidate_percentile_ranks": [
+          35.9,
+          7.6,
+          67.8,
+          32.2,
+          38.8
+        ],
+        "median_difference_db": -0.3978832960128784,
+        "permutation_p_two_sided": 0.49525047495250474
+      },
+      "s2_capture_days": {
+        "after": 56,
+        "before": 51
+      },
+      "s2_scenes": {
+        "after": 58,
+        "before": 52
+      },
+      "split": "validation",
+      "status": "TESTED"
+    },
+    "west-82-563": {
+      "block": "82:563",
+      "candidate_slope_deg": [
+        16.361099243164062,
+        16.361099243164062
+      ],
+      "cells": {
+        "background": 4095,
+        "candidate_ha": 0.09,
+        "candidates": 1,
+        "clusters": 1,
+        "eligible": 4096,
+        "sar_valid_candidates": 1,
+        "sar_valid_eligible": 4096,
+        "total": 4096
+      },
+      "s2_capture_days": {
+        "after": 28,
+        "before": 24
+      },
+      "s2_scenes": {
+        "after": 29,
+        "before": 24
+      },
+      "split": "train",
+      "status": "TOO_FEW_CANDIDATES"
+    },
+    "west-85-563": {
+      "block": "85:563",
+      "candidate_slope_deg": [
+        1.8543341159820557,
+        18.704763412475586
+      ],
+      "cells": {
+        "background": 4083,
+        "candidate_ha": 0.54,
+        "candidates": 6,
+        "clusters": 6,
+        "eligible": 4089,
+        "sar_valid_candidates": 6,
+        "sar_valid_eligible": 4089,
+        "total": 4096
+      },
+      "co_change_outside_5_95": [
+        2,
+        6
+      ],
+      "dVH": {
+        "background_median_db": -0.71244215965271,
+        "candidate_median_db": -2.200458526611328,
+        "candidate_percentile_ranks": [
+          0.1,
+          0.0,
+          13.3,
+          17.7,
+          26.1,
+          11.0
+        ],
+        "median_difference_db": -1.4880163669586182,
+        "permutation_p_two_sided": 0.0122987701229877
+      },
+      "dVV": {
+        "background_median_db": -0.5686260461807251,
+        "candidate_median_db": -0.8478867039084435,
+        "candidate_percentile_ranks": [
+          0.0,
+          0.0,
+          74.2,
+          65.5,
+          19.4,
+          78.5
+        ],
+        "median_difference_db": -0.27926065772771835,
+        "permutation_p_two_sided": 0.6218378162183782
+      },
+      "s2_capture_days": {
+        "after": 56,
+        "before": 51
+      },
+      "s2_scenes": {
+        "after": 58,
+        "before": 52
+      },
+      "split": "validation",
+      "status": "TESTED"
+    }
+  },
+  "cloud_usage": {
+    "requests": 9,
+    "response_bytes": 623267
+  },
+  "interpretation": "descriptive corroboration of UNKNOWN candidates; not validation or mining evidence",
+  "phase": "22Q",
+  "pooled_primary": {
+    "aois": [
+      "east-90-562",
+      "west-82-563",
+      "west-85-563"
+    ],
+    "candidate_cells": 12,
+    "mean_dVH_minus_background_median_db": -1.7701929820080597,
+    "permutation_p_two_sided": 9.999000099990002e-05
+  },
+  "pooled_secondary_with_22L": {
+    "candidate_cells": 21,
+    "mean_dVH_minus_background_median_db": -1.4772796410889852,
+    "permutation_p_two_sided": 9.999000099990002e-05
+  },
+  "preregistration_sha256": "beeae6f1345465fde0fdf1f67b1d764b8b0561076ffb73a25c99dac1cccca05c"
+}
