@@ -1,0 +1,116 @@
+{
+  "cells": {
+    "background": 4087,
+    "candidates": 9,
+    "eligible": 4096,
+    "sar_valid_candidates": 9,
+    "sar_valid_eligible": 4096
+  },
+  "cloud_usage": {
+    "requests": 3,
+    "response_bytes": 68234
+  },
+  "cluster_level": {
+    "clusters": [
+      {
+        "cells": 3,
+        "cluster": "C001",
+        "dVH_mean_db": -2.109910011291504,
+        "dVV_mean_db": -1.5595486958821614
+      },
+      {
+        "cells": 1,
+        "cluster": "C002",
+        "dVH_mean_db": 0.46401214599609375,
+        "dVV_mean_db": 1.3133339881896973
+      },
+      {
+        "cells": 1,
+        "cluster": "C003",
+        "dVH_mean_db": -3.3527183532714844,
+        "dVV_mean_db": -1.834214210510254
+      },
+      {
+        "cells": 2,
+        "cluster": "C004",
+        "dVH_mean_db": -2.2225794792175293,
+        "dVV_mean_db": 1.4513139724731445
+      },
+      {
+        "cells": 1,
+        "cluster": "C005",
+        "dVH_mean_db": -2.61246395111084,
+        "dVV_mean_db": -2.740135669708252
+      },
+      {
+        "cells": 1,
+        "cluster": "C006",
+        "dVH_mean_db": -3.085245132446289,
+        "dVV_mean_db": -1.4935626983642578
+      }
+    ],
+    "dVH_median_of_cluster_means_db": -2.4175217151641846,
+    "dVH_permutation_p_two_sided": 0.030596940305969402
+  },
+  "co_change": {
+    "cells_outside_background_5_95": 4,
+    "expected_by_chance_upper_bound": 1.8,
+    "note": "union bound: a random background cell is outside 5-95 in either polarisation with probability <= 0.20",
+    "of": 9
+  },
+  "dVH": {
+    "background_median_db": -1.0645275115966797,
+    "background_p5_p95_db": [
+      -3.830925178527832,
+      0.8903107643127438
+    ],
+    "candidate_median_db": -2.747870445251465,
+    "candidate_percentile_ranks": [
+      9.0,
+      71.1,
+      13.5,
+      89.9,
+      7.9,
+      46.0,
+      8.5,
+      15.1,
+      9.8
+    ],
+    "median_difference_db": -1.6833429336547852,
+    "permutation_p_two_sided": 0.0040995900409959
+  },
+  "dVV": {
+    "background_median_db": -0.8729648590087891,
+    "background_p5_p95_db": [
+      -2.9492387294769284,
+      0.851183032989501
+    ],
+    "candidate_median_db": -1.4935626983642578,
+    "candidate_percentile_ranks": [
+      16.6,
+      92.3,
+      3.0,
+      98.0,
+      20.4,
+      99.4,
+      97.2,
+      6.9,
+      29.6
+    ],
+    "median_difference_db": -0.6205978393554688,
+    "permutation_p_two_sided": 0.1730826917308269
+  },
+  "interpretation": "descriptive multi-sensor corroboration of UNKNOWN candidates; not validation or mining evidence",
+  "phase": "22P",
+  "preregistration_sha256": "e06f8c20d534d3dd503272d94368d0567ab4b8fb7069190e45123f2e6bad558f",
+  "reproduction": {
+    "max_abs_dVH_db": 1.7881393432617188e-06,
+    "max_abs_dVV_db": 1.1920928955078125e-06,
+    "shared_cells": 1938
+  },
+  "scenes": {
+    "after": 11,
+    "before": 13
+  },
+  "status": "COMPLETED"
+}
