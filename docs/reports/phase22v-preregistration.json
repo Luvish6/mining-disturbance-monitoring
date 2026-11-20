@@ -1,0 +1,119 @@
+{
+  "budget": {
+    "max_bytes": 2000000,
+    "max_requests": 12
+  },
+  "date": "2026-11-20",
+  "gates": {
+    "db_range": [
+      -35.0,
+      10.0
+    ],
+    "min_observations": 2,
+    "min_valid_fraction": 0.7,
+    "pass_": "DESCENDING",
+    "single_relative_orbit": true
+  },
+  "label_status": "Maus v2 weak static footprint labels; not Meghalaya mining-change labels",
+  "manifest_sha256": "a2fc86a883a91ee416765a9cea8277bcc7b9eccf865f504a5f8a7ff33957d1f1",
+  "not_done": "no RF training, no evaluation, no VAL/TEST access, no U-Net retraining",
+  "pairing": "same Q1-2019 window as the optical median; static footprint pairing, not acquisition-matched",
+  "phase": "22V",
+  "pilot": [
+    {
+      "affine": [
+        10,
+        0,
+        406320,
+        0,
+        -10,
+        1911370
+      ],
+      "bounds": [
+        406320,
+        1910090,
+        407600,
+        1911370
+      ],
+      "crs": 32644,
+      "group_id": "dfced0ef05569446",
+      "image_sha256": "0291c0e14ee5485876fdb2892d8e4024f56bdca2b60077a6c1d8bc785a4b7ea3",
+      "patch_id": "dfced0ef05569446-pos",
+      "state": "Telang\u0101na",
+      "weak_class": "positive"
+    },
+    {
+      "affine": [
+        10,
+        0,
+        402430,
+        0,
+        -10,
+        2810930
+      ],
+      "bounds": [
+        402430,
+        2809650,
+        403710,
+        2810930
+      ],
+      "crs": 32645,
+      "group_id": "27d4727c90101266",
+      "image_sha256": "af67cdbae7adbd40e110079780405b7ecc3bc0fe9738d46a83f062de58297bf4",
+      "patch_id": "27d4727c90101266-pos",
+      "state": "Bih\u0101r",
+      "weak_class": "positive"
+    },
+    {
+      "affine": [
+        10,
+        0,
+        379430,
+        0,
+        -10,
+        1727460
+      ],
+      "bounds": [
+        379430,
+        1726180,
+        380710,
+        1727460
+      ],
+      "crs": 32643,
+      "group_id": "56642b9feb1004b3",
+      "image_sha256": "e9dda17787c02e36b53e469c055d3cd593ace7adeef68dc8cc95149d7d49a199",
+      "patch_id": "56642b9feb1004b3-3000-6",
+      "state": "Goa",
+      "weak_class": "background"
+    },
+    {
+      "affine": [
+        10,
+        0,
+        413370,
+        0,
+        -10,
+        2768080
+      ],
+      "bounds": [
+        413370,
+        2766800,
+        414650,
+        2768080
+      ],
+      "crs": 32643,
+      "group_id": "b27df62851d5b686",
+      "image_sha256": "d9de4b7106c3d478884841039c99cbe282d7a803193b2d35bcca547be2c3a860",
+      "patch_id": "b27df62851d5b686-6000-2",
+      "state": "R\u0101jasth\u0101n",
+      "weak_class": "background"
+    }
+  ],
+  "sar": "COPERNICUS/S1_GRD IW 10 m VV+VH, DESCENDING, per patch the relative orbit with most Q1-2019 scenes (Phase 2 choose_orbit tie rule), linear-power 20 m focal mean, median in dB (Phase 2 sar.seasonal), exported on the patch's exact UTM 10 m grid",
+  "selection": "TRAIN only; sha256('22V:'+patch_id) order; 2 weak-positive + 2 weak-background patches; distinct groups, distinct states where possible; no VAL/TEST inspection",
+  "stop_rules": "stop full-run recommendation if any pilot patch lacks DESCENDING coverage, fails valid/joint gates, grid mismatch, or out-of-range dB",
+  "window": [
+    "2019-01-01",
+    "2019-04-01"
+  ]
+}
