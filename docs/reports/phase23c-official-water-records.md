@@ -59,3 +59,18 @@ So no official dated measurements exist for a paired upstream/downstream compari
    The total is probably under 30 MB. Confirm the exact sizes before downloading.
 2. **Formal request to MSPCB.** The address is in the portal footer. Ask for the monthly raw NWMP records for 4315 Khaddum, 3376 Sunapur, 3375 Lunar/Myndihati, 4316 and 3379 for Nov 2023 to Mar 2025. Include turbidity, TSS, conductivity, sulphate and iron where measured, with sampling dates and coordinates. This can be added to the existing DMR/MBDA letter in `docs/outreach/`.
 3. **Then preregister** a descriptive upstream/downstream table. Khaddum vs Sunapur would be ordered by the Phase 23A routing, with the Lunar as the tributary input. It would be reported with no causal inference: one bracket, short records, no discharge data, and karst and dam confounders.
+
+## Addendum — CPCB retry (2026-11-21)
+
+`cpcb.nic.in` was still unreachable. Both the built-in browser and a direct HTTPS client timed out connecting on port 443. Nothing was downloaded.
+
+**Internet Archive copies of the official files.** Metadata only was checked: the Wayback availability and CDX APIs, plus `HEAD` requests.
+
+| File | Archived snapshot | Size reported by the archive | Note |
+|---|---|---|---|
+| `WQMN_list.pdf` (station register with coordinates) | 2024-03-05; same digest as the 2021-03-02 snapshot. A different 2021-12-27 version also exists. | 1,048,576 bytes served; original crawler length 1,828,746 | The exact 1 MiB size suggests a **possible truncation**. Integrity is unverified. |
+| `2023/WQuality_River-Data-2023.pdf` (NWMP 2023 river table) | 2025-05-12 and 2025-04-26 (different digests) | 5,242,880 bytes served; original crawler length 5,586,691 | The exact 5 MiB size suggests a **possible truncation**. Integrity is unverified. |
+| `2023/Water_Quality_data_of_Med_Min_River_2023.pdf` | none | — | Not archived |
+| 2024 river tables (both) | none | — | Not archived; existence unconfirmed |
+
+**Proposed download (needs approval).** Fetch the two archived PDFs, about 6.3–7.4 MB in total, into an untracked local folder. Then check integrity: `pdfinfo` page count, a full-text extraction test, and every page readable. Use them **only if complete**. Report the rows for stations 3375, 3376, 4315, 4316, 3379 and 1428, along with their coordinates. A truncated file would be recorded as such and not used.
