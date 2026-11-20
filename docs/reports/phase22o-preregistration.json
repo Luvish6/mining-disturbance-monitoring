@@ -1,0 +1,132 @@
+{
+  "budget": {
+    "max_bytes": 50000000,
+    "max_requests": 40
+  },
+  "comparison_reach": "none independently source-backed beyond the four CPCB stations; none assumed mining-free",
+  "date": "2026-11-20",
+  "flow_topology_rule": "upstream/downstream only if the HydroSHEDS FFR NDOID chain from one station reach reaches the other",
+  "ndti": "(B4-B3)/(B4+B3) on L2A SR; relative spectral proxy, not NTU/sediment/contamination",
+  "phase": "22O",
+  "regulated_water": "Leshka is potentially impounded (Myntdu-Leshka Stage I); never pooled with flowing reaches",
+  "rules": {
+    "bootstrap_resamples": 10000,
+    "bootstrap_seed": 42,
+    "corridor": "nearest intersecting HydroSHEDS FFR line buffered 80 m, within 260 m of station, clipped to window",
+    "duplicate_dates": "keep granule with most interior pixels; tie -> lowest scene id",
+    "erosion": "3x3 8-neighbour, one 10 m pixel, window border fails",
+    "jrc_occurrence_min": 50,
+    "masks": "Phase 2 prepare(): cloud probability <40, SCL 4/5/6, B3/B4/B8/B8A/B9 edge masks; plus B11 present",
+    "min_dates_per_season": 5,
+    "min_interior_pixels": 3,
+    "mndwi_gt": 0.0
+  },
+  "seasons": {
+    "after": [
+      "2024-11-01",
+      "2025-04-01"
+    ],
+    "before": [
+      "2023-11-01",
+      "2024-04-01"
+    ]
+  },
+  "station_source": "CPCB WQMN register coordinates via Phase 4A receipt sha256 93732fe3a6292e95d26538f7d5763d2bbbad4a26432ba2ab11c30deb30caad0b",
+  "stations": {
+    "Lukha-Khaddum-4315": {
+      "acquire": true,
+      "blocks": {
+        "88:557": "validation",
+        "88:558": "train"
+      },
+      "cpcb_coordinates": [
+        92.422355,
+        25.224359
+      ],
+      "distance_to_nearest_test_buffer_m": 4600.0,
+      "district_contained": true,
+      "eroded_jrc50_pixels_within_260m_upper_bound": 12,
+      "geometry_eligible": true,
+      "jrc_cache_sha256": "21995dee821f368c033e68ec98d71c6ebc6fab649b3ead2b16243569e20ebfbe",
+      "pre_acquisition_status": null,
+      "test_buffer_intersections": [],
+      "window_epsg32646": [
+        441460.0,
+        2789560.0,
+        442180.0,
+        2790280.0
+      ]
+    },
+    "Lukha-Sunapur-3376": {
+      "acquire": true,
+      "blocks": {
+        "87:555": "validation"
+      },
+      "cpcb_coordinates": [
+        92.361445,
+        25.108633
+      ],
+      "distance_to_nearest_test_buffer_m": 4234.7,
+      "district_contained": true,
+      "eroded_jrc50_pixels_within_260m_upper_bound": 42,
+      "geometry_eligible": true,
+      "jrc_cache_sha256": "71d5936e249890a59ed48c601572b32d7101e075b8cda23e3704da8dbe296729",
+      "pre_acquisition_status": null,
+      "test_buffer_intersections": [],
+      "window_epsg32646": [
+        435260.0,
+        2776770.0,
+        435980.0,
+        2777490.0
+      ]
+    },
+    "Myntdu-Leshka-3379": {
+      "acquire": true,
+      "blocks": {
+        "83:558": "train",
+        "83:559": "train"
+      },
+      "cpcb_coordinates": [
+        92.19829,
+        25.268735
+      ],
+      "distance_to_nearest_test_buffer_m": 5250.0,
+      "district_contained": true,
+      "eroded_jrc50_pixels_within_260m_upper_bound": 513,
+      "geometry_eligible": true,
+      "jrc_cache_sha256": "fcc51f98063a29f6c77df087ab92984f4b43cc5d978de98d1020466f46093a1d",
+      "pre_acquisition_status": null,
+      "test_buffer_intersections": [],
+      "window_epsg32646": [
+        418910.0,
+        2794590.0,
+        419630.0,
+        2795310.0
+      ]
+    },
+    "Myntdu-Mihmyntdu-4316": {
+      "acquire": false,
+      "blocks": {
+        "83:562": "train",
+        "84:562": "train"
+      },
+      "cpcb_coordinates": [
+        92.204576,
+        25.434337
+      ],
+      "distance_to_nearest_test_buffer_m": 4500.0,
+      "district_contained": true,
+      "eroded_jrc50_pixels_within_260m_upper_bound": 1,
+      "geometry_eligible": true,
+      "jrc_cache_sha256": "173c03506b2333d60cadaf71b83ae6bfc38aeaf347040c590c2e1cdf37f33a12",
+      "pre_acquisition_status": "UNRESOLVED",
+      "test_buffer_intersections": [],
+      "window_epsg32646": [
+        419660.0,
+        2812920.0,
+        420380.0,
+        2813640.0
+      ]
+    }
+  }
+}
