@@ -1,0 +1,216 @@
+{
+  "aois": 18,
+  "associations": {
+    "dvh_minus_bg": {
+      "n_other": 121,
+      "n_persistent": 53,
+      "null_median": 0.22366567360552903,
+      "observed": 0.12490769388169376,
+      "p_two_sided": 0.565943405659434
+    },
+    "dvh_minus_bg_by_class": {
+      "PARTIAL": -1.3396114214216874,
+      "PERSISTENT": -1.3650824388902145,
+      "RECOVERING": -1.7531528776347949
+    },
+    "hard_commodities_p": {
+      "n_other": 121,
+      "n_persistent": 53,
+      "null_median": 0.08431761755306,
+      "observed": 0.09397965124611765,
+      "p_two_sided": 0.5895410458954105
+    },
+    "hard_commodities_p_by_class": {
+      "PARTIAL": 0.09871185498992983,
+      "PERSISTENT": 0.18767787804211103,
+      "RECOVERING": 0.08492437745660454
+    },
+    "lumshnong": {
+      "n_other": 121,
+      "n_persistent": 53,
+      "null_median": 0.3134258537346016,
+      "observed": 0.3134258537346016,
+      "p_two_sided": 1.0
+    },
+    "lumshnong_by_class": {
+      "PARTIAL": 0.23376623376623376,
+      "PERSISTENT": 0.5283018867924528,
+      "RECOVERING": 0.18181818181818182
+    },
+    "recent_loss": {
+      "n_other": 121,
+      "n_persistent": 53,
+      "null_median": -0.13612973647278964,
+      "observed": 0.026664587556525843,
+      "p_two_sided": 0.0165983401659834
+    },
+    "recent_loss_by_class": {
+      "PARTIAL": 0.33766233766233766,
+      "PERSISTENT": 0.41509433962264153,
+      "RECOVERING": 0.4772727272727273
+    },
+    "slope": {
+      "n_other": 121,
+      "n_persistent": 53,
+      "null_median": -2.1913240330327994,
+      "observed": -3.65275213543374,
+      "p_two_sided": 0.0380961903809619
+    },
+    "slope_by_class": {
+      "PARTIAL": 11.320143277138982,
+      "PERSISTENT": 8.106987065369365,
+      "RECOVERING": 12.529032067215324
+    }
+  },
+  "by_district": {
+    "East Jaintia Hills": {
+      "PARTIAL": 36,
+      "PERSISTENT": 34,
+      "RECOVERING": 25
+    },
+    "West Jaintia Hills": {
+      "PARTIAL": 41,
+      "PERSISTENT": 19,
+      "RECOVERING": 19
+    }
+  },
+  "cloud_usage": {
+    "requests": 60,
+    "response_bytes": 1877433
+  },
+  "clusters": 174,
+  "interpretation": "PERSISTENT is mining-compatible review priority only; candidates remain UNKNOWN; no accuracy",
+  "lumshnong_blocks": {
+    "PARTIAL": 18,
+    "PERSISTENT": 28,
+    "RECOVERING": 8
+  },
+  "per_aoi": {
+    "80:559": {
+      "PARTIAL": 0,
+      "PERSISTENT": 0,
+      "RECOVERING": 1
+    },
+    "83:557": {
+      "PARTIAL": 1,
+      "PERSISTENT": 0,
+      "RECOVERING": 2
+    },
+    "83:561": {
+      "PARTIAL": 1,
+      "PERSISTENT": 1,
+      "RECOVERING": 0
+    },
+    "83:563": {
+      "PARTIAL": 5,
+      "PERSISTENT": 7,
+      "RECOVERING": 3
+    },
+    "84:558": {
+      "PARTIAL": 1,
+      "PERSISTENT": 0,
+      "RECOVERING": 2
+    },
+    "85:565": {
+      "PARTIAL": 10,
+      "PERSISTENT": 1,
+      "RECOVERING": 4
+    },
+    "86:561": {
+      "PARTIAL": 2,
+      "PERSISTENT": 1,
+      "RECOVERING": 0
+    },
+    "87:556": {
+      "PARTIAL": 10,
+      "PERSISTENT": 12,
+      "RECOVERING": 7
+    },
+    "87:557": {
+      "PARTIAL": 8,
+      "PERSISTENT": 16,
+      "RECOVERING": 1
+    },
+    "87:563": {
+      "PARTIAL": 8,
+      "PERSISTENT": 3,
+      "RECOVERING": 0
+    },
+    "87:564": {
+      "PARTIAL": 3,
+      "PERSISTENT": 2,
+      "RECOVERING": 4
+    },
+    "88:556": {
+      "PARTIAL": 10,
+      "PERSISTENT": 3,
+      "RECOVERING": 2
+    },
+    "88:558": {
+      "PARTIAL": 3,
+      "PERSISTENT": 0,
+      "RECOVERING": 6
+    },
+    "88:563": {
+      "PARTIAL": 2,
+      "PERSISTENT": 1,
+      "RECOVERING": 1
+    },
+    "88:564": {
+      "PARTIAL": 3,
+      "PERSISTENT": 3,
+      "RECOVERING": 0
+    },
+    "88:567": {
+      "PARTIAL": 8,
+      "PERSISTENT": 1,
+      "RECOVERING": 4
+    },
+    "89:557": {
+      "PARTIAL": 2,
+      "PERSISTENT": 2,
+      "RECOVERING": 6
+    },
+    "91:558": {
+      "PARTIAL": 0,
+      "PERSISTENT": 0,
+      "RECOVERING": 1
+    }
+  },
+  "phase": "22Y",
+  "preregistration_sha256": "50aba5d6afd9c6fd80456e40d67ff4f5ac84560860beda173b7ecd46f84940da",
+  "shares": {
+    "PARTIAL": {
+      "ci95": [
+        0.35795454545454547,
+        0.54421768707483
+      ],
+      "clusters": 77,
+      "share": 0.4425287356321839
+    },
+    "PERSISTENT": {
+      "ci95": [
+        0.17116996675820206,
+        0.42041077969649393
+      ],
+      "clusters": 53,
+      "share": 0.3045977011494253
+    },
+    "RECOVERING": {
+      "ci95": [
+        0.1625600369458128,
+        0.3695652173913043
+      ],
+      "clusters": 44,
+      "share": 0.25287356321839083
+    },
+    "UNOBSERVED": {
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "clusters": 0,
+      "share": 0.0
+    }
+  }
+}
