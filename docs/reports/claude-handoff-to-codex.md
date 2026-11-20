@@ -158,3 +158,31 @@ Expected cost: about 4 requests and under 1 MB per AOI. In parallel, the user co
 **H2 (hard-commodities driver):** null. No AOI has a 1 km cell dominated by hard commodities (p = 0.52). The AOIs are dominated by shifting cultivation, agriculture, logging and settlement.
 
 **Status:** no accuracy metrics were computed. The candidates remain UNKNOWN.
+
+## Update: Phases 22S–22AA (2026-11-20/21)
+
+**Commits.** Each phase's reports are listed in `docs/research-progress.md`. Use `git log --oneline 1c19b1f..HEAD` for the commits.
+
+**Earth Engine usage.**
+
+| Phase | Requests | Data |
+|---|---|---|
+| 22V | 9 | 0.4 MB |
+| 22W | **490** | **47.9 MB** — breached the approved 300 / 40 MB through two concurrent writers. A lock and shared-ledger fix followed in `418b0bc`. |
+| 22X | 61 | 6.9 MB |
+| 22Y | 60 | 1.9 MB |
+| 22Z | 0 | — |
+| 22AA | 0 | — |
+
+**OSM.** 22AA made 1 Overpass request (0.72 MB, ODbL, cached locally).
+
+**Key results.**
+- **22W:** VAL weak-label F1 was SAR 0.378, optical 0.533, fusion 0.539, fusion + terrain 0.463, and NDVI rule 0.437. Fusion minus optical = +0.006 [−0.039, 0.058].
+- **22X:** candidate density 1.20 ha/100 ha [0.62, 1.98]. Across 174 clusters, dVH was −1.45 dB, negative in 18 of 18 AOIs. 40% overlap GFC 2024/25 loss, against 2.3% by chance.
+- **22Y:** 30.5% of clusters are persistent; Lumshnong 52% against 21% elsewhere.
+- **22Z:** NO-GO for mining attribution. The tier shortlist is 16 / 13 / 24.
+- **22AA:** NO-GO. OSM has only 3 buildings inside the AOIs, and 7 of 18 cluster AOIs have no mapped infrastructure. Persistent clusters' road adjacency equals the chance rate.
+
+**Pending externally.** The DMR/MBDA letter is drafted in `docs/outreach/`, which stays untracked as the user's file. Also pending: Kalimantan labels from Nursamsi.
+
+**Recommended next Codex task.** Draft the paper from the Phase 22 reports. If open building footprints are approved, rerun 22AA on them.

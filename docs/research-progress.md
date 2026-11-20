@@ -119,3 +119,21 @@ The [Day 5 dashboard report](reports/phase7-day5-dashboard.md) documents the map
 ## Phase 8 Stage C river workspace
 
 The [React River Intelligence and Leshka Feasibility views](reports/phase8-stage-c.md) use the saved Phase 4 observation ledgers and geographic products. The Leshka seasonal contrast remains withheld under the fixed-footprint support gate.
+
+## Phase 22O–22AA (Claude handoff period, 2026-11-20/21)
+
+Each phase below was preregistered before acquisition, kept frozen TEST data sealed, and labels every candidate UNKNOWN.
+
+- [22O](reports/phase22o-river-ndti.md) — relative NDTI river pilot. Negative 10 m feasibility result: only Leshka, a potentially impounded reach, is supported, and it shows no change.
+- [22P](reports/phase22p-sar-corroboration.md), [22Q](reports/phase22q-multi-aoi-sar.md) — Sentinel-1 VH corroboration of the optical candidates in four AOIs.
+- [22R](reports/phase22r-independent-product-agreement.md) — agreement with Hansen GFC and WRI/GDM forest-loss drivers in the four AOIs: weak.
+- [22S](reports/phase22s-official-mining-data-audit.md) — official-source audit: no open, dated mining footprints.
+- [22T](reports/phase22t-classifier-transfer-feasibility.md) — U-Net transfer to Meghalaya: NO-GO.
+- [22V](reports/phase22v-fusion-ablation-feasibility.md), [22W](reports/phase22w-multisensor-ablation.md) — SAR/optical/fusion RF ablation on Maus weak labels. Fusion adds no detectable F1 over optical, and terrain hurts. An Earth Engine budget breach is documented.
+- [22X](reports/phase22x-landscape-assessment.md) — 20-AOI systematic sample:
+  - candidate density 1.20 ha/100 ha;
+  - Sentinel-1 decrease in 18 of 18 AOIs;
+  - 40% GFC 2024/25 loss overlap.
+- [22Y](reports/phase22y-persistence-typology.md) — persistence typology: 30.5% persistent, concentrated at Lumshnong.
+- [22Z](reports/phase22z-mining-context-audit.md) — mining-context audit: NO-GO for attribution; tiered review shortlist.
+- [22AA](reports/phase22aa-osm-infrastructure-audit.md) — OSM infrastructure audit: NO-GO, because OSM coverage is too sparse. Where roads are mapped, persistent clusters are not road-enriched.

@@ -1,0 +1,326 @@
+{
+  "adjacency_by_class": {
+    "PARTIAL": [
+      17,
+      77
+    ],
+    "PERSISTENT": [
+      10,
+      53
+    ],
+    "RECOVERING": [
+      5,
+      44
+    ]
+  },
+  "adjacency_by_tier": {
+    "1": [
+      1,
+      16
+    ],
+    "2": [
+      3,
+      13
+    ],
+    "3": [
+      6,
+      24
+    ]
+  },
+  "aoi_coverage": {
+    "80:559": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": false,
+      "road_km_in_aoi": 1.007
+    },
+    "83:557": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": true,
+      "road_km_in_aoi": 0.0
+    },
+    "83:561": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": true,
+      "road_km_in_aoi": 0.0
+    },
+    "83:563": {
+      "buildings_in_aoi": 1,
+      "osm_sparse": false,
+      "road_km_in_aoi": 6.65
+    },
+    "84:558": {
+      "buildings_in_aoi": 1,
+      "osm_sparse": false,
+      "road_km_in_aoi": 1.256
+    },
+    "85:565": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": true,
+      "road_km_in_aoi": 0.0
+    },
+    "86:555": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": true,
+      "road_km_in_aoi": 0.0
+    },
+    "86:561": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": false,
+      "road_km_in_aoi": 6.041
+    },
+    "87:556": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": false,
+      "road_km_in_aoi": 4.082
+    },
+    "87:557": {
+      "buildings_in_aoi": 1,
+      "osm_sparse": false,
+      "road_km_in_aoi": 5.42
+    },
+    "87:563": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": false,
+      "road_km_in_aoi": 1.666
+    },
+    "87:564": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": true,
+      "road_km_in_aoi": 0.0
+    },
+    "88:556": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": false,
+      "road_km_in_aoi": 3.264
+    },
+    "88:558": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": true,
+      "road_km_in_aoi": 0.0
+    },
+    "88:563": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": true,
+      "road_km_in_aoi": 0.0
+    },
+    "88:564": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": false,
+      "road_km_in_aoi": 5.262
+    },
+    "88:567": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": false,
+      "road_km_in_aoi": 4.458
+    },
+    "89:557": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": false,
+      "road_km_in_aoi": 7.073
+    },
+    "91:556": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": true,
+      "road_km_in_aoi": 0.0
+    },
+    "91:558": {
+      "buildings_in_aoi": 0,
+      "osm_sparse": true,
+      "road_km_in_aoi": 0.0
+    }
+  },
+  "coverage_summary": {
+    "cluster_aois": 18,
+    "osm_sparse_cluster_aois": 7
+  },
+  "decision": "NO-GO: infrastructure explanations can be assessed only where OSM maps infrastructure; absence is not proof of absence",
+  "earth_engine_requests": 0,
+  "flagged_tier12": [
+    {
+      "building_m": 500,
+      "id": "87:556/C017",
+      "road_m": 0,
+      "tier": 2
+    },
+    {
+      "building_m": 500,
+      "id": "87:557/C025",
+      "road_m": 0,
+      "tier": 1
+    },
+    {
+      "building_m": 500,
+      "id": "88:556/C001",
+      "road_m": 39,
+      "tier": 2
+    },
+    {
+      "building_m": 500,
+      "id": "89:557/C007",
+      "road_m": 0,
+      "tier": 2
+    }
+  ],
+  "lumshnong": {
+    "buildings_in_locality": 1,
+    "other_classes": [
+      5,
+      26
+    ],
+    "persistent": [
+      5,
+      28
+    ],
+    "road_km_in_locality": 9.502
+  },
+  "osm": {
+    "buildings": 196,
+    "elements": 329,
+    "licence": "ODbL 1.0; (c) OpenStreetMap contributors",
+    "osm_base": "2026-11-20T18:27:06Z",
+    "requests": 1,
+    "response_bytes": 723413,
+    "roads": 133
+  },
+  "phase": "22AA",
+  "preregistration_sha256": "f1a6b3afc4e3c692fb434110e261915c802713acbd91d130ebdf029b1c3262dc",
+  "status": "all clusters UNKNOWN; adjacency is an alternative explanation to check, not a label",
+  "tests_all": {
+    "PARTIAL": {
+      "background_translation_null": {
+        "null_median": 0.1038961038961039,
+        "null_p2_5": 0.05194805194805195,
+        "null_p97_5": 0.18181818181818182,
+        "p_two_sided": 0.0413958604139586
+      },
+      "clusters": 77,
+      "share_adjacent": 0.18181818181818182
+    },
+    "PERSISTENT": {
+      "background_translation_null": {
+        "null_median": 0.18867924528301888,
+        "null_p2_5": 0.09433962264150944,
+        "null_p97_5": 0.2830188679245283,
+        "p_two_sided": 0.7274272572742726
+      },
+      "clusters": 53,
+      "share_adjacent": 0.16981132075471697
+    },
+    "RECOVERING": {
+      "background_translation_null": {
+        "null_median": 0.11363636363636363,
+        "null_p2_5": 0.022727272727272728,
+        "null_p97_5": 0.20454545454545456,
+        "p_two_sided": 0.7982201779822018
+      },
+      "clusters": 44,
+      "share_adjacent": 0.09090909090909091
+    },
+    "persistent_vs_other_adjacent": {
+      "n_other": 121,
+      "n_persistent": 53,
+      "null_median": 0.061125838141275535,
+      "observed": 0.006861063464837058,
+      "p_two_sided": 0.48965103489651035
+    },
+    "persistent_vs_other_min_distance_m": {
+      "n_other": 121,
+      "n_persistent": 53,
+      "null_median": -68.98746538292194,
+      "observed": -50.54250491494099,
+      "p_two_sided": 0.4276572342765723
+    }
+  },
+  "tests_excluding_lumshnong": {
+    "PARTIAL": {
+      "background_translation_null": {
+        "null_median": 0.0847457627118644,
+        "null_p2_5": 0.03389830508474576,
+        "null_p97_5": 0.1694915254237288,
+        "p_two_sided": 0.0164983501649835
+      },
+      "clusters": 59,
+      "share_adjacent": 0.1864406779661017
+    },
+    "PERSISTENT": {
+      "background_translation_null": {
+        "null_median": 0.16,
+        "null_p2_5": 0.04,
+        "null_p97_5": 0.28,
+        "p_two_sided": 0.7774222577742226
+      },
+      "clusters": 25,
+      "share_adjacent": 0.2
+    },
+    "RECOVERING": {
+      "background_translation_null": {
+        "null_median": 0.1111111111111111,
+        "null_p2_5": 0.027777777777777776,
+        "null_p97_5": 0.19444444444444445,
+        "p_two_sided": 1.0
+      },
+      "clusters": 36,
+      "share_adjacent": 0.1111111111111111
+    },
+    "persistent_vs_other_adjacent": {
+      "n_other": 95,
+      "n_persistent": 25,
+      "null_median": 0.12210526315789477,
+      "observed": 0.02105263157894738,
+      "p_two_sided": 0.2746725327467253
+    },
+    "persistent_vs_other_min_distance_m": {
+      "n_other": 95,
+      "n_persistent": 25,
+      "null_median": -71.51399805574113,
+      "observed": -49.615476007179836,
+      "p_two_sided": 0.5027497250274973
+    }
+  },
+  "tests_excluding_osm_sparse": {
+    "PARTIAL": {
+      "background_translation_null": {
+        "null_median": 0.15789473684210525,
+        "null_p2_5": 0.07017543859649122,
+        "null_p97_5": 0.24561403508771928,
+        "p_two_sided": 0.08909109089091091
+      },
+      "clusters": 57,
+      "share_adjacent": 0.24561403508771928
+    },
+    "PERSISTENT": {
+      "background_translation_null": {
+        "null_median": 0.20833333333333334,
+        "null_p2_5": 0.10416666666666667,
+        "null_p97_5": 0.3125,
+        "p_two_sided": 0.7292270772922708
+      },
+      "clusters": 48,
+      "share_adjacent": 0.1875
+    },
+    "RECOVERING": {
+      "background_translation_null": {
+        "null_median": 0.19230769230769232,
+        "null_p2_5": 0.038461538461538464,
+        "null_p97_5": 0.34615384615384615,
+        "p_two_sided": 0.7974202579742026
+      },
+      "clusters": 26,
+      "share_adjacent": 0.15384615384615385
+    },
+    "persistent_vs_other_adjacent": {
+      "n_other": 83,
+      "n_persistent": 48,
+      "null_median": 0.009036144578313254,
+      "observed": -0.0567269076305221,
+      "p_two_sided": 0.48375162483751627
+    },
+    "persistent_vs_other_min_distance_m": {
+      "n_other": 83,
+      "n_persistent": 48,
+      "null_median": -14.749239914922683,
+      "observed": 6.3251547084233835,
+      "p_two_sided": 0.44545545445455453
+    }
+  }
+}
