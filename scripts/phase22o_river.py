@@ -187,6 +187,35 @@ class Budget:
         return result
 
 
+def fetch_lines(ee, budget, regions):
+    """One request: window-intersecting FFR lines, grouped by station."""
+    ffr = ee.FeatureCollection("WWF/HydroSHEDS/v1/FreeFlowingRivers")
+    merged = ee.FeatureCollection([ffr.filterBounds(g).map(lambda f, s=s: f.select(["GOID", "NDOID"]).set("station", s))
+                                   for s, g in regions.items()]).flatten()
+    feats = budget.info("ffr_window_lines", merged)["features"]
+    return {s: dict(features=[f for f in feats if f["properties"]["station"] == s]) for s in regions}
+
+
+def refetch_lines():
+    """Repair: the first acquisition serialized collection metadata instead of window lines."""
+    import ee
+    from src.gee_setup import initialize
+    plan, hydro_path, budget_path = json.loads(PREREG.read_bytes()), OUT / "cache" / "hydrosheds.json", OUT / "budget.json"
+    hydro, used = json.loads(hydro_path.read_bytes()), json.loads(budget_path.read_bytes())
+    if all("features" in v for v in hydro["lines"].values()):
+        raise ValueError("Lines already cached")
+    budget = Budget()
+    budget.requests, budget.bytes, budget.log = used["requests"], used["response_bytes"], used["log"]
+    initialize()
+    regions = {s: ee.Geometry.Rectangle(r["window_epsg32646"], CRS, False) for s, r in plan["stations"].items() if r["acquire"]}
+    hydro["lines"] = fetch_lines(ee, budget, regions)
+    save(hydro_path, hydro)
+    used.update(requests=budget.requests, response_bytes=budget.bytes, log=budget.log,
+                repair="ffr_window_lines re-fetched after metadata-only response")
+    save(budget_path, used)
+    print("requests", budget.requests, "bytes", budget.bytes, {s: len(v["features"]) for s, v in hydro["lines"].items()})
+
+
 def acquire():
     import ee
     import rasterio
@@ -211,8 +240,7 @@ def acquire():
     ffr = ee.FeatureCollection("WWF/HydroSHEDS/v1/FreeFlowingRivers").filterBounds(bbox)
     topo = budget.info("ffr_topology", ee.Dictionary(dict(goid=ffr.aggregate_array("GOID"), ndoid=ffr.aggregate_array("NDOID"))))
     regions = {s: ee.Geometry.Rectangle(plan["stations"][s]["window_epsg32646"], CRS, False) for s in targets}
-    lines = budget.info("ffr_window_lines", ee.Dictionary({s: ee.FeatureCollection("WWF/HydroSHEDS/v1/FreeFlowingRivers")
-                        .filterBounds(g).map(lambda f: f.select(["GOID", "NDOID"])) for s, g in regions.items()}))
+    lines = fetch_lines(ee, budget, regions)
     save(cache / "hydrosheds.json", dict(topology=topo, lines=lines))
     pts = ee.Geometry.MultiPoint([list(STATIONS[s]) for s in targets])
     rain = budget.info("chirps_daily", ee.ImageCollection("UCSB-CHG/CHIRPS/DAILY").filterDate("2023-10-20", "2025-04-01").getRegion(pts, 5566))
@@ -312,7 +340,10 @@ def analyze():
                 mask = interior_mask(flags, jrc, corridor)
                 ndti, n = date_ndti(b3, b4, mask)
                 granules.append(dict(id=sid, date=datetime.fromtimestamp(t / 1000, timezone.utc).date().isoformat(),
-                                     pixels=n, ndti=ndti, valid_corridor=int(((flags & VALID) > 0)[corridor].sum()),
+                                     pixels=n, ndti=ndti,
+                                     # post-hoc diagnostics only; they never change a preregistered status
+                                     scl_water_share=float(((flags & SCL_WATER) > 0)[mask].mean()) if mask.any() else None,
+                                     median_b3_sr=float(np.median(b3[mask])) / 10000 if mask.any() else None, valid_corridor=int(((flags & VALID) > 0)[corridor].sum()),
                                      water_corridor=int((((flags & VALID) > 0) & ((flags & MNDWI_POS) > 0) & (jrc >= 50))[corridor].sum())))
             dates = select_dates(granules)
             for d in dates:
@@ -322,9 +353,18 @@ def analyze():
             season_days = [(date.fromisoformat(s) + timedelta(days=i)).isoformat()
                            for i in range((date.fromisoformat(e) - date.fromisoformat(s)).days)]
             summ = season_summary(dates)
+            if dates:
+                summ["posthoc_diagnostics"] = dict(
+                    median_interior_pixels=float(np.median([d["pixels"] for d in dates])),
+                    median_scl_water_share=float(np.median([d["scl_water_share"] for d in dates])),
+                    dates_with_any_scl_water=sum(d["scl_water_share"] > 0 for d in dates),
+                    median_b3_reflectance=float(np.median([d["median_b3_sr"] for d in dates])),
+                    months=sorted({d["date"][:7] for d in dates}))
             summ.update(granules=len(granules), granule_dates=len({g["date"] for g in granules}),
                         chirps_season_total_mm=float(sum(daily[d] for d in season_days)) if all(d in daily for d in season_days) else None,
                         chirps_days=sum(d in daily for d in season_days), dates=dates)
+            # scene IDs stay in the local granule CSV; the published summary keeps dates only
+            summ["dates"] = [{k: v for k, v in d.items() if k != "id"} for d in dates]
             out["seasons"][season] = summ
             values[season] = [d["ndti"] for d in dates]
             with open(OUT / f"{st}_{season}_granules.csv", "w", encoding="utf-8") as fh:
@@ -363,5 +403,6 @@ if __name__ == "__main__":
     g.add_argument("--preregister", action="store_true")
     g.add_argument("--acquire", action="store_true")
     g.add_argument("--analyze", action="store_true")
+    g.add_argument("--refetch-lines", action="store_true")
     a = p.parse_args()
-    preregister() if a.preregister else acquire() if a.acquire else analyze()
+    (preregister if a.preregister else acquire if a.acquire else refetch_lines if a.refetch_lines else analyze)()

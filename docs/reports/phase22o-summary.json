@@ -1,0 +1,1113 @@
+{
+  "cloud_usage": {
+    "requests": 22,
+    "response_bytes": 7323424
+  },
+  "flow_topology": {
+    "Lukha-Khaddum-4315->Lukha-Sunapur-3376": {
+      "downstream_hops": 14,
+      "reverse_hops": null,
+      "supported": true
+    },
+    "Myntdu-Mihmyntdu-4316->Myntdu-Leshka-3379": {
+      "downstream_hops": 18,
+      "reverse_hops": null,
+      "supported": true
+    }
+  },
+  "interpretation": "relative spectral proxy; no NTU, contamination, degradation or causal claim",
+  "phase": "22O",
+  "preregistration_sha256": "b1f9e29d8a8b5fc80d5691550e6aad53f82674a2e2217a9410470288919ac7d0",
+  "rules": {
+    "bootstrap_resamples": 10000,
+    "bootstrap_seed": 42,
+    "corridor": "nearest intersecting HydroSHEDS FFR line buffered 80 m, within 260 m of station, clipped to window",
+    "duplicate_dates": "keep granule with most interior pixels; tie -> lowest scene id",
+    "erosion": "3x3 8-neighbour, one 10 m pixel, window border fails",
+    "jrc_occurrence_min": 50,
+    "masks": "Phase 2 prepare(): cloud probability <40, SCL 4/5/6, B3/B4/B8/B8A/B9 edge masks; plus B11 present",
+    "min_dates_per_season": 5,
+    "min_interior_pixels": 3,
+    "mndwi_gt": 0.0
+  },
+  "stations": {
+    "Lukha-Khaddum-4315": {
+      "after_minus_before_median": 0.020609796212694553,
+      "corridor_pixels": 798,
+      "difference_ci95": [
+        -0.032746952012111905,
+        0.07573455393829609
+      ],
+      "reach_goid": 4103404,
+      "reach_ndoid": 4103405,
+      "seasons": {
+        "after": {
+          "chirps_days": 151,
+          "chirps_season_total_mm": 149.8658145070076,
+          "dates": [
+            {
+              "date": "2024-11-03",
+              "median_b3_sr": 0.1598,
+              "ndti": 0.027728613569321534,
+              "pixels": 7,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 758,
+              "water_corridor": 32
+            },
+            {
+              "date": "2024-11-08",
+              "median_b3_sr": 0.1632,
+              "ndti": 0.028353292055067925,
+              "pixels": 6,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 10.337913513183594,
+              "rain_7d_mm": 10.337913513183594,
+              "scl_water_share": 0.0,
+              "valid_corridor": 755,
+              "water_corridor": 33
+            },
+            {
+              "date": "2024-11-11",
+              "median_b3_sr": 0.1742,
+              "ndti": 0.026347305389221556,
+              "pixels": 11,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 10.337913513183594,
+              "scl_water_share": 0.0,
+              "valid_corridor": 709,
+              "water_corridor": 40
+            },
+            {
+              "date": "2024-11-13",
+              "median_b3_sr": 0.1672,
+              "ndti": 0.018050541516245487,
+              "pixels": 5,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 4.658632278442383,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 34
+            },
+            {
+              "date": "2024-11-16",
+              "median_b3_sr": 0.1834,
+              "ndti": -0.016113629949171544,
+              "pixels": 6,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 790,
+              "water_corridor": 38
+            },
+            {
+              "date": "2024-11-18",
+              "median_b3_sr": 0.1762,
+              "ndti": 0.007776445323199517,
+              "pixels": 6,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 795,
+              "water_corridor": 34
+            },
+            {
+              "date": "2024-11-23",
+              "median_b3_sr": 0.1535,
+              "ndti": 0.025488194702900827,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 791,
+              "water_corridor": 27
+            },
+            {
+              "date": "2024-11-26",
+              "median_b3_sr": 0.202,
+              "ndti": -0.01938534278959811,
+              "pixels": 7,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 790,
+              "water_corridor": 37
+            },
+            {
+              "date": "2024-11-28",
+              "median_b3_sr": 0.175,
+              "ndti": 0.017507723995880537,
+              "pixels": 5,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 789,
+              "water_corridor": 34
+            },
+            {
+              "date": "2024-12-01",
+              "median_b3_sr": 0.2098,
+              "ndti": -0.03713188220230473,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 3.2508111000061035,
+              "rain_7d_mm": 3.2508111000061035,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 34
+            },
+            {
+              "date": "2024-12-06",
+              "median_b3_sr": 0.1558,
+              "ndti": -0.013335555643921543,
+              "pixels": 6,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 57,
+              "water_corridor": 19
+            },
+            {
+              "date": "2024-12-08",
+              "median_b3_sr": 0.1609,
+              "ndti": 0.029828303095782646,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 31
+            },
+            {
+              "date": "2024-12-11",
+              "median_b3_sr": 0.1781,
+              "ndti": -0.05000479045194492,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 30
+            },
+            {
+              "date": "2024-12-16",
+              "median_b3_sr": 0.2141,
+              "ndti": -0.051384073267293356,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 33
+            },
+            {
+              "date": "2024-12-18",
+              "median_b3_sr": 0.181,
+              "ndti": 0.02608695652173913,
+              "pixels": 5,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 793,
+              "water_corridor": 36
+            },
+            {
+              "date": "2024-12-26",
+              "median_b3_sr": 0.1824,
+              "ndti": -0.03231097049137987,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 795,
+              "water_corridor": 32
+            },
+            {
+              "date": "2024-12-31",
+              "median_b3_sr": 0.1908,
+              "ndti": -0.05746126126126126,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 794,
+              "water_corridor": 32
+            },
+            {
+              "date": "2025-01-10",
+              "median_b3_sr": 0.165,
+              "ndti": -0.02142857142857143,
+              "pixels": 3,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 29
+            },
+            {
+              "date": "2025-01-15",
+              "median_b3_sr": 0.1809,
+              "ndti": -0.06213815648874434,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 796,
+              "water_corridor": 31
+            },
+            {
+              "date": "2025-01-25",
+              "median_b3_sr": 0.1598,
+              "ndti": -0.039897039897039896,
+              "pixels": 3,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 481,
+              "water_corridor": 26
+            },
+            {
+              "date": "2025-02-09",
+              "median_b3_sr": 0.2156,
+              "ndti": -0.13035836210382867,
+              "pixels": 4,
+              "rain_1d_mm": 2.865018367767334,
+              "rain_3d_mm": 4.230644643306732,
+              "rain_7d_mm": 4.230644643306732,
+              "scl_water_share": 0.0,
+              "valid_corridor": 555,
+              "water_corridor": 32
+            },
+            {
+              "date": "2025-02-14",
+              "median_b3_sr": 0.1723,
+              "ndti": -0.12479417065359732,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 4.2407286167144775,
+              "scl_water_share": 0.0,
+              "valid_corridor": 549,
+              "water_corridor": 27
+            },
+            {
+              "date": "2025-02-24",
+              "median_b3_sr": 0.1904,
+              "ndti": -0.10533159947984395,
+              "pixels": 3,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 636,
+              "water_corridor": 28
+            },
+            {
+              "date": "2025-03-26",
+              "median_b3_sr": 0.2064,
+              "ndti": -0.1299513551077137,
+              "pixels": 3,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 621,
+              "water_corridor": 26
+            }
+          ],
+          "granule_dates": 57,
+          "granules": 114,
+          "median_ci95": [
+            -0.05000479045194492,
+            0.017507723995880537
+          ],
+          "median_ndti": -0.02040695710908477,
+          "posthoc_diagnostics": {
+            "dates_with_any_scl_water": 0,
+            "median_b3_reflectance": 0.17715,
+            "median_interior_pixels": 4.0,
+            "median_scl_water_share": 0.0,
+            "months": [
+              "2024-11",
+              "2024-12",
+              "2025-01",
+              "2025-02",
+              "2025-03"
+            ]
+          },
+          "status": "SUPPORTED",
+          "usable_dates": 24
+        },
+        "before": {
+          "chirps_days": 152,
+          "chirps_season_total_mm": 275.68811655044556,
+          "dates": [
+            {
+              "date": "2023-11-02",
+              "median_b3_sr": 0.1281,
+              "ndti": 0.055100116213626586,
+              "pixels": 12,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 743,
+              "water_corridor": 42
+            },
+            {
+              "date": "2023-11-04",
+              "median_b3_sr": 0.153,
+              "ndti": 0.021464646464646464,
+              "pixels": 7,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 730,
+              "water_corridor": 29
+            },
+            {
+              "date": "2023-11-09",
+              "median_b3_sr": 0.1496,
+              "ndti": 0.03296703296703297,
+              "pixels": 7,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 786,
+              "water_corridor": 31
+            },
+            {
+              "date": "2023-11-12",
+              "median_b3_sr": 0.1696,
+              "ndti": -0.01678321626248493,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 753,
+              "water_corridor": 37
+            },
+            {
+              "date": "2023-11-14",
+              "median_b3_sr": 0.158,
+              "ndti": 0.0006406149903907751,
+              "pixels": 5,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 797,
+              "water_corridor": 33
+            },
+            {
+              "date": "2023-11-19",
+              "median_b3_sr": 0.1598,
+              "ndti": -0.01589319771137953,
+              "pixels": 5,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 56.678138732910156,
+              "rain_7d_mm": 56.678138732910156,
+              "scl_water_share": 0.0,
+              "valid_corridor": 794,
+              "water_corridor": 32
+            },
+            {
+              "date": "2023-11-22",
+              "median_b3_sr": 0.1299,
+              "ndti": 0.03690775150722683,
+              "pixels": 12,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 56.678138732910156,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 41
+            },
+            {
+              "date": "2023-11-24",
+              "median_b3_sr": 0.1486,
+              "ndti": 0.019411396368190358,
+              "pixels": 5,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 56.678138732910156,
+              "scl_water_share": 0.0,
+              "valid_corridor": 796,
+              "water_corridor": 30
+            },
+            {
+              "date": "2023-12-12",
+              "median_b3_sr": 0.1756,
+              "ndti": -0.06915551365347435,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 4.457714080810547,
+              "scl_water_share": 0.0,
+              "valid_corridor": 778,
+              "water_corridor": 36
+            },
+            {
+              "date": "2023-12-17",
+              "median_b3_sr": 0.1953,
+              "ndti": -0.06795810861509657,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 34
+            },
+            {
+              "date": "2023-12-22",
+              "median_b3_sr": 0.2045,
+              "ndti": -0.06413690699616516,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 32
+            },
+            {
+              "date": "2023-12-27",
+              "median_b3_sr": 0.1855,
+              "ndti": -0.06681825141133432,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 2.8553109169006348,
+              "rain_7d_mm": 2.8553109169006348,
+              "scl_water_share": 0.0,
+              "valid_corridor": 797,
+              "water_corridor": 32
+            },
+            {
+              "date": "2024-01-01",
+              "median_b3_sr": 0.1954,
+              "ndti": -0.08279989622151988,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 797,
+              "water_corridor": 32
+            },
+            {
+              "date": "2024-01-06",
+              "median_b3_sr": 0.1963,
+              "ndti": -0.07744357806040303,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 31
+            },
+            {
+              "date": "2024-01-11",
+              "median_b3_sr": 0.1732,
+              "ndti": -0.04101675332177932,
+              "pixels": 3,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 2.751070976257324,
+              "rain_7d_mm": 2.751070976257324,
+              "scl_water_share": 0.0,
+              "valid_corridor": 794,
+              "water_corridor": 30
+            },
+            {
+              "date": "2024-01-16",
+              "median_b3_sr": 0.1806,
+              "ndti": -0.1040844531543543,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 2.3631644248962402,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 29
+            },
+            {
+              "date": "2024-01-21",
+              "median_b3_sr": 0.2171,
+              "ndti": -0.09575643654591023,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 798,
+              "water_corridor": 30
+            },
+            {
+              "date": "2024-01-26",
+              "median_b3_sr": 0.1632,
+              "ndti": -0.03607896528250511,
+              "pixels": 3,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 757,
+              "water_corridor": 28
+            },
+            {
+              "date": "2024-02-10",
+              "median_b3_sr": 0.1823,
+              "ndti": -0.10159023313825194,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 11.086213111877441,
+              "scl_water_share": 0.0,
+              "valid_corridor": 601,
+              "water_corridor": 29
+            }
+          ],
+          "granule_dates": 52,
+          "granules": 98,
+          "median_ci95": [
+            -0.06915551365347435,
+            0.0006406149903907751
+          ],
+          "median_ndti": -0.04101675332177932,
+          "posthoc_diagnostics": {
+            "dates_with_any_scl_water": 0,
+            "median_b3_reflectance": 0.1732,
+            "median_interior_pixels": 4.0,
+            "median_scl_water_share": 0.0,
+            "months": [
+              "2023-11",
+              "2023-12",
+              "2024-01",
+              "2024-02"
+            ]
+          },
+          "status": "SUPPORTED",
+          "usable_dates": 19
+        }
+      },
+      "status": "SUPPORTED"
+    },
+    "Lukha-Sunapur-3376": {
+      "corridor_pixels": 749,
+      "reach_goid": 4110349,
+      "reach_ndoid": 4111385,
+      "seasons": {
+        "after": {
+          "chirps_days": 151,
+          "chirps_season_total_mm": 180.77792668319307,
+          "dates": [],
+          "granule_dates": 56,
+          "granules": 57,
+          "status": "UNRESOLVED",
+          "usable_dates": 0
+        },
+        "before": {
+          "chirps_days": 152,
+          "chirps_season_total_mm": 295.5751643180847,
+          "dates": [
+            {
+              "date": "2023-11-14",
+              "median_b3_sr": 0.055,
+              "ndti": -0.4823196605374823,
+              "pixels": 5,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.4,
+              "valid_corridor": 624,
+              "water_corridor": 28
+            },
+            {
+              "date": "2023-11-19",
+              "median_b3_sr": 0.07145,
+              "ndti": -0.5460762255013933,
+              "pixels": 12,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 53.57362747192383,
+              "rain_7d_mm": 53.57362747192383,
+              "scl_water_share": 0.9166666666666666,
+              "valid_corridor": 643,
+              "water_corridor": 30
+            },
+            {
+              "date": "2023-11-22",
+              "median_b3_sr": 0.0521,
+              "ndti": -0.32160136395805183,
+              "pixels": 4,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 53.57362747192383,
+              "scl_water_share": 0.0,
+              "valid_corridor": 555,
+              "water_corridor": 25
+            },
+            {
+              "date": "2023-11-24",
+              "median_b3_sr": 0.0404,
+              "ndti": -0.4800693240901213,
+              "pixels": 3,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 53.57362747192383,
+              "scl_water_share": 0.3333333333333333,
+              "valid_corridor": 575,
+              "water_corridor": 22
+            }
+          ],
+          "granule_dates": 47,
+          "granules": 47,
+          "median_ndti": -0.48119449231380185,
+          "posthoc_diagnostics": {
+            "dates_with_any_scl_water": 3,
+            "median_b3_reflectance": 0.05355,
+            "median_interior_pixels": 4.5,
+            "median_scl_water_share": 0.3666666666666667,
+            "months": [
+              "2023-11"
+            ]
+          },
+          "status": "INSUFFICIENT_DATES",
+          "usable_dates": 4
+        }
+      },
+      "status": "INSUFFICIENT_DATES"
+    },
+    "Myntdu-Leshka-3379": {
+      "after_minus_before_median": 0.025102790014684295,
+      "corridor_pixels": 549,
+      "difference_ci95": [
+        -0.10488550421350779,
+        0.1295738058476092
+      ],
+      "reach_goid": 4100220,
+      "reach_ndoid": 4101725,
+      "seasons": {
+        "after": {
+          "chirps_days": 151,
+          "chirps_season_total_mm": 136.3400556333363,
+          "dates": [
+            {
+              "date": "2024-11-11",
+              "median_b3_sr": 0.0339,
+              "ndti": -0.6954314720812182,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 10.533796787261963,
+              "scl_water_share": 1.0,
+              "valid_corridor": 539,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-11-16",
+              "median_b3_sr": 0.0432,
+              "ndti": -0.4517766497461929,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.06177606177606178,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-12-01",
+              "median_b3_sr": 0.0359,
+              "ndti": -0.69377990430622,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 1.0,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-12-11",
+              "median_b3_sr": 0.0497,
+              "ndti": -0.444743935309973,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-12-16",
+              "median_b3_sr": 0.0466,
+              "ndti": -0.7221206581352834,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 1.0,
+              "valid_corridor": 548,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-12-26",
+              "median_b3_sr": 0.0578,
+              "ndti": -0.517426273458445,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 548,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-12-31",
+              "median_b3_sr": 0.0615,
+              "ndti": -0.505,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.637065637065637,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2025-01-10",
+              "median_b3_sr": 0.0667,
+              "ndti": -0.44349680170575695,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2025-01-15",
+              "median_b3_sr": 0.065,
+              "ndti": -0.4958968347010551,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.03861003861003861,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2025-02-04",
+              "median_b3_sr": 0.0724,
+              "ndti": -0.32673267326732675,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 548,
+              "water_corridor": 306
+            },
+            {
+              "date": "2025-02-09",
+              "median_b3_sr": 0.0633,
+              "ndti": -0.5772558714462299,
+              "pixels": 259,
+              "rain_1d_mm": 3.298614025115967,
+              "rain_3d_mm": 4.888909876346588,
+              "rain_7d_mm": 4.888909876346588,
+              "scl_water_share": 1.0,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2025-02-14",
+              "median_b3_sr": 0.0672,
+              "ndti": -0.5130237825594564,
+              "pixels": 169,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 4.863089729100466,
+              "scl_water_share": 0.9940828402366864,
+              "valid_corridor": 304,
+              "water_corridor": 234
+            },
+            {
+              "date": "2025-03-11",
+              "median_b3_sr": 0.0888,
+              "ndti": -0.18037135278514588,
+              "pixels": 103,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 212,
+              "water_corridor": 171
+            }
+          ],
+          "granule_dates": 52,
+          "granules": 87,
+          "median_ci95": [
+            -0.5772558714462299,
+            -0.444743935309973
+          ],
+          "median_ndti": -0.505,
+          "posthoc_diagnostics": {
+            "dates_with_any_scl_water": 8,
+            "median_b3_reflectance": 0.0615,
+            "median_interior_pixels": 259.0,
+            "median_scl_water_share": 0.06177606177606178,
+            "months": [
+              "2024-11",
+              "2024-12",
+              "2025-01",
+              "2025-02",
+              "2025-03"
+            ]
+          },
+          "status": "SUPPORTED",
+          "usable_dates": 13
+        },
+        "before": {
+          "chirps_days": 152,
+          "chirps_season_total_mm": 252.7093379497528,
+          "dates": [
+            {
+              "date": "2023-11-02",
+              "median_b3_sr": 0.0416,
+              "ndti": -0.5035971223021583,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 1.0,
+              "valid_corridor": 537,
+              "water_corridor": 306
+            },
+            {
+              "date": "2023-11-22",
+              "median_b3_sr": 0.0512,
+              "ndti": -0.4082483406184232,
+              "pixels": 182,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 40.901065826416016,
+              "scl_water_share": 0.989010989010989,
+              "valid_corridor": 337,
+              "water_corridor": 229
+            },
+            {
+              "date": "2023-12-12",
+              "median_b3_sr": 0.0472,
+              "ndti": -0.49108589951377635,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 15.07863998413086,
+              "scl_water_share": 0.5173745173745173,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2023-12-17",
+              "median_b3_sr": 0.0428,
+              "ndti": -0.614100185528757,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 1.0,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2023-12-22",
+              "median_b3_sr": 0.0561,
+              "ndti": -0.6057142857142858,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 1.0,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2023-12-27",
+              "median_b3_sr": 0.0546,
+              "ndti": -0.5756718528995757,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 1.0,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-01-01",
+              "median_b3_sr": 0.0493,
+              "ndti": -0.6284329563812601,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 1.0,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-01-06",
+              "median_b3_sr": 0.0493,
+              "ndti": -0.5730706075533661,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 1.0,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-01-11",
+              "median_b3_sr": 0.0702,
+              "ndti": -0.35435992578849723,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 2.7353084087371826,
+              "rain_7d_mm": 2.7353084087371826,
+              "scl_water_share": 0.0,
+              "valid_corridor": 535,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-01-16",
+              "median_b3_sr": 0.0511,
+              "ndti": -0.5301027900146843,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 2.4684619903564453,
+              "scl_water_share": 0.8378378378378378,
+              "valid_corridor": 549,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-01-21",
+              "median_b3_sr": 0.047,
+              "ndti": -0.673469387755102,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 544,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-01-26",
+              "median_b3_sr": 0.0658,
+              "ndti": -0.17939609236234458,
+              "pixels": 41,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 119,
+              "water_corridor": 71
+            },
+            {
+              "date": "2024-01-31",
+              "median_b3_sr": 0.1272,
+              "ndti": -0.13672922252010725,
+              "pixels": 3,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 0.0,
+              "valid_corridor": 32,
+              "water_corridor": 16
+            },
+            {
+              "date": "2024-02-10",
+              "median_b3_sr": 0.0604,
+              "ndti": -0.6050314465408805,
+              "pixels": 259,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 11.260830879211426,
+              "scl_water_share": 1.0,
+              "valid_corridor": 531,
+              "water_corridor": 306
+            },
+            {
+              "date": "2024-03-06",
+              "median_b3_sr": 0.0634,
+              "ndti": -0.5017543859649123,
+              "pixels": 257,
+              "rain_1d_mm": 0.0,
+              "rain_3d_mm": 0.0,
+              "rain_7d_mm": 0.0,
+              "scl_water_share": 1.0,
+              "valid_corridor": 517,
+              "water_corridor": 306
+            }
+          ],
+          "granule_dates": 43,
+          "granules": 75,
+          "median_ci95": [
+            -0.6057142857142858,
+            -0.49108589951377635
+          ],
+          "median_ndti": -0.5301027900146843,
+          "posthoc_diagnostics": {
+            "dates_with_any_scl_water": 11,
+            "median_b3_reflectance": 0.0512,
+            "median_interior_pixels": 259.0,
+            "median_scl_water_share": 1.0,
+            "months": [
+              "2023-11",
+              "2023-12",
+              "2024-01",
+              "2024-02",
+              "2024-03"
+            ]
+          },
+          "status": "SUPPORTED",
+          "usable_dates": 15
+        }
+      },
+      "status": "SUPPORTED"
+    },
+    "Myntdu-Mihmyntdu-4316": {
+      "reason": "eroded JRC>=50 upper bound below 3 interior pixels; no imagery requested",
+      "status": "UNRESOLVED"
+    }
+  }
+}
