@@ -1,0 +1,120 @@
+{
+  "downloads": 0,
+  "earth_engine_requests": 0,
+  "inputs": {
+    "docs\\reports\\phase22o-summary.json": "82c3b4d631d93b8caaf0b312d063da5622d84dd94fc2dc48e144d6bfcba36582",
+    "docs\\reports\\phase23a-linkage-summary.json": "3837c7425382924b6889ab99a72acc1bcccf1438278cb11d031ebecb9883bd9b"
+  },
+  "interpretation": "review and monitoring priority only; no pollution, degradation or causation claim",
+  "phase": "23H",
+  "reaches": [
+    {
+      "confounders": "narrow channel; bright mixed pixels pass MNDWI/JRC but 0% SCL water; karst; station-to-reach snap 57 m; after season ~45% drier (CHIRPS station cell); no discharge or release records; 90 m DEM routing; clusters UNKNOWN",
+      "downstream_of": "",
+      "drainage_link": "D8-routed (23A)",
+      "evidence_category": "RIVER_UNOBSERVABLE",
+      "inspection_priority": "LOW",
+      "ndti_dates_after": 24,
+      "ndti_dates_before": 19,
+      "ndti_shift_after_minus_before": "",
+      "ndti_shift_ci95": "",
+      "observation_reason": "water identity not established (SCL water share 0.0/0.0)",
+      "official_wq_at_station": "NONE VERIFIED (CPCB NWMP unreachable/truncated; MSPCB portal does not list this code)",
+      "river": "Lukha",
+      "river_observation": "UNOBSERVABLE",
+      "shift_detected": "NOT_ASSESSED",
+      "station": "Lukha-Khaddum-4315",
+      "upstream_cluster_ha": 24.66,
+      "upstream_clusters": 11,
+      "upstream_partial": 4,
+      "upstream_persistent": 1,
+      "upstream_recovering": 6
+    },
+    {
+      "confounders": "narrow channel (<= 22 m water clearance); Lunar tributary joins near Sonapur (literature), position relative to CPCB point unverified; snap 101 m; karst; after season ~45% drier (CHIRPS station cell); no discharge or release records; 90 m DEM routing; clusters UNKNOWN",
+      "downstream_of": "Lukha-Khaddum-4315",
+      "drainage_link": "D8-routed (23A)",
+      "evidence_category": "RIVER_UNOBSERVABLE",
+      "inspection_priority": "HIGH",
+      "ndti_dates_after": 0,
+      "ndti_dates_before": 4,
+      "ndti_shift_after_minus_before": "",
+      "ndti_shift_ci95": "",
+      "observation_reason": "insufficient dates 4/0 (< 5)",
+      "official_wq_at_station": "NONE VERIFIED (CPCB NWMP unreachable/truncated; MSPCB portal does not list this code)",
+      "river": "Lukha",
+      "river_observation": "UNOBSERVABLE",
+      "shift_detected": "NOT_ASSESSED",
+      "station": "Lukha-Sunapur-3376",
+      "upstream_cluster_ha": 47.07,
+      "upstream_clusters": 80,
+      "upstream_partial": 32,
+      "upstream_persistent": 28,
+      "upstream_recovering": 20
+    },
+    {
+      "confounders": "narrow channel; Jowai bypass road-construction debris upstream (NGT OA 1271/2024); domestic sources; after season ~45% drier (CHIRPS station cell); no discharge or release records; 90 m DEM routing; clusters UNKNOWN",
+      "downstream_of": "",
+      "drainage_link": "D8-routed (23A)",
+      "evidence_category": "RIVER_UNOBSERVABLE",
+      "inspection_priority": "MEDIUM",
+      "ndti_dates_after": 0,
+      "ndti_dates_before": 0,
+      "ndti_shift_after_minus_before": "",
+      "ndti_shift_ci95": "",
+      "observation_reason": "no interior water (unresolved before acquisition)",
+      "official_wq_at_station": "NONE VERIFIED (CPCB NWMP unreachable/truncated; MSPCB portal does not list this code)",
+      "river": "Myntdu",
+      "river_observation": "UNOBSERVABLE",
+      "shift_detected": "NOT_ASSESSED",
+      "station": "Myntdu-Mihmyntdu-4316",
+      "upstream_cluster_ha": 4.05,
+      "upstream_clusters": 15,
+      "upstream_partial": 5,
+      "upstream_persistent": 7,
+      "upstream_recovering": 3
+    },
+    {
+      "confounders": "impounded reservoir/backwater of Myntdu-Leshka Stage I (dam releases); SCL classifies the same water differently between seasons; upstream road construction; after season ~45% drier (CHIRPS station cell); no discharge or release records; 90 m DEM routing; clusters UNKNOWN",
+      "downstream_of": "Myntdu-Mihmyntdu-4316",
+      "drainage_link": "D8-routed (23A)",
+      "evidence_category": "UNKNOWN",
+      "inspection_priority": "MEDIUM",
+      "ndti_dates_after": 13,
+      "ndti_dates_before": 15,
+      "ndti_shift_after_minus_before": "",
+      "ndti_shift_ci95": "",
+      "observation_reason": "water identity inconsistent between seasons (SCL water share 1.00/0.06)",
+      "official_wq_at_station": "NONE VERIFIED (CPCB NWMP unreachable/truncated; MSPCB portal does not list this code)",
+      "river": "Myntdu",
+      "river_observation": "INCONSISTENT",
+      "shift_detected": "NOT_ASSESSED",
+      "station": "Myntdu-Leshka-3379",
+      "upstream_cluster_ha": 5.31,
+      "upstream_clusters": 17,
+      "upstream_partial": 6,
+      "upstream_persistent": 8,
+      "upstream_recovering": 3
+    }
+  ],
+  "rules": {
+    "min_dates_per_season": 5,
+    "min_scl_water_share": 0.5,
+    "min_upstream_clusters": 3,
+    "priority": {
+      "HIGH": "river unobservable and >= 10 upstream persistent clusters",
+      "LOW": "< 3 upstream persistent clusters",
+      "MEDIUM": "river unobservable or UNKNOWN, with 3-9 upstream persistent clusters"
+    },
+    "shift": "after-minus-before median NDTI with date-bootstrap 95% CI excluding 0 (22O statistic)"
+  },
+  "separate_official_records": {
+    "note": "MSPCB monthly portal stations NOT linked to any reach (coordinates unverified)",
+    "source": "docs/reports/phase23c-official-water-records.md",
+    "stations": [
+      "3375 Lunar (Lukha tributary) at Myndihati",
+      "1428 Kyrhuhkhla",
+      "1631 Myntdu at Jowai"
+    ]
+  }
+}
