@@ -1,0 +1,45 @@
+{
+  "exclusions": "TEST blocks/tiles never in frame; non-SAR-tested clusters excluded; purposive items excluded from rates",
+  "frame": "Phase 22X AOIs (17 TRAIN + 3 VAL, full-footprint TEST guard), 174 SAR-tested clusters, 22Y classes; controls = 22X background cells (eligible, > 60 m from candidates, land)",
+  "manifest_sha256": "f25368c8de6f9b28f85c288efa8fc1d8e6408a6939d5b7940ee7f5f4feaa13a4",
+  "min_separation_m": 640,
+  "phase": "23I",
+  "seed": "23I",
+  "selection": "sha256(seed:key) order, sequential, rejecting items < 640 m from an already selected item in the same AOI; nominal inclusion probability n_h/N_h (separation rule makes it approximate)",
+  "sizes": {
+    "CONTROL": 10,
+    "PARTIAL": 6,
+    "PERSISTENT": 8,
+    "PURPOSIVE_TIER1": 6,
+    "RECOVERING": 6
+  },
+  "strata": {
+    "CONTROL": {
+      "frame_size": 75618,
+      "rejected_for_separation": 4,
+      "sampled": 10
+    },
+    "PARTIAL": {
+      "frame_size": 77,
+      "rejected_for_separation": 5,
+      "sampled": 6
+    },
+    "PERSISTENT": {
+      "frame_size": 53,
+      "rejected_for_separation": 2,
+      "sampled": 8
+    },
+    "PURPOSIVE_TIER1": {
+      "frame_size": 14,
+      "note": "22Z Tier-1 review shortlist; NOT used for any rate estimate",
+      "rejected_for_separation": 14,
+      "sampled": 0
+    },
+    "RECOVERING": {
+      "frame_size": 44,
+      "rejected_for_separation": 8,
+      "sampled": 6
+    }
+  },
+  "total": 30
+}
