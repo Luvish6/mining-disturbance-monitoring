@@ -146,3 +146,15 @@ Expected cost: about 4 requests and under 1 MB per AOI. In parallel, the user co
 - `results/phase22/feasibility.json` is pre-existing, untracked and was left alone.
 - Local outputs listed above are gitignored by design.
 - Push status is reported in the final chat summary. Verify with `git ls-remote origin phase22-label-sources`.
+
+## Update: Phase 22R (independent published-product agreement)
+
+**Commits:** `0c3e5b4` (preregistration), then the next commit (results). **Report:** [phase22r-independent-product-agreement.md](phase22r-independent-product-agreement.md).
+
+**Data and cost:** GFC v1.13 and WRI/GDM drivers v1.2, sampled for the 18 frozen clusters in 4 AOIs. 2 Earth Engine requests, 266 KB.
+
+**H1 (GFC 2024/25 loss):** 1 of 18 clusters agrees. That cluster rests on a single 2024 cell. Wilson 95% CI 0.010–0.258; translation-permutation p = 0.038, which is weak.
+
+**H2 (hard-commodities driver):** null. No AOI has a 1 km cell dominated by hard commodities (p = 0.52). The AOIs are dominated by shifting cultivation, agriculture, logging and settlement.
+
+**Status:** no accuracy metrics were computed. The candidates remain UNKNOWN.

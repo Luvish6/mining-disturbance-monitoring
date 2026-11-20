@@ -1,0 +1,449 @@
+{
+  "H1_recent_loss": {
+    "clusters_with_2024_2025_loss": [
+      1,
+      18
+    ],
+    "fraction": 0.05555555555555555,
+    "translation_null": {
+      "null_median": 0.0,
+      "null_p2_5": 0.0,
+      "null_p97_5": 0.05555555555555555,
+      "p_two_sided": 0.0382961703829617
+    },
+    "wilson95": [
+      0.009874935830924525,
+      0.2575779980200754
+    ]
+  },
+  "H2_hard_commodities": {
+    "aois": 4,
+    "clusters": 18,
+    "distinct_candidate_driver_cells": 12,
+    "mean_cluster_probability": 0.04200000000000001,
+    "translation_null": {
+      "null_median": 0.03940740740740741,
+      "null_p2_5": 0.03422222222222223,
+      "null_p97_5": 0.04844444444444444,
+      "p_two_sided": 0.5153484651534846
+    }
+  },
+  "aois": {
+    "east-90-562": {
+      "background_cells": 3959,
+      "candidate_cells": 5,
+      "cell_level": {
+        "background_prior_loss_fraction": 0.1270522859307906,
+        "background_recent_loss_fraction": 0.00025258903763576663,
+        "background_treecover2000_mean": 51.45794392523364,
+        "candidate_prior_loss_fraction": 0.2,
+        "candidate_recent_loss_fraction": 0.0,
+        "candidate_treecover2000_mean": 22.0
+      },
+      "clusters": [
+        {
+          "cells": 1,
+          "cluster": "C001",
+          "driver_cells": [
+            2725105856
+          ],
+          "driver_classes": [
+            "Permanent agriculture"
+          ],
+          "hard_commodities_p_mean": 0.044,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 0.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C002",
+          "driver_cells": [
+            2725305856
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.036000000000000004,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 28.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C003",
+          "driver_cells": [
+            2725205857
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.036000000000000004,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 1,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 70.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C004",
+          "driver_cells": [
+            2725205857
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.036000000000000004,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 12.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C005",
+          "driver_cells": [
+            2725205857
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.036000000000000004,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 0.0
+        }
+      ],
+      "clusters_with_recent_loss": [
+        0,
+        5
+      ],
+      "drivers": {
+        "aoi_cells_by_class": {
+          "Permanent agriculture": 448,
+          "Shifting cultivation": 3648
+        },
+        "aoi_driver_cells": 6,
+        "background_hard_commodities_p_mean": 0.03313968173781259,
+        "candidate_driver_cells": 3,
+        "candidate_hard_commodities_p_mean": 0.03760000000000001,
+        "hard_commodities_dominant_cells": 0
+      }
+    },
+    "east-94-559-c74": {
+      "background_cells": 3937,
+      "candidate_cells": 9,
+      "cell_level": {
+        "background_prior_loss_fraction": 0.0967741935483871,
+        "background_recent_loss_fraction": 0.003302006604013208,
+        "background_treecover2000_mean": 49.126746253492506,
+        "candidate_prior_loss_fraction": 0.3333333333333333,
+        "candidate_recent_loss_fraction": 0.0,
+        "candidate_treecover2000_mean": 64.77777777777777
+      },
+      "clusters": [
+        {
+          "cells": 3,
+          "cluster": "C001",
+          "driver_cells": [
+            2727205870
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.024000000000000004,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 2,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 86.33333333333333
+        },
+        {
+          "cells": 1,
+          "cluster": "C002",
+          "driver_cells": [
+            2727105870
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.028,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 63.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C003",
+          "driver_cells": [
+            2727105871
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.02,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 0.0
+        },
+        {
+          "cells": 2,
+          "cluster": "C004",
+          "driver_cells": [
+            2727105871
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.02,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 86.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C005",
+          "driver_cells": [
+            2727005871
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.024,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 1,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 89.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C006",
+          "driver_cells": [
+            2727105871
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.02,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 0.0
+        }
+      ],
+      "clusters_with_recent_loss": [
+        0,
+        6
+      ],
+      "drivers": {
+        "aoi_cells_by_class": {
+          "Shifting cultivation": 4096
+        },
+        "aoi_driver_cells": 9,
+        "background_hard_commodities_p_mean": 0.023580391160782328,
+        "candidate_driver_cells": 4,
+        "candidate_hard_commodities_p_mean": 0.022666666666666665,
+        "hard_commodities_dominant_cells": 0
+      }
+    },
+    "west-82-563": {
+      "background_cells": 4071,
+      "candidate_cells": 1,
+      "cell_level": {
+        "background_prior_loss_fraction": 0.05821665438467207,
+        "background_recent_loss_fraction": 0.0036845983787767134,
+        "background_treecover2000_mean": 40.20805698845493,
+        "candidate_prior_loss_fraction": 0.0,
+        "candidate_recent_loss_fraction": 0.0,
+        "candidate_treecover2000_mean": 0.0
+      },
+      "clusters": [
+        {
+          "cells": 1,
+          "cluster": "C001",
+          "driver_cells": [
+            2721205852
+          ],
+          "driver_classes": [
+            "Permanent agriculture"
+          ],
+          "hard_commodities_p_mean": 0.028,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 0.0
+        }
+      ],
+      "clusters_with_recent_loss": [
+        0,
+        1
+      ],
+      "drivers": {
+        "aoi_cells_by_class": {
+          "Logging": 936,
+          "Permanent agriculture": 3160
+        },
+        "aoi_driver_cells": 6,
+        "background_hard_commodities_p_mean": 0.027100957995578493,
+        "candidate_driver_cells": 1,
+        "candidate_hard_commodities_p_mean": 0.028,
+        "hard_commodities_dominant_cells": 0
+      }
+    },
+    "west-85-563": {
+      "background_cells": 3965,
+      "candidate_cells": 6,
+      "cell_level": {
+        "background_prior_loss_fraction": 0.06431273644388398,
+        "background_recent_loss_fraction": 0.0012610340479192938,
+        "background_treecover2000_mean": 25.16595208070618,
+        "candidate_prior_loss_fraction": 0.16666666666666666,
+        "candidate_recent_loss_fraction": 0.16666666666666666,
+        "candidate_treecover2000_mean": 42.333333333333336
+      },
+      "clusters": [
+        {
+          "cells": 1,
+          "cluster": "C001",
+          "driver_cells": [
+            2722805852
+          ],
+          "driver_classes": [
+            "Settlements and infrastructure"
+          ],
+          "hard_commodities_p_mean": 0.048,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 0.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C002",
+          "driver_cells": [
+            2722805852
+          ],
+          "driver_classes": [
+            "Settlements and infrastructure"
+          ],
+          "hard_commodities_p_mean": 0.048,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 45.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C003",
+          "driver_cells": [
+            2722705852
+          ],
+          "driver_classes": [
+            "Logging"
+          ],
+          "hard_commodities_p_mean": 0.052000000000000005,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 85.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C004",
+          "driver_cells": [
+            2722705853
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.064,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 1,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 75.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C005",
+          "driver_cells": [
+            2722705853
+          ],
+          "driver_classes": [
+            "Shifting cultivation"
+          ],
+          "hard_commodities_p_mean": 0.064,
+          "loss_2024_cells": 1,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 1,
+          "treecover2000_mean": 4.0
+        },
+        {
+          "cells": 1,
+          "cluster": "C006",
+          "driver_cells": [
+            2722805853
+          ],
+          "driver_classes": [
+            "Permanent agriculture"
+          ],
+          "hard_commodities_p_mean": 0.128,
+          "loss_2024_cells": 0,
+          "loss_2025_cells": 0,
+          "prior_loss_cells": 0,
+          "recent_loss_cells": 0,
+          "treecover2000_mean": 45.0
+        }
+      ],
+      "clusters_with_recent_loss": [
+        1,
+        6
+      ],
+      "drivers": {
+        "aoi_cells_by_class": {
+          "Logging": 1587,
+          "Permanent agriculture": 588,
+          "Settlements and infrastructure": 1036,
+          "Shifting cultivation": 885
+        },
+        "aoi_driver_cells": 9,
+        "background_hard_commodities_p_mean": 0.0633018915510719,
+        "candidate_driver_cells": 4,
+        "candidate_hard_commodities_p_mean": 0.06733333333333334,
+        "hard_commodities_dominant_cells": 0
+      }
+    }
+  },
+  "cloud_usage": {
+    "requests": 2,
+    "response_bytes": 266451
+  },
+  "interpretation": "independent-product agreement only; candidates remain UNKNOWN; no mining accuracy metrics",
+  "phase": "22R",
+  "preregistration_sha256": "4586c4c6f7d1a7d9ab69df4f099efde1b7326e71b034bf4f78e599a9c7c6a483",
+  "products": {
+    "drivers": "projects/landandcarbon/assets/wri_gdm_drivers_forest_loss_1km/v1_2_2001_2024",
+    "hansen": "UMD/hansen/global_forest_change_2025_v1_13"
+  }
+}
