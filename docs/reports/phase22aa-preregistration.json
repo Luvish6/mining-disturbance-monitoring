@@ -1,0 +1,218 @@
+{
+  "completeness": {
+    "per_aoi": "mapped road length and building count inside each AOI reported",
+    "sensitivity": "all tests repeated excluding OSM-SPARSE AOIs",
+    "sparse_rule": "AOI is OSM-SPARSE if it has 0 mapped buildings AND < 1 km mapped highway inside the AOI"
+  },
+  "date": "2026-11-20",
+  "expand_m": 500,
+  "go_rule": "GO for infrastructure assessment only if >= 12 of the 18 cluster-bearing AOIs are not OSM-SPARSE",
+  "inputs": {
+    "phase22x_prereg": "d711fcfd5f95c93fca8e686514901eb037b8386f56c2e46b0238873355910da9",
+    "phase22y_summary": "695a338202123c8b01ab05632ceeb9dcd715d196ded028edee7cbb04c8a084e0",
+    "phase22z_summary": "2f55aafc90a209dfa8b46d50ca93bfc69a9cb4c107ac293fd97dcf0e2af0cfa7"
+  },
+  "metrics": {
+    "adjacent": "road or building within 60 m (2 cells) of the cluster polygon",
+    "distance": "distance from cluster polygon to nearest highway way / building way, right-censored at 500 m"
+  },
+  "not_done": "no EE requests, no training, no thresholds changed, no TEST geography, all clusters UNKNOWN",
+  "phase": "22AA",
+  "priority_rule": "Tier-1/2 clusters adjacent to mapped infrastructure are flagged INFRASTRUCTURE_ADJACENT (alternative explanation to check first); tiers are not changed and no cluster is relabelled",
+  "query_extents": {
+    "80:559": {
+      "bbox_swne": [
+        25.277519,
+        92.01702,
+        25.304075,
+        92.04623
+      ],
+      "test_buffer_distance_m": 908.6
+    },
+    "83:557": {
+      "bbox_swne": [
+        25.188228,
+        92.166634,
+        25.214756,
+        92.195791
+      ],
+      "test_buffer_distance_m": 911.9
+    },
+    "83:561": {
+      "bbox_swne": [
+        25.368643,
+        92.165399,
+        25.395172,
+        92.194601
+      ],
+      "test_buffer_distance_m": 1275.6
+    },
+    "83:563": {
+      "bbox_swne": [
+        25.45912,
+        92.164775,
+        25.485649,
+        92.194
+      ],
+      "test_buffer_distance_m": 5962.5
+    },
+    "84:558": {
+      "bbox_swne": [
+        25.233467,
+        92.215778,
+        25.259986,
+        92.244936
+      ],
+      "test_buffer_distance_m": 1291.8
+    },
+    "85:565": {
+      "bbox_swne": [
+        25.549858,
+        92.263609,
+        25.576368,
+        92.292835
+      ],
+      "test_buffer_distance_m": 5973.0
+    },
+    "86:555": {
+      "bbox_swne": [
+        25.098508,
+        92.316033,
+        25.125007,
+        92.345138
+      ],
+      "test_buffer_distance_m": 5963.2
+    },
+    "86:561": {
+      "bbox_swne": [
+        25.369413,
+        92.314514,
+        25.395913,
+        92.343685
+      ],
+      "test_buffer_distance_m": 1280.6
+    },
+    "87:556": {
+      "bbox_swne": [
+        25.14397,
+        92.365197,
+        25.17046,
+        92.394303
+      ],
+      "test_buffer_distance_m": 5977.3
+    },
+    "87:557": {
+      "bbox_swne": [
+        25.189212,
+        92.364963,
+        25.215702,
+        92.394079
+      ],
+      "test_buffer_distance_m": 5967.4
+    },
+    "87:563": {
+      "bbox_swne": [
+        25.460116,
+        92.363546,
+        25.486606,
+        92.392729
+      ],
+      "test_buffer_distance_m": 916.4
+    },
+    "87:564": {
+      "bbox_swne": [
+        25.505085,
+        92.363309,
+        25.531576,
+        92.392503
+      ],
+      "test_buffer_distance_m": 5896.3
+    },
+    "88:556": {
+      "bbox_swne": [
+        25.144174,
+        92.414912,
+        25.170655,
+        92.444007
+      ],
+      "test_buffer_distance_m": 5907.6
+    },
+    "88:558": {
+      "bbox_swne": [
+        25.234388,
+        92.41448,
+        25.260869,
+        92.443597
+      ],
+      "test_buffer_distance_m": 917.6
+    },
+    "88:563": {
+      "bbox_swne": [
+        25.460323,
+        92.41339,
+        25.486804,
+        92.442562
+      ],
+      "test_buffer_distance_m": 1290.2
+    },
+    "88:564": {
+      "bbox_swne": [
+        25.505293,
+        92.413171,
+        25.531774,
+        92.442355
+      ],
+      "test_buffer_distance_m": 5966.8
+    },
+    "88:567": {
+      "bbox_swne": [
+        25.640742,
+        92.41251,
+        25.667223,
+        92.441727
+      ],
+      "test_buffer_distance_m": 1290.1
+    },
+    "89:557": {
+      "bbox_swne": [
+        25.189605,
+        92.464429,
+        25.216076,
+        92.493524
+      ],
+      "test_buffer_distance_m": 5969.7
+    },
+    "91:556": {
+      "bbox_swne": [
+        25.144687,
+        92.56376,
+        25.171139,
+        92.592824
+      ],
+      "test_buffer_distance_m": 5911.2
+    },
+    "91:558": {
+      "bbox_swne": [
+        25.234903,
+        92.563438,
+        25.261355,
+        92.592524
+      ],
+      "test_buffer_distance_m": 920.8
+    }
+  },
+  "source": {
+    "endpoint": "https://overpass-api.de/api/interpreter",
+    "licence": "ODbL 1.0; (c) OpenStreetMap contributors",
+    "max_bytes": 20000000,
+    "query_template": "way[\"highway\"](bbox); way[\"building\"](bbox); out geom;",
+    "requests": 1,
+    "user_agent": "generic research client; no personal data"
+  },
+  "tests": {
+    "background": "shape-preserving translation of each cluster within its AOI's 22X background (Phase 22R translation_null, 10,000 draws, seed 46), statistic = share adjacent, per class",
+    "classes": "PERSISTENT vs other: class labels permuted within AOI (Phase 22Y), share adjacent and mean censored distance",
+    "lumshnong": "87:556+87:557 reported as one locality, separately from the other 16 AOIs"
+  },
+  "units": "the 174 SAR-tested 22X clusters with frozen 22Y classes and 22Z tiers; cluster = union of its 30 m cells"
+}
