@@ -4,7 +4,7 @@ This preregistration was committed **before** any PlanetScope data was selected 
 
 ## Sites (fixed)
 
-The AOIs are in [phase23k-planet-aoi.json](phase23k-planet-aoi.geojson): the Phase 4A 720 m CPCB station windows, verified offline to be inside the districts and clear of all TEST buffers.
+The AOIs are in [phase23k-planet-aoi.json](phase23k-planet-aoi.json): the Phase 4A 720 m CPCB station windows, verified offline to be inside the districts and clear of all TEST buffers.
 
 | Role | Station | Phase 23A exposure |
 |---|---|---|
