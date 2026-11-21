@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {createRoot} from 'react-dom/client';
-import {ChevronDown, CircleHelp, ClipboardCheck, FileText, Grid2X2, Layers, MapPin, Menu, Minus, Plus, Route, Search, ShieldCheck} from 'lucide-react';
+import {BarChart3, ChevronDown, CircleHelp, ClipboardCheck, FileText, Grid2X2, Layers, MapPin, Menu, Route, Search} from 'lucide-react';
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
@@ -9,12 +9,13 @@ import {Explorer} from './explorer';
 import {River} from './river';
 import {PlanetReview} from './planet';
 import {Analytics, Evidence, ResearchKPIs, RiverExposure} from './research';
+import {GeoMap} from './geomap';
 
 type Tile = {id: string; valid: number; total: number};
 type Data = {area: number; seasons: Record<string, Record<string, number>>; tiles: Tile[]; stations: number};
 const nav = [
   ['Overview', Grid2X2], ['Explorer', Layers], ['Rivers', Route],
-  ['Review', ClipboardCheck], ['Analytics', ShieldCheck], ['Evidence', FileText],
+  ['Review', ClipboardCheck], ['Analytics', BarChart3], ['Evidence', FileText],
 ] as const;
 const districts = ['East Jaintia Hills', 'West Jaintia Hills'] as const;
 const format = (value?: number) => value?.toLocaleString('en-IN') ?? '—';
@@ -43,8 +44,6 @@ function App() {
   const [district, setDistrict] = useState('All districts');
   const [season, setSeason] = useState('2023-24');
   const [query, setQuery] = useState('');
-  const [zoom, setZoom] = useState(1);
-  const [image, setImage] = useState(true);
   const [drawer, setDrawer] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
@@ -92,19 +91,9 @@ function App() {
           <small>{format(data?.area)} km² · GAUL 2025 study area · {format(data?.stations)} river stations</small>
         </aside>
         <div className="content">
-          <section className="map" aria-label="Illustrative study-area context">
-            {image && <div className="map-art" style={{transform:'scale('+zoom+')'}}>
-              <img className="landscape" src={local+'figma-landscape.png'} onError={()=>setImage(false)} alt=""/>
-              {['StudyEnvelope','DistrictBoundary','RiverCorridor','Tributary'].map(name =>
-                <img key={name} className={name} src={local+name+'.svg'} alt=""
-                     onError={event => {event.currentTarget.hidden = true;}}/>)}
-            </div>}
-            <div className="map-tabs"><span>Study boundary</span><span>Regional context</span></div><span className="badge map-label">Illustrative context</span>
-            {image && <div className="map-names"><span>WEST JAINTIA HILLS</span><span>EAST JAINTIA HILLS</span></div>}
-            {!image && <p className="map-empty">Local Figma background unavailable.</p>}
-            <div className="zoom"><button aria-label="Zoom in" disabled={!image||zoom>=1.6} onClick={()=>setZoom(Math.min(1.6,zoom+.2))}><Plus size={18}/></button>
-              <button aria-label="Zoom out" disabled={!image||zoom<=1} onClick={()=>setZoom(Math.max(1,zoom-.2))}><Minus size={18}/></button></div>
-            <div className="map-note">Illustrative study envelope and river corridors · Figma design</div>
+          <section className="map" aria-label="Interactive study-area map">
+            <GeoMap district={district}/>
+            <span className="badge map-label">Real geography · offline vectors</span>
           </section>
           <section className="triage"><div className="section-bar"><h2>Tile coverage</h2><span className="badge neutral">{tiles?.length ?? '—'} verified tiles</span></div>
             <p>Saved feature coverage. Independent reference review is pending.</p>

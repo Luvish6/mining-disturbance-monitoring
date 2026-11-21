@@ -22,6 +22,8 @@ def main():
         rows = list(csv.DictReader(stream))
     records = []
     for tile in tiles:
+        if tile["split"] == "test":
+            continue  # frozen TEST tiles are never exported to dashboard bundles
         arrays, valid = tile["arrays"], tile["common"]
         source = receipt["sources"][tile["id"]]
         if tile["hashes"] != source["hashes"] or tile["quality_sha256"] != source["quality_sha256"]:

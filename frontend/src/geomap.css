@@ -1,0 +1,44 @@
+.geomap{position:absolute;inset:0;background:#141d23}
+.geomap svg{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+.geomap svg:active{cursor:grabbing}
+.geomap .sea{fill:#141d23}
+.geomap .district{fill:#1d2a30;stroke:#79d9cd;stroke-width:1.4}
+.geomap .district.dim{fill:#171f25;stroke:#3c4b52;stroke-dasharray:4 3}
+.geomap .river{fill:none;stroke:#4f8fb3;stroke-linecap:round;opacity:.85}
+.geomap .chain{fill:none;stroke:#79cbe2;stroke-width:3.2;stroke-dasharray:7 4;stroke-linecap:round}
+.geomap .aoi{stroke:#e8edf2;stroke-width:1;cursor:pointer}
+.geomap .aoi:hover,.geomap .aoi:focus{stroke:#e4ba72;stroke-width:2.2;outline:none}
+.geomap .aoi.d0,.ramp .d0{fill:#2a3238;fill-opacity:.85}
+.geomap .aoi.d1,.ramp .d1{fill:#6e5a33;fill-opacity:.85}
+.geomap .aoi.d2,.ramp .d2{fill:#a37a35;fill-opacity:.88}
+.geomap .aoi.d3,.ramp .d3{fill:#d29a3c;fill-opacity:.9}
+.geomap .aoi.d4,.ramp .d4{fill:#f2c066;fill-opacity:.95}
+.geomap .station{cursor:pointer;outline:none}
+.geomap .station circle{fill:#15191e;stroke:#e8edf2;stroke-width:2}
+.geomap .station:focus circle,.geomap .station:hover circle{stroke:#79d9cd;stroke-width:3}
+.geomap .station text{fill:#e8edf2;font-size:11px;paint-order:stroke;stroke:#141d23;stroke-width:3px}
+.geotip{position:absolute;transform:translate(-50%,calc(-100% - 8px));background:#0f1418;border:1px solid var(--line);border-radius:4px;padding:6px 9px;font-size:11px;white-space:pre;pointer-events:none;z-index:3;color:#e8edf2}
+.geozoom{position:absolute;right:16px;top:79px;background:#192129;border-radius:4px;display:flex;flex-direction:column;z-index:2}
+.geozoom button{display:grid;place-items:center;width:36px;height:36px;background:none;border:0}
+.geozoom button+button{border-top:1px solid var(--line)}
+.geolayers{position:absolute;left:16px;top:64px;z-index:2;background:#192129ee;border:1px solid var(--line);border-radius:4px;padding:8px 10px;width:232px;max-height:calc(100% - 120px);overflow:auto}
+.geolayers.closed{width:auto}
+.geolayers-toggle{display:flex;align-items:center;gap:6px;background:none;border:0;color:var(--teal);padding:2px 0 6px;font-size:11px}
+.layer{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:11px;cursor:pointer}
+.layer input{margin:2px 0 0}
+.layer small{display:block;font-size:9px}
+.swatch{flex:0 0 18px;height:10px;margin-top:2px;border-radius:2px}
+.l-districts .swatch{background:#1d2a30;border:1.5px solid #79d9cd}
+.l-rivers .swatch{height:2px;margin-top:6px;background:#4f8fb3}
+.l-chains .swatch{height:0;margin-top:6px;border-top:3px dashed #79cbe2}
+.l-stations .swatch{flex-basis:10px;width:10px;border-radius:50%;border:2px solid #e8edf2;background:#15191e}
+.l-aois .swatch{background:linear-gradient(90deg,#6e5a33,#f2c066)}
+.ramp{display:flex;flex-wrap:wrap;gap:4px 8px;margin:6px 0;font-size:9px;color:var(--muted)}
+.ramp span{display:inline-flex;align-items:center;gap:4px}
+.ramp i{display:inline-block;width:10px;height:10px;border-radius:2px}
+.ramp small{flex-basis:100%}
+.unavail{display:block;margin-top:6px;line-height:1.35}
+.geonote{position:absolute;bottom:16px;left:16px;background:#192129;border-radius:4px;padding:8px 12px;font-size:10px;color:var(--muted);z-index:2}
+.geomap-state{position:absolute;inset:45% 10% auto;text-align:center;color:var(--muted)}
+.geomap-state code{background:var(--control);padding:2px 6px;border-radius:3px;color:#e8edf2}
+@media(max-width:530px){.geolayers{width:190px;top:56px}.geonote{right:16px}}

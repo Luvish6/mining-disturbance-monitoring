@@ -64,3 +64,39 @@ The existing Phase 8 adapters still populate the Overview map, Explorer and Rive
 - The Explorer's satellite imagery is still the existing India candidate-site view. **No Meghalaya per-candidate imagery is published to the dashboard**, because exact candidate geometry stays local by project rule.
 - The Overview map is still the Figma illustrative context, not a georeferenced map.
 - Human-review results will appear only after both independent reviews are returned and analysed.
+
+## Update — real GIS map and end-to-end audit
+
+**Overview map.** The illustrative Figma picture is replaced by an **offline vector GIS map** (`frontend/src/geomap.tsx`, with pure helpers in `geo-utils.ts`). It keeps the same frame, zoom stack and dark styling.
+- **Layers** (`scripts/phase23_dashboard_geo.py` writes `public/local/geo.json`, which is git-ignored, from verified local assets only):
+  - GAUL 2025 district polygons, hash-checked against the Phase 6B roster;
+  - HydroSHEDS FFR reaches draining at least 25 km², labelled *DEM-modelled*;
+  - NDOID main-stem paths between the CPCB station pairs (15 and 19 reaches, *modelled*);
+  - the 4 CPCB stations;
+  - the 20 Phase 22X sample squares, shaded by fixed candidate-density classes (AOI aggregates only).
+- **Controls:**
+  - drag to pan, wheel or buttons to zoom about a point, and reset;
+  - layer toggles with a legend that separates observed, official and modelled layers;
+  - hover and focus tooltips;
+  - the district filter fits and dims the map and filters the AOIs.
+- **Not shown** (stated on the map): exact candidate locations, surveyed or named river centrelines, catchment polygons and basemap tiles. No external tile requests are made.
+
+**Audit fixes.**
+- `overview.json` and `explorer.json` previously included the **two frozen TEST tiles**: their tile IDs and coverage, plus per-pixel change layers and overlap statistics derived from TEST imagery. Both adapters now drop TEST-split tiles.
+- The existing snapshot was filtered by its `split` label alone, without reading TEST rasters again.
+- The Explorer loader now rejects any snapshot that contains TEST tiles, instead of requiring exactly 6.
+- The Analytics rail icon was corrected, and unused map state was removed.
+- The layers panel starts collapsed on narrow screens.
+
+**Tests.**
+- `npm test` runs the Node built-in test runner (`tests/frontend_geo_utils.test.js`) on `geo-utils` (projection, geometry parsing, zoom anchoring, fit, district filter, density classes).
+- `tests/test_phase23_dashboard_geo.py` checks the layers' provenance, chain topology, that there are no TEST or candidate locations, and that the snapshots exclude the TEST tiles.
+- `npm run build` passes.
+- In the browser, Overview (including the filter, tooltip and layers), Explorer, Rivers, Exposure, Analytics, Evidence and Review all render with no console errors.
+
+**Regenerate.**
+
+```powershell
+python -B -m scripts.phase23_dashboard_geo
+python -B scripts/phase8_overview_data.py
+```

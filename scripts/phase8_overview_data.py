@@ -13,11 +13,15 @@ def main():
         tiles = [row for row in csv.DictReader(stream)
                  if row["scope"] == "tile" and row["field"] == "common_valid"]
     stations = json.loads((outputs / "phase4a_river_feasibility/receipt.json").read_text(encoding="utf-8"))
+    # Dashboard bundles must not carry frozen-TEST information: drop TEST-split tiles (Phase 6B roster).
+    roster = json.loads((outputs / "phase6b_multitile/roster.json").read_text(encoding="utf-8"))
+    test_ids = {row["id"] for row in roster["selected"] if row["split"] == "test"}
     payload = {
         "area": inventory["boundary"]["area_km2"],
         "seasons": inventory["collection_counts"],
         "tiles": [{"id": row["group"], "valid": int(row["supported_n"]),
-                   "total": int(row["footprint_n"])} for row in tiles],
+                   "total": int(row["footprint_n"])} for row in tiles if row["group"] not in test_ids],
+        "tiles_note": f"{len(test_ids)} TEST-split tiles withheld from the dashboard",
         "stations": len(stations["stations"]),
     }
     target = ROOT / "frontend/public/local/overview.json"

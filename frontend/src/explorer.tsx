@@ -163,7 +163,7 @@ export function Explorer() {
     const controller = new AbortController();
     fetch(import.meta.env.BASE_URL+'local/explorer.json', {signal: controller.signal})
       .then(response => { if (!response.ok) throw Error('Unavailable'); return response.json(); })
-      .then(value => { if (value.tiles?.length !== 6) throw Error('Invalid roster'); setData(value); })
+      .then(value => { if (!value.tiles?.length || value.tiles.some((t: {split?: string}) => t.split === 'test')) throw Error('Invalid roster'); setData(value); })
       .catch(() => { if (!controller.signal.aborted) setFailed(true); });
     return () => controller.abort();
   }, []);
