@@ -1,0 +1,178 @@
+{
+ "phase": "23M",
+ "checks": [
+  {
+   "check": "23L source hash: reach_table",
+   "ok": true,
+   "detail": "docs/reports/phase23h-reach-priority.json"
+  },
+  {
+   "check": "23L source hash: linkage",
+   "ok": true,
+   "detail": "docs/reports/phase23a-linkage-summary.json"
+  },
+  {
+   "check": "23L source hash: planet_2025_02_20",
+   "ok": true,
+   "detail": "docs/reports/phase23k-20250220_045741_92_2534-screen.json"
+  },
+  {
+   "check": "23L source hash: planet_2024_11_08",
+   "ok": true,
+   "detail": "docs/reports/phase23k-20241108_044308_36_24f0-screen.json"
+  },
+  {
+   "check": "23L source hash: official_records",
+   "ok": true,
+   "detail": "docs/reports/phase23c-official-water-records.md"
+  },
+  {
+   "check": "23A preregistration hash",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "23A station GOIDs equal audit constants",
+   "ok": true,
+   "detail": "{\"Lukha-Khaddum-4315\": 4103404, \"Lukha-Sunapur-3376\": 4110349, \"Myntdu-Leshka-3379\": 4100220, \"Myntdu-Mihmyntdu-4316\": 4090610}"
+  },
+  {
+   "check": "Phase 4A receipt reach GOIDs match",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "routes cover all 174 clusters, all routed",
+   "ok": true,
+   "detail": "174 routes"
+  },
+  {
+   "check": "Lukha-Khaddum-4315: re-derived == 23A summary",
+   "ok": true,
+   "detail": "{\"upstream_clusters\": 11, \"persistent\": 1, \"partial\": 4, \"recovering\": 6, \"upstream_ha\": 24.66}"
+  },
+  {
+   "check": "Lukha-Sunapur-3376: re-derived == 23A summary",
+   "ok": true,
+   "detail": "{\"upstream_clusters\": 80, \"persistent\": 28, \"partial\": 32, \"recovering\": 20, \"upstream_ha\": 47.07}"
+  },
+  {
+   "check": "Myntdu-Mihmyntdu-4316: re-derived == 23A summary",
+   "ok": true,
+   "detail": "{\"upstream_clusters\": 15, \"persistent\": 7, \"partial\": 5, \"recovering\": 3, \"upstream_ha\": 4.05}"
+  },
+  {
+   "check": "Myntdu-Leshka-3379: re-derived == 23A summary",
+   "ok": true,
+   "detail": "{\"upstream_clusters\": 17, \"persistent\": 8, \"partial\": 6, \"recovering\": 3, \"upstream_ha\": 5.31}"
+  },
+  {
+   "check": "Lukha-Khaddum-4315: 23A == 23H",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "Lukha-Sunapur-3376: 23A == 23H",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "Myntdu-Mihmyntdu-4316: 23A == 23H",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "Myntdu-Leshka-3379: 23A == 23H",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "Lukha-Khaddum-4315: 23H == 23L",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "Lukha-Sunapur-3376: 23H == 23L",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "Myntdu-Mihmyntdu-4316: 23H == 23L",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "Myntdu-Leshka-3379: 23H == 23L",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "persistence join: route IDs and classes equal 22Y clusters",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "class totals equal 22Y summary",
+   "ok": true,
+   "detail": "{\"RECOVERING\": 44, \"PARTIAL\": 77, \"PERSISTENT\": 53}"
+  },
+  {
+   "check": "routing uncertainty: ambiguous snaps",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "routing uncertainty: TEST crossings",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "nesting Khaddum within Sunapur",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "check": "nesting Mihmyntdu within Leshka",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "passed": 27,
+ "total": 27,
+ "gaps": [
+  "Phase 23B: no report, output folder or commit exists under any name; routing provenance is Phase 23A",
+  "Per-cluster routes and 22Y class table are local (git-ignored; exact cluster positions are kept private), so re-derivation requires the local outputs; committed artifacts carry their hashes"
+ ],
+ "derived_per_station": {
+  "Lukha-Khaddum-4315": {
+   "upstream_clusters": 11,
+   "persistent": 1,
+   "partial": 4,
+   "recovering": 6,
+   "upstream_ha": 24.66
+  },
+  "Lukha-Sunapur-3376": {
+   "upstream_clusters": 80,
+   "persistent": 28,
+   "partial": 32,
+   "recovering": 20,
+   "upstream_ha": 47.07
+  },
+  "Myntdu-Mihmyntdu-4316": {
+   "upstream_clusters": 15,
+   "persistent": 7,
+   "partial": 5,
+   "recovering": 3,
+   "upstream_ha": 4.05
+  },
+  "Myntdu-Leshka-3379": {
+   "upstream_clusters": 17,
+   "persistent": 8,
+   "partial": 6,
+   "recovering": 3,
+   "upstream_ha": 5.31
+  }
+ },
+ "routes_sha256": "36812f0610686d7ad60a3c36a9efc3bd1caee726f57e2ff3c1104a948cbc4855",
+ "verdict": "COMPLETE"
+}
