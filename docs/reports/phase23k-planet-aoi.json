@@ -1,0 +1,87 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Lukha-Khaddum-4315",
+    "role": "upstream",
+    "extent_epsg32646": [
+     441460.0,
+     2789560.0,
+     442180.0,
+     2790280.0
+    ],
+    "source": "Phase 4A CPCB station window (720 m)"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       92.418839,
+       25.22113
+      ],
+      [
+       92.425987,
+       25.221158
+      ],
+      [
+       92.425956,
+       25.227659
+      ],
+      [
+       92.418808,
+       25.227632
+      ],
+      [
+       92.418839,
+       25.22113
+      ]
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "name": "Lukha-Sunapur-3376",
+    "role": "downstream",
+    "extent_epsg32646": [
+     435260.0,
+     2776770.0,
+     435980.0,
+     2777490.0
+    ],
+    "source": "Phase 4A CPCB station window (720 m)"
+   },
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       92.357896,
+       25.105377
+      ],
+      [
+       92.365037,
+       25.105408
+      ],
+      [
+       92.365003,
+       25.11191
+      ],
+      [
+       92.357862,
+       25.111879
+      ],
+      [
+       92.357896,
+       25.105377
+      ]
+     ]
+    ]
+   }
+  }
+ ]
+}
