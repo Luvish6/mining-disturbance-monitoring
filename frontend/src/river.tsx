@@ -136,6 +136,7 @@ export function River({pilotView, brahmaniView}: {pilotView: boolean; brahmaniVi
         <h1>River monitoring</h1><p>{brahmani?'Matched Sentinel-2 observations on the Brahmani in Odisha.':'Sentinel-2 observation support in the Lukha and Myntdu study windows.'}</p>
         <a href="#rivers" aria-current={!pilotView?'page':undefined}>Station monitoring</a>
         <a href="#rivers-leshka" aria-current={pilotView?'page':undefined}>Leshka Feasibility</a>
+        <a href="#rivers-exposure">Exposure &amp; priority (Phase 23H)</a>
         {!pilotView && <label>Region<select value={region} onChange={e=>setRegion(e.target.value)}>
           <option value="meghalaya">Meghalaya</option><option value="brahmani">Odisha · Brahmani</option>
         </select></label>}

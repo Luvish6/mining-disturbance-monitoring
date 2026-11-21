@@ -8,12 +8,13 @@ import './style.css';
 import {Explorer} from './explorer';
 import {River} from './river';
 import {PlanetReview} from './planet';
+import {Analytics, Evidence, ResearchKPIs, RiverExposure} from './research';
 
 type Tile = {id: string; valid: number; total: number};
 type Data = {area: number; seasons: Record<string, Record<string, number>>; tiles: Tile[]; stations: number};
 const nav = [
   ['Overview', Grid2X2], ['Explorer', Layers], ['Rivers', Route],
-  ['Review', ClipboardCheck], ['Quality', ShieldCheck], ['Reports', FileText],
+  ['Review', ClipboardCheck], ['Analytics', ShieldCheck], ['Evidence', FileText],
 ] as const;
 const districts = ['East Jaintia Hills', 'West Jaintia Hills'] as const;
 const format = (value?: number) => value?.toLocaleString('en-IN') ?? '—';
@@ -29,6 +30,10 @@ function App() {
   const explorer = hash.startsWith('#explorer');
   const rivers = hash.startsWith('#river');
   const review = hash === '#review';
+  const analytics = hash.startsWith('#analytics');
+  const evidence = hash.startsWith('#evidence');
+  const exposure = hash === '#rivers-exposure';
+  const page = review?3:analytics?4:evidence?5:rivers?2:explorer?1:0;
   useEffect(() => {
     const route = () => setHash(location.hash);
     addEventListener('hashchange', route);
@@ -54,20 +59,19 @@ function App() {
   const inventory = data?.seasons[season];
   return <div className="app">
     <header className="global"><div className="brand"><b>MEGHALAYA</b><small>Mining &amp; River Intelligence Portal</small></div>
-      {!explorer && !rivers && !review && <><label className="control"><MapPin size={16}/><select aria-label="Study area" value={district} onChange={e => setDistrict(e.target.value)}>
+      {page===0 && <><label className="control"><MapPin size={16}/><select aria-label="Study area" value={district} onChange={e => setDistrict(e.target.value)}>
         <option value="All districts">Jaintia Hills, Meghalaya</option>{districts.map(name => <option key={name}>{name}</option>)}
       </select></label>
       <label className="control search"><Search size={17}/><input aria-label="Filter district or tile" placeholder="Find a district or tile" value={query} onChange={e => setQuery(e.target.value)}/></label></>}
       <span className="workspace">Research workspace</span><span className="source">{data ? 'Sources indexed' : 'Local receipts unavailable'}</span>
-      <a className="method" onClick={event=>{if(rivers||review){event.preventDefault();const details=document.querySelector<HTMLDetailsElement>(review?"#review-methodology":"#river-methodology");if(details){details.open=true;details.scrollIntoView();details.querySelector("summary")?.focus();}}}} href={explorer?"#explorer-methodology":rivers?"#river-methodology":review?"#review-methodology":"#methodology"}><CircleHelp size={16}/> Methodology</a><span className="badge neutral">Research preview</span>
+      <a className="method" onClick={event=>{if(analytics||evidence||exposure)return;if(rivers||review){event.preventDefault();const details=document.querySelector<HTMLDetailsElement>(review?"#review-methodology":"#river-methodology");if(details){details.open=true;details.scrollIntoView();details.querySelector("summary")?.focus();}}}} href={analytics||evidence||exposure?"#evidence":explorer?"#explorer-methodology":rivers?"#river-methodology":review?"#review-methodology":"#methodology"}><CircleHelp size={16}/> Methodology</a><span className="badge neutral">Research preview</span>
     </header>
     <nav className={'rail'+(drawer ? ' expanded' : '')} aria-label="Workspace">
-      {nav.map(([name, Icon], index) => index < 4 ?
-        <a key={name} href={["#overview","#explorer","#rivers","#review"][index]} aria-current={index===(review?3:rivers?2:explorer?1:0)?"page":undefined}><Icon size={20}/><span>{name}</span></a> :
-        <button key={name} disabled title={name+' is outside Stage D'}><Icon size={20}/><span>{name}</span></button>)}
+      {nav.map(([name, Icon], index) =>
+        <a key={name} href={["#overview","#explorer","#rivers","#review","#analytics","#evidence"][index]} aria-current={index===page?"page":undefined} title={name}><Icon size={20}/><span>{name}</span></a>)}
       <button className="nav-menu" onClick={() => setDrawer(!drawer)} aria-label="Toggle navigation" aria-expanded={drawer}><Menu size={19}/></button>
     </nav>
-    <main id={explorer?"explorer":rivers?"rivers":review?"review":"overview"}>{explorer ? <Explorer/> : rivers ? <River key={hash} pilotView={hash==="#rivers-leshka"} brahmaniView={hash==="#rivers-brahmani"}/> : review ? <PlanetReview/> : <>
+    <main id={["overview","explorer","rivers","review","analytics","evidence"][page]}>{analytics ? <Analytics/> : evidence ? <Evidence/> : exposure ? <RiverExposure/> : explorer ? <Explorer/> : rivers ? <River key={hash} pilotView={hash==="#rivers-leshka"} brahmaniView={hash==="#rivers-brahmani"}/> : review ? <PlanetReview/> : <>
       <div className="toolbar"><Grid2X2 size={18}/><b>Overview</b><span>/</span><span>Regional monitoring</span>
         <label className="season"><select aria-label="Inventory window" value={season} onChange={e => setSeason(e.target.value)}>
           <option value="2023-24">Nov 2023 — Mar 2024</option><option value="2024-25">Nov 2024 — Mar 2025</option>
@@ -82,6 +86,7 @@ function App() {
           </section>
           <section><h2>District focus</h2>{districts.map(name => <button className="district" key={name} aria-pressed={district===name}
             onClick={() => setDistrict(district===name?'All districts':name)}>{name}<span>{format(data?.tiles.filter(tile=>region(tile)===name).length)}</span></button>)}</section>
+          <ResearchKPIs district={district}/>
           <section id="methodology"><h2>Research readiness</h2><ul><li>Acquisition checks complete</li><li>Exploratory change analysis available</li><li>Independent reference admission pending</li></ul>
             <div className="notice">Verified field observations<small>No admitted reference labels.</small></div></section>
           <small>{format(data?.area)} km² · GAUL 2025 study area · {format(data?.stations)} river stations</small>
@@ -110,7 +115,7 @@ function App() {
         </div>
       </div>
     </>}</main>
-    <footer><span>RESEARCH PREVIEW / Exploratory observations</span><span>Jaintia Hills, Meghalaya</span><span>Sentinel-1 / Sentinel-2</span></footer>
+    <footer><span>RESEARCH PREVIEW / Frozen results — not real-time monitoring · Mining attribution UNKNOWN</span><span>Jaintia Hills, Meghalaya</span><span>Sentinel-1 / Sentinel-2</span></footer>
   </div>;
 }
 createRoot(document.getElementById('root')!).render(<App/>);
