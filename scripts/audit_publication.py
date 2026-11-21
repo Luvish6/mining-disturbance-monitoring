@@ -9,11 +9,11 @@ from pathlib import PurePosixPath
 
 MAX_FILE = 1_048_576
 MAX_TOTAL = 10_485_760
-ROOT_FILES = {'.gitignore', '.gitattributes', '.env.example', 'AGENTS.md', 'README.md',
+ROOT_FILES = {'.gitignore', '.gitattributes', '.env.example', 'AGENTS.md', 'CLAUDE.md', 'README.md',
               'main.py', 'phase2.py', 'phase3.py', 'phase3_data.py', 'check_boundary.py',
               'requirements.txt', 'requirements-phase3.txt'}
 ALLOWED_DIRS = {'src', 'tests', 'config', 'gee_js', 'docs', 'scripts', '.githooks'}
-TEXT_SUFFIXES = {'.py', '.js', '.md', '.txt', '.csv', '.json', '.yml', '.yaml', '.toml', '.sh'}
+TEXT_SUFFIXES = {'.py', '.js', '.md', '.txt', '.csv', '.json', '.yml', '.yaml', '.toml', '.sh', '.tex', '.bib'}
 BLOCKED_SUFFIXES = {'.zip', '.7z', '.rar', '.gz', '.tar', '.tif', '.tiff', '.jp2', '.img',
                     '.vrt', '.nc', '.hdf', '.h5', '.gpkg', '.shp', '.kml', '.kmz', '.png',
                     '.jpg', '.jpeg', '.pdf', '.npy', '.npz', '.pkl', '.pt', '.pth', '.joblib',

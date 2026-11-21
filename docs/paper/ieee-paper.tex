@@ -1,0 +1,204 @@
+% IEEE conference-format manuscript (IEEEtran). Compile: pdflatex ieee-paper; bibtex ieee-paper; pdflatex x2
+% Or upload this file and refs.bib to Overleaf (template "IEEE Conference").
+% Every number is taken from committed files in docs/reports/ (see docs/paper-draft.md for the source of each).
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{url}
+
+\begin{document}
+
+\title{Multi-Sensor Screening of Mining-Related Land Disturbance and Downstream River Observability in the Jaintia Hills, India, Using Sentinel-1 SAR and Sentinel-2 Optical Data}
+
+\author{\IEEEauthorblockN{Author Name(s) -- to be completed}
+\IEEEauthorblockA{Department, Institution\\City, India\\email -- to be completed}}
+
+\maketitle
+
+\begin{abstract}
+Unregulated surface mining in the Jaintia Hills of Meghalaya, India, affects land cover and river systems, yet independent, dated reference data are scarce. We present a reproducible, preregistered screening framework that combines seasonal Sentinel-1 (S1) SAR and Sentinel-2 (S2) optical change features. A fixed NDVI/BSI change rule, applied to 20 systematically sampled areas of interest (AOIs), yielded 174 disturbance clusters, a candidate density of 1.20~ha per 100~ha (95\% CI 0.62--1.98), and an independent S1 VH backscatter decrease of $-1.45$~dB relative to background in 18 of 18 AOIs (translation-null $p\approx10^{-4}$). A third dry season classified 30.5\% of clusters as persistent. In a spatially blocked sensor ablation against unverified weak labels, SAR--optical fusion did not improve F1 over optical data alone ($\Delta F1=+0.006$, 95\% CI $-0.039$ to $0.058$). Routing clusters along D8 flow paths prioritised one river reach for field monitoring. However, neither 10~m S2 nor 3~m PlanetScope imagery could observe the narrow channels' water colour, a negative feasibility result. Mining attribution remains unknown, because no accepted independent reference exists. The framework generalises to configurable Indian AOIs with explicit coverage limits.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Sentinel-1, Sentinel-2, change detection, mining, SAR--optical fusion, river monitoring, Google Earth Engine, reproducibility
+\end{IEEEkeywords}
+
+\section{Introduction}
+Coal and limestone extraction in the Jaintia Hills has been associated with land degradation and acid drainage into the Lukha and Myntdu rivers. Satellite monitoring is attractive, but optical imagery is frequently cloud-limited and independent, dated mining footprints are unavailable for the region. Supervised detectors therefore cannot be validated locally.
+
+This work addresses three questions:
+\begin{itemize}
+\item Can a transparent, preregistered S1/S2 change screen quantify disturbance patterns without labels?
+\item Does SAR add value to optical data under controlled spatial validation?
+\item Can satellite water colour observe the downstream reaches exposed to upstream disturbance?
+\end{itemize}
+
+\textbf{Contributions.}
+\begin{enumerate}
+\item A hash-receipted, budget-guarded S1/S2 seasonal screening pipeline with sealed spatial TEST blocks, generalised to configurable Indian AOIs.
+\item A systematic landscape estimate with S1 corroboration and a persistence typology.
+\item A controlled SAR/optical/fusion/terrain ablation.
+\item An exposure--observability framework linking disturbance to river reaches.
+\item A documented negative result on narrow-channel water-colour observability.
+\end{enumerate}
+
+\section{Study Area and Data}
+East and West Jaintia Hills (FAO GAUL 2025, about 3{,}818~km$^2$) contain the Lukha and Myntdu catchments and four CPCB monitoring stations.
+
+\textbf{Seasons.} Composites use dry seasons: 1~Nov~2023--31~Mar~2024 (before) and 1~Nov~2024--31~Mar~2025 (after). A 2025--26 season is used for persistence.
+
+\textbf{Data.}
+\begin{itemize}
+\item Sentinel-1 GRD (descending, relative orbit 77).
+\item Sentinel-2 SR harmonized with cloud probability.
+\item SRTM terrain.
+\item Hansen GFC v1.13 and WRI/GDM forest-loss drivers.
+\item JRC Global Surface Water.
+\item HydroSHEDS Free-Flowing Rivers and 3-arc-second flow directions.
+\item CHIRPS rainfall.
+\item Two PlanetScope SR scenes.
+\end{itemize}
+Six Indian discovery leads were located from public environmental-clearance documents.
+
+\section{Methods}
+\subsection{Seasonal Composites and Change Features}
+SAR scenes are speckle-filtered (20~m focal mean in linear power) and median-composited in dB. Optical scenes are masked by cloud probability ($<40$) and SCL classes 4/5/6, then reduced to seasonal medians of NDVI, NDTI and BSI. Change is computed as after minus before on a 30~m UTM grid, with SRTM elevation and slope added.
+
+\subsection{Candidate Rule and Landscape Sampling}
+A cell is a candidate if $\Delta\mathrm{NDVI}\le-0.30$ and $\Delta\mathrm{BSI}>+0.10$. Candidates are grouped into 4-connected clusters.
+
+Twenty $64\times64$-cell AOIs (1{,}920~m) were drawn, ten per district, in SHA-256 order. They were drawn from the non-TEST 5~km seed-42 blocks that pass a full-footprint TEST-buffer guard (120~m).
+
+\textbf{Statistical tests.}
+\begin{itemize}
+\item Density: AOI bootstrap.
+\item Cluster-minus-background S1 change: AOI-stratified, shape-preserving translation permutations (10{,}000 draws).
+\item Persistence: within-AOI permutation, using the third season.
+\end{itemize}
+
+\subsection{Sensor Ablation}
+Random forests were trained on Maus et~al.\ v2 mining footprints (weak, unverified labels) in TRAIN states and evaluated on 11 Odisha validation groups. TEST remained sealed. Five arms were compared:
+\begin{itemize}
+\item SAR (VV, VH);
+\item optical (B3, B4, B8);
+\item fusion (SAR and optical);
+\item fusion plus terrain;
+\item an NDVI rule.
+\end{itemize}
+Confidence intervals use a group bootstrap.
+
+\subsection{River Linkage and Observability}
+Clusters are routed with 90~m D8 flow directions to Free-Flowing-Rivers reaches. They are then followed down the network topology to the station reaches, and counts are accumulated downstream.
+
+\textbf{Burden classes.} Upstream persistent clusters define the burden class: HIGH ($\ge10$), MODERATE (3--9) and LOW ($<3$).
+
+\textbf{Observability tests.} Observability was tested with preregistered water screens on 10~m S2 and on 3~m PlanetScope. Each screen requires UDM2-clear pixels, NDWI~$>0$ and JRC occurrence $\ge50\%$, followed by 6~m erosion. At least 25 interior pixels must remain, and three sensitivity checks are applied.
+
+\subsection{India Generalisation}
+AOIs listed in a configuration file are screened as $32\times32$-cell, 30~m tiles with descriptive change quantiles. The run is checkpointed, resumable and request-capped.
+
+\section{Results}
+\subsection{Landscape Screening}
+Table~\ref{tab:land} summarises the Meghalaya sample. Cluster S1 VH decreased relative to background in every AOI with clusters, which is independent-sensor corroboration of a land-surface change. About 40\% of clusters overlap GFC 2024/25 loss.
+
+\begin{table}[t]
+\caption{Meghalaya Systematic Screening (Exploratory)}
+\label{tab:land}
+\centering
+\begin{tabular}{@{}lr@{}}
+\toprule
+Quantity & Value \\
+\midrule
+AOIs / clusters & 20 / 174 \\
+Density (ha per 100 ha) & 1.20 [0.62, 1.98] \\
+Cluster $\Delta$VH $-$ background & $-1.45$ dB (18/18 AOIs) \\
+Translation-null $p$ & $\approx 10^{-4}$ \\
+Persistent / partial / recovering & 53 (30.5\%) / 77 / 44 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Sensor Ablation}
+SAR alone was clearly weaker than optical data (Table~\ref{tab:abl}). Fusion matched optical data, and adding terrain reduced F1. Scores measure agreement with unverified weak labels, not accuracy.
+
+For context, a U-Net on the same weak-label source reached a validation F1 of $0.713\pm0.085$. On the external MineNetCD256 RGB benchmark, a random forest reached a held-out pooled F1 of 0.246. Neither is Indian accuracy.
+
+\begin{table}[t]
+\caption{Validation F1 Against Weak Labels (Group 95\% CI)}
+\label{tab:abl}
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+Arm & F1 \\
+\midrule
+SAR (VV, VH) & 0.378 [0.239, 0.480] \\
+Optical (B3, B4, B8) & 0.533 [0.354, 0.637] \\
+Fusion & 0.539 [0.386, 0.628] \\
+Fusion + terrain & 0.463 [0.290, 0.583] \\
+NDVI rule & 0.437 [0.199, 0.637] \\
+\midrule
+Fusion $-$ optical & +0.006 [$-0.039$, 0.058] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{River Exposure and Observability}
+All 174 clusters were routed, with a median path of 0.99~km to the first reach. Sunapur on the Lukha carries the highest upstream burden, yet it is unobservable at both resolutions (Table~\ref{tab:river}). Khaddum passed the 3~m gate only marginally (44 interior pixels, NDTI $-0.002$) and failed two of three sensitivity checks. A routing provenance audit passed 27 of 27 checks.
+
+\begin{table}[t]
+\caption{Reach Exposure and Observability}
+\label{tab:river}
+\centering
+\begin{tabular}{@{}lccl@{}}
+\toprule
+Reach & Upstr.\ (pers.) & Burden & Observability \\
+\midrule
+Lukha--Khaddum & 11 (1) & LOW & Marginal \\
+Lukha--Sunapur & 80 (28) & HIGH & Unobservable \\
+Myntdu--Mihmyntdu & 15 (7) & MOD. & Unobservable \\
+Myntdu--Leshka & 17 (8) & MOD. & Unknown \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{India Screening}
+Six configured AOIs in five states (5.53~km$^2$ in total) were summarised from cached tiles with no new requests. No national or state coverage is implied.
+
+\section{Discussion and Limitations}
+\textbf{Weak labels.} Without accepted independent reference labels, all candidates remain of unknown cause, and weak-label F1 is agreement, not accuracy.
+
+\textbf{Alternative explanations.} At 30~m, small excavations are unresolved. SAR layover, moisture, phenology, agriculture, forestry and construction remain alternative explanations.
+
+\textbf{River colour.} NDTI is a relative proxy, not turbidity in NTU or acidity. The negative observability result motivates in-situ sampling at the prioritised Sunapur reach rather than finer imagery alone.
+
+\textbf{Routing.} D8 routing at 90~m and unverified karst flow paths limit the linkage.
+
+\section{Conclusion}
+A preregistered multi-sensor screen detects a coherent, SAR-corroborated land-disturbance signal across the Jaintia Hills and ranks downstream reaches for field monitoring. SAR does not improve footprint agreement over optical data, and narrow-channel water colour is not satellite-observable at 10~m or 3~m.
+
+\textbf{Future work.}
+\begin{itemize}
+\item Blinded human review and official lease boundaries, to enable verified classification.
+\item Field water-quality data, to test downstream effects.
+\end{itemize}
+
+\section*{Data and Code Availability}
+Code, preregistrations and result summaries are available at \url{https://github.com/Luvish6/mining-disturbance-monitoring}. Raw commercial imagery is not redistributed.
+
+\begin{thebibliography}{00}
+\bibitem{s1} European Space Agency, ``Sentinel-1 SAR GRD,'' Copernicus programme, accessed via Google Earth Engine.
+\bibitem{s2} European Space Agency, ``Sentinel-2 MSI Level-2A surface reflectance (harmonized),'' Copernicus programme.
+\bibitem{gee} N. Gorelick \emph{et al.}, ``Google Earth Engine: Planetary-scale geospatial analysis for everyone,'' \emph{Remote Sens. Environ.}, vol. 202, pp. 18--27, 2017.
+\bibitem{hansen} M. C. Hansen \emph{et al.}, ``High-resolution global maps of 21st-century forest cover change,'' \emph{Science}, vol. 342, pp. 850--853, 2013.
+\bibitem{sims} M. Sims \emph{et al.}, ``Global drivers of forest loss at 1 km resolution,'' \emph{Environ. Res. Lett.}, vol. 20, 074027, 2025.
+\bibitem{maus} V. Maus \emph{et al.}, ``An update on global mining land use,'' \emph{Sci. Data}, vol. 9, 433, 2022.
+\bibitem{pekel} J.-F. Pekel \emph{et al.}, ``High-resolution mapping of global surface water and its long-term changes,'' \emph{Nature}, vol. 540, pp. 418--422, 2016.
+\bibitem{hydrosheds} B. Lehner, K. Verdin, and A. Jarvis, ``New global hydrography derived from spaceborne elevation data,'' \emph{Eos}, vol. 89, no. 10, pp. 93--94, 2008.
+\bibitem{ffr} G. Grill \emph{et al.}, ``Mapping the world's free-flowing rivers,'' \emph{Nature}, vol. 569, pp. 215--221, 2019.
+\bibitem{chirps} C. Funk \emph{et al.}, ``The climate hazards infrared precipitation with stations,'' \emph{Sci. Data}, vol. 2, 150066, 2015.
+\bibitem{minenetcd} HZDR-FWGEL, ``MineNetCD256 dataset,'' Hugging Face, 2024.
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,103 @@
+# Project handoff: read this first (any new Claude or Codex session)
+
+This file is the single entry point for resuming the project with no chat history. It summarises what was done, what is pending, and the rules every session must follow.
+
+The project's rules for agents are in [AGENTS.md](../AGENTS.md). The numbers behind every claim are in `docs/reports/`.
+
+## 1. What the project is
+
+- **What it is.** A B.Tech major project and research prototype: *Multi-Sensor Mining-Related Disturbance and Downstream River Monitoring Using Sentinel-1 SAR and Sentinel-2 Optical Data*.
+- **Primary study.** East and West Jaintia Hills, Meghalaya, on the Lukha and Myntdu rivers.
+- **Secondary layer.** India-wide discovery leads.
+- **Repository.** GitHub `Luvish6/mining-disturbance-monitoring`.
+  - The working branch is **`phase22-label-sources`**, and all work up to Phase 24 is pushed there.
+  - `main` is the intended publication branch. Do not merge into it without the user's say-so.
+- **Goal.** A working dashboard, a complete pipeline and a publishable paper. Drafts are [docs/paper-draft.md](paper-draft.md) and the IEEE LaTeX version in [docs/paper/ieee-paper.tex](paper/ieee-paper.tex).
+
+## 2. Current state (end of Phase 24, commit after `c38cddb`)
+
+The headline tables are in [docs/reports/final-project-status.md](reports/final-project-status.md). In short:
+
+| Area | Outcome |
+|---|---|
+| Meghalaya screening (22L → 22X/22Y) | 20 systematically sampled AOIs and 174 disturbance clusters. Density 1.20 ha per 100 ha. S1 ΔVH negative in 18 of 18 AOIs. 30.5% of clusters persistent. All are **UNKNOWN**, not confirmed mining |
+| Model experiments | 22W ablation on weak labels: fusion ≈ optical (+0.006 F1, CI spans 0). SAR alone is weaker and terrain hurts. U-Net weak-label validation F1 0.713. MineNetCD external RGB F1 0.246. **None of these is Indian accuracy** |
+| River | 23A D8 routing of all clusters to 4 CPCB station reaches; 23M audit 27 of 27 checks pass. 23L labels: **Sunapur = PRIORITY FIELD MONITORING** (not confirmed pollution). River NDTI closed as a **negative result**: 10 m S2 (22O) and 3 m Planet (23K) cannot observe the narrow channels |
+| India | Phase 11C has 6 leads in 5 states. Phase 15C/16A screened Gevra and Bhubaneswari. Phase 24B adds config-driven, resumable, budget-guarded screening (`config/india_aois.json`), demonstrated offline on the 6 cached tiles (5.5 km²). **No national coverage** |
+| Dashboard | `frontend/` (React and Vite). The India discovery view is the default Overview, and the Meghalaya detailed study is at `#meghalaya`. Also Explorer, Rivers, Analytics and Evidence views, and the Brahmani pilot kept separate |
+| Verified detections | **0.** Mining attribution is **UNKNOWN** everywhere |
+
+## 3. What is pending (do not mark as done without real evidence)
+
+1. **Human review (23I).** Two reviewers, blinded sample of 30 items.
+   - The packages are built in git-ignored `outputs/phase23i_review/`, including `share_reviewer_B` and its zip.
+   - Reviewer results have **not** been returned.
+2. **Reference labels.** Verified classification is BLOCKED until accepted independent Indian labels exist. Do not retrain or report Meghalaya accuracy before then.
+3. **Official data requests.** Drafts are in `docs/outreach/`, which is **local only and deliberately not committed**: DMR/MBDA letter and email, Nursamsi, and Dr Patel (Presidency University). The user sends them; nothing has been confirmed received.
+4. **Field or official water quality.** Needed for Sunapur and the other reaches. The CPCB archive copies were unusable (23C–23G).
+5. **Wider India screening.** Needs approved Earth Engine quota. Use `python -B -m scripts.phase24b_india_screening` to plan, then `--execute --approve --max-requests N`.
+6. **Paper.** Fill in the author and affiliation lines and add figures from the dashboard and reports (see the figure table in `paper-draft.md`). Then choose a venue.
+
+## 4. Non-negotiable rules (from the whole project history)
+
+- **Frozen TEST data.** Never open frozen TEST imagery, labels or predictions (5 km seed-42 spatial blocks, 120 m buffer). Use the guards `phase22n_temporal.guards()` and `phase22q_multi_aoi.guard()`.
+- **No invention.** Never invent labels, coordinates, dates, F1, precision, recall or "confirmed mining" or "pollution" claims.
+- **Never commit** any of the following; the pre-commit audit enforces this through `scripts/audit_publication.py` and `.githooks`:
+  - `.env` or credentials;
+  - raw imagery, including Planet zips and the LISS-IV zips in the parent folder;
+  - `outputs/`, `results/` or `frontend/public/local/`;
+  - `docs/outreach/`, private local paths or `.geojson` under `docs/`.
+- **Earth Engine work.** Preregister and commit before acquiring. Set a request/byte budget, use `phase22w_ablation.acquire_lock`/`ledger_usage`, and record any breach honestly.
+- **No new data spending.** No new Planet orders or river-image searches unless the user asks.
+- **Git.** No force-push. Commit only explicit paths. Ask before destructive, costly or credentialed actions.
+- **Frozen design.** The seasons `[2023-11-01, 2024-04-01)` and `[2024-11-01, 2025-04-01)` (follow-up `[2025-11-01, 2026-04-01)`) and the 22L rule (ΔNDVI ≤ −0.30 and ΔBSI > +0.10) are frozen.
+- **Routing source.** The routing source is **Phase 23A**. There is no Phase 23B.
+
+## 5. Where things are
+
+| Need | Location |
+|---|---|
+| Install, run, dashboard | [README.md](../README.md) |
+| Every phase's command | [docs/REPRODUCIBILITY.md](REPRODUCIBILITY.md) |
+| Chronological phase log | [docs/research-progress.md](research-progress.md) and `git log --oneline` (about 150 descriptive commits, one or more per phase) |
+| Phase reports and JSON results | `docs/reports/phaseNN-*.md` / `*.json` |
+| Earlier handoff (Claude → Codex) | [docs/reports/claude-handoff-to-codex.md](reports/claude-handoff-to-codex.md) |
+| Model consolidation | [docs/reports/final-model-experiment-consolidation.md](reports/final-model-experiment-consolidation.md), [phase24c-evidence-summary.json](reports/phase24c-evidence-summary.json) |
+| Python environment | `.venv` in the **parent** folder of this checkout (`../.venv/Scripts/python.exe`) |
+| Dashboard dev server | `cd frontend; npm run dev` (port 5173). A preview config is in the parent folder's `.claude/launch.json` |
+| Large local data (not in git) | `outputs/` (tiles, checkpoints, review packages), `results/`, plus Planet/LISS-IV zips and `phase3_delivery/` in the parent folder |
+
+## 6. How to resume
+
+1. Run `git status --short --branch` and `git log --oneline -5`. Expect a clean tree apart from the untracked `docs/outreach/` and `results/`.
+2. Run the checks:
+   - `python -B -m pytest -q tests` (370 pass at Phase 24);
+   - in `frontend/`: `npm test` (11 pass) and `npm run build`.
+3. Rebuild the dashboard snapshots (commands are in the README), then open `#overview`.
+4. Pick from the pending list in section 3. If reviewer results arrive, adjudicate them under `docs/reference/REAL_REFERENCE_PROTOCOL.md` before any accuracy claim.
+
+## 7. Phase index (one line each)
+
+| Phases | Summary |
+|---|---|
+| 1–3 | GEE setup, GAUL 2025 boundary check, seasonal S1/S2 preprocessing, coverage gates, inference contracts |
+| 5–8 | Streamlit dashboard, then React portal and local release |
+| 11–16 | India discovery leads (11C), unsupervised cross-sensor screening (15C), regional terrain features (16A), MineNetCD external benchmark (17x) |
+| 22A–22K | Indian label-source audits and Maus weak-label RF/U-Net training. TEST stays sealed |
+| 22L–22N | Temporal NDVI/BSI candidate rule and multi-area pilot |
+| 22O | River NDTI at 10 m: negative |
+| 22P–22R | S1 corroboration and agreement with GFC/WRI products |
+| 22S–22T | Official data audit; U-Net transfer NO-GO |
+| 22V–22W | Sensor-fusion ablation |
+| 22X–22Y | Systematic 20-AOI sample and persistence |
+| 22Z–22AA | Mining-context and OSM audits (NO-GO for attribution) |
+| 23A | Drainage linkage |
+| 23C–23G | Official water-quality and external-case searches (unusable or over budget) |
+| 23H | Reach priority |
+| 23I | Blinded human-review workflow |
+| 23J | Dashboard and GIS map |
+| 23K | PlanetScope 3 m: river NDTI closed |
+| 23L–23M | Reach integration and routing audit |
+| 24A | India discovery dashboard |
+| 24B | Generalised India screening |
+| 24C | Evidence tiers, final docs and paper |

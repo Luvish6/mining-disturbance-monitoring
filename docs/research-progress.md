@@ -137,3 +137,5 @@ Each phase below was preregistered before acquisition, kept frozen TEST data sea
 - [22Y](reports/phase22y-persistence-typology.md) — persistence typology: 30.5% persistent, concentrated at Lumshnong.
 - [22Z](reports/phase22z-mining-context-audit.md) — mining-context audit: NO-GO for attribution; tiered review shortlist.
 - [22AA](reports/phase22aa-osm-infrastructure-audit.md) — OSM infrastructure audit: NO-GO, because OSM coverage is too sparse. Where roads are mapped, persistent clusters are not road-enriched.
+
+Phase 23A–24C (river linkage, Planet NDTI closure, reach integration, India screening, dashboard, final docs) are summarised in [docs/reports/final-project-status.md](reports/final-project-status.md) and [docs/PROJECT_HANDOFF.md](PROJECT_HANDOFF.md).
