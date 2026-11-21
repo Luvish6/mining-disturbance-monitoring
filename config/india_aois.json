@@ -1,0 +1,22 @@
+{
+  "version": "24b-1",
+  "description": "Configurable Indian screening AOIs. Each AOI is a 32x32 cell, 30 m tile in its local UTM zone, centred on an anchor. Anchors come from Phase 11C public clearance documents (anchor_from=phase11c) or an explicit [lon, lat]. Listing an AOI is not a detection.",
+  "seasons": {"before": ["2023-11-01", "2024-04-01"], "after": ["2024-11-01", "2025-04-01"]},
+  "tile_cells": 32,
+  "cell_m": 30,
+  "budget": {"max_requests_per_run": 20, "max_response_bytes_per_run": 10000000,
+             "requests_per_aoi_estimate": 3, "bytes_per_aoi_estimate": 150000},
+  "regions": [
+    {"region": "Korba coalfield", "state": "Chhattisgarh", "aois": [
+      {"id": "gevra", "anchor_from": "phase11c"},
+      {"id": "kusmunda", "anchor_from": "phase11c"}]},
+    {"region": "Talcher coalfield", "state": "Odisha", "aois": [
+      {"id": "bhubaneswari", "anchor_from": "phase11c"}]},
+    {"region": "Jharia coalfield", "state": "Jharkhand", "aois": [
+      {"id": "kusunda-cluster-vii", "anchor_from": "phase11c"}]},
+    {"region": "Singrauli coalfield", "state": "Madhya Pradesh", "aois": [
+      {"id": "nigahi", "anchor_from": "phase11c"}]},
+    {"region": "Meghalaya control", "state": "Meghalaya", "aois": [
+      {"id": "R008", "anchor_from": "phase11c"}]}
+  ]
+}

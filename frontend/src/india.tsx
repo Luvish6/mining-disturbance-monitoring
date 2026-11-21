@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {Globe2, MapPin, Route} from 'lucide-react';
 import './india.css';
 import {localSnapshot, useSnapshot} from './research-data';
-import {INDIA_FRAME, RIVER_STUDY, TIERS, type Lead, inFrame, plot, summarise, tierOf} from './india-data';
+import {ANALYSED_REGION, INDIA_FRAME, RIVER_STUDY, TIERS, type Lead, type Screening, byState, inFrame, plot, siteFor, statesOf, summarise, tierOf} from './india-data';
 
 /** Label placement only: points stay at their true coordinates; labels of points closer than 18 px are stacked. */
 export function placeLabels(leads: Lead[], W: number, H: number) {
@@ -26,14 +26,18 @@ export function IndiaDiscovery() {
   const {result, failed} = useSnapshot<Lead[]>('india-candidates');
   const [study, setStudy] = useState<number[]>();
   const [sel, setSel] = useState('');
+  const [state, setState] = useState('');
+  const screening = useSnapshot<Screening>('india-screening').result?.data;
   useEffect(() => {  // verified Meghalaya study bounds from the existing geo layer (optional)
     const c = new AbortController();
     fetch(localSnapshot + 'geo.json', {signal: c.signal}).then(r => r.ok ? r.json() : undefined).then(g => g && setStudy(g.view_bounds)).catch(() => {});
     return () => c.abort();
   }, []);
-  const leads = (result?.data ?? []).filter(l => inFrame(l.longitude, l.latitude));
-  const s = summarise(leads);
+  const all = (result?.data ?? []).filter(l => inFrame(l.longitude, l.latitude));
+  const leads = byState(all, state);
+  const s = summarise(all);
   const lead = leads.find(l => l.id === sel) ?? leads[0];
+  const site = lead && siteFor(screening, lead.id);
   const W = 600, H = 620;
   return <>
     <div className="toolbar"><Globe2 size={18}/><b>Overview</b><ScopeSwitch scope="india"/><span className="badge neutral">Discovery leads · not detections</span></div>
@@ -48,7 +52,14 @@ export function IndiaDiscovery() {
         <section><h2>Evidence tiers</h2>
           {(Object.keys(TIERS) as (keyof typeof TIERS)[]).map(t => <div key={t} className={'tier t-' + t.toLowerCase()}>
             <span className="dot" aria-hidden/><div><b>{TIERS[t].label} ({result ? s.tiers[t] : '—'})</b><small>{TIERS[t].text}</small></div></div>)}
+          <div className="tier t-analysed"><span className="dot" aria-hidden/><div><b>{ANALYSED_REGION.label} (1)</b><small>{ANALYSED_REGION.text}</small></div></div>
           <div className="notice">Rest of India: no analysis<small>Unmarked areas were not screened. Absence of a point is not absence of mining.</small></div>
+        </section>
+        <section><h2>State</h2>
+          <label className="state-filter">Filter leads by state<select value={state} onChange={e => { setState(e.target.value); setSel(''); }}>
+            <option value="">All states ({statesOf(all).length})</option>
+            {statesOf(all).map(x => <option key={x} value={x}>{x}</option>)}</select></label>
+          {screening && <p className="legend">Phase 24B screened {screening.coverage.aois_screened} tiles · {screening.coverage.screened_km2} km² in total · national coverage: no</p>}
         </section>
         <section><h2>Studies</h2>
           <a className="nav-card" href="#meghalaya"><MapPin size={15}/> Meghalaya detailed study<small>20 sampled AOIs, persistence, river exposure</small></a>
@@ -87,6 +98,17 @@ export function IndiaDiscovery() {
             {RIVER_STUDY[lead.id] && <a href={RIVER_STUDY[lead.id]}>Brahmani river study</a>}
             {tierOf(lead) === 'MEGHALAYA_LEAD' && <a href="#meghalaya">Meghalaya detailed study</a>}
           </div>
+          {site ? <div className="screen-detail">
+            <h3>Phase 24B screening summary <span className="badge neutral">{site.status} · attribution {site.attribution}</span></h3>
+            <table><thead><tr><th>Change (after − before)</th><th>p10</th><th>median</th><th>p90</th></tr></thead>
+              <tbody>{Object.entries(site.tile.changes).map(([k, q]) => <tr key={k}><td>{k}{k === 'dVV' || k === 'dVH' ? ' (dB)' : ''}</td><td>{q.p10.toFixed(3)}</td><td>{q.median.toFixed(3)}</td><td>{q.p90.toFixed(3)}</td></tr>)}</tbody></table>
+            <p className="legend">{site.tile.common_cells}/{site.tile.grid_cells} common-valid cells ({site.tile.screened_km2} km²) · NDVI drop ≤ −0.30 in {(100 * site.tile.ndvi_loss_fraction).toFixed(1)}% of cells (with VH decrease {(100 * site.tile.ndvi_loss_and_vh_drop_fraction).toFixed(1)}%)
+              {site.terrain && <> · median slope {site.terrain.slope_deg.median.toFixed(1)}°, &gt;25° in {(100 * site.terrain.slope_over_25_fraction).toFixed(1)}%</>}
+              {site.screening && <> · 15C {site.screening.method}: {site.screening.candidate_polygons} review-only anomaly polygons</>}</p>
+            <details><summary>Provenance and uncertainty</summary>
+              <p className="legend">Tile SHA-256 {site.provenance.tile_sha256.slice(0, 12)}… · config {screening?.config_version} ({site.provenance.config_sha256.slice(0, 12)}…){site.provenance.location_document ? ' · location: ' + site.provenance.location_document : ''}</p>
+              <p className="legend">{site.uncertainty}. Descriptive statistics only: no detections, accuracy or mining attribution.</p></details>
+          </div> : lead && <p className="legend">No Phase 24B summary loaded. Run <code>python -B -m scripts.phase24b_india_screening --summarise</code>.</p>}
         </section>}
       </div>
     </div>

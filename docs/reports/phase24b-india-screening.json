@@ -1,0 +1,517 @@
+{
+  "phase": "24B",
+  "config_version": "24b-1",
+  "config_sha256": "22aa46e261851039fc8621263020d3d4b46838475f6a2ae2729ade43b6a70439",
+  "seasons": {
+    "before": [
+      "2023-11-01",
+      "2024-04-01"
+    ],
+    "after": [
+      "2024-11-01",
+      "2025-04-01"
+    ]
+  },
+  "claims": {
+    "status": "EXPLORATORY",
+    "attribution": "UNKNOWN",
+    "verified_detections": 0,
+    "accuracy": "NOT_ESTIMATED",
+    "coverage": "Only the listed tiles were screened; no national or state coverage is implied."
+  },
+  "method": {
+    "statistics": "p10/median/p90 of after-minus-before seasonal medians over common-valid 30 m cells",
+    "ndvi_loss_threshold": -0.3,
+    "note": "BSI is absent from the cached tiles, so the full 22L candidate rule is not applied"
+  },
+  "coverage": {
+    "aois_configured": 6,
+    "aois_screened": 6,
+    "states": [
+      "Chhattisgarh",
+      "Jharkhand",
+      "Madhya Pradesh",
+      "Meghalaya",
+      "Odisha"
+    ],
+    "screened_km2": 5.532,
+    "national_coverage": false
+  },
+  "sites": [
+    {
+      "id": "gevra",
+      "name": "Gevra OCP",
+      "state": "Chhattisgarh",
+      "district": "Korba",
+      "region": "Korba coalfield",
+      "tier": "SCREENED_SITE",
+      "status": "UNKNOWN",
+      "attribution": "UNKNOWN",
+      "tile": {
+        "grid_cells": 1024,
+        "common_cells": 1024,
+        "crs": "EPSG:32644",
+        "shape": [
+          32,
+          32
+        ],
+        "screened_km2": 0.922,
+        "changes": {
+          "dVV": {
+            "p10": -2.8921,
+            "median": 0.0655,
+            "p90": 3.3469
+          },
+          "dVH": {
+            "p10": -3.0464,
+            "median": 0.3059,
+            "p90": 3.2623
+          },
+          "dNDVI": {
+            "p10": -0.0475,
+            "median": 0.0113,
+            "p90": 0.1008
+          },
+          "dNDTI": {
+            "p10": -0.0189,
+            "median": 0.0018,
+            "p90": 0.0289
+          }
+        },
+        "seasonal_count_ranges": {
+          "sar_before_count": [
+            13,
+            13
+          ],
+          "sar_after_count": [
+            11,
+            11
+          ],
+          "optical_before_count": [
+            3,
+            25
+          ],
+          "optical_after_count": [
+            5,
+            24
+          ]
+        },
+        "ndvi_loss_fraction": 0.0,
+        "ndvi_loss_and_vh_drop_fraction": 0.0
+      },
+      "terrain": {
+        "source": "Phase 16A SRTM elevation/slope on the same grid",
+        "features_sha256": "a4b79a781c8176c5aaea11b68c6dbe15e6d459fd943db40b2ab91d7e3d68f450",
+        "elevation_m": {
+          "p10": 269.0,
+          "median": 289.0,
+          "p90": 302.0
+        },
+        "slope_deg": {
+          "p10": 1.3656,
+          "median": 4.7652,
+          "p90": 10.1588
+        },
+        "slope_over_25_fraction": 0.0029
+      },
+      "screening": {
+        "method": "robust_cross_sensor_v1",
+        "status": "EXPLORATORY",
+        "candidate_polygons": 3,
+        "eligible_cells": 1021,
+        "receipt_sha256": "d173b0b3b82170ba0af3896ed7d5e6beb782966a0b25ee31b9a32fe749fa722a",
+        "note": "Tile-relative robust cross-sensor anomaly polygons, REVIEW_REQUIRED; not detections"
+      },
+      "provenance": {
+        "tile_sha256": "753e0d5e4a13bb7179eb3a7240a3cd423681e0b5106b3f8ce8bf0fda39be6831",
+        "config_sha256": "22aa46e261851039fc8621263020d3d4b46838475f6a2ae2729ade43b6a70439",
+        "location_source": "https://environmentclearance.nic.in/auth/FORM_A_PDF.aspx?cat_id=IA%2FCG%2FCMIN%2F60655%2F2016&pid=found",
+        "location_document": "IA/CG/CMIN/19281/2013",
+        "position_note": "Anchor from public project documents; datum and local error unverified"
+      },
+      "uncertainty": "Seasonal medians over one 0.92 km2 tile; tile-relative; SAR layover and phenology not removed"
+    },
+    {
+      "id": "kusmunda",
+      "name": "Kusmunda OCP",
+      "state": "Chhattisgarh",
+      "district": "Korba",
+      "region": "Korba coalfield",
+      "tier": "UNVERIFIED_LEAD",
+      "status": "UNKNOWN",
+      "attribution": "UNKNOWN",
+      "tile": {
+        "grid_cells": 1024,
+        "common_cells": 1024,
+        "crs": "EPSG:32644",
+        "shape": [
+          32,
+          32
+        ],
+        "screened_km2": 0.922,
+        "changes": {
+          "dVV": {
+            "p10": -2.4029,
+            "median": -0.8137,
+            "p90": 0.666
+          },
+          "dVH": {
+            "p10": -5.0792,
+            "median": -2.2295,
+            "p90": -0.2017
+          },
+          "dNDVI": {
+            "p10": -0.0511,
+            "median": -0.0169,
+            "p90": 0.0124
+          },
+          "dNDTI": {
+            "p10": 0.0079,
+            "median": 0.0227,
+            "p90": 0.0371
+          }
+        },
+        "seasonal_count_ranges": {
+          "sar_before_count": [
+            13,
+            13
+          ],
+          "sar_after_count": [
+            11,
+            11
+          ],
+          "optical_before_count": [
+            17,
+            26
+          ],
+          "optical_after_count": [
+            14,
+            24
+          ]
+        },
+        "ndvi_loss_fraction": 0.0,
+        "ndvi_loss_and_vh_drop_fraction": 0.0
+      },
+      "terrain": null,
+      "screening": null,
+      "provenance": {
+        "tile_sha256": "17f62a85a178aa1ae8c7e36e3727e98c268d9ab1fa051d13db2af23944d29da5",
+        "config_sha256": "22aa46e261851039fc8621263020d3d4b46838475f6a2ae2729ade43b6a70439",
+        "location_source": "https://environmentclearance.nic.in/writereaddata/modification/Amendment/Attach_file/11072018TPA969WLAnnexure-RevisedForm1andotherdocuments.pdf",
+        "location_document": "37th EAC item 37.1, 2015-06-11/12",
+        "position_note": "Anchor from public project documents; datum and local error unverified"
+      },
+      "uncertainty": "Seasonal medians over one 0.92 km2 tile; tile-relative; SAR layover and phenology not removed"
+    },
+    {
+      "id": "bhubaneswari",
+      "name": "Bhubaneswari OCP, Talcher",
+      "state": "Odisha",
+      "district": "Angul",
+      "region": "Talcher coalfield",
+      "tier": "SCREENED_SITE",
+      "status": "UNKNOWN",
+      "attribution": "UNKNOWN",
+      "tile": {
+        "grid_cells": 1024,
+        "common_cells": 1024,
+        "crs": "EPSG:32645",
+        "shape": [
+          32,
+          32
+        ],
+        "screened_km2": 0.922,
+        "changes": {
+          "dVV": {
+            "p10": -5.7393,
+            "median": -0.5096,
+            "p90": 2.3604
+          },
+          "dVH": {
+            "p10": -5.478,
+            "median": -0.3764,
+            "p90": 3.0207
+          },
+          "dNDVI": {
+            "p10": -0.0652,
+            "median": 0.0117,
+            "p90": 0.0644
+          },
+          "dNDTI": {
+            "p10": -0.0475,
+            "median": 0.0058,
+            "p90": 0.0477
+          }
+        },
+        "seasonal_count_ranges": {
+          "sar_before_count": [
+            13,
+            13
+          ],
+          "sar_after_count": [
+            12,
+            12
+          ],
+          "optical_before_count": [
+            2,
+            35
+          ],
+          "optical_after_count": [
+            5,
+            43
+          ]
+        },
+        "ndvi_loss_fraction": 0.001,
+        "ndvi_loss_and_vh_drop_fraction": 0.001
+      },
+      "terrain": {
+        "source": "Phase 16A SRTM elevation/slope on the same grid",
+        "features_sha256": "3bd2e3fb242f6fc2d3d693c5bdf5c90240b6069bbc1e0220c0d36726fcda8a17",
+        "elevation_m": {
+          "p10": 96.0,
+          "median": 104.0,
+          "p90": 110.0
+        },
+        "slope_deg": {
+          "p10": 0.9932,
+          "median": 2.716,
+          "p90": 5.0321
+        },
+        "slope_over_25_fraction": 0.0
+      },
+      "screening": {
+        "method": "robust_cross_sensor_v1",
+        "status": "EXPLORATORY",
+        "candidate_polygons": 0,
+        "eligible_cells": 1024,
+        "receipt_sha256": "4961f4212df3336c6b7fb15ef66866d3eaf8a324ab43c0482ee8c60342313490",
+        "note": "Tile-relative robust cross-sensor anomaly polygons, REVIEW_REQUIRED; not detections"
+      },
+      "provenance": {
+        "tile_sha256": "6f5c6979a29e45d2f6a22f5112991fef2a5e44c61acc5a13c060379db3534a44",
+        "config_sha256": "22aa46e261851039fc8621263020d3d4b46838475f6a2ae2729ade43b6a70439",
+        "location_source": "https://environmentclearance.nic.in/writereaddata/Form-1A/EC/022120141Bhubaneshwari_EC_Expansion.pdf",
+        "location_document": "J-11015/280/2013-IA.II(M)",
+        "position_note": "Anchor from public project documents; datum and local error unverified"
+      },
+      "uncertainty": "Seasonal medians over one 0.92 km2 tile; tile-relative; SAR layover and phenology not removed"
+    },
+    {
+      "id": "kusunda-cluster-vii",
+      "name": "Kusunda Cluster VII, Jharia",
+      "state": "Jharkhand",
+      "district": "Dhanbad",
+      "region": "Jharia coalfield",
+      "tier": "UNVERIFIED_LEAD",
+      "status": "UNKNOWN",
+      "attribution": "UNKNOWN",
+      "tile": {
+        "grid_cells": 1024,
+        "common_cells": 1024,
+        "crs": "EPSG:32645",
+        "shape": [
+          32,
+          32
+        ],
+        "screened_km2": 0.922,
+        "changes": {
+          "dVV": {
+            "p10": -1.6762,
+            "median": -0.0675,
+            "p90": 1.6003
+          },
+          "dVH": {
+            "p10": -1.5813,
+            "median": 0.0032,
+            "p90": 1.4498
+          },
+          "dNDVI": {
+            "p10": -0.096,
+            "median": -0.0184,
+            "p90": 0.0188
+          },
+          "dNDTI": {
+            "p10": -0.0007,
+            "median": 0.0182,
+            "p90": 0.0535
+          }
+        },
+        "seasonal_count_ranges": {
+          "sar_before_count": [
+            13,
+            13
+          ],
+          "sar_after_count": [
+            12,
+            12
+          ],
+          "optical_before_count": [
+            5,
+            16
+          ],
+          "optical_after_count": [
+            7,
+            25
+          ]
+        },
+        "ndvi_loss_fraction": 0.001,
+        "ndvi_loss_and_vh_drop_fraction": 0.001
+      },
+      "terrain": null,
+      "screening": null,
+      "provenance": {
+        "tile_sha256": "8fa7e92ea5892f9f9a768d10d9a22ca63d16fadc6c5e068901f0eeec9ddbe01b",
+        "config_sha256": "22aa46e261851039fc8621263020d3d4b46838475f6a2ae2729ade43b6a70439",
+        "location_source": "https://environmentclearance.nic.in/writereaddata/Form-1A/EC/102420181ECCluster-VII.PDF",
+        "location_document": "J-11015/238/2010-IA.II(M) Pt",
+        "position_note": "Anchor from public project documents; datum and local error unverified"
+      },
+      "uncertainty": "Seasonal medians over one 0.92 km2 tile; tile-relative; SAR layover and phenology not removed"
+    },
+    {
+      "id": "nigahi",
+      "name": "Nigahi OCP",
+      "state": "Madhya Pradesh",
+      "district": "Singrauli",
+      "region": "Singrauli coalfield",
+      "tier": "UNVERIFIED_LEAD",
+      "status": "UNKNOWN",
+      "attribution": "UNKNOWN",
+      "tile": {
+        "grid_cells": 1024,
+        "common_cells": 1024,
+        "crs": "EPSG:32644",
+        "shape": [
+          32,
+          32
+        ],
+        "screened_km2": 0.922,
+        "changes": {
+          "dVV": {
+            "p10": -1.7596,
+            "median": 0.0814,
+            "p90": 1.809
+          },
+          "dVH": {
+            "p10": -1.5649,
+            "median": 0.307,
+            "p90": 2.376
+          },
+          "dNDVI": {
+            "p10": -0.0129,
+            "median": 0.0108,
+            "p90": 0.0973
+          },
+          "dNDTI": {
+            "p10": -0.0345,
+            "median": -0.0068,
+            "p90": 0.0101
+          }
+        },
+        "seasonal_count_ranges": {
+          "sar_before_count": [
+            13,
+            13
+          ],
+          "sar_after_count": [
+            11,
+            11
+          ],
+          "optical_before_count": [
+            10,
+            24
+          ],
+          "optical_after_count": [
+            6,
+            24
+          ]
+        },
+        "ndvi_loss_fraction": 0.0029,
+        "ndvi_loss_and_vh_drop_fraction": 0.0029
+      },
+      "terrain": null,
+      "screening": null,
+      "provenance": {
+        "tile_sha256": "1f28fe2d3888f0cc944c4bb8cb0d5fa5e2ea7a274797d6bbe5424042c9db686b",
+        "config_sha256": "22aa46e261851039fc8621263020d3d4b46838475f6a2ae2729ade43b6a70439",
+        "location_source": "https://environmentclearance.nic.in/writereaddata/Online/TOR/05_Jun_2021_20003824384022258Annexure-Pre-feasibilityReport%28PFR%29File.pdf",
+        "location_document": "CMPDI job 212206102, 2021 PFR",
+        "position_note": "Anchor from public project documents; datum and local error unverified"
+      },
+      "uncertainty": "Seasonal medians over one 0.92 km2 tile; tile-relative; SAR layover and phenology not removed"
+    },
+    {
+      "id": "R008",
+      "name": "Potential stable-background control",
+      "state": "Meghalaya",
+      "district": null,
+      "region": "Meghalaya control",
+      "tier": "MEGHALAYA_LEAD",
+      "status": "UNKNOWN",
+      "attribution": "UNKNOWN",
+      "tile": {
+        "grid_cells": 1024,
+        "common_cells": 1024,
+        "crs": "EPSG:32646",
+        "shape": [
+          32,
+          32
+        ],
+        "screened_km2": 0.922,
+        "changes": {
+          "dVV": {
+            "p10": -1.4116,
+            "median": -0.2187,
+            "p90": 0.9856
+          },
+          "dVH": {
+            "p10": -1.5963,
+            "median": -0.3558,
+            "p90": 0.9448
+          },
+          "dNDVI": {
+            "p10": -0.1029,
+            "median": -0.0184,
+            "p90": 0.0598
+          },
+          "dNDTI": {
+            "p10": -0.0574,
+            "median": -0.0023,
+            "p90": 0.0599
+          }
+        },
+        "seasonal_count_ranges": {
+          "sar_before_count": [
+            13,
+            13
+          ],
+          "sar_after_count": [
+            11,
+            11
+          ],
+          "optical_before_count": [
+            12,
+            20
+          ],
+          "optical_after_count": [
+            15,
+            26
+          ]
+        },
+        "ndvi_loss_fraction": 0.0068,
+        "ndvi_loss_and_vh_drop_fraction": 0.0068
+      },
+      "terrain": null,
+      "screening": null,
+      "provenance": {
+        "tile_sha256": "92a415b6b8787f8129c912e7fdd8351e5433407f1b1c06e3140f204757f08614",
+        "config_sha256": "22aa46e261851039fc8621263020d3d4b46838475f6a2ae2729ade43b6a70439",
+        "location_source": "outputs/phase11b_reference_packages/R008.json",
+        "location_document": "Phase 11B R008",
+        "position_note": "Anchor from public project documents; datum and local error unverified"
+      },
+      "uncertainty": "Seasonal medians over one 0.92 km2 tile; tile-relative; SAR layover and phenology not removed"
+    }
+  ],
+  "skipped": []
+}

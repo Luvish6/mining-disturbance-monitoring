@@ -1,126 +1,124 @@
-# Mining-Related Disturbance & River Degradation
+# Multi-Sensor Mining-Related Disturbance and Downstream River Monitoring (Sentinel-1 SAR + Sentinel-2)
 
-**Scope:** Phase 1 authentication, boundary validation and inventory; Phase 2 seasonal preprocessing and change features. This is **not** a trained detector or an operational alert system.
+Research prototype (B.Tech major project). It screens land disturbance with seasonal Sentinel-1/Sentinel-2 change features, routes disturbance to downstream river reaches and tests whether satellite water colour can observe those reaches.
 
-## Demonstration
+- **Primary study:** East and West Jaintia Hills, Meghalaya (Lukha and Myntdu rivers).
+- **India discovery layer:** six configurable lead AOIs in five states.
 
-The [Phase 8 local release guide](docs/reports/phase8-stage-e1.md) covers the React portal, private loopback review, Windows launch commands and live walkthrough.
+This is **not** an operational detector, a pollution index or a legal determination. Mining attribution remains **UNKNOWN** everywhere, and there are **zero verified detections**.
 
-Use the [offline Streamlit dashboard](docs/reports/phase5a-dashboard.md) to inspect saved real Sentinel layers and river feasibility diagnostics. See the [current research progress](docs/research-progress.md) for validation status.
+## Scope at a glance
 
-## Setup (Windows PowerShell)
+| Component | Status | Coverage actually analysed |
+|---|---|---|
+| Meghalaya systematic screening (22L rule, 22X/22Y) | Done, exploratory | 20 sampled 64×64-cell AOIs; 174 clusters |
+| India screening (Phase 11C → 24B) | Config-driven pipeline; offline demonstration | 6 tiles, about 5.5 km² in total. **No national or state coverage.** |
+| Sensor ablation (22W) | Done on weak labels | 11 Odisha validation groups |
+| River routing and priority (23A/23H/23L/23M) | Final | 4 CPCB station reaches |
+| River NDTI (22O at 10 m, 23K at 3 m) | Closed as a negative result | Khaddum marginal; Sunapur not observable |
+| Verified classification | **BLOCKED** | Needs accepted independent reference labels |
+
+## Installation (Windows PowerShell)
 
 ```powershell
-cd mining_monitor_phase1
 py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-Copy-Item .env.example .env
-notepad .env
-```
-
-Set `GEE_PROJECT_ID` in `.env` to your existing registered Google Cloud project ID.
-
-Authenticate once in the terminal:
-
-```powershell
+python -m pip install -r requirements.txt -r requirements-phase3.txt
+Copy-Item .env.example .env   # set GEE_PROJECT_ID
 earthengine authenticate
-python main.py
+cd frontend; npm ci; cd ..
 ```
 
-If needed, use `python main.py --authenticate` instead of the separate authentication command. In Colab, authentication is different: `ee.Authenticate()` followed by `ee.Initialize(project='YOUR_PROJECT_ID')`.
+Earth Engine is needed only for acquisition steps. Analysis, reports and the dashboard run offline from saved outputs.
 
-## Critical boundary check
+## Architecture
 
-The working Python boundary uses `FAO/GAUL/2025/level2`, `GAUL2_NAME`, and verifies **East Jaintia Hills** and **West Jaintia Hills**. It checks both names and feature count. Expected combined area is approximately 3,818.32 km²; inspect actual output. The original Phase 1 Code Editor script uses older GAUL 2015 names and must not be used to validate the current Python boundary.
+```
+config/          season dates, AOI config (india_aois.json), preprocessing settings
+src/             EE setup, S1/S2 preprocessing, change features, coverage, phase-3 inference contracts
+scripts/phaseNN_*.py   one script per research phase (preregistered, hash-receipted)
+docs/reports/    committed reports and JSON summaries (the source of every dashboard number)
+frontend/        React 19 + Vite dashboard; reads git-ignored snapshots in frontend/public/local/
+tests/           pytest (Python) and node --test (frontend helpers)
+outputs/         git-ignored imagery, tiles, checkpoints and private review material
+```
 
-The existing `study_area.py` does not implement the optional `GEE_STUDY_AREA_ASSET` override mentioned in `.env.example`; both entry points currently use GAUL 2025. District boundaries and Lukha/Myntdu catchments are different geometries; delineate catchments separately in the river-analysis phase.
+**Pipeline:**
 
-## Expected output
+1. **Seasonal composites.** S1 GRD (one relative orbit, 20 m focal mean in linear power, seasonal median in dB) and S2 SR harmonized (cloud probability < 40, SCL 4/5/6, seasonal medians of NDVI/NDTI/BSI).
+2. **Change features.** dVV, dVH, dNDVI, dNDTI (after − before, Nov–Mar 2023/24 vs 2024/25), plus SRTM elevation and slope.
+3. **Screening.** Rule-based screening (22L), followed by S1 corroboration (22P/22Q), external-product agreement (22R) and persistence (22Y).
+4. **Routing.** HydroSHEDS D8 routing to the Free-Flowing-Rivers reaches (23A), then reach priority (23H/23L).
 
-`outputs/phase1_inventory.json`: boundary area and raw scene counts for Nov 2023–Mar 2024 and Nov 2024–Mar 2025. **These counts are not cloud-free coverage or classification results.** The program uses a few metadata requests, no imagery exports, and no training.
+## Data sources
 
-## Project structure
+All imagery is processed in Earth Engine:
 
-- `config/settings.py`: season dates, district names, project config
-- `src/gee_setup.py`: GEE initialization
-- `src/study_area.py`: boundary selection and validation
-- `src/data_inventory.py`: metadata-only availability counts
-- `gee_js/01_study_area_explorer.js`: visual inspection in Code Editor
-- `tests/test_settings.py`: lightweight local unit test
+- Sentinel-1 GRD and Sentinel-2 SR harmonized, plus S2 cloud probability;
+- SRTM, JRC GSW, Hansen GFC v1.13, WRI/GDM drivers;
+- HydroSHEDS FFR and 03DIR;
+- CHIRPS;
+- FAO GAUL 2025 boundaries.
 
-## Next phase
+Other sources:
 
-Create season-matched Sentinel-1 VV/VH and cloud-masked Sentinel-2 NDVI/NDTI composites. Keep SAR orbit/pass and incidence-angle effects in mind; avoid comparing incompatible acquisitions. No unsupported claims of illegal mining, measured NTU, acidity, or causal river pollution will be made.
+- **PlanetScope SR (23K):** two scenes under the educational licence. Raw scenes are never committed.
+- **Lead locations:** public environmental-clearance documents (environmentclearance.nic.in).
+- **Weak labels:** Maus et al. v2 mining footprints, which are unverified.
+- **External benchmark:** MineNetCD256.
 
-## Phase 2 preprocessing
+## Running
 
-Phase 1 Python files and requirements are preserved. Phase 2 uses the same `.env`, initialization, boundary checks and exclusive-end seasons: 2023-11-01–2024-04-01 and 2024-11-01–2025-04-01. Run from the project directory with Python 3.10+ and existing requirements installed:
+See [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) for every phase. India screening:
 
 ```powershell
-python -m compileall -q config src main.py phase2.py tests
-python -m pytest -q
-python phase2.py --smoke
-# If the district centroid is outside the boundary or the patch has no observations:
-python phase2.py --smoke --point 92.35 25.35 --pass ASCENDING
-# Check coarse district coverage before progressing to Phase 3:
-python phase2.py --full-region --relative-orbit NUMBER
-# Or request district diagnostics alongside the small-region test:
-python phase2.py --smoke --district-coverage
-# Optional map (requires geemap); layers are initially hidden:
-python phase2.py --smoke --map
+python -B -m scripts.phase24b_india_screening              # plan: cached/missing tiles, request estimate (no EE)
+python -B -m scripts.phase24b_india_screening --summarise  # offline summaries, checkpointed per AOI
+python -B -m scripts.phase24c_evidence_summary             # evidence-tier summary from committed reports
 ```
 
-The example point is only a candidate; the script checks containment. `NUMBER` is a placeholder for a shared relative orbit reported by your test, not an invented orbit. Run `python phase2.py --help` for thresholds and controls. Configuration lives in `config/phase2_settings.py`. Defaults: descending, cloud probability <40, scene cloud percentage <=80, 20 m speckle radius, minimum two observations per season. `--full-region --smoke` is rejected. There are no automatic exports or full-resolution downloads. `build(region, cfg)` in `phase2.py` returns reusable lazy stack and diagnostic images for Phase 3. A graph-built status is not evidence of pixel execution.
+To add an AOI, add `{"id": ..., "anchor": [lon, lat]}` under a region in `config/india_aois.json`. Then check the plan output, and only then run the acquisition:
 
-SAR (`src/sar_preprocessing.py`): IW, 10 m metadata resolution, VV/VH, fixed pass and a single common relative orbit. Automatic orbit selection maximises the smaller seasonal scene count, with deterministic ties; this does not establish spatial coverage. If coverage is poor, inspect another pass/orbit or use separate orbit-specific analyses rather than merging incompatible geometries. Existing GRD values are dB: convert to linear power, apply a circular focal mean, restore original valid masks, median composite in power, then convert back to dB. dVV/dVH are after minus before in dB. No extra calibration or dB conversion of input log values. A 20 m smoothing radius can blur small disturbances. Orbit-specific footprint gaps remain masked.
+```powershell
+python -B -m scripts.phase24b_india_screening --execute --approve --max-requests N
+```
 
-Optical (`src/optical_preprocessing.py`): join harmonized SR and cloud probability by exact `system:index`, exclude unmatched scenes, require probability below threshold, retain SCL 4/5/6 (vegetation/bare/water), mask B8A/B9 tile edges and invalid B3/B4/B8 pixels. SCL 0/1/2/3/7/8/9/10/11 are excluded conservatively. SCL shadow masking is not a full projected-shadow model; residual haze/shadows and omission of dark terrain remain possible. Reflectance is divided by 10,000; NDVI=(B8-B4)/(B8+B4), NDTI=(B4-B3)/(B4+B3), with zero denominators masked. Calculate per-image indices then seasonal medians. Changes are after minus before. NDTI is a relative spectral turbidity proxy, not NTU, acidity, a water-only product or a calibrated river measurement. No water mask is applied because land disturbance features also matter.
+Acquisition takes an exclusive lock, reads the budget from the on-disk ledger before each AOI, stops at the caps in the config, and reuses the Phase 11C S1/S2 graph.
 
-`src/change_features.py` adds native SRTM elevation (m) and slope (degrees) before clipping. Exact stack order: `dVV,dVH,dNDVI,dNDTI,elevation,slope`. Masks remain separate by band. `ablation(stack, name)` applies a common valid mask only within the selected experiment:
+## Dashboard
 
-| Experiment | Bands |
+```powershell
+python -B -m scripts.phase13_data; python -B -m scripts.phase23_dashboard_data; python -B -m scripts.phase23_dashboard_geo
+python -B -m scripts.phase24b_india_screening --summarise
+cd frontend; npm run dev    # http://127.0.0.1:5173
+```
+
+| View | Route |
 |---|---|
-| sar | dVV, dVH |
-| optical | dNDVI, dNDTI |
-| fused | four changes |
-| fused_terrain | four changes, elevation, slope |
+| India discovery (default Overview): leads, evidence tiers, state filter, 24B summaries with provenance | `#overview` |
+| Meghalaya detailed study | `#meghalaya` |
+| Explorer, with India deep links | `#explorer`, `#explorer-india/<id>[/site]` |
+| Rivers (Lukha/Myntdu stations; exposure and priority) | `#rivers`, `#rivers-exposure` |
+| Brahmani pilot (kept separate) | `#rivers-brahmani` |
+| Analytics and Evidence | `#analytics`, `#evidence` |
 
-For the main Phase 3 comparison, all four models must use identical independently held-out locations with valid data for all six bands. Use `src/evaluation_support.py` as described below. Do not globally mask the source stack by optical availability before SAR-only training/coverage analysis; separately report its coverage advantage where optical data is missing.
+Unmarked areas of India were not analysed.
 
-`outputs/phase2_report.json` records config, dates, selected orbit, bounded per-season orbit histograms, optical raw/joined/unmatched scene counts and execution status. `outputs/phase2.log` records progress/errors. Counts in diagnostic images represent valid contributing observations (including overlapping granules, not unique dates). Smoke mode computes means/ranges of features and counts plus per-band valid fractions over a clipped 500 m radius patch at 30 m, UTM 46N, maxPixels=100000, without bestEffort. It fails if any band has no valid pixels. It also requires a nonzero common six-band valid fraction. Re-run deliberately after inspecting diagnostics; do not repeatedly process the full districts. Quota consumption is not measured or guaranteed by this code.
+## Limitations
 
-SAR orthorectification is not radiometric terrain flattening; layover, radar shadow, local incidence angle and moisture differences can mimic changes in these hills. SRTM is about 30 m and optical SCL is coarser than the 10 m reflectance bands. There is no forced reprojection in the lazy stack; consumers must choose an explicit analysis CRS/scale, as the smoke test does. Native masks and nearest-neighbour default sampling remain; a 30 m downstream grid does not create new spatial detail. No classification, accuracy, mining labels, illegality determination or causal downstream degradation claim is produced.
+- **No independent reference labels.** Weak-label F1 values measure agreement with unverified footprints, not accuracy.
+- **Small screening tiles.** Each India tile is 0.92 km², and the summaries are tile-relative.
+- **Residual SAR and phenology effects.** SAR layover, moisture and phenology effects are not removed.
+- **River colour is unresolved.** 10 m and 3 m imagery cannot resolve the narrow Jaintia channels. NDTI is a relative proxy, not NTU or acidity.
+- **Sunapur.** It is a field-monitoring priority, not confirmed pollution.
 
-Reference documentation: [Sentinel-1 processing](https://developers.google.com/earth-engine/guides/sentinel1), [cloud probability and edge-mask example](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_CLOUD_PROBABILITY), [S2 SR quality bands](https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S2_SR_HARMONIZED).
+Pending human-review and field-data dependencies are listed in [docs/reports/final-project-status.md](docs/reports/final-project-status.md).
 
-## Coverage audit and Phase 3 safeguards
+## Further documentation
 
-Full-region runs now skip centroid creation and containment checks entirely. Only small-region runs validate their test point. `--full-region` automatically evaluates coarse district diagnostics; a small run can request them with `--district-coverage`. If the small run selects an orbit locally, its exact selected orbit is pinned for the district diagnostic build. Both districts and both seasons must be checked for that orbit. The selection heuristic still balances scene counts, but the coverage gate, rather than the scene count, determines whether the selected orbit can proceed. Failed coverage does not automatically select or mix other orbits; inspect another pass/orbit explicitly.
-
-The new `src/coverage_diagnostics.py` performs two bounded district reductions at `--coverage-scale-m 500` (allowed 250–2000 m), UTM 46N, `tileScale=2`, `maxPixelsPerRegion=100000`, without bestEffort. One sums pixel areas of valid coverage and the whole district; the other reports p5/p50/p95 and coarse pixel counts for all four change bands and all four observation counts. Response geometries are removed before retrieval. Reductions use coarse-grid sampling, not expensive native-resolution area aggregation. These are approximate spatial diagnostics and representative distributions; fine gaps or narrow features may be missed. Count distributions include zero outside scene footprints. Change distributions use each band's own valid support.
-
-Each district report contains SAR before/after and optical before/after valid fractions (at least `min_observations`), plus the intersection of all six feature masks. Missing scene footprints are explicitly zero-filled with extended footprint before calculating numerator/denominator areas. The common valid mask is retained as a map layer and reusable image. Full-region coverage gates require every district's SAR fraction in both seasons to meet `--min-sar-coverage 0.90` and each district's common fraction to meet `--min-common-coverage 0.70`. These are configurable screening defaults, not scientifically validated classification reliability thresholds. There is no automatic threshold relaxation. A failed gate is recorded in `phase2_report.json` and exits with an error. Optical-only fractions are reported separately; the common gate limits their shared support. Passing the coverage gate is not approval to train without labels, split design and local inspection.
-
-`--map` now adds dVV, dVH, dNDVI, dNDTI, four observation-count layers, four seasonal-valid layers, common six-band footprint and district outlines. All layers start hidden; opening/activating them requests EE tiles and consumes compute. Use `python phase2.py --full-region --map --relative-orbit NUMBER` for district inspection or `python phase2.py --smoke --map` for the small patch. With `--smoke --district-coverage --map`, the map intentionally shows the small patch; use the full-region command for district maps. Maps are generated before a failed coverage gate raises, when requested, to aid inspection. geemap is optional at runtime. Smoke diagnostics additionally include four seasonal valid fractions and p5/p50/p95, preserving the original nonzero common-data check. A successful smoke does not imply district coverage has passed; `district_coverage_checked` records whether it was tested.
-
-For the main ablation experiment, sample held-out points once:
-
-```python
-from src.evaluation_support import shared_evaluation_samples
-
-# `heldout_points` is an independently held-out EE Point FeatureCollection
-# with stable unique `sample_id` and non-null `label` properties.
-evaluation = shared_evaluation_samples(stack, heldout_points, cfg)
-sar_test = evaluation['experiments']['sar']
-optical_test = evaluation['experiments']['optical']
-fused_test = evaluation['experiments']['fused']
-terrain_test = evaluation['experiments']['fused_terrain']
-print(evaluation['audit'])
-```
-
-This helper samples all six bands once at the explicit 30 m UTM grid and derives each model's evaluation table from that same master collection. It checks geometry types, IDs, labels, empty results and sample loss with bounded scalar metadata, not a full downloaded table. Missing six-band rows fail by default. An explicit `allow_dropped=True` supports a deliberately restricted common-footprint experiment and reports input/retained/excluded counts; document this exclusion bias. Save/freeze the master point collection for reproducibility. Preserve spatial train/test separation, report per-class attrition separately, and never independently resample held-out points for each model. The helper does not create labels, split data or train models. Point sampling cost scales with the supplied held-out collection; keep it appropriately sized.
-
-SAR-only coverage under cloud-limited conditions is a separate analysis from the common-footprint main comparison. Dry-season composites cannot demonstrate monsoon performance; add a separately defined cloud-season evaluation before making that claim. The conservative SCL 4/5/6 policy remains unchanged; reported optical fractions expose the resulting support rather than silently relaxing the mask.
-
-Coverage API references: [bounded district reductions](https://developers.google.com/earth-engine/apidocs/ee-image-reduceregions), [extended-footprint zero filling](https://developers.google.com/earth-engine/apidocs/ee-image-unmask), [masked point sampling](https://developers.google.com/earth-engine/apidocs/ee-image-sampleregions).
+- [Final project status](docs/reports/final-project-status.md)
+- [Paper draft](docs/paper-draft.md)
+- [Evidence tiers (24C)](docs/reports/phase24c-evidence-summary.json)
+- [Model consolidation](docs/reports/final-model-experiment-consolidation.md)
+- [Phase 1–2 preprocessing detail](docs/PHASE1_2_PREPROCESSING.md)
+- [Publication audit](docs/publication-audit.md)

@@ -34,3 +34,20 @@ export function plot(lon: number, lat: number, w = 600, h = 620, pad = 36) {
 }
 export const inFrame = (lon: number, lat: number) =>
   lon >= INDIA_FRAME.west && lon <= INDIA_FRAME.east && lat >= INDIA_FRAME.south && lat <= INDIA_FRAME.north;
+
+/** Phase 24B screening summary (docs/reports/phase24b-india-screening.json): descriptive, never detections. */
+export type Q = {p10: number; median: number; p90: number};
+export type ScreeningSite = {id: string; state: string; region: string; tier: Tier; status: string; attribution: string;
+  tile: {common_cells: number; grid_cells: number; screened_km2: number; changes: Record<string, Q>; ndvi_loss_fraction: number; ndvi_loss_and_vh_drop_fraction: number};
+  terrain: null | {slope_deg: Q; elevation_m: Q; slope_over_25_fraction: number};
+  screening: null | {method: string; candidate_polygons: number; eligible_cells: number; note: string};
+  provenance: {tile_sha256: string; config_sha256: string; location_document?: string}; uncertainty: string};
+export type Screening = {phase: string; config_version: string; coverage: {aois_configured: number; aois_screened: number; states: string[]; screened_km2: number; national_coverage: boolean};
+  claims: {verified_detections: number; attribution: string}; sites: ScreeningSite[]};
+
+/** The analysed region (systematic Meghalaya study) is a separate tier from leads. */
+export const ANALYSED_REGION = {label: 'Analysed region', text: 'Meghalaya systematic study: 20 sampled AOIs with persistence and river exposure (Phases 22X–23M). No verified detections.'};
+
+export const statesOf = (leads: Pick<Lead, 'state'>[]) => [...new Set(leads.map(l => l.state))].sort();
+export const byState = <T extends Pick<Lead, 'state'>>(leads: T[], state: string) => state ? leads.filter(l => l.state === state) : leads;
+export const siteFor = (s: Screening | undefined, id: string) => s?.sites.find(x => x.id === id);

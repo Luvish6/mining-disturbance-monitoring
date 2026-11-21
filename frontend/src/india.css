@@ -32,3 +32,12 @@
 @media(max-width:530px){.scope-switch a{padding:6px 6px;font-size:10px}}
 .india-map .leader{stroke:#a4afba;stroke-width:1}
 .india-map .geonote{top:12px;bottom:auto}
+.tier.t-analysed .dot{border-color:#79d9cd;background:#79d9cd22}
+.state-filter{display:block;font-size:11px;color:var(--muted)}
+.state-filter select{display:block;width:100%;margin-top:6px;background:var(--control);border:1px solid var(--line);border-radius:4px;padding:7px}
+.screen-detail{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+.screen-detail h3{font-size:12px;margin:0 0 8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.screen-detail table{width:100%;max-width:520px;border-collapse:collapse;font-size:11px}
+.screen-detail th,.screen-detail td{text-align:right;padding:4px 8px;border-bottom:1px solid var(--line)}
+.screen-detail th:first-child,.screen-detail td:first-child{text-align:left}
+.screen-detail summary{cursor:pointer;color:var(--teal);font-size:11px;margin-top:8px}

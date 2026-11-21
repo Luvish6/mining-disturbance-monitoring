@@ -1,0 +1,200 @@
+{
+  "phase": "24C",
+  "generated_from": "committed docs/reports JSON only; no retraining, no TEST access",
+  "tiers": {
+    "unsupervised_screening": {
+      "label": "Unsupervised screening (no labels; descriptive)",
+      "items": [
+        {
+          "phase": "22X",
+          "what": "Meghalaya 22L rule over 20 sampled AOIs",
+          "density_ha_per_100ha": 1.204,
+          "ci95": [
+            0.617,
+            1.975
+          ],
+          "clusters": 174,
+          "dvh_cluster_minus_background_db": -1.452,
+          "aois_negative_dvh": [
+            18,
+            18
+          ],
+          "source": {
+            "path": "docs/reports/phase22x-summary.json",
+            "sha256": "265b3ef04e7630ec04564fd18f4218a644138949d48c4d8ff7992188d1674d96"
+          }
+        },
+        {
+          "phase": "22Y",
+          "what": "Persistence typology of the 22X clusters",
+          "shares": {
+            "PARTIAL": {
+              "clusters": 77,
+              "share": 0.443
+            },
+            "PERSISTENT": {
+              "clusters": 53,
+              "share": 0.305
+            },
+            "RECOVERING": {
+              "clusters": 44,
+              "share": 0.253
+            },
+            "UNOBSERVED": {
+              "clusters": 0,
+              "share": 0.0
+            }
+          },
+          "source": {
+            "path": "docs/reports/phase22y-summary.json",
+            "sha256": "695a338202123c8b01ab05632ceeb9dcd715d196ded028edee7cbb04c8a084e0"
+          }
+        },
+        {
+          "phase": "24B",
+          "what": "Change-feature summaries over configured Indian AOI tiles",
+          "aois": 6,
+          "states": [
+            "Chhattisgarh",
+            "Jharkhand",
+            "Madhya Pradesh",
+            "Meghalaya",
+            "Odisha"
+          ],
+          "screened_km2": 5.532,
+          "national_coverage": false,
+          "source": {
+            "path": "docs/reports/phase24b-india-screening.json",
+            "sha256": "2438f7c4fcba4b24575bc9db5bfc2c34893b2409629fd50146d4b4fc611d1ef2"
+          }
+        }
+      ],
+      "claim": "Spatial patterns and S1/S2 co-change only; mining attribution UNKNOWN."
+    },
+    "weak_label_experiments": {
+      "label": "Weak-label experiments (agreement with unverified Maus v2 footprints; validation split only)",
+      "items": [
+        {
+          "phase": "22H",
+          "model": "U-Net (3 seeds), B3/B4/B8",
+          "val_f1_mean": 0.713,
+          "val_f1_sd": 0.085,
+          "source": {
+            "path": "docs/reports/phase22h-expanded-metrics.json",
+            "sha256": "ecf2d2797d6cba607eada5a9d3879a1804709292806a37de946d7295ee49adfc"
+          }
+        },
+        {
+          "phase": "22H",
+          "model": "RF-A, B3/B4/B8 @0.50",
+          "val_f1": 0.574,
+          "source": {
+            "path": "docs/reports/phase22h-expanded-metrics.json",
+            "sha256": "ecf2d2797d6cba607eada5a9d3879a1804709292806a37de946d7295ee49adfc"
+          }
+        },
+        {
+          "phase": "22K",
+          "model": "Index rule A (TRAIN-selected)",
+          "val_f1": 0.437,
+          "source": {
+            "path": "docs/reports/phase22k-rule-metrics.json",
+            "sha256": "31a20ac5d185ac62e5bb2581db8029c51cbcd434f6dabba806463de75d908fb1"
+          }
+        },
+        {
+          "phase": "22W",
+          "model": "Sensor ablation RF (11 Odisha groups)",
+          "arms": {
+            "A_sar": {
+              "features": [
+                "VV",
+                "VH"
+              ],
+              "f1": 0.378,
+              "ci95": [
+                0.239,
+                0.48
+              ]
+            },
+            "B_optical": {
+              "features": [
+                "B3",
+                "B4",
+                "B8"
+              ],
+              "f1": 0.533,
+              "ci95": [
+                0.354,
+                0.637
+              ]
+            },
+            "C_fusion": {
+              "features": [
+                "VV",
+                "VH",
+                "B3",
+                "B4",
+                "B8"
+              ],
+              "f1": 0.539,
+              "ci95": [
+                0.386,
+                0.628
+              ]
+            },
+            "D_fusion_terrain": {
+              "features": [
+                "VV",
+                "VH",
+                "B3",
+                "B4",
+                "B8",
+                "elevation",
+                "slope"
+              ],
+              "f1": 0.463,
+              "ci95": [
+                0.29,
+                0.583
+              ]
+            },
+            "R_rule_ndvi_lt_0.10": {
+              "features": [
+                "NDVI"
+              ],
+              "f1": 0.437,
+              "ci95": [
+                0.199,
+                0.637
+              ]
+            }
+          },
+          "fusion_minus_optical": {
+            "median": 0.006,
+            "ci95": [
+              -0.039,
+              0.058
+            ],
+            "share_positive": 0.605
+          },
+          "source": {
+            "path": "docs/reports/phase22w-metrics.json",
+            "sha256": "fa6256c835f19ec457770cddbef66344653ffd71e8c4890ac8a77acd0971e518"
+          }
+        }
+      ],
+      "claim": "Not accuracy: labels are unverified weak footprints; TEST split sealed (test_sealed=true)."
+    },
+    "external_benchmark": {
+      "label": "External RGB benchmark (MineNetCD256, non-Indian sites)",
+      "note": "See docs/reports/final-model-experiment-consolidation.md and phase17g-rf-heldout-results.md (markdown tables); not Indian accuracy."
+    },
+    "verified_classification": {
+      "status": "BLOCKED",
+      "count": 0,
+      "reason": "No accepted independent Indian reference labels; reviewer adjudication (Phase 23I) and field/official data pending."
+    }
+  },
+  "mining_attribution": "UNKNOWN"
+}

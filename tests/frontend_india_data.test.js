@@ -38,3 +38,23 @@ test('local snapshot (if present) has six UNKNOWN Phase 11C leads with two scree
   assert.equal(s.tiers.SCREENED_SITE, 2);
   assert.ok(leads.every(l => l.status === 'UNKNOWN'));
 });
+
+test('state filter and screening lookup are pure and never invent sites', async () => {
+  const {byState, statesOf, siteFor, ANALYSED_REGION} = await import('../frontend/src/india-data.ts');
+  const ls = [lead('gevra', 'Chhattisgarh'), lead('kusmunda', 'Chhattisgarh'), lead('nigahi', 'Madhya Pradesh')];
+  assert.deepEqual(statesOf(ls), ['Chhattisgarh', 'Madhya Pradesh']);
+  assert.equal(byState(ls, 'Chhattisgarh').length, 2);
+  assert.equal(byState(ls, '').length, 3);
+  assert.equal(siteFor(undefined, 'gevra'), undefined);
+  assert.equal(siteFor({sites: [{id: 'gevra'}]}, 'nigahi'), undefined);
+  assert.doesNotMatch(ANALYSED_REGION.text, /confirmed/i);
+});
+
+test('Phase 24B snapshot (if present) claims no detections or national coverage', () => {
+  const p = new URL('../frontend/public/local/india-screening.json', import.meta.url);
+  if (!existsSync(p)) return;
+  const r = JSON.parse(readFileSync(p, 'utf8')).data;
+  assert.equal(r.claims.verified_detections, 0);
+  assert.equal(r.coverage.national_coverage, false);
+  assert.ok(r.sites.every(s => s.status === 'UNKNOWN' && s.attribution === 'UNKNOWN'));
+});
