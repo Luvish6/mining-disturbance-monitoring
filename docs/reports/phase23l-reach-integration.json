@@ -1,0 +1,169 @@
+{
+ "phase": "23L",
+ "earth_engine_requests": 0,
+ "downloads": 0,
+ "rules": {
+  "burden": {
+   "HIGH": ">= 10 upstream persistent clusters",
+   "MODERATE": "3-9",
+   "LOW": "< 3",
+   "basis": "Phase 23A D8 routing of 22Y classes"
+  },
+  "observability": {
+   "OBSERVABLE": "a preregistered gate passes AND all sensitivities pass on at least one date (none so far)",
+   "MARGINAL": "primary gate passes on a date but >= 1 preregistered sensitivity fails",
+   "UNOBSERVABLE": "every assessed date fails the gate (insufficient valid interior water)",
+   "UNKNOWN": "observations exist but water identity is inconsistent, or the reach was never assessed at a finer scale"
+  },
+  "monitoring_label": {
+   "HIGH+UNOBSERVABLE": "PRIORITY FIELD MONITORING",
+   "HIGH+MARGINAL": "PRIORITY FIELD MONITORING",
+   "HIGH+UNKNOWN": "PRIORITY FIELD MONITORING",
+   "MODERATE+*": "FIELD MONITORING",
+   "LOW+*": "REFERENCE / LOW",
+   "*+OBSERVABLE": "SATELLITE-TRACKABLE (add field validation)"
+  },
+  "note": "Labels prioritise where measurements are missing relative to modelled exposure; they are not pollution-risk scores."
+ },
+ "routing": {
+  "method": "90 m HydroSHEDS D8 to FFR reach, NDOID chain (Phase 23A)",
+  "clusters_routed": 174,
+  "clusters_total": 174,
+  "ambiguous_snaps": 1,
+  "test_block_crossings": 0,
+  "median_path_km": 0.99,
+  "counts": "cumulative down the main stem (Sunapur includes Khaddum; Leshka includes Mihmyntdu)"
+ },
+ "sources": {
+  "reach_table": {
+   "file": "docs/reports/phase23h-reach-priority.json",
+   "sha256": "3c84f3ef87566361d601dcf797193a2917269264e1403fa4fffe2f47c6ede72b"
+  },
+  "linkage": {
+   "file": "docs/reports/phase23a-linkage-summary.json",
+   "sha256": "3837c7425382924b6889ab99a72acc1bcccf1438278cb11d031ebecb9883bd9b"
+  },
+  "planet_2025_02_20": {
+   "file": "docs/reports/phase23k-20250220_045741_92_2534-screen.json",
+   "sha256": "1cafda070ce8ef3f1d9430c28d01a8820f9d9c6179d424fc24ab87c586ecd831"
+  },
+  "planet_2024_11_08": {
+   "file": "docs/reports/phase23k-20241108_044308_36_24f0-screen.json",
+   "sha256": "2f8f59babea2ca29c4070516e2d1c2d2b15a0c7fa4c0e22696afc77ab9ae4e7c"
+  },
+  "official_records": {
+   "file": "docs/reports/phase23c-official-water-records.md",
+   "sha256": "830d27c7e30424448432b95b374e42741d12ca58bbe857233910a1315252b00d"
+  }
+ },
+ "note": "Phase 23B report does not exist in the repository; not used.",
+ "reaches": [
+  {
+   "station": "Lukha-Khaddum-4315",
+   "river": "Lukha",
+   "downstream_of": "",
+   "upstream_clusters": 11,
+   "upstream_persistent": 1,
+   "upstream_partial": 4,
+   "upstream_recovering": 6,
+   "upstream_cluster_ha": 24.66,
+   "routing": "D8-routed (23A)",
+   "burden_class": "LOW",
+   "s2_observation": "UNOBSERVABLE",
+   "s2_dates_before_after": "19/24",
+   "planet_status": "2024-11-08: PASS_MARGINAL; 2025-02-20: FAIL_CONDITIONS",
+   "observability": "MARGINAL",
+   "ndti_availability": "single-date descriptive only (2024-11-08, fragile): median -0.0021",
+   "monitoring_label": "REFERENCE / LOW",
+   "missing_measurement_reasons": [
+    "Sentinel-2 10 m: water identity not established (SCL water share 0.0/0.0)",
+    "PlanetScope 3 m 2025-02-20: clear 0.5% (haze 99.5%)",
+    "PlanetScope 3 m 2024-11-08: 44 interior px; fails sensitivities min_interior_50, ndwi_gt_0_1",
+    "Official station measurements: none verified (CPCB NWMP unreachable/truncated; MSPCB portal lacks this code)",
+    "Paired upstream/downstream NDTI: not feasible (needs both reaches passing on >= 5 dates per season)"
+   ],
+   "confounders": "narrow channel; bright mixed pixels pass MNDWI/JRC but 0% SCL water; karst; station-to-reach snap 57 m; after season ~45% drier (CHIRPS station cell); no discharge or release records; 90 m DEM routing; clusters UNKNOWN",
+   "mining_attribution": "UNKNOWN"
+  },
+  {
+   "station": "Lukha-Sunapur-3376",
+   "river": "Lukha",
+   "downstream_of": "Lukha-Khaddum-4315",
+   "upstream_clusters": 80,
+   "upstream_persistent": 28,
+   "upstream_partial": 32,
+   "upstream_recovering": 20,
+   "upstream_cluster_ha": 47.07,
+   "routing": "D8-routed (23A)",
+   "burden_class": "HIGH",
+   "s2_observation": "UNOBSERVABLE",
+   "s2_dates_before_after": "4/0",
+   "planet_status": "2024-11-08: FAIL_GATE; 2025-02-20: FAIL_GATE",
+   "observability": "UNOBSERVABLE",
+   "ndti_availability": "none",
+   "monitoring_label": "PRIORITY FIELD MONITORING",
+   "missing_measurement_reasons": [
+    "Sentinel-2 10 m: insufficient dates 4/0 (< 5)",
+    "PlanetScope 3 m 2025-02-20: 0 interior px (< 25); water px 0; width ~0.0 m",
+    "PlanetScope 3 m 2024-11-08: 0 interior px (< 25); water px 41; width ~8.5 m",
+    "Official station measurements: none verified (CPCB NWMP unreachable/truncated; MSPCB portal lacks this code)",
+    "Paired upstream/downstream NDTI: not feasible (needs both reaches passing on >= 5 dates per season)"
+   ],
+   "confounders": "narrow channel (<= 22 m water clearance); Lunar tributary joins near Sonapur (literature), position relative to CPCB point unverified; snap 101 m; karst; after season ~45% drier (CHIRPS station cell); no discharge or release records; 90 m DEM routing; clusters UNKNOWN",
+   "mining_attribution": "UNKNOWN"
+  },
+  {
+   "station": "Myntdu-Mihmyntdu-4316",
+   "river": "Myntdu",
+   "downstream_of": "",
+   "upstream_clusters": 15,
+   "upstream_persistent": 7,
+   "upstream_partial": 5,
+   "upstream_recovering": 3,
+   "upstream_cluster_ha": 4.05,
+   "routing": "D8-routed (23A)",
+   "burden_class": "MODERATE",
+   "s2_observation": "UNOBSERVABLE",
+   "s2_dates_before_after": "0/0",
+   "planet_status": "NOT_ACQUIRED",
+   "observability": "UNOBSERVABLE",
+   "ndti_availability": "none",
+   "monitoring_label": "FIELD MONITORING",
+   "missing_measurement_reasons": [
+    "Sentinel-2 10 m: no interior water (unresolved before acquisition)",
+    "PlanetScope 3 m: not acquired for this station (Phase 23K covered Khaddum/Sunapur only)",
+    "Official station measurements: none verified (CPCB NWMP unreachable/truncated; MSPCB portal lacks this code)",
+    "Paired upstream/downstream NDTI: not feasible (needs both reaches passing on >= 5 dates per season)"
+   ],
+   "confounders": "narrow channel; Jowai bypass road-construction debris upstream (NGT OA 1271/2024); domestic sources; after season ~45% drier (CHIRPS station cell); no discharge or release records; 90 m DEM routing; clusters UNKNOWN",
+   "mining_attribution": "UNKNOWN"
+  },
+  {
+   "station": "Myntdu-Leshka-3379",
+   "river": "Myntdu",
+   "downstream_of": "Myntdu-Mihmyntdu-4316",
+   "upstream_clusters": 17,
+   "upstream_persistent": 8,
+   "upstream_partial": 6,
+   "upstream_recovering": 3,
+   "upstream_cluster_ha": 5.31,
+   "routing": "D8-routed (23A)",
+   "burden_class": "MODERATE",
+   "s2_observation": "INCONSISTENT",
+   "s2_dates_before_after": "15/13",
+   "planet_status": "NOT_ACQUIRED",
+   "observability": "UNKNOWN",
+   "ndti_availability": "none",
+   "monitoring_label": "FIELD MONITORING",
+   "missing_measurement_reasons": [
+    "Sentinel-2 10 m: water identity inconsistent between seasons (SCL water share 1.00/0.06)",
+    "PlanetScope 3 m: not acquired for this station (Phase 23K covered Khaddum/Sunapur only)",
+    "Official station measurements: none verified (CPCB NWMP unreachable/truncated; MSPCB portal lacks this code)",
+    "Paired upstream/downstream NDTI: not feasible (needs both reaches passing on >= 5 dates per season)"
+   ],
+   "confounders": "impounded reservoir/backwater of Myntdu-Leshka Stage I (dam releases); SCL classifies the same water differently between seasons; upstream road construction; after season ~45% drier (CHIRPS station cell); no discharge or release records; 90 m DEM routing; clusters UNKNOWN",
+   "mining_attribution": "UNKNOWN"
+  }
+ ],
+ "interpretation": "burden = modelled exposure geometry; observability = satellite measurability; no pollution, runoff or causal claim"
+}

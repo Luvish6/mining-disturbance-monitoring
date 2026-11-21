@@ -17,7 +17,7 @@ def test_payload_is_aggregate_only_and_traceable():
     p = build()
     assert not (set(_keys(p)) & FORBIDDEN_KEYS)
     assert p["earth_engine_requests"] == 0 and p["mining_attribution"] == "UNKNOWN"
-    for block in ("landscape", "persistence", "ablation", "exposure", "review"):
+    for block in ("landscape", "persistence", "ablation", "exposure", "review", "integration"):
         assert p[block]["source"]["file"].startswith("docs/reports/") and len(p[block]["source"]["sha256"]) == 64
     json.dumps(p, allow_nan=False)
 

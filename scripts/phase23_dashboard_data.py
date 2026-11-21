@@ -85,9 +85,12 @@ def build():
                   reviews_returned=len(returned), total_items=i["total"], seed=i["seed"],
                   strata={k: dict(frame_size=v["frame_size"], sampled=v["sampled"]) for k, v in i["strata"].items()},
                   note="No reviewer results are shown until both independent reviews are complete and analysed.")
+    integ, pint = load("phase23l-reach-integration.json")
+    integration = dict(source=pint, rules=integ["rules"], routing=integ["routing"], reaches=integ["reaches"],
+                       sources=integ["sources"], interpretation=integ["interpretation"])
     payload = strip(dict(schema=1, generated_from="committed docs/reports artifacts", earth_engine_requests=0,
                          mining_attribution="UNKNOWN", landscape=landscape, persistence=persistence, ablation=ablation,
-                         exposure=exposure, official_water_quality=official, review=review))
+                         exposure=exposure, official_water_quality=official, review=review, integration=integration))
     return payload
 
 

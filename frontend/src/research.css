@@ -53,3 +53,16 @@ small.block{display:block;margin-top:3px}
 .kpis .notice{margin-top:14px}
 @media(max-width:1000px){.grid2{grid-template-columns:1fr}.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:530px){.page>.panel,.page>.grid2{margin:12px 10px}.facts{grid-template-columns:1fr}.node{min-width:0}}
+
+.reach-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.reach-tabs button{background:var(--control);border:1px solid var(--line);border-radius:4px;padding:6px 10px;font-size:11px}
+.reach-tabs button[aria-selected=true]{color:var(--teal);border-color:#42615f;background:#253c3e}
+.axes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.axis-card{display:flex;flex-direction:column;gap:5px;background:var(--control);border-radius:4px;padding:12px;font-size:11px;color:var(--muted)}
+.axis-card b{font-size:16px;font-weight:600;color:#e8edf2}
+.burden.b-high{color:var(--amber)}.burden.b-moderate{color:#79cbe2}.burden.b-low{color:var(--muted)}
+.obs.o-unobservable,.obs.o-unknown{color:#c9d1da}.obs.o-marginal{color:#79cbe2}.obs.o-observable{color:var(--teal)}
+.axis-card b.mon{color:var(--amber);font-size:13px}
+.sub{font-size:12px;margin:14px 0 4px}
+.panel details summary{cursor:pointer;color:var(--teal);font-size:11px;margin-top:10px}
+@media(max-width:1000px){.axes{grid-template-columns:1fr}}

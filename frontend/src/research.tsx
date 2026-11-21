@@ -22,7 +22,16 @@ export type Research = {
   exposure: {source: Source; rules: Record<string, unknown>; reaches: Reach[]; separate_official: {note: string; stations: string[]}};
   official_water_quality: {source: Source; portal: string; note: string; stations: {code: string; name: string; ph_2023_24: CI; ph_2024_25: CI; months: string}[]};
   review: {source: Source; status: string; reviews_returned: number; total_items: number; seed: string; strata: Record<string, {frame_size: number; sampled: number}>; note: string};
+  integration: {source: Source; rules: {note: string; burden: Record<string, string>; observability: Record<string, string>};
+    routing: {method: string; clusters_routed: number; clusters_total: number; ambiguous_snaps: number; test_block_crossings: number;
+      median_path_km: number; counts: string};
+    reaches: IntegratedReach[]; sources: Record<string, Source>; interpretation: string};
 };
+export type IntegratedReach = {station: string; river: string; downstream_of: string; upstream_clusters: number;
+  upstream_persistent: number; upstream_partial: number; upstream_recovering: number; upstream_cluster_ha: number;
+  routing: string; burden_class: string; s2_observation: string; s2_dates_before_after: string; planet_status: string;
+  observability: string; ndti_availability: string; monitoring_label: string; missing_measurement_reasons: string[];
+  confounders: string; mining_attribution: string};
 
 const pct = (v: number) => (v * 100).toFixed(1) + '%';
 const f = (v: number | null | undefined, d = 2) => v == null ? '—' : v.toFixed(d);
@@ -172,12 +181,43 @@ export function RiverExposure() {
       <dl className="cats">{Object.entries(CAT).map(([k, [t, d]]) => <div key={k}><dt><span className={'cat c-' + k.toLowerCase()}>{t}</span></dt><dd>{d}</dd></div>)}</dl>
       <p className="legend">Sunapur is HIGH priority for future monitoring because of modelled upstream exposure and missing usable NDTI — not because pollution has been demonstrated. No official measurements are verified at these four stations.</p>
     </Panel>
+    <ReachDetail data={data}/>
     <Panel title="Official water-quality records — kept separate" badge="Not linked to any reach">
       <div className="notice">{W.portal}<small>{W.note}</small></div>
       <div className="table-scroll"><table><thead><tr><th>Station</th><th>pH Nov–Mar 2023–24</th><th>pH Nov–Mar 2024–25</th><th>Months</th></tr></thead>
         <tbody>{W.stations.map(s => <tr key={s.code}><td>{s.code} · {s.name}</td><td>{s.ph_2023_24[0]}–{s.ph_2023_24[1]}</td><td>{s.ph_2024_25[0]}–{s.ph_2024_25[1]}</td><td>{s.months}</td></tr>)}</tbody></table></div>
     </Panel>
   </div>;
+}
+
+export function ReachDetail({data}: {data: Research}) {
+  const I = data.integration;
+  const [sel, setSel] = useState('Lukha-Sunapur-3376');
+  if (!I?.reaches?.length) return <Panel title="Reach detail"><p className="legend">Phase 23L integration not available. Rerun the dashboard data adapter.</p></Panel>;
+  const r = I.reaches.find(x => x.station === sel) ?? I.reaches[0];
+  const label = (s: string) => s.split('-').slice(0, 2).join(' · ');
+  return <Panel title="Reach detail: burden vs observability" badge="Phase 23L">
+    <div className="reach-tabs" role="tablist" aria-label="Select reach">{I.reaches.map(x =>
+      <button key={x.station} role="tab" aria-selected={x.station === r.station} onClick={() => setSel(x.station)}>{label(x.station)}</button>)}</div>
+    <div className="axes">
+      <div className="axis-card"><small>UPSTREAM BURDEN (modelled)</small><b className={'burden b-' + r.burden_class.toLowerCase()}>{r.burden_class}</b>
+        <span>{r.upstream_persistent} persistent · {r.upstream_partial} partial · {r.upstream_recovering} recovering ({r.upstream_clusters} clusters, {r.upstream_cluster_ha} ha)</span>
+        <small>{r.routing}{r.downstream_of ? ' · cumulative, includes ' + label(r.downstream_of) : ''}</small></div>
+      <div className="axis-card"><small>DOWNSTREAM OBSERVABILITY (satellite)</small><b className={'obs o-' + r.observability.toLowerCase()}>{r.observability}</b>
+        <span>Sentinel-2 10 m: {r.s2_observation} ({r.s2_dates_before_after} dates)</span><span>PlanetScope 3 m: {r.planet_status}</span>
+        <small>NDTI: {r.ndti_availability}</small></div>
+      <div className="axis-card"><small>MONITORING LABEL (rule lookup)</small><b className="mon">{r.monitoring_label}</b>
+        <span>Mining attribution: {r.mining_attribution}</span><small>{I.rules.note}</small></div>
+    </div>
+    <h3 className="sub">Why measurements are missing</h3>
+    <ul className="plain">{r.missing_measurement_reasons.map(m => <li key={m}>{m}</li>)}</ul>
+    <h3 className="sub">Confounders</h3><p className="legend">{r.confounders}</p>
+    <h3 className="sub">Routing uncertainty</h3>
+    <p className="legend">{I.routing.method}; {I.routing.clusters_routed}/{I.routing.clusters_total} clusters routed, {I.routing.ambiguous_snaps} ambiguous snap,
+      median path {I.routing.median_path_km} km, {I.routing.test_block_crossings} TEST-block crossings. {I.routing.counts}. Exposure geometry only, not measured runoff.</p>
+    <details><summary>Evidence provenance</summary><div className="table-scroll"><table><thead><tr><th>Input</th><th>File</th><th>SHA-256</th></tr></thead>
+      <tbody>{Object.entries(I.sources).map(([k, s]) => <tr key={k}><td>{k}</td><td>{s.file}</td><td><code>{s.sha256.slice(0, 16)}…</code></td></tr>)}</tbody></table></div></details>
+  </Panel>;
 }
 
 function download(name: string, text: string, type: string) {
@@ -195,7 +235,7 @@ export function toCSV(rows: Record<string, unknown>[]) {
 
 export function Evidence() {
   const {data, state} = useResearch();
-  const sources = useMemo(() => data ? (['landscape', 'persistence', 'ablation', 'exposure', 'official_water_quality', 'review'] as const)
+  const sources = useMemo(() => data ? (['landscape', 'persistence', 'ablation', 'exposure', 'official_water_quality', 'review', 'integration'] as const)
     .map(k => [k, data[k].source] as const) : [], [data]);
   if (state !== 'ready' || !data) return <div className="page"><DataState state={state === 'ready' ? 'error' : state}/></div>;
   const R = data.review;
@@ -229,6 +269,7 @@ export function Evidence() {
         <button onClick={() => download('research-summary.json', JSON.stringify(data, null, 1), 'application/json')}><Download size={15}/> Full summary (JSON)</button>
         <button onClick={() => download('sampled-aois.csv', toCSV(data.landscape.per_aoi), 'text/csv')}><Download size={15}/> Sampled AOIs (CSV)</button>
         <button onClick={() => download('reach-priority.csv', toCSV(data.exposure.reaches), 'text/csv')}><Download size={15}/> Reach priority (CSV)</button>
+        <button onClick={() => download('reach-integration.csv', toCSV(data.integration.reaches.map(x => ({...x, missing_measurement_reasons: x.missing_measurement_reasons.join(' | ')}))), 'text/csv')}><Download size={15}/> Reach integration (CSV)</button>
         <button onClick={() => download('sensor-ablation.csv', toCSV(Object.entries(data.ablation.arms).map(([k, v]) => ({arm: k, ...v}))), 'text/csv')}><Download size={15}/> Sensor ablation (CSV)</button>
       </div>
       <p className="legend">No imagery, coordinates, reviewer answers or blinded-review keys are included.</p>
