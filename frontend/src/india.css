@@ -1,0 +1,34 @@
+.scope-switch{display:flex;gap:2px;background:var(--control);border-radius:4px;padding:2px}
+.scope-switch a{padding:6px 10px;border-radius:3px;font-size:11px;color:var(--muted);white-space:nowrap}
+.scope-switch a[aria-current=page]{background:#223f3d;color:var(--teal)}
+.india{display:grid;grid-template-columns:minmax(224px,304px) minmax(0,1fr);min-height:calc(100vh - 136px)}
+.india .content{min-width:0}
+.india-map{position:relative;background:#141d23;height:clamp(440px,62vh,640px)}
+.india-map svg{width:100%;height:100%;display:block}
+.india-map .grat{stroke:#26323b;stroke-width:1}
+.india-map .gl{fill:var(--muted);font-size:10px}
+.india-map .study{fill:#79d9cd22;stroke:#79d9cd;stroke-width:1.5}
+.india-map .study-l{fill:var(--teal)}
+.lead{cursor:pointer;outline:none}
+.lead circle,.lead rect{fill:#15191e;stroke-width:2.2}
+.lead.t-unverified_lead circle{stroke:#e4ba72}
+.lead.t-screened_site rect{stroke:#79d9cd;fill:#223f3d}
+.lead.t-meghalaya_lead circle{stroke:#79cbe2;stroke-dasharray:2 2}
+.lead.on circle,.lead.on rect,.lead:focus circle,.lead:focus rect{stroke-width:3.5;filter:drop-shadow(0 0 4px #fff6)}
+.lead text{fill:#e8edf2;font-size:11px;paint-order:stroke;stroke:#141d23;stroke-width:3px}
+.tier{display:flex;gap:10px;align-items:flex-start;margin-top:10px;font-size:11px}
+.tier b{display:block;font-weight:600;color:#e8edf2;margin-bottom:3px}
+.tier small{display:block;line-height:1.4}
+.tier .dot{flex:0 0 12px;height:12px;margin-top:2px;border:2.2px solid}
+.tier.t-unverified_lead .dot{border-color:#e4ba72;border-radius:50%}
+.tier.t-screened_site .dot{border-color:#79d9cd;background:#223f3d}
+.tier.t-meghalaya_lead .dot{border-color:#79cbe2;border-style:dashed;border-radius:50%}
+.nav-card{display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:var(--control);border:1px solid transparent;border-radius:4px;padding:9px 11px;margin-top:8px;font-size:11px}
+.nav-card small{flex-basis:100%;margin-left:21px}
+.nav-card:hover{border-color:var(--teal);color:var(--teal)}
+.lead-detail .lead-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.lead-detail .lead-links a{background:var(--control);border:1px solid var(--line);border-radius:4px;padding:6px 10px;font-size:11px;color:var(--teal)}
+@media(max-width:800px){.india{grid-template-columns:1fr}.india-map{height:460px}}
+@media(max-width:530px){.scope-switch a{padding:6px 6px;font-size:10px}}
+.india-map .leader{stroke:#a4afba;stroke-width:1}
+.india-map .geonote{top:12px;bottom:auto}

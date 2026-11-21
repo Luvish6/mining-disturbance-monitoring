@@ -10,6 +10,7 @@ import {River} from './river';
 import {PlanetReview} from './planet';
 import {Analytics, Evidence, ResearchKPIs, RiverExposure} from './research';
 import {GeoMap} from './geomap';
+import {IndiaDiscovery, ScopeSwitch} from './india';
 
 type Tile = {id: string; valid: number; total: number};
 type Data = {area: number; seasons: Record<string, Record<string, number>>; tiles: Tile[]; stations: number};
@@ -34,6 +35,7 @@ function App() {
   const analytics = hash.startsWith('#analytics');
   const evidence = hash.startsWith('#evidence');
   const exposure = hash === '#rivers-exposure';
+  const meghalaya = hash === '#meghalaya';
   const page = review?3:analytics?4:evidence?5:rivers?2:explorer?1:0;
   useEffect(() => {
     const route = () => setHash(location.hash);
@@ -57,8 +59,8 @@ function App() {
     (tile.id + ' ' + region(tile)).toLowerCase().includes(query.trim().toLowerCase()));
   const inventory = data?.seasons[season];
   return <div className="app">
-    <header className="global"><div className="brand"><b>MEGHALAYA</b><small>Mining &amp; River Intelligence Portal</small></div>
-      {page===0 && <><label className="control"><MapPin size={16}/><select aria-label="Study area" value={district} onChange={e => setDistrict(e.target.value)}>
+    <header className="global"><div className="brand"><b>{page===0 && !meghalaya ? 'INDIA' : 'MEGHALAYA'}</b><small>Mining &amp; River Intelligence Portal</small></div>
+      {page===0 && meghalaya && <><label className="control"><MapPin size={16}/><select aria-label="Study area" value={district} onChange={e => setDistrict(e.target.value)}>
         <option value="All districts">Jaintia Hills, Meghalaya</option>{districts.map(name => <option key={name}>{name}</option>)}
       </select></label>
       <label className="control search"><Search size={17}/><input aria-label="Filter district or tile" placeholder="Find a district or tile" value={query} onChange={e => setQuery(e.target.value)}/></label></>}
@@ -70,8 +72,8 @@ function App() {
         <a key={name} href={["#overview","#explorer","#rivers","#review","#analytics","#evidence"][index]} aria-current={index===page?"page":undefined} title={name}><Icon size={20}/><span>{name}</span></a>)}
       <button className="nav-menu" onClick={() => setDrawer(!drawer)} aria-label="Toggle navigation" aria-expanded={drawer}><Menu size={19}/></button>
     </nav>
-    <main id={["overview","explorer","rivers","review","analytics","evidence"][page]}>{analytics ? <Analytics/> : evidence ? <Evidence/> : exposure ? <RiverExposure/> : explorer ? <Explorer/> : rivers ? <River key={hash} pilotView={hash==="#rivers-leshka"} brahmaniView={hash==="#rivers-brahmani"}/> : review ? <PlanetReview/> : <>
-      <div className="toolbar"><Grid2X2 size={18}/><b>Overview</b><span>/</span><span>Regional monitoring</span>
+    <main id={["overview","explorer","rivers","review","analytics","evidence"][page]}>{analytics ? <Analytics/> : evidence ? <Evidence/> : exposure ? <RiverExposure/> : explorer ? <Explorer key={hash} hash={hash}/> : rivers ? <River key={hash} pilotView={hash==="#rivers-leshka"} brahmaniView={hash==="#rivers-brahmani"}/> : review ? <PlanetReview/> : !meghalaya ? <IndiaDiscovery/> : <>
+      <div className="toolbar"><Grid2X2 size={18}/><b>Overview</b><ScopeSwitch scope="meghalaya"/>
         <label className="season"><select aria-label="Inventory window" value={season} onChange={e => setSeason(e.target.value)}>
           <option value="2023-24">Nov 2023 — Mar 2024</option><option value="2024-25">Nov 2024 — Mar 2025</option>
         </select><ChevronDown size={13}/></label><span className="badge neutral">Read only</span></div>

@@ -87,13 +87,13 @@ function SiteMap({site}: {site: string}) {
   </>;
 }
 
-function CandidateExplorer({toggle}: {toggle: () => void}) {
+function CandidateExplorer({toggle, initial, site}: {toggle: () => void; initial?: string; site?: boolean}) {
   const {result, failed} = useSnapshot<Candidate[]>('india-candidates');
   const [state, setState] = useState('');
-  const [id, setId] = useState('');
+  const [id, setId] = useState(initial ?? '');
   const candidates = result?.data ?? [];
-  const activeState = state || candidates[0]?.state || '';
-  const [showSite, setShowSite] = useState(false);
+  const activeState = state || candidates.find(c => c.id === id)?.state || candidates[0]?.state || '';
+  const [showSite, setShowSite] = useState(!!site && ['gevra','bhubaneswari'].includes(initial ?? ''));
   const selected = candidates.find(c=>c.state===activeState && c.id===id) ?? candidates.find(c=>c.state===activeState);
   return <>
     <div className="toolbar"><Layers size={18}/><b>Satellite Explorer</b><button onClick={toggle}>Meghalaya tiles</button><span className="badge neutral">Indian discovery leads</span></div>
@@ -142,8 +142,9 @@ function CandidateExplorer({toggle}: {toggle: () => void}) {
   </>;
 }
 
-export function Explorer() {
-  const [india, setIndia] = useState(false);
+export function Explorer({hash = ''}: {hash?: string}) {
+  const deep = hash.startsWith('#explorer-india') ? hash.split('/') : undefined;
+  const [india, setIndia] = useState(!!deep);
   const [data, setData] = useState<Data>();
   const [failed, setFailed] = useState(false);
   const [district, setDistrict] = useState('');
@@ -196,7 +197,7 @@ export function Explorer() {
     });
     ctx.putImageData(frame, 0, 0);
   }, [tile, layer, limit, categories, india]);
-  if (india) return <CandidateExplorer toggle={()=>setIndia(false)}/>;
+  if (india) return <CandidateExplorer toggle={()=>setIndia(false)} initial={deep?.[1]} site={deep?.[2] === 'site'}/>;
   return <>
     <div className="toolbar"><Layers size={18}/><b>Satellite Explorer</b><button onClick={()=>setIndia(true)}>Indian candidates</button><span>/</span><span>Regional monitoring</span><span className="badge neutral">Exploratory</span></div>
     <div className={'explorer'+(collapsed?' analysis-closed':'')}>
