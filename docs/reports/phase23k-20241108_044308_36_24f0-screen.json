@@ -1,0 +1,168 @@
+{
+  "acquired": "2024-11-08T04:43:08.363827Z",
+  "bands": "coastal_blue, blue, green_i, green, yellow, red, rededge, nir (green = band 4, red = band 6)",
+  "harmonized_to_sentinel2": "not indicated in delivered metadata",
+  "instrument": "PSB.SD",
+  "interpretation": "single-date descriptive relative NDTI only; no NTU, degradation or causal claim",
+  "paired_ndti_feasible_this_date": false,
+  "phase": "23K",
+  "preregistration_sha256": "d7e48d22376ea606d829d7b3f4c8f0718a016728997053882e1a2db0d3875088",
+  "scene_clear_percent": 100,
+  "scene_id": "20241108_044308_36_24f0",
+  "scene_light_haze_percent": 0,
+  "sr_scale": 0.0001,
+  "sun_elevation": 46.3,
+  "view_angle": 1.4,
+  "windows": {
+    "Lukha-Khaddum-4315": {
+      "covered": true,
+      "primary": {
+        "corridor_clear_px": 8871,
+        "corridor_px": 8871,
+        "corridor_valid_px": 8871,
+        "gate": true,
+        "green_median": 0.1458,
+        "interior_px": 44,
+        "largest_water_component_px": 209,
+        "ndti_iqr": [
+          -0.0185,
+          0.0152
+        ],
+        "ndti_median": -0.0021,
+        "nir_median": 0.0935,
+        "red_median": 0.1436,
+        "water_px_corridor": 234,
+        "width_estimate_m": 24.0
+      },
+      "role": "upstream",
+      "sensitivity": {
+        "erode_1px": {
+          "corridor_clear_px": 8871,
+          "corridor_px": 8871,
+          "corridor_valid_px": 8871,
+          "gate": true,
+          "green_median": 0.1443,
+          "interior_px": 120,
+          "largest_water_component_px": 209,
+          "ndti_iqr": [
+            -0.0248,
+            0.024
+          ],
+          "ndti_median": -0.0033,
+          "nir_median": 0.0957,
+          "red_median": 0.1422,
+          "water_px_corridor": 234,
+          "width_estimate_m": 24.0
+        },
+        "min_interior_50": {
+          "corridor_clear_px": 8871,
+          "corridor_px": 8871,
+          "corridor_valid_px": 8871,
+          "gate": false,
+          "interior_px": 44,
+          "largest_water_component_px": 209,
+          "water_px_corridor": 234,
+          "width_estimate_m": 24.0
+        },
+        "ndwi_gt_0_1": {
+          "corridor_clear_px": 8871,
+          "corridor_px": 8871,
+          "corridor_valid_px": 8871,
+          "gate": false,
+          "interior_px": 9,
+          "largest_water_component_px": 152,
+          "water_px_corridor": 169,
+          "width_estimate_m": 18.0
+        }
+      },
+      "sr_percentiles_green_red_nir": [
+        [
+          218.0,
+          333.0,
+          1409.0
+        ],
+        [
+          142.0,
+          211.0,
+          1558.0
+        ],
+        [
+          1541.0,
+          2804.0,
+          4219.0
+        ]
+      ],
+      "window_clear_fraction": 1.0,
+      "window_haze_light_fraction": 0.0,
+      "window_shadow_fraction": 0.0,
+      "window_valid_fraction": 1.0
+    },
+    "Lukha-Sunapur-3376": {
+      "covered": true,
+      "primary": {
+        "corridor_clear_px": 8323,
+        "corridor_px": 8323,
+        "corridor_valid_px": 8323,
+        "gate": false,
+        "interior_px": 0,
+        "largest_water_component_px": 29,
+        "water_px_corridor": 41,
+        "width_estimate_m": 8.5
+      },
+      "role": "downstream",
+      "sensitivity": {
+        "erode_1px": {
+          "corridor_clear_px": 8323,
+          "corridor_px": 8323,
+          "corridor_valid_px": 8323,
+          "gate": false,
+          "interior_px": 0,
+          "largest_water_component_px": 29,
+          "water_px_corridor": 41,
+          "width_estimate_m": 8.5
+        },
+        "min_interior_50": {
+          "corridor_clear_px": 8323,
+          "corridor_px": 8323,
+          "corridor_valid_px": 8323,
+          "gate": false,
+          "interior_px": 0,
+          "largest_water_component_px": 29,
+          "water_px_corridor": 41,
+          "width_estimate_m": 8.5
+        },
+        "ndwi_gt_0_1": {
+          "corridor_clear_px": 8323,
+          "corridor_px": 8323,
+          "corridor_valid_px": 8323,
+          "gate": false,
+          "interior_px": 0,
+          "largest_water_component_px": 0,
+          "water_px_corridor": 0,
+          "width_estimate_m": 0.0
+        }
+      },
+      "sr_percentiles_green_red_nir": [
+        [
+          107.0,
+          402.0,
+          923.0
+        ],
+        [
+          82.0,
+          255.0,
+          1042.0
+        ],
+        [
+          594.0,
+          2380.0,
+          4470.0
+        ]
+      ],
+      "window_clear_fraction": 1.0,
+      "window_haze_light_fraction": 0.0,
+      "window_shadow_fraction": 0.0,
+      "window_valid_fraction": 1.0
+    }
+  }
+}

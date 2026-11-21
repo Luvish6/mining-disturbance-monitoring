@@ -49,3 +49,45 @@ This is the same limitation found at 10 m (Phases 22O and 23H). Here it is confi
 - This clear February scene, at 3× finer resolution, found no open-water pixels at all.
 
 If one more test is wanted, use quota on **one early-November date** (post-monsoon, higher flow) where both windows are clear, applying the same unchanged rules. If that also fails, close the river NDTI objective as **NO-GO at both 10 m and 3 m** for these Lukha stations, and report it as a resolution- and flow-limited negative result.
+
+## Final test — 8 November 2024 (post-monsoon), same unchanged rules
+
+**Scene and integrity.** Derived statistics are in [phase23k-20241108_044308_36_24f0-screen.json](phase23k-20241108_044308_36_24f0-screen.json).
+- The ZIP is 7,189,529 bytes, SHA-256 `6fb2f0a1…19eb0`. The CRC test passes and all 7 manifest digests match.
+- **Scene `20241108_044308_36_24f0`:** Super Dove (PSB.SD), acquired **2024-11-08 04:43:08 UTC**, satellite 24f0, view angle 1.4°, sun elevation 46.3°, ground control true, finalized.
+- **Scene quality:** **100% clear**, with 0% haze, shadow and cloud.
+- The grid, bands, nodata value and ×10⁻⁴ scaling are identical to the February scene, and again there is no harmonization flag. The raw data stays local and git-ignored.
+- **Unchanged rules:** the 720 m windows, UDM2 clear mask, NDWI > 0, JRC ≥ 50%, the reach corridor, 2-pixel (6 m) erosion and the 25-pixel gate.
+
+| Station | Window clear | Corridor water px (NDWI > 0) | Interior px (2 px erosion) | Largest water body (inscribed width) | Primary gate | Sensitivities (NDWI > 0.1 / 1 px erosion / ≥ 50 px) | Verdict |
+|---|---|---|---|---|---|---|---|
+| Khaddum 4315 (upstream) | 100% | 234 (2 components) | **44** (2 components) | ≈ 24 m | **PASS (marginal)** | **fail** (9) / pass (120) / **fail** (44) | **FRAGILE: descriptive only** |
+| Sunapur 3376 (downstream) | 100% | 41 (4 fragments) | **0** | ≈ 8.5 m | **FAIL** | fail / fail / fail | **NO-GO** |
+| *Feb 2025, Khaddum* | 0.5% (99.5% light haze) | 0 | 0 | — | FAIL | — | NO-GO (haze) |
+| *Feb 2025, Sunapur* | 100% | 0 | 0 | — | FAIL | — | NO-GO (no water signature) |
+
+**Khaddum, single date (descriptive only).** Over the 44 interior pixels:
+- **NDTI median −0.002**, IQR −0.019 to 0.015;
+- pixel-bootstrap 95% CI of the median −0.014 to 0.011. The pixels are spatially dependent, so this CI is descriptive only;
+- interior NDWI 0.13–0.25 (median 0.22).
+
+The pixels are unusually bright for open water: median green 0.146, red 0.144, NIR 0.094. That is consistent with milky or turbid, bright water, but the cause cannot be identified from reflectance. The result **fails 2 of 3 preregistered sensitivities**, so it is fragile. It is **not** a turbidity, NTU, acidity or pollution value, and no causal reading is made.
+
+**Sunapur.** Water-like pixels appear in November (41, against 0 in February) but only as fragments about 8 m wide. None survive the conservative bank exclusion.
+
+**November vs February.** These are the same two windows under the same rules, but the comparison is not controlled for flow or conditions. With clear skies, November shows **some** open-water signal at both stations, and February showed none at Sunapur. Two dates do not show that November is generally wetter; February's Khaddum window was hazy and could not be assessed.
+
+**Paired statistic.** The preregistered same-day Sunapur − Khaddum difference needs **both** gates on at least 5 paired dates per season. It is **not feasible** on either date, because Sunapur never passes.
+
+## Conclusion of Phase 23K
+
+**NO-GO: close the satellite-only river-NDTI objective for the Lukha stations.**
+
+| Evidence | Result |
+|---|---|
+| Sentinel-2, 10 m (Phases 22O, 23A, 23H) | 9 windows; no flowing reach observable |
+| PlanetScope, 3 m (this phase) | Downstream Sunapur fails on both dates (0 interior px). Upstream Khaddum passes once, marginally, and fails the sensitivity checks. |
+
+Searching further for favourable scenes would risk selection bias, so it is not recommended. The river component should be reported as a **resolution- and flow-limited negative feasibility result**: the channels are roughly 8–24 m of open water in the dry season.
+
+Any future river-impact work would need **field sampling** (turbidity/TSS, pH, conductivity, metals) at Khaddum and Sunapur matched to dates, or official MSPCB/CPCB station records.
