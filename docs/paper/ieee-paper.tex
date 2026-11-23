@@ -58,7 +58,7 @@ East and West Jaintia Hills (FAO GAUL 2025, about 3{,}818~km$^2$) contain the Lu
 \item JRC Global Surface Water.
 \item HydroSHEDS Free-Flowing Rivers and 3-arc-second flow directions.
 \item CHIRPS rainfall.
-\item Two PlanetScope SR scenes.
+\item Two PlanetScope SR scenes (Planet Labs PBC; acquired 8 November 2024 and 20 February 2025), used privately under Education \& Research Basic. Only aggregate observability statistics are reported; raw scenes are not distributed.
 \end{itemize}
 Six Indian discovery leads were located from public environmental-clearance documents.
 
@@ -94,7 +94,7 @@ Clusters are routed with 90~m D8 flow directions to Free-Flowing-Rivers reaches.
 
 \textbf{Burden classes.} Upstream persistent clusters define the burden class: HIGH ($\ge10$), MODERATE (3--9) and LOW ($<3$).
 
-\textbf{Observability tests.} Observability was tested with preregistered water screens on 10~m S2 and on 3~m PlanetScope. Each screen requires UDM2-clear pixels, NDWI~$>0$ and JRC occurrence $\ge50\%$, followed by 6~m erosion. At least 25 interior pixels must remain, and three sensitivity checks are applied.
+\textbf{Observability tests.} Observability was tested with preregistered water screens on 10~m S2 and on 3~m PlanetScope. The Planet screen requires UDM2-clear pixels, NDWI~$>0$ and JRC occurrence $\ge50\%$, followed by 6~m erosion; Sentinel-2 instead uses its cloud-probability/SCL validity masks, not UDM2. At least 25 interior pixels must remain, and three sensitivity checks are applied. Planet L3B metadata provides no scene-specific RMSE or CE90 here; aggregate specifications and image-to-image registration offsets are not independent absolute geolocation measurements. No conversion from nominal specifications to scene-specific CE90 is made.
 
 \subsection{India Generalisation}
 AOIs listed in a configuration file are screened as $32\times32$-cell, 30~m tiles with descriptive change quantiles. The run is checkpointed, resumable and request-capped.

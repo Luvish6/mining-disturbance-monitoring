@@ -122,3 +122,9 @@ Pending human-review and field-data dependencies are listed in [docs/reports/fin
 - [Model consolidation](docs/reports/final-model-experiment-consolidation.md)
 - [Phase 1–2 preprocessing detail](docs/PHASE1_2_PREPROCESSING.md)
 - [Publication audit](docs/publication-audit.md)
+
+### PlanetScope licensing and reviewer access
+
+The Phase 23I 30-item reviewer package uses Copernicus Sentinel-2 only (older 30 m chips add Sentinel-1), not PlanetScope. Audit it offline with `python -B -m scripts.audit_review_package` before release. Review is still pending and does not establish mining labels.
+
+Downloaded Planet raw scenes, pixel-preserving crops and the loopback Planet viewer are for the licensee's private project use. External reviewers must not access them under this E&R Basic license; they may independently obtain scenes under their own eligible licenses. Do not publish or tunnel the private service. A PNG/JPEG extension alone does not establish Permitted Imagery rights. Any proposed Planet figure or derivative must be non-reconstructable, meet the applicable terms and attribution conditions, and remain **REQUIRES PLANET CONFIRMATION** where those conditions are unresolved. See [the licensing audit](docs/reports/planet-licensing-audit.md).

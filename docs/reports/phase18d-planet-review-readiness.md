@@ -1,6 +1,10 @@
 # Phase 18D — PlanetScope independent review readiness
 
-**Decision: diagnostic evidence prepared and held locally. Formal reviewer release remains blocked on positioning and permissions.** This assessment reused only the existing 8 March 2024 and 25 March 2025 pair. The archive, each selected extracted asset, and the prior inspection SHA-256 matched. Exact delivered item IDs, full UTC timestamps, transforms, bounds and source hashes are in the private scene verification receipt.
+## Licensing clarification — 2026-11-23
+
+The historical release questions below are superseded by Planet support clarification: external reviewers cannot view these downloaded raw scenes under the owner's E&R Basic license, including through local display. They must independently access scenes under their own eligible licenses, or use specifically cleared Permitted Imagery. Local hosting is not sharing permission. No scene-specific RMSE/CE90 was supplied. See [the current licensing audit](planet-licensing-audit.md); historical results and private evidence remain unchanged.
+
+**Historical decision: diagnostic evidence prepared and held locally. Formal reviewer release remains blocked on positioning and permissions.** This assessment reused only the existing 8 March 2024 and 25 March 2025 pair. The archive, each selected extracted asset, and the prior inspection SHA-256 matched. Exact delivered item IDs, full UTC timestamps, transforms, bounds and source hashes are in the private scene verification receipt.
 
 | Scene delivered | UTC acquisition | Provider ground control | Publishing stage | Quality category | Processing |
 | --- | --- | --- | --- | --- | --- |

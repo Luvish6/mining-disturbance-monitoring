@@ -31,7 +31,7 @@ The headline tables are in [docs/reports/final-project-status.md](reports/final-
 
 1. **Human review (23I).** Two reviewers, blinded sample of 30 items.
    - The packages are built in git-ignored `outputs/phase23i_review/`, including `share_reviewer_B` and its zip.
-   - Reviewer results have **not** been returned.
+   - Reviewer results have **not** been returned. The 30 share-package chips are Sentinel-2 only; do not supply external reviewers with downloaded Planet raw scenes or the private Planet viewer under the owner's E&R Basic license. See [the licensing audit](reports/planet-licensing-audit.md).
 2. **Reference labels.** Verified classification is BLOCKED until accepted independent Indian labels exist. Do not retrain or report Meghalaya accuracy before then.
 3. **Official data requests.** Drafts are in `docs/outreach/`, which is **local only and deliberately not committed**: DMR/MBDA letter and email, Nursamsi, and Dr Patel (Presidency University). The user sends them; nothing has been confirmed received.
 4. **Field or official water quality.** Needed for Sunapur and the other reaches. The CPCB archive copies were unusable (23C–23G).

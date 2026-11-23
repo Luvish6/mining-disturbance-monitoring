@@ -66,7 +66,7 @@ export function PlanetReview() {
     <div className="toolbar"><ClipboardCheck size={18}/><b>Reference Review</b><span>/</span><span>KORPET</span><span className="badge neutral">Private · local only</span></div>
     <div className="planet-workspace">
       <aside className="planet-queue"><h1>Review queue</h1><div className="notice">KORPET · UNKNOWN</div>
-        <p>One evidence pair for diagnostic review.</p>
+        <p>Licensee-only diagnostic workspace. Do not give external reviewers access under this license.</p>
         {data?.scenes.map((scene,i)=><button key={scene.id} aria-pressed={mode===String(i)}
           disabled={layer==='difference'} onClick={()=>setMode(String(i))}><strong>{i===0?'Before':'After'} · {date(scene)}</strong><small>{scene.id}</small></button>)}
         {data && <p>{data.coordinates[1]}° N · {data.coordinates[0]}° E</p>}
@@ -91,6 +91,7 @@ export function PlanetReview() {
               data.scenes.map((s,i)=>panel([i],date(s))) : mode==='swipe' ?
               panel([0,1],date(data.scenes[0])+' / '+date(data.scenes[1]),true) : panel([+mode],date(data.scenes[+mode]))}
           </div>
+          <p>Image © 2024, 2025 Planet Labs PBC. Private diagnostic display; no redistribution approval.</p>
           <p>North ↑ · Native 3 m cells · {data.crs} · Cyan cross and ring mark KORPET and the {data.radius} m radius.</p>
           <p>{layer==='rgb'?'RGB bands 6 / 4 / 2 · stored-value stretch 0–3500 · masked cells are transparent.':
             layer==='ndvi'?'NDVI (unitless) · brown −1, pale 0, green +1 · common clear cells inside 300 m.':
@@ -117,7 +118,7 @@ export function PlanetReview() {
         <p>Both dates show the southwest exposed-looking patch. Local tone and apparent edges differ. Illumination, terrain shadow, phenology, moisture and relative alignment remain plausible explanations. Land-cover change is inconclusive.</p>
         <details open><summary>Pending evidence and review</summary><ul>
           <li>Independent positional control · pending. Relative texture offsets are approximately 3–6.7 m. Document positional error ≤30 m with independent controls.</li>
-          <li>Planet reviewer-use rights · unconfirmed.</li>
+          <li>External reviewers cannot view these downloaded scenes under the owner’s E&amp;R Basic license. Use their own eligible Planet licenses or separately cleared Permitted Imagery.</li>
           <li>First reviewer · pending.</li><li>Independent second reviewer · pending.</li>
         </ul></details>
         <label htmlFor="planet-notes">Session notes</label>
