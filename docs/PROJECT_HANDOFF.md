@@ -26,6 +26,10 @@ Phase 25A feasibility is complete; see [the focused report](reports/phase25a-fea
 
 [Report](reports/phase25b-cached-features.md), [summary](reports/phase25b-summary.json), `config/phase25b_v1.json` and `scripts/phase25b_cached.py` define the new isolated pipeline. Backup rechecked; four guarded TRAIN/VAL AOIs produced 36 potential-disturbance, 4,837 potentially stable and 11,511 uncertain cells. These are shared-source retrospective pseudo-states, never reference labels. Four of twelve domains are populated; eight remain unavailable. Legacy scene IDs remain incomplete. 19 focused and 382 full offline tests passed. Outputs stay in `outputs/phase25/experiments/25b-v1/`; historical dashboard/river/models are unchanged. **STOP after 25B; no acquisition, training or later phase without user approval.**
 
+## Phase 25B.1 recovery — 2026-11-25
+
+[Report](reports/phase25b1-recovery.md), [committed preregistration](reports/phase25b1-preregistration.json), `scripts/phase25b1_recover.py` and `src/phase25/acquisition.py`: one locked pilot completed on the same three TRAIN AOIs. 14 requests / 1,069,012 response-body bytes. SRTM, WorldCover and CHIRPS cover all 4,096 cells per AOI; JRC covers only 110 cells in one AOI. Fire has no complete seasonal support; OSM returned HTTP 406, roads remain missing. Current queries recover 24 unique S1 and 214 S2 IDs, corroborated by legacy timestamp/count metadata but not certified as original cache source identities. All four prior pseudo-state hashes remain unchanged; no recalibration, labels, training or TEST payload access. Private outputs: `outputs/phase25/datasets/25b1-v1/`. **This task's bounded acquisition approval is exhausted; STOP before further acquisition, training, publication or Phase25C.**
+
 ## 2. Current state (end of Phase 24, commit after `c38cddb`)
 
 The headline tables are in [docs/reports/final-project-status.md](reports/final-project-status.md). In short:

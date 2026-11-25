@@ -19,3 +19,7 @@ Stable tag `pre-minechange-india` is pushed at 08604dea. Existing `phase22-label
 ## Phase 25B boundary
 
 User authorized cached-only work after safeguards. Essential backup recheck passed for 8,765 files / 6,058,419,596 bytes. Four AOIs processed with no acquisition or research fitting; 19 focused and 382 full regression tests passed. Current twelve-slot stack has four populated domains and eight explicit gaps. Stop after 25B: await approval for missing-source/provenance recovery or 25C planning. No acquisition, training or public dataset release is authorized.
+
+## Phase 25B.1 boundary
+
+The separately authorized, preregistered recovery pilot is complete: [report](reports/phase25b1-recovery.md). Three existing TRAIN AOIs, 14 metered HTTP requests / 1,069,012 body bytes. Elevation/land-cover/rainfall added; sparse JRC support, no qualified fire support and OSM HTTP406 remain explicit. Current query scene IDs recovered without rewriting legacy provenance. Old pseudo-states unchanged. Stop before further acquisition or 25C; independent supervised training and public release remain NO-GO.
