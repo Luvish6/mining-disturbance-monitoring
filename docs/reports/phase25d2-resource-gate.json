@@ -1,0 +1,42 @@
+{
+  "acquisition_lock_present": false,
+  "backup_inventory_verified": true,
+  "checkpoint_actual_sha256": null,
+  "checkpoint_loaded": false,
+  "dependency_transferred_bytes": 0,
+  "disk_free_gib": {
+    "C": 26.44,
+    "D": 306.94
+  },
+  "disk_requirements_gib": {
+    "C": 10,
+    "D": 20
+  },
+  "environment_created": false,
+  "frozen_gradient_result": null,
+  "gpu": {
+    "driver": "610.91",
+    "free_mib": 7956,
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "total_mib": 8188
+  },
+  "gpu_smoke_run": false,
+  "mask_result": null,
+  "model_output_shape": null,
+  "model_transferred_bytes": 0,
+  "package_resolution_performed": false,
+  "peak_cuda_memory_gib": null,
+  "peak_process_ram_gib": null,
+  "phase": "25D.2",
+  "plan_contract_hashes_verified": true,
+  "preserved_branch_commit": "d0b6dd1ac7c6771f3bfccf11c4353cf1a77b7574",
+  "prior_checkpoint_expected_sha256": "e56ea9ebcd4451078b9ca4893d5cd8a89bbee376ae16829c3e7fbbbc76de0eba",
+  "ram_available_gib": 3.4741668701171875,
+  "ram_available_kib": 3642928,
+  "remediation": "Save work and manually close unneeded memory-heavy applications or restart Windows; rerun only when >=8GiB available. Do not lower the gate or alter system settings.",
+  "required_ram_available_gib": 8,
+  "stable_tag_commit": "08604dea4fe39641ea32ebda8a37532669b52933",
+  "status": "STOPPED_RAM_GATE",
+  "system_settings_altered": false,
+  "test_payload_access": false
+}

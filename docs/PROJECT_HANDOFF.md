@@ -46,6 +46,10 @@ Phase 25A feasibility is complete; see [the focused report](reports/phase25a-fea
 
 [Report](reports/phase25d1-model-readiness.md), [proposal](../config/phase25d1_comparison.json), [counts](reports/phase25d1-summary.json). New isolated input/loss/evaluation adapters use actual B2/B3/B4+VV/VH,not invented NIR/SWIR. Same fixed pretraining normalization and conservative16×16 complete-token mask for both prospective systems;67 TRAIN/12 VAL patches usable,81/60 pseudo-positive cells across10/2 groups. Original80-patch dataset unchanged. Existing Siamese U-Net5-channel synthetic forward/backward passed without optimizer updates; TerraMind weights/runtime absent and actual32×32/native30m/API/mask behavior untested. GPU hardware8GB exists,torch CPU-only;availableRAM4.68GiB below proposed8GiB setup guard.20 focused tests passed. **STOP after25D.1: next approval is isolated CUDA environment,exact verified Tiny checkpoint and≤5-minute synthetic GPU smoke; no training authorized.** RF/historical experiments remain intact;no RF in the active proposal.
 
+## Phase25D.2 resource stop — 2026-11-25
+
+[Report](reports/phase25d2-cuda-smoke.md), [gate](reports/phase25d2-resource-gate.json):availableRAM3.474GiB failed mandatory8GiB minimum;VRAM7,956MiB and disks passed. Stopped before package resolution,environment creation,downloads or checkpoint load. No GPU smoke;shape/mask/gradient/peak results unmeasured. Existing environments/data/TEST safeguards unchanged. **Resume only after manually freeing RAM to≥8GiB and rechecking gates;no threshold relaxation or system-setting changes.** One authorized setup/checkpoint/synthetic smoke remains unexecuted;no research training authorized.
+
 ## 2. Current state (end of Phase 24, commit after `c38cddb`)
 
 The headline tables are in [docs/reports/final-project-status.md](reports/final-project-status.md). In short:

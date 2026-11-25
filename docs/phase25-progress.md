@@ -39,3 +39,7 @@ User-authorized offline packaging completed from5b360da. Four guarded parent AOI
 ## Phase25D.1 boundary
 
 [Readiness](reports/phase25d1-model-readiness.md) complete: shared5-channel paired adapters,masked loss/evaluation frame and synthetic-only checks.67 TRAIN/12 VAL usable under common token mask;81/60 pseudo-positives,zero independent labels. Tiny is conditional on isolated CUDA runtime,verified211.9MB checkpoint and32×32/native30m smoke;no weights loaded or fitting. Stop for setup/smoke approval before any installation/download/training.
+
+## Phase25D.2 resource boundary
+
+[STOPPED at RAM gate](reports/phase25d2-cuda-smoke.md):3.474GiB available versus8GiB required. No setup,resolution,transfer,checkpoint load or GPU smoke. Existing settings/data/environments unchanged. Resume after user frees RAM and all gates pass;no further phase started.
