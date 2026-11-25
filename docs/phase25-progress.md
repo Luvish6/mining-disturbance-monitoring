@@ -43,3 +43,7 @@ User-authorized offline packaging completed from5b360da. Four guarded parent AOI
 ## Phase25D.2 resource boundary
 
 [STOPPED at RAM gate](reports/phase25d2-cuda-smoke.md):3.474GiB available versus8GiB required. No setup,resolution,transfer,checkpoint load or GPU smoke. Existing settings/data/environments unchanged. Resume after user frees RAM and all gates pass;no further phase started.
+
+## Phase25D.2 partial setup boundary
+
+[Progress](reports/phase25d2-setup-progress.md):RAM initially passed,empty isolated3.11 environment created;official dependency constraints require3.12. Resolution failed,no installs;nextRAM gate7.856GiB stopped before3.12 acquisition. Preserve D: cache/ledger44.40MB charged;model0,smoke unrun. Resume after RAM gate with corrected interpreter,never reset budgets.

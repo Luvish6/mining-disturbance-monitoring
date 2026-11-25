@@ -1,0 +1,19 @@
+# Phase25D.2 resumed setup — partial, stopped safely
+
+2026-11-25;from4083b13,on`phase25-minechange-india`. This records genuine setup progress,not a repeated initial-RAM stop. Original stop report and all experiments remain preserved. [Measured progress](phase25d2-setup-progress.json).
+
+Initial gates passed:RAM8.089GiB,freeVRAM7,956MiB,C26.38GiB/D306.94GiB;backup inventory,stable Git refs,frozen plans/dataset-manifest and no-active-acquisition checks passed. The heavy setup entry recheckedRAM8.008GiB. No TEST payload was read.
+
+One empty environment was created at`D:/ResearchEnvironments/minechange-india-gpu-v1` from existing Python3.11.8. No dependency package was installed;the existing project `.venv` is unchanged. Package/source/resolver caches and retained logs are under`D:/ResearchEnvironments/minechange-india-gpu-v1-cache`.
+
+Official sources:[TerraTorch PyPI metadata](https://pypi.org/pypi/terratorch/1.2.14/json),[TorchGeo0.10 metadata](https://pypi.org/pypi/torchgeo/0.10.1/json),[PyTorch CUDA12.8 wheel index](https://download.pytorch.org/whl/cu128/torch/),[torchvision index](https://download.pytorch.org/whl/cu128/torchvision/). Proposed pins are torch2.11.0+cu128,torchvision0.26.0+cu128,TerraTorch1.2.14. Published Windows CPython3.12 wheel hashes are in the JSON;they are expected metadata hashes,not locally downloaded CUDA-wheel verification.
+
+**Resolver blocker:**TerraTorch1.2.14 requires TorchGeo≥0.10,<0.11;official metadata requires Python≥3.12. Existing scoped interpreters are3.11/3.13;the selected3.11 bootstrap cannot resolve this set. No compatible lock was created and no model/API compatibility is claimed. Python3.12 acquisition was prepared on D: using uv's official managed-runtime mirror with checksum verification,no-bin/no-registry,but **did not execute**:the next RAM gate measured7.856GiB<8GiB. Work stopped immediately at that gate.
+
+Transfers:151 completed HTTP attempts,41,929,290 dependency response-body bytes;44,403,274 conservatively charged bytes including16KiB/header allowance per attempt,below12GiB. This is an HTTP-body/allowance counter,not a TLS-wire measurement. Published wheel hashes,allowlist,verified-cache reuse,no automatic adapter retries and stop-before-cap checks are implemented. All upstream resolver traffic used the loopback metered proxy;it is stopped. Model transfers0 bytes;no Tiny checkpoint downloaded or loaded. Prior expected Tiny size211,873,402/SHA256e56ea9ebcd4451078b9ca4893d5cd8a89bbee376ae16829c3e7fbbbc76de0eba remains unverified locally.
+
+GPU smoke,shape/normalization/mask/gradient tests and peak process/CUDA memory are **NOT RUN / NOT MEASURED**,not passing or zero. No training,GEE,architecture fallback,dataset alteration,system-setting change or public release occurred.
+
+Four focused offline synthetic tests passed for cache/hash reuse,budget-before-body rejection,host/redirect accounting and RAM preventing any bootstrap transfer. No full-suite rerun. Staged publication/privacy audit passed;all environments,package archives,logs and source metadata remain private on D:.
+
+**Smallest correction on resume:**free≥8GiB RAM with headroom,then use Python3.12 on D: as required by the actual metadata. Preserve the empty3.11 bootstrap as an audit artifact rather than installing into it;recreate the active isolated environment with3.12. The setup command fails closed on a non3.12 active environment. Reuse the same ledger/cache and remaining budgets;do not reset counters. uv-managed acquisition must retain no-bin/no-registry and official-source hash verification. No architecture or source substitution is proposed. After successful package resolution/install,recheck RAM/disk/VRAM before the pinned checkpoint and sole≤5-minute synthetic smoke. Existing12GiB/250MB and6GiB process/CUDA limits remain. Stop after this partial25D.2;research training is not authorized.
