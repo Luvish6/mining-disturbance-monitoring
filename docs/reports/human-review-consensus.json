@@ -1,0 +1,120 @@
+{
+  "admitted_negative_labels": 0,
+  "admitted_positive_labels": 0,
+  "agreement_fraction": 0.5172413793103449,
+  "agreement_pairs": 15,
+  "categories": [
+    "YES",
+    "NO",
+    "UNCERTAIN"
+  ],
+  "cohens_kappa": 0.25641025641025644,
+  "complete_disturbance_pairs": 29,
+  "confusion_matrix_rows_A_columns_B": [
+    [
+      10,
+      1,
+      1
+    ],
+    [
+      1,
+      4,
+      2
+    ],
+    [
+      5,
+      4,
+      1
+    ]
+  ],
+  "consensus_counts": {
+    "CONFLICTING": 14,
+    "CONSENSUS_DISTURBANCE": 10,
+    "CONSENSUS_NO_DISTURBANCE": 4,
+    "CONSENSUS_UNCERTAIN": 1,
+    "INCOMPLETE": 1
+  },
+  "disagreement_pairs": 14,
+  "distributions": {
+    "A": {
+      "change_type": {
+        "agriculture": 4,
+        "exposed_soil": 7,
+        "unclear": 16,
+        "vegetation_removal": 3
+      },
+      "image_quality": {
+        "LIMITED": 25,
+        "UNUSABLE": 5
+      },
+      "reviewer_confidence": {
+        "LOW": 10,
+        "MEDIUM": 20
+      },
+      "visible_disturbance": {
+        "MISSING": 1,
+        "NO": 7,
+        "UNCERTAIN": 10,
+        "YES": 12
+      }
+    },
+    "B": {
+      "change_type": {
+        "construction": 2,
+        "excavation_like": 4,
+        "exposed_soil": 4,
+        "other": 7,
+        "unclear": 2,
+        "vegetation_removal": 11
+      },
+      "image_quality": {
+        "GOOD": 8,
+        "LIMITED": 17,
+        "UNUSABLE": 5
+      },
+      "reviewer_confidence": {
+        "HIGH": 9,
+        "LOW": 5,
+        "MEDIUM": 16
+      },
+      "visible_disturbance": {
+        "NO": 9,
+        "UNCERTAIN": 4,
+        "YES": 17
+      }
+    }
+  },
+  "excavation_like_ids": [
+    "R0442ACAF",
+    "R4E2CCBF3",
+    "R6947EBA0",
+    "RB9952572"
+  ],
+  "expected_chance_agreement": 0.3507728894173603,
+  "fully_complete_pairs": 29,
+  "incomplete_ids": [
+    "RE2F35EF0"
+  ],
+  "independent_reviewer_identity_status": "UNCONFIRMED; submitted A/B are pseudonyms",
+  "interpretation": "Visible-disturbance agreement only; not mining accuracy or independent reference truth",
+  "kappa_definition": "Unweighted three-category complete-disturbance-pair kappa; neither reviewer is ground truth",
+  "matched_ids": 30,
+  "operational_alerts": 0,
+  "priority_ids": [
+    "R0442ACAF",
+    "R0A099D23",
+    "R2C582A69",
+    "R6947EBA0",
+    "RB9952572"
+  ],
+  "reviewed_block_counts": {
+    "train": 10,
+    "validation": 3
+  },
+  "unusable_by_either": 9,
+  "original_sha256": {
+    "A": "e3c401c5cf28f996df869723319f482b9f8ab1ec25071cd0bbe578a42c75a317",
+    "B": "04366c617776f02547208bafd52dfd3cc4e15717d2e21da8e299368b6d2542b7"
+  },
+  "focused_tests_passed": 13
+}

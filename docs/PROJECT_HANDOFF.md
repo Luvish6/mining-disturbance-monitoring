@@ -165,3 +165,7 @@ Pinned Tiny211,873,402bytes/SHAe56ea9eb… verified. Official HF CDN authenticat
 ## Phase25D.2 approved RAM-verification rerun passed (2026-11-25)
 
 One additional offline synthetic run completed,43.366s. Corrected watchdog independently tracked actual worker3144/launcher22640; conservative process-tree peak1.731GiB, CUDA allocated38.96MiB/reserved44MiB.363samples/0.1s requested interval; max gap0.127097s. Functional checks and loss exactly match prior run. No downloads, package changes, optimizer steps, dataset or TEST payload access; ledger unchanged.22focused tests pass. Prior failure/caveat preserved; [new report and measurement limitations](reports/phase25d2-ram-verification.md). Synthetic25D.2 gate completed under sampled working-set accounting; no research training authorized. Stop here.
+
+## Completed30-item blinded review integration (2026-11-25)
+
+Private originals and ID-joined outputs: outputs/phase25/experiments/human-review-integration-v1/.30matched IDs,29complete pairs:10YES/YES,4NO/NO,1UNCERTAIN/UNCERTAIN,14disagreements,1missing response(A,RE2F35EF0). Kappa0.256410; five priority disturbance-review items, four excavation-like flags. Zero admitted positive/negative labels: shared-Sentinel evidence, UNKNOWN attribution, unconfirmed A/B identities and missing independent positional/paired/polygon evidence remain blockers. Existing strict importer/admission unchanged; new intake is analysis-only.13focused tests pass. [Report](reports/human-review-integration.md). No training or TEST access.
