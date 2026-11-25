@@ -54,7 +54,8 @@ def export():
 
 
 def experimental_files(root):
-    cache=Path(root)/CACHE
+    new=Path(root)/'outputs/phase25/experiments/25e4-portal-v2'
+    cache=new if new.exists() else Path(root)/CACHE
     if not (cache/'integrity.json').is_file():return {}
     receipt=json.loads((cache/'integrity.json').read_bytes());files={}
     for name,digest in receipt.items():
