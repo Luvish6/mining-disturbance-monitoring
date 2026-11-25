@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-25",
+  "status": "VERIFIED",
+  "stable_commit": "08604dea4fe39641ea32ebda8a37532669b52933",
+  "stable_tag": "pre-minechange-india",
+  "preserved_branch": "phase22-label-sources",
+  "preserved_branch_commit": "d0b6dd1ac7c6771f3bfccf11c4353cf1a77b7574",
+  "development_branch": "phase25-minechange-india",
+  "files": 72005,
+  "directories": 9106,
+  "bytes": 7918850848,
+  "manifest_sha256": "fac35b9b16303fdb2cb375af76f3dbba872e4c16c2b1cf30be5cda4b900de7c4",
+  "inventory_sha256": "ebebe613a92f3bee3f2da351de7f41a86ff21ba95148c8ea28d303d978012d28",
+  "missing_files": 0,
+  "checksum_mismatches": 0,
+  "source_mutation_check": "PASS",
+  "elapsed_seconds": 433.62,
+  "git_object_checks": "source and copied stores passed; private bundle verified",
+  "backup_storage": "Private D: local volume, outside repository and OneDrive; same physical disk as C:",
+  "test_handling": "Opaque byte copy/hash only; no decoding, label inspection, evaluation or modification",
+  "scope": "Complete project parent including raw archives, .git, ignored outputs/data/results, outreach drafts and environments",
+  "experimental_work": "NOT STARTED"
+}

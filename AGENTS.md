@@ -19,4 +19,13 @@ Research constraints: seasons `[2023-11-01,2024-04-01)` and `[2024-11-01,2025-04
 
 Use the existing local virtual environment when available (may be outside checkout); never publish machine-specific location/secrets. Fresh clones use README setup. Documentation-only changes normally need publication/link/schema review rather than retraining tests, unless the user requires full tests. Hooks are tracked but fresh clones must install them with `git config core.hooksPath .githooks`; never bypass them. AGENTS.md gives future sessions durable instructions; it is not a background scheduler or an auth grant.
 
-**Start every session by reading [docs/PROJECT_HANDOFF.md](docs/PROJECT_HANDOFF.md)** (current state, pending work, rules, locations). Current working branch: `phase22-label-sources`.
+**Start every session by reading [docs/PROJECT_HANDOFF.md](docs/PROJECT_HANDOFF.md)** (current state, pending work, rules, locations). Preserved historical branch: `phase22-label-sources`. Phase 25 development branch: `phase25-minechange-india`.
+
+## Mandatory Phase 25 isolation and rollback
+
+- Work on Phase 25 only on `phase25-minechange-india`. Preserve `phase22-label-sources`; no merge to it or main without explicit user approval.
+- Stable tag `pre-minechange-india` resolves to `08604dea4fe39641ea32ebda8a37532669b52933`; never retarget/delete it or rewrite history.
+- Before experimental work, require the verified private backup described in [the safeguard report](docs/reports/phase25-backup-rollback.md). If its integrity cannot be established, stop before functionality changes.
+- Store new datasets/models/results under new versioned run directories in `outputs/phase25/{datasets,models,experiments,receipts,qa}/`. Fail on existing artifact targets; never overwrite historical imagery, labels, checkpoints, normalization or results.
+- Keep backup payloads, per-file inventories, credentials, restricted imagery and private reports local. Frozen TEST remains sealed; backup byte copying/hashing does not authorize scientific access.
+- Phase 25A is complete. The backup task does not authorize 25B acquisition, model training, publication or later phases. Retain the user's phase-boundary approval gates.

@@ -10,9 +10,13 @@ The project's rules for agents are in [AGENTS.md](../AGENTS.md). The numbers beh
 - **Primary study.** East and West Jaintia Hills, Meghalaya, on the Lukha and Myntdu rivers.
 - **Secondary layer.** India-wide discovery leads.
 - **Repository.** GitHub `Luvish6/mining-disturbance-monitoring`.
-  - The working branch is **`phase22-label-sources`**, and all work up to Phase 24 is pushed there.
+  - The preserved branch is **`phase22-label-sources`**. All Phase 25 development must use **`phase25-minechange-india`**; do not merge back without approval.
   - `main` is the intended publication branch. Do not merge into it without the user's say-so.
 - **Goal.** A working dashboard, a complete pipeline and a publishable paper. Drafts are [docs/paper-draft.md](paper-draft.md) and the IEEE LaTeX version in [docs/paper/ieee-paper.tex](paper/ieee-paper.tex).
+
+## Verified rollback safeguard — 2026-11-25
+
+Stable tag `pre-minechange-india` points to `08604dea4fe39641ea32ebda8a37532669b52933` and is pushed. A private full-parent backup on D: verified 72,005 files / 7,918,850,848 bytes with zero mismatches or missing files. See [rollback commands and limitations](reports/phase25-backup-rollback.md). D: shares the physical disk with C:, so off-device protection is still recommended. New outputs belong under `outputs/phase25/` in unique run directories; no overwrites. Active development branch is `phase25-minechange-india`, while `phase22-label-sources` remains at d0b6dd1. Phase 25B remains unstarted.
 
 ## Phase 25 extension — 2026-11-25
 
