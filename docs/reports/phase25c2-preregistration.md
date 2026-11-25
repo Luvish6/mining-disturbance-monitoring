@@ -1,0 +1,20 @@
+# Phase25C.2 execution preregistration — 2026-11-25
+
+User authorized one bounded context-recovery session and private expansion fromea25bb7. This overlays execution permission only; the immutable25C.1 contract remains byte-identical, including its historical authorized=false field. No research fitting, TEST payload access, new locations, source substitution or public release is authorized.
+
+- Frozen private plan SHA256:`e2fa7d831421bae8bd338060193f6104b66ec25524dec5417fd8abfc0e363d84`.
+- Frozen acquisition contract SHA256:`b10e1f803bf38f5471c796a906e5e3947e820a297a3d434e0efdae7376c8a98f`.
+- Frozen rule/config SHA256:`f59a7d08541103f33fb28d8da7815ed13c1e3d1ee41dd3a4b9a9a9a58ac89186`.
+- All20 original development AOIs,17 TRAIN/3 VAL;80 planned32×32 crops on the existing30m EPSG32646 lattice, no filtering/replacements by outcomes. Keep prior25C separate and unchanged.
+- QA precedes requests. Structural/hash/grid/guard failures stop the run. Apply the original thresholds without fitting: all4 prior pseudo masks must reproduce bit-for-bit. Retain unknown/NoData and all validly structured AOIs regardless of class support.
+- Offline QA passed all20: TRAIN20,329 potential stable /84 potential disturbance /49,219 uncertain; VAL3,057 /84 /9,147. These are retrospective shared-source pseudo states, not independently reviewed mining labels. Outcome counts do not alter the frozen roster or acquisition priorities.
+- Acquire only seven context bands for17 missing AOIs: elevation,WorldCover,two CHIRPS totals,two daily-count diagnostics,JRC occurrence. Reuse existing verified context for3 TRAIN AOIs. Capture current before/after/follow-up scene metadata in10 bounded chunks; never certify it as original cache membership.
+- Follow the existing priority order. The first new TIFF is the smoke test; validate64×64×7,CRS,affine,band-order graph provenance,NoData and counts before subsequent downloads. On any mismatch stop without replacements. Fire/roads/geology/mining context remain missing.
+- One persistent global acquisition lock and new versioned phase-session ledger; the prior25B.1 ledger is preserved, not reset. Meter all auth/discovery/metadata/RPC/body attempts, including failures/retries, through the existing allowlist transport. No automatic adapter retries or redirects. Hard limits60 attempts/100,000,000 response-body bytes; reserve2MB per response and retain pending reservations after interruption. Stop before caps. No new acquisition session or expanded budget is permitted.
+- Source/script/transport/plan/QA fingerprints bind resumability. Completed TIFFs and metadata are skipped only after hash and grid checks. Partial failure is preserved and reported. A complete resume requires no new authentication.
+- Context uses original native support: SRTM~30m/2000; WorldCover10m/2021; CHIRPS0.05degree; JRC30m/1984–2021. Nearest sampling on30m grid is not additional information. Missing occurrence/quality is never zero absence. Preserve source citations and private-only rights status.
+- Private targets:`outputs/phase25/qa/25c2-offline-v1/`, `outputs/phase25/datasets/25c2-acquisition-v1/`, `outputs/phase25/datasets/25c2-v1/`. Never overwrite original sources or25C. Source hashes, scene overlap, patch identities, masks, signed arithmetic and prior artifacts are checked. Mining attribution UNKNOWN; admitted references0; operational alerts0.
+
+Implementation:`scripts/phase25c2_expand.py --qa|--acquire|--build --backup <verified-private-backup>`. The shared25C crop writer is reused; no new scientific preprocessing or thresholds are introduced.23 focused tests passed before execution. Full offline regression passed411 tests in58.24s. Publication/privacy audit must pass before this preregistration commit. Stop after25C.2.
+
+Frozen offline-QA receipt SHA256:`9ba9f0076b609a94a1ba3c3d183f7ea873e970b61ed05b29d7fb2f541748aa30`. Backup verification covered80 selected development payload/metadata files; original protected datasets/reviewer sheets remain unchanged.

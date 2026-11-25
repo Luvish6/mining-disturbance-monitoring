@@ -150,15 +150,23 @@ def run(backup):
         parents.append(dict(key=key,grid=grid,values=values,features=features,valid=valid,counts=counts,states=states,
             receipt=receipt,context=context_receipt,sources=sources,meta=meta))
     spatial_check(patches)
-    OUTPUT.mkdir(parents=True,exist_ok=False);(OUTPUT/'patches').mkdir();(OUTPUT/'provenance').mkdir();(OUTPUT/'examples').mkdir()
-    save(OUTPUT/'schema.json',schema(cfg))
+    package(parents,patches,cfg,source_hashes,backup_checks,out=OUTPUT,version='25c-v1',start=start,cpu=cpu)
+
+def package(parents,patches,cfg,source_hashes,backup_checks,*,out,version,start,cpu,traffic=None,
+            context_note='VAL has no acquired B1 context; never copied from TRAIN'):
+    """Shared crop-only writer; refuses existing targets and never fits a model."""
+    traffic=traffic or {}
+    if out.exists():raise ValueError('Existing dataset target; no overwrite')
+    out.mkdir(parents=True,exist_ok=False);(out/'patches').mkdir();(out/'provenance').mkdir();(out/'examples').mkdir()
+    contract=schema(cfg);contract['version']=version
+    save(out/'schema.json',contract)
     for parent in parents:
-        key=parent['key'];save(OUTPUT/'provenance'/(key.replace(':','_')+'.json'),dict(original=parent['receipt'],context=parent['context'],historical_inputs=parent['sources'],
+        key=parent['key'];save(out/'provenance'/(key.replace(':','_')+'.json'),dict(original=parent['receipt'],context=parent['context'],historical_inputs=parent['sources'],
             original_scene_status='INCOMPLETE',follow_up='INCOMPLETE original item IDs/dates; count is retrospective QA only',
-            no_reference_admission=True,context_absence='VAL has no acquired B1 context; never copied from TRAIN'))
-        plot_example(OUTPUT/'examples'/(key.replace(':','_')+'.png'),key,parent['grid'],parent['values'],parent['states'])
+            no_reference_admission=True,context_absence=context_note))
+        plot_example(out/'examples'/(key.replace(':','_')+'.png'),key,parent['grid'],parent['values'],parent['states'])
         for row in [r for r in patches if r['group_id']==key]:
-            folder=OUTPUT/'patches'/row['patch_id'];folder.mkdir();r,c=row['row_offset'],row['col_offset'];sl=np.s_[:,r:r+32,c:c+32]
+            folder=out/'patches'/row['patch_id'];folder.mkdir();r,c=row['row_offset'],row['col_offset'];sl=np.s_[:,r:r+32,c:c+32]
             x=parent['features'][sl];v=parent['valid'][sl];count=parent['counts'][sl];y=parent['states'][r:r+32,c:c+32]
             grid=Grid(row['crs'],tuple(row['affine']),(32,32))
             tif(folder/'features.tif',x,grid,BANDS);tif(folder/'validity.tif',v,grid,BANDS,dtype='uint8',nodata=None)
@@ -171,8 +179,8 @@ def run(backup):
                 for i in range(32):
                     for j in range(32):
                         writer.writerow([key+f':r{r+i}:c{c+j}',row['patch_id'],key,row['split'],*(a*(j+.5,i+.5)),int(y[i,j]),sum(int(v[k,i,j])<<k for k in range(len(BANDS)))]+[float(z) if np.isfinite(z) else '' for z in x[:,i,j]])
-            row['files']={name:(folder/(name+'.tif')).relative_to(OUTPUT).as_posix() for name in ['features','validity','counts','pseudo_states','pseudo_masks']}
-            row['feature_table']=(folder/'features.csv').relative_to(OUTPUT).as_posix()
+            row['files']={name:(folder/(name+'.tif')).relative_to(out).as_posix() for name in ['features','validity','counts','pseudo_states','pseudo_masks']}
+            row['feature_table']=(folder/'features.csv').relative_to(out).as_posix()
             row['provenance']='provenance/'+key.replace(':','_')+'.json'
             row['pseudo_counts']={str(k):int((y==k).sum()) for k in [0,1,255]}
             row['valid_cells']={n:int(v[i].sum()) for i,n in enumerate(BANDS)}
@@ -182,17 +190,17 @@ def run(backup):
         bands=len(BANDS),by_split={s:dict(patches=sum(r['split']==s for r in patches),groups=len({r['group_id'] for r in patches if r['split']==s}),
           pseudo_counts={str(k):sum(r['pseudo_counts'][str(k)] for r in patches if r['split']==s) for k in [0,1,255]}) for s in ['train','validation']},
         source_hashes=source_hashes,backup_sources_verified=len(backup_checks),backup_manifest_sha256=MANIFEST_SHA,
-        operational_alerts=0,verified_reference_labels=0,requests=0,downloads=0,training_runs=0,
+        operational_alerts=0,verified_reference_labels=0,requests=traffic.get('requests',0),downloads=traffic.get('raster_downloads',0),traffic=traffic,training_runs=0,
         test='SEALED; only protected geometry metadata used',release='NO-GO',runtime_wall_seconds=time.perf_counter()-start,cpu_seconds=time.process_time()-cpu,
-        output_bytes_before_manifest=sum(p.stat().st_size for p in OUTPUT.rglob('*') if p.is_file()))
-    save(OUTPUT/'summary.json',summary)
-    artifacts={p.relative_to(OUTPUT).as_posix():digest(p) for p in OUTPUT.rglob('*') if p.is_file()}
-    manifest=dict(schema=SCHEMA,version='25c-v1',bands=BANDS,label_semantics=LABELS,verified_reference_labels=0,
+        output_bytes_before_manifest=sum(p.stat().st_size for p in out.rglob('*') if p.is_file()))
+    save(out/'summary.json',summary)
+    artifacts={p.relative_to(out).as_posix():digest(p) for p in out.rglob('*') if p.is_file()}
+    manifest=dict(schema=SCHEMA,version=version,bands=BANDS,label_semantics=LABELS,verified_reference_labels=0,
         patches=patches,artifacts=artifacts,source_hashes=source_hashes,rule_config_sha256=digest(CONFIG),original_plan_sha256=digest(PLAN),
         follow_policy='retrospective annotation evidence, excluded from model features',release='NO-GO',normalization='NONE FITTED; native units preserved')
-    save(OUTPUT/'manifest.json',manifest);(OUTPUT/'manifest.sha256').write_text(digest(OUTPUT/'manifest.json')+'\n',encoding='utf-8')
-    load_manifest(OUTPUT)
-    for row in patches:read_patch(OUTPUT,row['patch_id'],allow_pseudo=True)
+    save(out/'manifest.json',manifest);(out/'manifest.sha256').write_text(digest(out/'manifest.json')+'\n',encoding='utf-8')
+    load_manifest(out)
+    for row in patches:read_patch(out,row['patch_id'],allow_pseudo=True)
     for path,h in source_hashes.items():
         if digest(path)!=h:raise ValueError('Source changed during packaging')
     print(json.dumps({k:v for k,v in summary.items() if k!='source_hashes'}))
