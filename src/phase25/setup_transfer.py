@@ -38,14 +38,14 @@ class Transfers:
             original=url
             for hop in range(6):
                 host=urlsplit(url).hostname
-                if urlsplit(url).scheme!='https' or host not in HOSTS:raise ValueError('Unapproved source host')
+                if urlsplit(url).scheme!='https' or (host not in HOSTS and not (kind=='model' and host=='us.aws.cdn.hf.co')):raise ValueError('Unapproved source host')
                 if self.used(kind)+16384>CAPS[kind]:raise RuntimeError('Transfer cap before request')
                 row=dict(kind=kind,host=host,key=key,state='PENDING',received=0,charged=16384)
                 self.rows.append(row);self.persist()
                 response=self.session.get(url,headers={'Accept-Encoding':'identity'},stream=True,allow_redirects=False,timeout=(20,120))
                 row['status']=response.status_code
                 if response.status_code in (301,302,303,307,308):
-                    row['state']='REDIRECT';self.persist();url=response.headers['Location'];response.close();continue
+                    row['state']='REDIRECT';row['redirect_host']=urlsplit(response.headers['Location']).hostname;self.persist();url=response.headers['Location'];response.close();continue
                 response.raise_for_status()
                 length=response.headers.get('Content-Length')
                 if length is None:response.close();raise RuntimeError('Known response size required')

@@ -108,3 +108,39 @@ def test_local_wheel_head_never_fetches_network(tmp_path,monkeypatch):
         assert r.status_code==200 and int(r.headers['Content-Length'])==7 and not r.content
         assert not errors and not t.rows
     finally:server.shutdown();server.server_close()
+
+
+def test_official_cdn_model_only_and_redirect_hostname_receipt(tmp_path,monkeypatch):
+    monkeypatch.setattr(transfer,'ROOT',tmp_path)
+    t=transfer.Transfers();t.session=Session(Response())
+    with pytest.raises(ValueError,match='Unapproved'):t.get('https://us.aws.cdn.hf.co/checkpoint')
+    h=hashlib.sha256(b'abc').hexdigest()
+    assert t.get('https://us.aws.cdn.hf.co/checkpoint',kind='model',expected=h).read_bytes()==b'abc'
+    assert t.used('model')==16387
+    t2=transfer.Transfers();t2.session=Session(Response(status=302,location='https://blocked.invalid/path?secret=never-persist'))
+    with pytest.raises(ValueError):t2.get('https://huggingface.co/frozen',kind='model')
+    assert t2.rows[-1]['redirect_host']=='blocked.invalid'
+    assert 'never-persist' not in t2.path.read_text()
+
+
+def test_smoke_checkpoint_size_and_hash_fail_closed(tmp_path,monkeypatch):
+    import scripts.phase25d2_smoke as smoke
+    p=tmp_path/'fake.pt';p.write_bytes(b'abc')
+    with pytest.raises(ValueError,match='size'):smoke.verify_checkpoint(p)
+    monkeypatch.setattr(smoke,'SIZE',3)
+    with pytest.raises(ValueError,match='SHA'):smoke.verify_checkpoint(p)
+    monkeypatch.setattr(smoke,'SHA',hashlib.sha256(b'abc').hexdigest())
+    smoke.verify_checkpoint(p)
+
+
+def test_smoke_ram_monitor_includes_windows_launcher_child():
+    from types import SimpleNamespace
+    from scripts.phase25d2_smoke import process_tree_memory
+    class Process:
+        def __init__(self,rss,peak,descendants=()):self.info=SimpleNamespace(rss=rss,peak_wset=peak);self.descendants=descendants
+        def memory_info(self):return self.info
+        def children(self,recursive):assert recursive;return list(self.descendants)
+    worker=Process(5*2**30,7*2**30)
+    launcher=Process(4*2**20,5*2**20,[worker])
+    assert process_tree_memory(launcher)==7*2**30+5*2**20
+    assert process_tree_memory(launcher)>6*2**30

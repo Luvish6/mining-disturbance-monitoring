@@ -1,0 +1,68 @@
+{
+  "result": {
+    "status": "PASS_SYNTHETIC_ONLY",
+    "checkpoint_sha256": "e56ea9ebcd4451078b9ca4893d5cd8a89bbee376ae16829c3e7fbbbc76de0eba",
+    "checkpoint_bytes": 211873402,
+    "input_shape": [
+      1,
+      5,
+      32,
+      32
+    ],
+    "modalities": {
+      "S2L2A": [
+        "BLUE",
+        "GREEN",
+        "RED"
+      ],
+      "S1GRD": [
+        "VV",
+        "VH"
+      ]
+    },
+    "feature_shape": [
+      1,
+      4,
+      192
+    ],
+    "feature_layers": 12,
+    "output_shape": [
+      1,
+      1,
+      32,
+      32
+    ],
+    "masked_valid_cells": 768,
+    "normalization_once": true,
+    "nonfinite_fill_equivalence": true,
+    "ignored_logit_gradient_zero": true,
+    "encoder_frozen": true,
+    "head_backward_finite": true,
+    "optimizer_steps": 0,
+    "loss": 0.6502230167388916,
+    "cuda_peak_allocated": 40852480,
+    "cuda_peak_reserved": 46137344,
+    "ignored_checkpoint_keys": 154,
+    "ignored_checkpoint_prefixes": [
+      "decoder",
+      "decoder_embeddings",
+      "decoder_norm",
+      "decoder_proj_context",
+      "encoder_embeddings",
+      "mask_token"
+    ],
+    "mask_limitation": "Computational fill and loss exclusion; encoder has no explicit spatial attention mask. This does not prove invalid tokens cannot affect valid embeddings.",
+    "spatial_limitation": "Native32x32 at30m; checkpoint pretraining spatial-domain shift remains. Output head interpolates logits only.",
+    "research_training": false,
+    "test_access": false
+  },
+  "wall_seconds": 102.18955280000046,
+  "process_ram_certification": "BLOCKED: launcher-only original monitor; worker peak unmeasured",
+  "corrected_watchdog_unit_tested": true,
+  "smoke_runs": 1,
+  "dependency_charged_bytes": 3138453534,
+  "model_charged_bytes": 211938938,
+  "checkpoint_body_bytes": 211873402,
+  "focused_tests_passed": 21,
+  "training_authorized": false
+}

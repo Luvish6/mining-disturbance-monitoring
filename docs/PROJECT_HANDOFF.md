@@ -157,3 +157,7 @@ Existing Python3.12.10 venv now has the hash-locked CUDA torch2.11.0+cu128/torch
 ## Phase25D.2 CUDA verified; checkpoint redirect stop (2026-11-25)
 
 Without package changes, torch confirmed CUDA12.8 available on RTX4060; locked distribution versions match. Pinned checkpoint request returned302 to an unapproved host; stopped before redirected request/body. Model charge16,384bytes/body0; no smoke ran. Need audited delivery-host handling before retry; preserve counters and pinned hash. [Evidence and next correction](reports/phase25d2-cuda-verified-download-stop.md).
+
+## Phase25D.2 one functional smoke completed; RAM certification unresolved (2026-11-25)
+
+Pinned Tiny211,873,402bytes/SHAe56ea9eb… verified. Official HF CDN authenticated and model-only allowlisted. One native32x32 paired synthetic CUDA smoke passed shapes/normalization/masked loss/frozen gradients in102.190s; CUDA reserved44MiB. Original watchdog sampled Windows launcher only, so worker RAM peak is UNVERIFIED. Corrected recursive-tree accounting and21focused tests pass; no rerun. Exactly one smoke consumed. Need approval for one download-free resource-verification rerun before full25D.2 certification. No training. [Report](reports/phase25d2-synthetic-smoke.md). Model charge211,938,938bytes; dependency charge3,138,453,534bytes. Preserve existing environment/checkpoint/ledgers and all data.
