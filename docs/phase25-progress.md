@@ -4,7 +4,7 @@
 |---|---|---|
 | 25A | Complete: focused implementation inventory, verified literature, model/input/rights and hardware feasibility | [Report](reports/phase25a-feasibility.md), [evidence](reports/phase25a-evidence.json); 35 offline tests passed |
 | 25B | COMPLETE, cached-only engineering | [Report](reports/phase25b-cached-features.md); four development AOIs, 36 potential-disturbance cells; eight unavailable layer families; no reference labels or accuracy |
-| 25C | NOT STARTED | Requires eligible unique patches, source rights, provenance and separate pseudo/reference manifests |
+| 25C | COMPLETE: private offline pilot | [Report](reports/phase25c-private-pilot.md);16 patches,29 slots, preserved pseudo states; no admitted references or release |
 | 25D | NOT STARTED | U-Net/modern comparison requires data and approved isolated TerraMind smoke test; no historical RF deletion |
 | 25E | NOT STARTED | Preserve existing portal; analyzer changes await approval |
 | 25F | NOT STARTED | No public dataset, DOI reservation or upload authorized |
@@ -23,3 +23,7 @@ User authorized cached-only work after safeguards. Essential backup recheck pass
 ## Phase 25B.1 boundary
 
 The separately authorized, preregistered recovery pilot is complete: [report](reports/phase25b1-recovery.md). Three existing TRAIN AOIs, 14 metered HTTP requests / 1,069,012 body bytes. Elevation/land-cover/rainfall added; sparse JRC support, no qualified fire support and OSM HTTP406 remain explicit. Current query scene IDs recovered without rewriting legacy provenance. Old pseudo-states unchanged. Stop before further acquisition or 25C; independent supervised training and public release remain NO-GO.
+
+## Phase25C boundary
+
+User-authorized offline packaging completed from5b360da. Four guarded parent AOIs produced12 TRAIN /4 VAL non-overlapping crops,52 source hashes rechecked unchanged, zero TEST payload access or acquisition. Labels remain retrospective shared-source pseudo states. VAL has no potential-disturbance support; independent Indian training and release remain NO-GO. Stop after the private pilot; no25D or training authorization.

@@ -30,6 +30,10 @@ Phase 25A feasibility is complete; see [the focused report](reports/phase25a-fea
 
 [Report](reports/phase25b1-recovery.md), [committed preregistration](reports/phase25b1-preregistration.json), `scripts/phase25b1_recover.py` and `src/phase25/acquisition.py`: one locked pilot completed on the same three TRAIN AOIs. 14 requests / 1,069,012 response-body bytes. SRTM, WorldCover and CHIRPS cover all 4,096 cells per AOI; JRC covers only 110 cells in one AOI. Fire has no complete seasonal support; OSM returned HTTP 406, roads remain missing. Current queries recover 24 unique S1 and 214 S2 IDs, corroborated by legacy timestamp/count metadata but not certified as original cache source identities. All four prior pseudo-state hashes remain unchanged; no recalibration, labels, training or TEST payload access. Private outputs: `outputs/phase25/datasets/25b1-v1/`. **This task's bounded acquisition approval is exhausted; STOP before further acquisition, training, publication or Phase25C.**
 
+## Phase 25C private pilot — 2026-11-25
+
+[Report](reports/phase25c-private-pilot.md), [draft card](reports/phase25c-dataset-card.md), `scripts/phase25c_dataset.py` and `src/phase25/dataset.py`:16 non-overlapping32×32 patches /16,384 cells,29 feature slots,12 TRAIN patches from3 blocks and4 VAL patches from1 block. Frozen pseudo counts remain36 potential disturbance /4,837 potentially stable /11,511 uncertain. VAL has zero potential-disturbance cells and no recovered B1 context. Original scene/follow-up provenance remains incomplete. Private outputs: `outputs/phase25/datasets/25c-v1/`; all source hashes unchanged, no requests/training/TEST payload access. Loader requires explicit pseudo opt-in and refuses verified-reference promotion. **Private packaging GO; verified training/evaluation/release NO-GO. STOP after25C; no later phase without approval.**
+
 ## 2. Current state (end of Phase 24, commit after `c38cddb`)
 
 The headline tables are in [docs/reports/final-project-status.md](reports/final-project-status.md). In short:

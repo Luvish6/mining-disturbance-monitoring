@@ -1,0 +1,42 @@
+{
+  "backup_sources_verified": 16,
+  "bands": 29,
+  "buffer_violations": 0,
+  "by_split": {
+    "train": {
+      "groups": 3,
+      "patches": 12,
+      "pseudo_counts": {
+        "0": 3360,
+        "1": 36,
+        "255": 8892
+      }
+    },
+    "validation": {
+      "groups": 1,
+      "patches": 4,
+      "pseudo_counts": {
+        "0": 1477,
+        "1": 0,
+        "255": 2619
+      }
+    }
+  },
+  "cpu_seconds": 6.515625,
+  "cross_split_overlaps": 0,
+  "downloads": 0,
+  "manifest_sha256": "540b2479e062877ac41090dfa7ed04d4deb90e7422f3a8b3583b333766461e08",
+  "operational_alerts": 0,
+  "output_bytes": 10977371,
+  "patches": 16,
+  "pixels": 16384,
+  "release": "NO-GO",
+  "requests": 0,
+  "runtime_wall_seconds": 8.501891600000818,
+  "schema": "minechange-india-private/1",
+  "source_hashes_unchanged": 52,
+  "status": "PRIVATE_PILOT_ENGINEERING_GO_NOT_REFERENCE_DATA",
+  "training_runs": 0,
+  "unique_pixel_ids": 16384,
+  "verified_reference_labels": 0
+}
