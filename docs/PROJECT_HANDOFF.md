@@ -169,3 +169,7 @@ One additional offline synthetic run completed,43.366s. Corrected watchdog indep
 ## Completed30-item blinded review integration (2026-11-25)
 
 Private originals and ID-joined outputs: outputs/phase25/experiments/human-review-integration-v1/.30matched IDs,29complete pairs:10YES/YES,4NO/NO,1UNCERTAIN/UNCERTAIN,14disagreements,1missing response(A,RE2F35EF0). Kappa0.256410; five priority disturbance-review items, four excavation-like flags. Zero admitted positive/negative labels: shared-Sentinel evidence, UNKNOWN attribution, unconfirmed A/B identities and missing independent positional/paired/polygon evidence remain blockers. Existing strict importer/admission unchanged; new intake is analysis-only.13focused tests pass. [Report](reports/human-review-integration.md). No training or TEST access.
+
+## Phase25E.1 multi-layer methodology/cache pilot (2026-11-25)
+
+Added guarded unsubmitted GEE graph composition reusing existing optics/SAR/context code and frozen thresholds; no online execution. One label-blind TRAIN32x32cache patch:1024eligiblecells, evidence-count0/1/2/3=591/391/41/1; existing pseudo-states284stable/0potential-disturbance/740uncertain preserved. Terrain/WorldCover/CHIRPS available, other contextual layers missing. Five human leads remain separate UNKNOWN inspection leads, not references. Requests/downloads/training0;18focused tests pass. [Methodology/limitations](reports/phase25e1-multilayer-methodology.md). Next: independent paired evidence and adjudication, not accuracy claims or new discovery.

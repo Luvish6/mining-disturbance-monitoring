@@ -1,0 +1,159 @@
+{
+  "version": "25e1/1",
+  "base_rule_config": "config/phase25b_v1.json",
+  "base_rule_sha256": "f59a7d08541103f33fb28d8da7815ed13c1e3d1ee41dd3a4b9a9a9a58ac89186",
+  "layers": [
+    {
+      "name": "vegetation_change",
+      "units": "1",
+      "kind": "continuous",
+      "source": "COPERNICUS/S2_SR_HARMONIZED",
+      "dates": "2023-11/2025-03",
+      "native_support": "10m sampled at30m",
+      "rights": "Copernicus attribution",
+      "role": "signal"
+    },
+    {
+      "name": "bare_ground_change",
+      "units": "1",
+      "kind": "continuous",
+      "source": "COPERNICUS/S2_SR_HARMONIZED",
+      "dates": "2023-11/2025-03",
+      "native_support": "10/20m sampled at30m",
+      "rights": "Copernicus attribution",
+      "role": "signal"
+    },
+    {
+      "name": "radar_change",
+      "units": "dB",
+      "kind": "continuous",
+      "source": "COPERNICUS/S1_GRD",
+      "dates": "2023-11/2025-03",
+      "native_support": "SAR support;30m output",
+      "rights": "Copernicus attribution",
+      "role": "signal"
+    },
+    {
+      "name": "slope",
+      "units": "degree",
+      "kind": "continuous",
+      "source": "USGS/SRTMGL1_003",
+      "dates": "2000-02",
+      "native_support": "30m",
+      "rights": "JPL/USGS use policy; cite",
+      "role": "context_only"
+    },
+    {
+      "name": "elevation",
+      "units": "m",
+      "kind": "continuous",
+      "source": "USGS/SRTMGL1_003",
+      "dates": "2000-02",
+      "native_support": "30m",
+      "rights": "JPL/USGS use policy; cite",
+      "role": "context_only"
+    },
+    {
+      "name": "land_cover",
+      "units": "class",
+      "kind": "categorical",
+      "source": "ESA/WorldCover/v200",
+      "dates": "2021",
+      "native_support": "10m",
+      "rights": "CC-BY-4.0",
+      "role": "context_only"
+    },
+    {
+      "name": "geology",
+      "units": "class",
+      "kind": "categorical",
+      "source": "GSI Bhukosh; exact product UNVERIFIED",
+      "dates": "UNVERIFIED",
+      "native_support": "UNVERIFIED",
+      "rights": "REQUIRES PROVIDER CONFIRMATION",
+      "role": "context_only"
+    },
+    {
+      "name": "mining_context",
+      "units": "m",
+      "kind": "continuous",
+      "source": "Maus v2; independently documented locations",
+      "dates": "historical; not change dates",
+      "native_support": "polygon scale/position product-dependent",
+      "rights": "Source/version rights must be checked",
+      "role": "context_only"
+    },
+    {
+      "name": "roads",
+      "units": "m",
+      "kind": "continuous",
+      "source": "OpenStreetMap historical roads",
+      "dates": "timestamped extract required",
+      "native_support": "vector; incomplete positional precision",
+      "rights": "ODbL; attribution/share-alike review",
+      "role": "context_only"
+    },
+    {
+      "name": "rainfall",
+      "units": "mm",
+      "kind": "continuous",
+      "source": "UCSB-CHG/CHIRPS/DAILY",
+      "dates": "matched seasonal/antecedent dates required",
+      "native_support": "0.05 degree (~5.6km)",
+      "rights": "Public domain; cite",
+      "role": "context_only"
+    },
+    {
+      "name": "surface_water",
+      "units": "percent",
+      "kind": "continuous",
+      "source": "JRC/GSW1_4/GlobalSurfaceWater",
+      "dates": "1984-2021",
+      "native_support": "30m",
+      "rights": "Copernicus; EC JRC/Google attribution",
+      "role": "context_only"
+    },
+    {
+      "name": "fire_history",
+      "units": "class",
+      "kind": "categorical",
+      "source": "MODIS/061/MCD64A1",
+      "dates": "monthly; match exact dates",
+      "native_support": "500m",
+      "rights": "LP DAAC MODIS unrestricted use; cite",
+      "role": "context_only"
+    }
+  ],
+  "rules_unchanged": true,
+  "score": {
+    "conditions": [
+      "dNDVI <= -0.30",
+      "dBSI > +0.10",
+      "dVV <=0 dB AND dVH <=0 dB"
+    ],
+    "range": [
+      0,
+      3
+    ],
+    "missing": "NaN if common optical/SAR/count/land/terrain support fails; never turn missing signals into zero evidence",
+    "interpretation": "Equal condition count for transparent diagnostics, not calibrated probability or attribution; correlated indicators not independent votes",
+    "persistence": "Separate preserved retrospective pseudo-state annotation; never infer missing follow-up bands"
+  },
+  "evidence_namespaces": [
+    "independently_verified_reference",
+    "human_visible_disturbance_review",
+    "algorithm_retrospective_pseudo_state",
+    "algorithm_evidence_count"
+  ],
+  "gee": {
+    "builder": "src.phase25.methodology.build_graph_bundle",
+    "execution": "NOT_RUN; lazy graphs reuse original Phase22L/Phase2/Phase25B.1 builders",
+    "grid": "EPSG:32646;30m north-up global lattice; explicit frozen affine required for any later export",
+    "orbit": 77,
+    "orbit_pass": "DESCENDING",
+    "min_observations": 2,
+    "request_cap_for_this_cached_pilot": 0
+  },
+  "supervised_training": "NO-GO",
+  "operational_alerts": 0
+}

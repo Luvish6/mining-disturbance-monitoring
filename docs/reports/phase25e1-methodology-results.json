@@ -1,0 +1,104 @@
+{
+  "alternative_explanations": {
+    "agriculture_context_cells": 0,
+    "built_up_context_cells": 0,
+    "interpretation": "Historical land-cover/terrain flags suggest review questions only; agriculture, forestry, road works, construction, landslides, erosion and artifacts remain alternatives.",
+    "roads_status": "MISSING",
+    "steep_terrain_context_cells": 0
+  },
+  "contexts": {
+    "elevation": {
+      "maximum": 617.0,
+      "minimum": 456.0,
+      "status": "AVAILABLE_CONTEXT_ONLY",
+      "valid_cells": 1024
+    },
+    "fire_history": {
+      "maximum": null,
+      "minimum": null,
+      "status": "MISSING",
+      "valid_cells": 0
+    },
+    "geology": {
+      "maximum": null,
+      "minimum": null,
+      "status": "MISSING",
+      "valid_cells": 0
+    },
+    "land_cover": {
+      "maximum": 30.0,
+      "minimum": 10.0,
+      "status": "AVAILABLE_CONTEXT_ONLY",
+      "valid_cells": 1024
+    },
+    "mining_context": {
+      "maximum": null,
+      "minimum": null,
+      "status": "MISSING",
+      "valid_cells": 0
+    },
+    "rainfall": {
+      "maximum": -125.55867004394531,
+      "minimum": -127.85542297363281,
+      "status": "AVAILABLE_CONTEXT_ONLY",
+      "valid_cells": 1024
+    },
+    "roads": {
+      "maximum": null,
+      "minimum": null,
+      "status": "MISSING",
+      "valid_cells": 0
+    },
+    "slope": {
+      "maximum": 28.802703857421875,
+      "minimum": 0.9274099469184875,
+      "status": "AVAILABLE_CONTEXT_ONLY",
+      "valid_cells": 1024
+    },
+    "surface_water": {
+      "maximum": null,
+      "minimum": null,
+      "status": "MISSING",
+      "valid_cells": 0
+    }
+  },
+  "crs": "EPSG:32646",
+  "download_bytes": 0,
+  "elapsed_seconds": 6.163192400001208,
+  "eligible_cells": 1024,
+  "eligible_percent": 100.0,
+  "human_reviewed_disturbance_leads": 5,
+  "independently_verified_references": 0,
+  "operational_alerts": 0,
+  "persistence": "Existing retrospective pseudo-states kept separate. Follow-up NDVI/BSI are not stored as pilot input bands; no persistence inference from missing channels.",
+  "preserved_pseudo_state_counts": {
+    "0": 284,
+    "1": 0,
+    "255": 740
+  },
+  "requests": 0,
+  "score_distribution": {
+    "0": 591,
+    "1": 391,
+    "2": 41,
+    "3": 1
+  },
+  "score_semantics": "0..3 count of frozen optical/SAR conditions, not probability, risk, mining attribution or a new pseudo-label; persistence remains separate",
+  "selection": "sha256(42:25E1:<patch_id>) minimum among frozen TRAIN patches; label-blind",
+  "shape": [
+    32,
+    32
+  ],
+  "split": "train",
+  "total_cells": 1024,
+  "training": false,
+  "version": "25e1/1",
+  "priority_review_ids": [
+    "R0442ACAF",
+    "R0A099D23",
+    "R2C582A69",
+    "R6947EBA0",
+    "RB9952572"
+  ],
+  "focused_tests_passed": 18
+}
