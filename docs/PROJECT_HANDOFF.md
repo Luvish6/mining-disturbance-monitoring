@@ -149,3 +149,7 @@ The headline tables are in [docs/reports/final-project-status.md](reports/final-
 ## Phase25D.2 ANTLR exception progress (2026-11-25)
 
 Approved one-time pure-Python ANTLR4.9.3 wheel built and hash-verified without executing setup.py. Setup then stopped on missing local HTTP HEAD support; fixed and covered by eight focused tests, not retried. No installation/checkpoint/smoke ran. Reuse existing wheel/receipt and counters; do not rebuild or reset budgets. [Progress and hashes](reports/phase25d2-antlr-progress.md). Resume only after resource gates; original limits persist.
+
+## Phase25D.2 isolated stack installed (2026-11-25)
+
+Existing Python3.12.10 venv now has the hash-locked CUDA torch2.11.0+cu128/torchvision0.26.0+cu128/TerraTorch1.2.14 stack. Installation completed; cumulative dependency charge 3,138,453,534 bytes. Post-install RAM7.930GiB failed the8GiB gate, so checkpoint/model import/GPU smoke did not run. Reuse setup-complete receipt and lock; do not reinstall or rebuild ANTLR. Model transfer remains0; original budgets and single-smoke authorization persist. [Progress](reports/phase25d2-installed-progress.md).
