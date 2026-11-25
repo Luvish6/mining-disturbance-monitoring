@@ -1,0 +1,58 @@
+{
+  "version": "mci-multiclass/1",
+  "base_manifest_sha256": "3e3794f9fde5a9c1a22c265ae86f1d8b3553d524eb7c4403e02f050d52d1b7aa",
+  "thresholds": {
+    "ndvi_drop": -0.3,
+    "bsi_increase": 0.1,
+    "sar_nonincrease": 0.0,
+    "stable_ndvi": 0.1,
+    "stable_bsi": 0.05,
+    "stable_sar_db": 1.0,
+    "context_probability": 0.6,
+    "built_before_max": 0.2,
+    "minimum_observations": 2,
+    "minimum_fire_months": 5,
+    "minimum_winning_score": 0.99,
+    "minimum_margin": 0.25,
+    "steep_context_degrees": 30
+  },
+  "classes": {
+    "0": "potentially_stable",
+    "1": "persistent_exposed_ground_disturbance_MINING_LIKE_OR_OTHER_UNATTRIBUTED",
+    "2": "agriculture_context_transient_disturbance",
+    "3": "construction_context_persistent_disturbance",
+    "4": "other_transient_disturbance_UNATTRIBUTED",
+    "255": "uncertain_ignore"
+  },
+  "merging": "Mining, landslide, road work and other persistent exposure cannot be reliably separated; merged class1, not mining attribution. Unsupported specific classes remain unpopulated and excluded from active taxonomy.",
+  "sources": {
+    "dynamic_world": "GOOGLE/DYNAMICWORLD/V1",
+    "fire": "MODIS/061/MCD64A1"
+  },
+  "seasons": {
+    "before": [
+      "2023-11-01",
+      "2024-04-01"
+    ],
+    "after": [
+      "2024-11-01",
+      "2025-04-01"
+    ]
+  },
+  "budget": {
+    "max_requests": 60,
+    "max_bytes": 100000000,
+    "response_cap": 2000000
+  },
+  "selection": "All existing17TRAIN and3VAL frozen AOIs, TRAIN-first label-blind hash order. No replacements, VAL-conditioned sampling or TEST access.",
+  "rights": {
+    "dynamic_world": "CC-BY4.0; Google/National Geographic Society/WRI attribution",
+    "fire": "LP DAAC unrestricted redistribution; cite MCD64A1.061",
+    "bhoonidhi": "EXCLUDED: product-specific rights/QA/positioning unresolved; no TEST footprint payload access"
+  },
+  "label_kind": "WEAK_ALGORITHMIC_HYPOTHESES_NOT_REFERENCE",
+  "publication": "PRIVATE_CANDIDATE_ONLY_NO_EXTERNAL_RELEASE",
+  "private_plan_sha256": "762432bda5e17edb78fd54c9bc1457cc2023f8007b3ea68f4780edf83f101ddf",
+  "private_plan_path": "outputs/phase25/datasets/multiclass-context-v1/frozen_plan.json",
+  "private_roster": "20 existing development AOIs retained in ignored immutable plan; coordinates and cache crosswalks not published"
+}
