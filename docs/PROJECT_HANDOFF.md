@@ -14,6 +14,10 @@ The project's rules for agents are in [AGENTS.md](../AGENTS.md). The numbers beh
   - `main` is the intended publication branch. Do not merge into it without the user's say-so.
 - **Goal.** A working dashboard, a complete pipeline and a publishable paper. Drafts are [docs/paper-draft.md](paper-draft.md) and the IEEE LaTeX version in [docs/paper/ieee-paper.tex](paper/ieee-paper.tex).
 
+## Phase 25 extension — 2026-11-25
+
+Phase 25A feasibility is complete; see [the focused report](reports/phase25a-feasibility.md) and [phase progress](phase25-progress.md). MineC2FNet is the primary methodological reference; TerraMind tiny is conditional on raw-band compatibility, an approved isolated environment and a memory smoke test. The host has 8 GB-class RTX 4060 hardware, but the current torch environment is CPU-only. No acquisition, research training, new labels or dashboard change occurred. **STOP: await user approval for 25B; do not begin 25B–25G automatically.** Historical RF/U-Net, TEST sealing, river findings and Planet restrictions remain in force.
+
 ## 2. Current state (end of Phase 24, commit after `c38cddb`)
 
 The headline tables are in [docs/reports/final-project-status.md](reports/final-project-status.md). In short:
