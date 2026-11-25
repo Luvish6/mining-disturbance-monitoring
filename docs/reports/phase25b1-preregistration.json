@@ -1,0 +1,151 @@
+{
+  "aois": {
+    "86:561": {
+      "bounds": [
+        431550,
+        2806530,
+        433470,
+        2808450
+      ],
+      "guard": {
+        "block": "86:561",
+        "bounds": [
+          431550,
+          2806530,
+          433470,
+          2808450
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 2008.2,
+        "split": "train",
+        "test_intersections": []
+      },
+      "osm_halo_eligible": true,
+      "osm_query": "[out:json][timeout:25][maxsize:1000000][date:\"2025-03-31T23:59:59Z\"];way[\"highway\"](25.36487452,92.30951782,25.40044982,92.34867889);out geom;",
+      "split": "train"
+    },
+    "88:556": {
+      "bounds": [
+        441540,
+        2781540,
+        443460,
+        2783460
+      ],
+      "guard": {
+        "block": "88:556",
+        "bounds": [
+          441540,
+          2781540,
+          443460,
+          2783460
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6420.0,
+        "split": "train",
+        "test_intersections": []
+      },
+      "osm_halo_eligible": true,
+      "osm_query": "[out:json][timeout:25][maxsize:1000000][date:\"2025-03-31T23:59:59Z\"];way[\"highway\"](25.13963937,92.40992835,25.17518859,92.44898738);out geom;",
+      "split": "train"
+    },
+    "89:557": {
+      "bounds": [
+        446550,
+        2786550,
+        448470,
+        2788470
+      ],
+      "guard": {
+        "block": "89:557",
+        "bounds": [
+          446550,
+          2786550,
+          448470,
+          2788470
+        ],
+        "district_contained": true,
+        "eligible": true,
+        "rectangle_test_buffer_distance_m": 6567.6,
+        "split": "train",
+        "test_intersections": []
+      },
+      "osm_halo_eligible": true,
+      "osm_query": "[out:json][timeout:25][maxsize:1000000][date:\"2025-03-31T23:59:59Z\"];way[\"highway\"](25.18507169,92.45944527,25.22060821,92.49850506);out geom;",
+      "split": "train"
+    }
+  },
+  "base": "ce5f675",
+  "budget": {
+    "max_bytes": 100000000,
+    "max_requests": 60,
+    "response_cap": 2000000
+  },
+  "date": "2026-11-25",
+  "grid": {
+    "crs": "EPSG:32646",
+    "metres": 30,
+    "size": 64
+  },
+  "interpretation": "Context only; no threshold recalibration, reference labels, causal attribution or model training",
+  "legacy_summary_sha256": "1b14fd46fca14184777431756c936b7839d3240e1858084204712275caffa1a6",
+  "licensing": {
+    "chirps": "public domain; cite",
+    "jrc": "Copernicus; EC JRC/Google attribution",
+    "modis": "LP DAAC unrestricted use; cite",
+    "osm": "ODbL; attribution/share-alike obligations; private outputs only",
+    "srtm": "NASA/USGS/JPL use policy; cite",
+    "worldcover": "CC-BY-4.0"
+  },
+  "local_source_recovery_sha256": "7e2c278695fef552c11742670a16603ae99cc15a04410f75b4edeaa8ec7d81e9",
+  "original_plan_sha256": "d711fcfd5f95c93fca8e686514901eb037b8386f56c2e46b0238873355910da9",
+  "preserved_pseudo_outputs": {
+    "80:559": "551d1639650bd2990e0ff24b9728608cd36c400f4ff70a9e4323352f086bd0e0",
+    "86:561": "9b8790268b597796f5f51f0385ff111312a881a97811e5acc0a1061e25495a95",
+    "88:556": "4608e455840f40332e5664e7e1af83a11947216f29b4e656bf6c2b650a149b1d",
+    "89:557": "86a196baf685810589e93ba9b09cae50d2db7dc8532c4514c7e9d416dd5e2129"
+  },
+  "provenance": "Local candidate IDs remain partial; current query identities compared with original acquisition timestamps/counts, never silently certified as original sources",
+  "qa": {
+    "fire_land_bit": 0,
+    "fire_required_months": 5,
+    "fire_shortened_mapping_bit_must_be_zero": 2,
+    "fire_special_condition_bits_5_7_must_be_zero": true,
+    "fire_valid_bit": 1,
+    "osm_max_distance_m": 1000,
+    "osm_max_ways": 1000,
+    "rain_required_days": {
+      "after": 151,
+      "before": 152
+    }
+  },
+  "seasons": {
+    "after": [
+      "2024-11-01",
+      "2025-04-01"
+    ],
+    "before": [
+      "2023-11-01",
+      "2024-04-01"
+    ]
+  },
+  "selection": "All three existing Phase25B TRAIN AOIs, no VAL, no replacements or outcome-based reselection",
+  "sources": {
+    "elevation": "USGS/SRTMGL1_003",
+    "fire": "MODIS/061/MCD64A1",
+    "land_cover": "ESA/WorldCover/v200/2021",
+    "rain": "UCSB-CHG/CHIRPS/DAILY",
+    "roads": "Overpass official public API; historical snapshot 2025-03-31",
+    "water": "JRC/GSW1_4/GlobalSurfaceWater"
+  },
+  "support": {
+    "elevation_m": 30,
+    "fire_m": 500,
+    "land_cover_m": 10,
+    "rain_degrees": 0.05,
+    "sampling": "nearest-neighbor native values onto frozen 30m grid; no fine-scale evidence claim",
+    "water_m": 30
+  },
+  "version": "25b1-v1"
+}
