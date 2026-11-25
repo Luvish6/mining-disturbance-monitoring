@@ -144,3 +144,19 @@ def test_smoke_ram_monitor_includes_windows_launcher_child():
     launcher=Process(4*2**20,5*2**20,[worker])
     assert process_tree_memory(launcher)==7*2**30+5*2**20
     assert process_tree_memory(launcher)>6*2**30
+
+
+def test_watchdog_records_actual_worker_identity():
+    from types import SimpleNamespace
+    from scripts.phase25d2_smoke import process_tree_memory
+    class Process:
+        def __init__(self,pid,parent,rss,children=()):self.pid=pid;self.parent=parent;self.rss=rss;self.descendants=children
+        def memory_info(self):return SimpleNamespace(rss=self.rss,peak_wset=self.rss+1024)
+        def children(self,recursive):assert recursive;return list(self.descendants)
+        def ppid(self):return self.parent
+        def name(self):return 'python.exe'
+    worker=Process(22,11,500000000)
+    launcher=Process(11,1,4000000,[worker]);observed={}
+    assert process_tree_memory(launcher,observed)==504002048
+    assert observed[22]['parent_pid']==11 and observed[22]['peak_working_set']==500001024
+    assert set(observed)=={11,22}

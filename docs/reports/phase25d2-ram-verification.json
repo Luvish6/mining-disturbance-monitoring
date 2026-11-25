@@ -1,0 +1,57 @@
+{
+  "status": "PASS_OFFLINE_SYNTHETIC_RESOURCE_VERIFICATION",
+  "functional_differences": {},
+  "prior_loss": 0.6502230167388916,
+  "rerun_loss": 0.6502230167388916,
+  "loss_difference": 0.0,
+  "process_tree_peak_bytes": 1859121152,
+  "cuda_peak_allocated": 40852480,
+  "cuda_peak_reserved": 46137344,
+  "wall_seconds": 43.366216400001576,
+  "worker_observed": true,
+  "samples": 363,
+  "sampling_interval_seconds": 0.1,
+  "max_sampling_gap_seconds": 0.12709689999974216,
+  "ledger_unchanged": true,
+  "additional_network_bytes": 0,
+  "checkpoint_sha256": "e56ea9ebcd4451078b9ca4893d5cd8a89bbee376ae16829c3e7fbbbc76de0eba",
+  "source_sha256": "b31b24508eb629f4ae3c6b1c9887b8554ebf2c4d52ac0d85a4b50beda4c91a2d",
+  "prior_receipts_preserved": true,
+  "smoke_runs_this_approval": 1,
+  "optimizer_steps": 0,
+  "training_authorized": false,
+  "process_tree": [
+    {
+      "pid": 22640,
+      "parent_pid": 22884,
+      "name": "python.exe",
+      "rss": 4476928,
+      "peak_working_set": 4476928
+    },
+    {
+      "pid": 3144,
+      "parent_pid": 22640,
+      "name": "python.exe",
+      "rss": 1850003456,
+      "peak_working_set": 1854644224
+    }
+  ],
+  "worker": {
+    "worker_pid": 3144,
+    "parent_pid": 22640
+  },
+  "focused_tests_passed": 22,
+  "receipt_hashes": {
+    "comparison.json": "aa9f05b2fea074289c582478df76fa47f4d0f82cb78c9387c5b75cd186bbad80",
+    "monitor.json": "2edad7af259e9e032d83a31ad9291760a2afa68070ce8bd570e8238e75a67d52",
+    "process-tree.jsonl": "af3e6470967caddb70c2f79c8da3ae99b8eb1521efa5bb775afbb2191105a44f",
+    "result.json": "24df8462b9b9b6cb80a44e184591aac5bad705eb104ade3dab8e8d77aabb1975",
+    "smoke.log": "ab47e2771b75aac68c215253d17ac7e3ec4e2ecb8478a77f456f3debfdb80f14",
+    "worker-identity.json": "3c90bd66a049fa2fbb76607133cb63b7680473b4408a192bbc229f51253502bb"
+  },
+  "measurement_limitations": [
+    "Polling at0.1s plus scheduling overhead; maximum observed sample gap0.127097s.",
+    "Conservative sum of observed Windows per-process peak working sets; individual peaks need not coincide.",
+    "Not a Windows Job Object or kernel-enforced allocation quota; short-lived unobserved descendants and non-working-set allocations are outside this measurement."
+  ]
+}

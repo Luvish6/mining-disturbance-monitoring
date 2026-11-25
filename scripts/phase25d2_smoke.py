@@ -19,6 +19,8 @@ def verify_checkpoint(path):
 
 
 def child(checkpoint,out):
+    with Path(out).with_name('worker-identity.json').open('x') as f:
+        json.dump(dict(worker_pid=os.getpid(),parent_pid=os.getppid()),f)
     verify_checkpoint(checkpoint)
     import torch
     import numpy as np
@@ -77,14 +79,17 @@ def child(checkpoint,out):
     Path(out).write_text(json.dumps(result,indent=2))
 
 
-def process_tree_memory(root):
+def process_tree_memory(root,observed=None):
     """Include Windows venv launcher descendants; peak working-set is conservative."""
     import psutil
     total=0
     for process in [root]+root.children(recursive=True):
         try:
             info=process.memory_info()
-            total+=max(info.rss,getattr(info,'peak_wset',info.rss))
+            working_peak=max(info.rss,getattr(info,'peak_wset',info.rss))
+            total+=working_peak
+            if observed is not None:
+                observed[process.pid]=dict(pid=process.pid,parent_pid=process.ppid(),name=process.name(),rss=info.rss,peak_working_set=working_peak)
         except psutil.NoSuchProcess:continue
     return total
 
@@ -98,31 +103,43 @@ def stop_owned_tree(root):
         except psutil.NoSuchProcess:pass
 
 
-def run(checkpoint):
+def run(checkpoint,destination='outputs/phase25/experiments/25d2-synthetic-smoke-v1'):
     from scripts.phase25d2_setup import resource_gate,ENV
     from src.phase25.setup_transfer import ROOT
     import psutil
     resource_gate();verify_checkpoint(checkpoint)
     free=int(subprocess.check_output(['nvidia-smi','--query-gpu=memory.free','--format=csv,noheader,nounits'],text=True).strip())
     if free<7*1024:raise RuntimeError('VRAM gate')
-    dest=Path('outputs/phase25/experiments/25d2-synthetic-smoke-v1')
+    dest=Path(destination)
+    if not dest.resolve().is_relative_to(Path('outputs/phase25/experiments').resolve()):raise ValueError('Isolated Phase25 output required')
     dest.mkdir(parents=True,exist_ok=False)
     env=os.environ.copy();env.update(HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',HF_HOME=str(ROOT/'hf'),TORCH_HOME=str(ROOT/'torch'),TEMP=str(ROOT/'tmp'),TMP=str(ROOT/'tmp'),PYTHONUNBUFFERED='1',WANDB_MODE='disabled')
-    start=time.monotonic();peak=0;failure=None
-    with (dest/'smoke.log').open('x') as log:
+    start=time.monotonic();peak=0;failure=None;seen={};samples=0;interval=.1;gaps=[];last=start
+    with (dest/'smoke.log').open('x') as log, (dest/'process-tree.jsonl').open('x') as trace:
         p=subprocess.Popen([str(ENV/'Scripts/python.exe'),'-B','-m',__name__ if __name__!='__main__' else 'scripts.phase25d2_smoke','--child',str(checkpoint),str(dest/'result.json')],env=env,stdout=log,stderr=subprocess.STDOUT)
         monitor=psutil.Process(p.pid)
         try:
             while p.poll() is None:
-                try:peak=max(peak,process_tree_memory(monitor))
+                observed={};now=time.monotonic();gaps.append(now-last);last=now
+                try:current=process_tree_memory(monitor,observed)
                 except psutil.NoSuchProcess:break
+                peak=max(peak,current);samples+=1
+                for pid,row in observed.items():
+                    if pid not in seen or row['peak_working_set']>seen[pid]['peak_working_set']:seen[pid]=row
+                trace.write(json.dumps(dict(seconds=now-start,process_tree_bytes=current,processes=list(observed.values())))+'\n');trace.flush()
                 if peak>6*2**30:failure='PROCESS_RAM_CAP';break
                 if time.monotonic()-start>300:failure='WALL_CAP';break
-                time.sleep(.1)
+                time.sleep(interval)
+        except BaseException as exc:
+            failure='WATCHDOG_'+type(exc).__name__
         finally:
             if p.poll() is None:stop_owned_tree(monitor)
             p.wait()
-    receipt=dict(returncode=p.returncode,failure=failure,wall_seconds=time.monotonic()-start,process_tree_peak_working_set_upper_bound=peak,accounting='launcher plus recursive descendants; conservative sum of sampled peak working sets',checkpoint_sha256=SHA,model_transfers_not_performed=True,synthetic_only=True)
+    identity=dest/'worker-identity.json'
+    worker=json.loads(identity.read_bytes()) if identity.exists() else {}
+    worker_seen=worker.get('worker_pid') in seen
+    if not failure and not worker_seen:failure='WATCHDOG_WORKER_NOT_OBSERVED'
+    receipt=dict(worker=worker,worker_observed=worker_seen,observed_processes=list(seen.values()),samples=samples,sampling_interval_seconds=interval,max_sampling_gap_seconds=max(gaps,default=None),returncode=p.returncode,failure=failure,wall_seconds=time.monotonic()-start,process_tree_peak_working_set_upper_bound=peak,accounting='launcher plus recursive descendants; conservative sum of sampled peak working sets',checkpoint_sha256=SHA,model_transfers_not_performed=True,synthetic_only=True)
     (dest/'monitor.json').write_text(json.dumps(receipt,indent=2));print(json.dumps(receipt))
     if failure or p.returncode:raise RuntimeError('Smoke failed; stop and inspect retained log')
 
@@ -130,4 +147,6 @@ def run(checkpoint):
 if __name__=='__main__':
     import sys
     if len(sys.argv)>1 and sys.argv[1]=='--child':child(sys.argv[2],sys.argv[3])
-    else:run(sys.argv[1])
+    else:
+        parser=argparse.ArgumentParser();parser.add_argument('checkpoint');parser.add_argument('--output',default='outputs/phase25/experiments/25d2-synthetic-smoke-v1');args=parser.parse_args()
+        run(args.checkpoint,args.output)
