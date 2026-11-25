@@ -1,0 +1,65 @@
+{
+  "version": "mci-official-context-access/1",
+  "verified_on": "2026-11-25",
+  "bhuvan": {
+    "catalog": "https://bhuvan-app1.nrsc.gov.in/2dresources/bhuvanstore2.php",
+    "wms": "https://bhuvan-vec2.nrsc.gov.in/bhuvan/wms",
+    "wfs_candidate": "https://bhuvan-vec2.nrsc.gov.in/bhuvan/wfs",
+    "lulc250_wms": "https://bhuvan-ras2.nrsc.gov.in/cgi-bin/LULC250K.exe",
+    "availability": {
+      "lulc50k": [
+        "2005-06",
+        "2011-12",
+        "2015-16"
+      ],
+      "lulc250k": "annual catalog lists through2022-23",
+      "sisdp_phase2": "2018-23;1:10000mapscale, not verified pixel resolution",
+      "wasteland": [
+        "2008-09",
+        "2015-16"
+      ],
+      "degradation": [
+        "2005-06",
+        "2015-16"
+      ],
+      "geomorphology": "2005-06",
+      "urban_sprawl": "2005-06/2011-12;5states"
+    },
+    "actual_numeric_access": "WMS/WFS capability probes timed out; no classes downloaded",
+    "rights": "Product-specific permission/redistribution unresolved; no map-color-to-class inference"
+  },
+  "bhoonidhi": {
+    "api": "https://bhoonidhi.nrsc.gov.in/bhoonidhi-api/",
+    "login": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/login.html",
+    "catalog": "https://bhoonidhi-api.nrsc.gov.in/data/collections",
+    "actual_access": "Documentation HTTP200; collection HTTP401; registered account/token required; no authentication attempted",
+    "products": [
+      "ResourceSat-2A_LISS3_BOA",
+      "ResourceSat-2A_LISS4-MX70_L2",
+      "ResourceSat-2A_AWIFS_BOA",
+      "EOS-04_SAR-MRS_L2B"
+    ],
+    "native_support": "LISS3 nominal23.5m;LISS4nominal5.8m;AWiFSnominal56m. Verify exact delivered metadata/units and EOS04mode; do not invent30m detail.",
+    "existing_liss4": "Three existing2024March17/Nov12/Nov19scene assessments retained; no new payload read because existing evidence prioritizes protected KORPET/Sumon, rights/QA/position unresolved; no substitution for new TRAIN windows",
+    "rights": "Open acquisition policy does not establish the received-product redistribution terms. Preserve original terms/metadata; research/reviewer/redistribution checks separate."
+  },
+  "fallback": {
+    "sources": [
+      "ESA/WorldCover/v200/2021",
+      "GOOGLE/DYNAMICWORLD/V1",
+      "COPERNICUS/S2_SR_HARMONIZED",
+      "COPERNICUS/S1_GRD",
+      "USGS/SRTMGL1_003",
+      "UCSB-CHG/CHIRPS/DAILY",
+      "JRC/GSW1_4/GlobalSurfaceWater",
+      "MODIS/061/MCD64A1"
+    ],
+    "role": "Explicit non-NRSC fallback; weak context and source observations only",
+    "new_session": {
+      "max_requests": 40,
+      "max_response_bytes": 100000000
+    },
+    "old_ledger": "Immutable; separate new session authorized by user",
+    "publication": "Private only; source attribution, inherited incomplete historical IDs and independent human reference gates remain"
+  }
+}
