@@ -1,0 +1,106 @@
+{
+  "bands": 29,
+  "by_split": {
+    "train": {
+      "groups": 17,
+      "patches": 68,
+      "pseudo_counts": {
+        "0": 20329,
+        "1": 84,
+        "255": 49219
+      }
+    },
+    "validation": {
+      "groups": 3,
+      "patches": 12,
+      "pseudo_counts": {
+        "0": 3057,
+        "1": 84,
+        "255": 9147
+      }
+    }
+  },
+  "context_valid_cells": {
+    "train": {
+      "dNDVI": 69473,
+      "dVV": 69632,
+      "elevation": 69632,
+      "fire_history": 0,
+      "geology": 0,
+      "land_cover": 69632,
+      "mining_context": 0,
+      "rainfall": 69632,
+      "roads": 0,
+      "slope": 69632,
+      "surface_water": 231
+    },
+    "validation": {
+      "dNDVI": 12286,
+      "dVV": 12288,
+      "elevation": 12288,
+      "fire_history": 0,
+      "geology": 0,
+      "land_cover": 12288,
+      "mining_context": 0,
+      "rainfall": 12288,
+      "roads": 0,
+      "slope": 12288,
+      "surface_water": 15
+    }
+  },
+  "cpu_seconds": 28.671875,
+  "downloads": 17,
+  "integrity_artifacts": 602,
+  "manifest_sha256": "3e3794f9fde5a9c1a22c265ae86f1d8b3553d524eb7c4403e02f050d52d1b7aa",
+  "old_dataset_preserved": true,
+  "operational_alerts": 0,
+  "original_sources_certified": false,
+  "output_bytes": 55513524,
+  "patches": 80,
+  "pixels": 81920,
+  "positive_support": {
+    "train": {
+      "groups": 10,
+      "patches": 21
+    },
+    "validation": {
+      "groups": 2,
+      "patches": 6
+    }
+  },
+  "release": "NO-GO",
+  "requests": 48,
+  "runtime_wall_seconds": 35.028622100000575,
+  "s1_count_matches": 40,
+  "s2_timestamp_matches": 40,
+  "schema": "minechange-india-private/1",
+  "shared_current_scene_ids": {
+    "s1": {
+      "shared": 48,
+      "train": 48,
+      "unique_total": 48,
+      "validation": 48
+    },
+    "s2": {
+      "shared": 212,
+      "train": 214,
+      "unique_total": 316,
+      "validation": 314
+    }
+  },
+  "source_hashes_checked": 132,
+  "status": "PRIVATE_PILOT_ENGINEERING_GO_NOT_REFERENCE_DATA",
+  "traffic": {
+    "byte_cap": 100000000,
+    "charged_bytes_including_pending": 1528746,
+    "pending": 0,
+    "raster_downloads": 17,
+    "received_response_body_bytes": 1528746,
+    "request_cap": 60,
+    "requests": 48
+  },
+  "training_runs": 0,
+  "verified_reference_labels": 0,
+  "zero_buffer_violations": true,
+  "zero_cross_split_overlap": true
+}

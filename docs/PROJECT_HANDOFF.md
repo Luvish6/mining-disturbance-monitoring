@@ -38,6 +38,10 @@ Phase 25A feasibility is complete; see [the focused report](reports/phase25a-fea
 
 [Report](reports/phase25c1-expansion-readiness.md), [metadata counts](reports/phase25c1-summary.json):20 eligible cache AOIs (17 TRAIN/3 VAL),14 additional TRAIN +2 additional VAL groups. Target80 non-overlapping crops is a plan, not a new dataset; pixel validity/positive support were not inspected.17 AOIs lack recovered core context. Private plan/contract in `outputs/phase25/datasets/25c1-plan-v1/`, proposal58 requests/30MB expected with60/100MB hard caps, NOT authorized. `src/phase25/review_import.py` and `scripts/phase25c1_readiness.py` support original30 neutral items, preserving originals and preventing interpretation agreement from becoming mining labels. Blank-sheet import:30 pending/zero admitted. **STOP for approval before acquisition or raster replay; no training, release or25D.**
 
+## Phase25C.2 private expansion — 2026-11-25
+
+[Report](reports/phase25c2-context-expansion.md), [actual counts](reports/phase25c2-expanded-dataset-summary.json): all20 preregistered AOIs passed offline QA. One locked session completed17 new context rasters with48 requests/1,528,746 body bytes;3 existing context caches reused. New `outputs/phase25/datasets/25c2-v1/`:80 patches (68 TRAIN/12 VAL),81,920 cells,29 slots. Pseudo counts TRAIN84 disturbance/20,329 potentially stable/49,219 uncertain; VAL84/3,057/9,147. Potential positives span10 TRAIN/2 VAL blocks; no labels admitted. SRTM/WorldCover/CHIRPS complete; JRC231 TRAIN/15 VAL cells; unsupported layers missing. Original25C,reviewer sheets,thresholds,splits and backups unchanged. Current IDs corroborate legacy metadata but remain uncertified originals; scene sharing and mine-complex independence limits persist.411 tests passed; all actual raster/table/hash checks passed. **STOP after25C.2: no more requests, training, dataset release or25D without approval.**
+
 ## 2. Current state (end of Phase 24, commit after `c38cddb`)
 
 The headline tables are in [docs/reports/final-project-status.md](reports/final-project-status.md). In short:

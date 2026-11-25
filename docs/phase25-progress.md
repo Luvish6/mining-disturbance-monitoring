@@ -31,3 +31,7 @@ User-authorized offline packaging completed from5b360da. Four guarded parent AOI
 ## Phase25C.1 boundary
 
 [Metadata-only readiness plan](reports/phase25c1-expansion-readiness.md):20 existing guarded development caches, target68 TRAIN/12 VAL crops (not built);17 missing core-context AOIs. Original30-sheet import stays pending with no admitted mining labels. No imagery/mask decoding, acquisition, fitting or TEST payload access. Stop before the proposed acquisition/replay pending explicit approval.
+
+## Phase25C.2 boundary
+
+[Completed private expansion](reports/phase25c2-context-expansion.md):80 patches from all20 frozen development AOIs,17 context downloads/3 reused,48 requests/1,528,746 body bytes.168 total potential-disturbance cells remain UNKNOWN pseudo states; independent references0,operational alerts0. Old25C and review materials preserved. No future acquisition,training or public release authorized. Stop after25C.2.
