@@ -1,0 +1,70 @@
+{
+  "backup_development_files_verified": 80,
+  "cached_source_sha256": "01ccbea7cc7ed0f49482427dbddd42e9a47d12fe1edd51ae980c9069718b1c2d",
+  "checkpoint": {
+    "actual_hash_verified": false,
+    "expected_bytes": 211873402,
+    "expected_sha256": "e56ea9ebcd4451078b9ca4893d5cd8a89bbee376ae16829c3e7fbbbc76de0eba",
+    "license": "apache-2.0",
+    "model": "ibm-esa-geospatial/TerraMind-1.0-tiny",
+    "present_in_known_caches": false,
+    "revision": "2b5ac0a3ed7dd7e922ccfd595b56607f342df343",
+    "weights_loaded": false
+  },
+  "contract_sha256": "0ebbbf461919b55dc0436ea82d35c10a8ed498bdda140123f5c248ac8520877e",
+  "dataset_manifest_sha256": "3e3794f9fde5a9c1a22c265ae86f1d8b3553d524eb7c4403e02f050d52d1b7aa",
+  "downloads": 0,
+  "hardware": {
+    "cuda_available": false,
+    "disk_free_gib": {
+      "C": 26.29271697998047,
+      "D": 306.94249725341797
+    },
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU, 8188 MiB, 7956 MiB, 610.91",
+    "python": "3.13.2",
+    "ram_available_gib": 4.67889404296875,
+    "ram_total_gib": 15.287960052490234,
+    "terratorch_installed": false,
+    "torch": "2.15.0+cpu",
+    "torch_cuda_build": null
+  },
+  "model_fits": 0,
+  "operational_alerts": 0,
+  "proposed_positive_weight_train_only": 10,
+  "requests": 0,
+  "stats": {
+    "train": {
+      "excluded_labeled_by_token": 1694,
+      "patches": 68,
+      "positive_groups": 10,
+      "positive_patches": 21,
+      "raw_positive": 84,
+      "raw_stable": 20329,
+      "raw_uncertain": 49219,
+      "token_valid_cells": 63744,
+      "usable_foreground_prevalence": 0.004327154228324162,
+      "usable_groups": 17,
+      "usable_patches": 67,
+      "usable_positive": 81,
+      "usable_stable": 18638
+    },
+    "validation": {
+      "excluded_labeled_by_token": 45,
+      "patches": 12,
+      "positive_groups": 2,
+      "positive_patches": 6,
+      "raw_positive": 84,
+      "raw_stable": 3057,
+      "raw_uncertain": 9147,
+      "token_valid_cells": 12032,
+      "usable_foreground_prevalence": 0.01937984496124031,
+      "usable_groups": 3,
+      "usable_patches": 12,
+      "usable_positive": 60,
+      "usable_stable": 3036
+    }
+  },
+  "status": "INPUT_ADAPTER_READY; TERRAMIND_RUNTIME_AND_30M_TOKEN_CONTRACT_UNVERIFIED",
+  "validation_frame_sha256": "1bd04236486c57e260d1bdae3bc0ec5e5293ee53dff11f9d9ef5d7e8a66da059",
+  "verified_reference_labels": 0
+}

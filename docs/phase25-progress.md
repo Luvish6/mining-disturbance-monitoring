@@ -35,3 +35,7 @@ User-authorized offline packaging completed from5b360da. Four guarded parent AOI
 ## Phase25C.2 boundary
 
 [Completed private expansion](reports/phase25c2-context-expansion.md):80 patches from all20 frozen development AOIs,17 context downloads/3 reused,48 requests/1,528,746 body bytes.168 total potential-disturbance cells remain UNKNOWN pseudo states; independent references0,operational alerts0. Old25C and review materials preserved. No future acquisition,training or public release authorized. Stop after25C.2.
+
+## Phase25D.1 boundary
+
+[Readiness](reports/phase25d1-model-readiness.md) complete: shared5-channel paired adapters,masked loss/evaluation frame and synthetic-only checks.67 TRAIN/12 VAL usable under common token mask;81/60 pseudo-positives,zero independent labels. Tiny is conditional on isolated CUDA runtime,verified211.9MB checkpoint and32×32/native30m smoke;no weights loaded or fitting. Stop for setup/smoke approval before any installation/download/training.

@@ -1,0 +1,174 @@
+{
+  "dataset_manifest_sha256": "3e3794f9fde5a9c1a22c265ae86f1d8b3553d524eb7c4403e02f050d52d1b7aa",
+  "environment_proposal": {
+    "cache_and_temp": "D:/ResearchEnvironments/minechange-india-gpu-v1-cache",
+    "candidate_python": [
+      "3.11",
+      "3.12"
+    ],
+    "checkpoint_download_cap_bytes": 250000000,
+    "current_environment_unchanged": true,
+    "dependency_download_cap_gib": 12,
+    "isolated_path": "D:/ResearchEnvironments/minechange-india-gpu-v1",
+    "minimum_available_ram_gib": 8,
+    "minimum_free_disk_gib": 20,
+    "minimum_free_vram_gib": 7,
+    "minimum_system_disk_reserve_gib": 10,
+    "package_lock": "UNRESOLVED; validate official CUDA torch/torchvision and pinned TerraTorch dependency compatibility first",
+    "stop_before_budget_or_source_build": true
+  },
+  "input_contract": {
+    "bands": [
+      "B2",
+      "B3",
+      "B4",
+      "VV",
+      "VH"
+    ],
+    "checkpoint": "NOT_LOADED",
+    "grid": "32x32 at30m; no spatial resampling or invented spectral channels",
+    "mask": "all five raw channels valid in both dates; exclude incomplete16x16 tokens for BOTH systems; labels0/1 only",
+    "mean": [
+      1503.3170166015625,
+      1718.197021484375,
+      1853.9100341796875,
+      -12.598999977111816,
+      -20.292999267578125
+    ],
+    "models": [
+      "existing SiameseUNet(channels=5,width=16)",
+      "frozen TerraMind1.0-tiny with S2L2A BLUE/GREEN/RED and S1GRD VV/VH"
+    ],
+    "normalization": "fixed publisher constants once; no TRAIN/VAL fitting",
+    "operational_alerts": 0,
+    "scale": [
+      10000.0,
+      10000.0,
+      10000.0,
+      1.0,
+      1.0
+    ],
+    "std": [
+      2141.10693359375,
+      2038.9730224609375,
+      2134.137939453125,
+      5.195000171661377,
+      5.889999866485596
+    ],
+    "target": "retrospective pseudo-label agreement; not independently verified mining",
+    "temporal": "paired shared encoder; absolute feature difference, temporally symmetric",
+    "token_size": 16,
+    "version": "25d1-shared-raw/1"
+  },
+  "input_contract_sha256": "0ebbbf461919b55dc0436ea82d35c10a8ed498bdda140123f5c248ac8520877e",
+  "loss": {
+    "background_only": "BCE only; Dice undefined",
+    "ignore": 255,
+    "name": "masked BCE + foreground soft Dice",
+    "positive_weight_train_only": 10,
+    "weights": [
+      0.5,
+      0.5
+    ]
+  },
+  "models": {
+    "terramind": {
+      "bands": {
+        "S1GRD": [
+          "VV",
+          "VH"
+        ],
+        "S2L2A": [
+          "BLUE",
+          "GREEN",
+          "RED"
+        ]
+      },
+      "checkpoint": {
+        "actual_hash_verified": false,
+        "expected_bytes": 211873402,
+        "expected_sha256": "e56ea9ebcd4451078b9ca4893d5cd8a89bbee376ae16829c3e7fbbbc76de0eba",
+        "license": "apache-2.0",
+        "model": "ibm-esa-geospatial/TerraMind-1.0-tiny",
+        "present_in_known_caches": false,
+        "revision": "2b5ac0a3ed7dd7e922ccfd595b56607f342df343",
+        "weights_loaded": false
+      },
+      "download_authorized": false,
+      "frozen_backbone": true,
+      "generation": false,
+      "head": "small trainable segmentation head; feature API/layout MUST pass smoke first",
+      "model": "ibm-esa-geospatial/TerraMind-1.0-tiny",
+      "revision": "2b5ac0a3ed7dd7e922ccfd595b56607f342df343"
+    },
+    "unet": {
+      "channels_per_date": 5,
+      "implementation": "src.phase3.model.SiameseUNet",
+      "pretrained": false,
+      "temporal_symmetry": "absolute encoder differences; preserved",
+      "width": 16
+    }
+  },
+  "operational_alerts": 0,
+  "schema": "minechange-model-comparison-proposal/1",
+  "smoke_proposal": {
+    "batch_size": 1,
+    "forward_backward": "synthetic only; frozen backbone,no optimizer update; strict checkpoint hash before load",
+    "max_cuda_allocated_or_reserved_gib": 6,
+    "max_process_rss_gib": 6,
+    "max_wall_seconds": 300,
+    "shape": [
+      1,
+      5,
+      32,
+      32
+    ],
+    "stop": [
+      "CUDA unavailable",
+      "wrong weights/hash",
+      "unresolved package versions",
+      "wrong band mapping or double normalization",
+      "unsupported32x32/native30m/feature layout",
+      "missing-mask behavior unverified",
+      "NaN/OOM/resource cap",
+      "unexpected pretrained missing keys"
+    ]
+  },
+  "source": {
+    "cached_register_sha256": "01ccbea7cc7ed0f49482427dbddd42e9a47d12fe1edd51ae980c9069718b1c2d",
+    "normalization": "S2L2A selected BLUE/GREEN/RED entries, SR*10000; S1GRD dB; fixed constants applied once to BOTH models",
+    "repo": "https://github.com/IBM/terramind",
+    "repo_revision": "53d61da09213c2c3629931b6322f94cce617886a",
+    "terratorch_revision": "297b9dea723a147aef6b778041af111b71494e59"
+  },
+  "status": "NOT_AUTHORIZED_FOR_TRAINING",
+  "training_proposal": {
+    "augmentation": "NONE in initial paired pilot; no hidden feature transforms",
+    "batch_size": 1,
+    "early_stopping": "same VAL masked loss,patience2; TEST sealed",
+    "gradient_accumulation": 4,
+    "gradient_clip_norm": 1.0,
+    "lr": 0.0003,
+    "max_combined_wall_seconds": 1800,
+    "max_epochs_per_fit": 5,
+    "max_wall_seconds_per_fit": 300,
+    "optimizer": "AdamW",
+    "precision": "FP32 initial; no silent AMP fallback",
+    "sampling": "All common-mask-usable TRAIN patches in seed-shuffled order; equal4 original crops/group; empty-supervision batches skipped and counted; no VAL sampling",
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "threshold_selection": "VAL only: max IoU-0.25*FPR; ties lowerFPR,nearest0.50; also report fixed0.50",
+    "thresholds": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "uncertainty": "per-group counts/FPR,positive-group support,matched completed-seed mean/sampleSD; no pixel-independence significance",
+    "weight_decay": 0.0001
+  },
+  "validation_frame_sha256": "1bd04236486c57e260d1bdae3bc0ec5e5293ee53dff11f9d9ef5d7e8a66da059",
+  "verified_mining_accuracy": "NO-GO; zero admitted references"
+}
