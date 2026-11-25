@@ -153,3 +153,7 @@ Approved one-time pure-Python ANTLR4.9.3 wheel built and hash-verified without e
 ## Phase25D.2 isolated stack installed (2026-11-25)
 
 Existing Python3.12.10 venv now has the hash-locked CUDA torch2.11.0+cu128/torchvision0.26.0+cu128/TerraTorch1.2.14 stack. Installation completed; cumulative dependency charge 3,138,453,534 bytes. Post-install RAM7.930GiB failed the8GiB gate, so checkpoint/model import/GPU smoke did not run. Reuse setup-complete receipt and lock; do not reinstall or rebuild ANTLR. Model transfer remains0; original budgets and single-smoke authorization persist. [Progress](reports/phase25d2-installed-progress.md).
+
+## Phase25D.2 CUDA verified; checkpoint redirect stop (2026-11-25)
+
+Without package changes, torch confirmed CUDA12.8 available on RTX4060; locked distribution versions match. Pinned checkpoint request returned302 to an unapproved host; stopped before redirected request/body. Model charge16,384bytes/body0; no smoke ran. Need audited delivery-host handling before retry; preserve counters and pinned hash. [Evidence and next correction](reports/phase25d2-cuda-verified-download-stop.md).
