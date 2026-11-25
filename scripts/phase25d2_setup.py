@@ -54,6 +54,11 @@ def run():
     python=existing_python()
     transport.TAGS=set(cpython_tags((3,12),abis=['cp312'],platforms=['win_amd64']))|set(compatible_tags((3,12),interpreter='cp312',platforms=['win_amd64']))
     pinned={'torch':links('torch','2.11.0+cu128'),'torchvision':links('torchvision','0.26.0+cu128')}
+    receipt=json.loads((ROOT/'antlr-approved-build.json').read_bytes())
+    wheel=ROOT/'antlr4_python3_runtime-4.9.3-py3-none-any.whl'
+    entry=dict(filename=wheel.name,url='approved-local:antlr4-4.9.3',local_path=str(wheel),sha256=receipt['wheel_sha256'])
+    transport.approved_local_wheel(entry)
+    pinned['antlr4-python3-runtime']=[entry]
     (ROOT/'pinned-cuda-wheels.json').write_text(json.dumps(pinned,indent=2),encoding='utf-8')
     env=os.environ.copy();env.update(UV_CACHE_DIR=str(ROOT/'uv-cache'),UV_PYTHON_DOWNLOADS='never',UV_CONCURRENT_DOWNLOADS='1',UV_CONCURRENT_BUILDS='1',UV_HTTP_RETRIES='0',UV_HTTP_TIMEOUT='1800',TMP=str(ROOT/'tmp'),TEMP=str(ROOT/'tmp'),PIP_CACHE_DIR=str(ROOT/'pip-cache'))
     (ROOT/'tmp').mkdir(exist_ok=True)

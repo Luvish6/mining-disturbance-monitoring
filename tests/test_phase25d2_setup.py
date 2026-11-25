@@ -73,3 +73,38 @@ def test_redirect_cache_reuses_original_verified_identity(tmp_path,monkeypatch):
     t.session=RedirectSession();h=hashlib.sha256(b'abc').hexdigest()
     p=t.get('https://pypi.org/pkg',expected=h)
     assert t.get('https://pypi.org/pkg',expected=h)==p and t.session.calls==2
+
+
+def test_approved_local_wheel_is_hash_bound_and_path_limited(tmp_path,monkeypatch):
+    import json
+    monkeypatch.setattr(transfer,'ROOT',tmp_path)
+    wheel=tmp_path/'antlr4_python3_runtime-4.9.3-py3-none-any.whl'
+    wheel.write_bytes(b'audited fixture')
+    h=hashlib.sha256(wheel.read_bytes()).hexdigest()
+    (tmp_path/'antlr-approved-build.json').write_text(json.dumps(dict(wheel_sha256=h,source_sha256='f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b')))
+    entry=dict(local_path=str(wheel),sha256=h)
+    assert transfer.approved_local_wheel(entry)==wheel
+    wheel.write_bytes(b'altered')
+    with pytest.raises(ValueError,match='integrity'):transfer.approved_local_wheel(entry)
+    entry['local_path']=str(tmp_path/'other.whl')
+    with pytest.raises(ValueError,match='Only approved'):transfer.approved_local_wheel(entry)
+
+
+def test_local_wheel_head_never_fetches_network(tmp_path,monkeypatch):
+    import json
+    import requests
+    monkeypatch.setattr(transfer,'ROOT',tmp_path)
+    wheel=tmp_path/'antlr4_python3_runtime-4.9.3-py3-none-any.whl';wheel.write_bytes(b'fixture')
+    h=hashlib.sha256(wheel.read_bytes()).hexdigest()
+    (tmp_path/'antlr-approved-build.json').write_text(json.dumps(dict(wheel_sha256=h,source_sha256='f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b')))
+    entry=dict(filename=wheel.name,url='approved-local:antlr4-4.9.3',local_path=str(wheel),sha256=h)
+    token=hashlib.sha256(entry['url'].encode()).hexdigest()
+    (tmp_path/'source-links.json').write_text(json.dumps({token:entry}))
+    t=transfer.Transfers()
+    monkeypatch.setattr(t,'get',lambda *a,**k:pytest.fail('No external fetch'))
+    server,errors=transfer.serve(t,{},port=0)
+    try:
+        r=requests.head(f'http://127.0.0.1:{server.server_port}/file/{token}/{wheel.name}',timeout=5)
+        assert r.status_code==200 and int(r.headers['Content-Length'])==7 and not r.content
+        assert not errors and not t.rows
+    finally:server.shutdown();server.server_close()

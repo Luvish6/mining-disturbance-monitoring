@@ -76,11 +76,32 @@ def compatible(filename):
     except ValueError:return False
 
 
+def approved_local_wheel(entry):
+    source=Path(entry['local_path']).resolve()
+    if source.parent!=ROOT.resolve() or source.name!='antlr4_python3_runtime-4.9.3-py3-none-any.whl':
+        raise ValueError('Only approved ANTLR local wheel')
+    receipt=json.loads((ROOT/'antlr-approved-build.json').read_bytes())
+    actual=hashlib.sha256(source.read_bytes()).hexdigest()
+    if actual!=entry['sha256'] or actual!=receipt['wheel_sha256'] or receipt['source_sha256']!='f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b':
+        raise ValueError('Approved wheel integrity failure')
+    return source
+
+
 def serve(transfer,torch_links,port=18765):
     mapping=ROOT/'source-links.json'
     urls=json.loads(mapping.read_bytes()) if mapping.exists() else {};simple={};errors=[]
     class Handler(BaseHTTPRequestHandler):
         def log_message(self,*args):pass
+        def do_HEAD(self):
+            try:
+                path=unquote(urlsplit(self.path).path)
+                _,_,token,filename=path.split('/',3)
+                entry=urls[token]
+                if not path.startswith('/file/') or filename!=entry['filename'] or not entry.get('local_path'):
+                    self.send_error(405);return
+                source=approved_local_wheel(entry)
+                self.send_response(200);self.send_header('Content-Length',str(source.stat().st_size));self.send_header('Accept-Ranges','bytes');self.end_headers()
+            except (ValueError,KeyError,FileNotFoundError):self.send_error(502)
         def do_GET(self):
             try:
                 path=unquote(urlsplit(self.path).path)
@@ -128,7 +149,11 @@ def serve(transfer,torch_links,port=18765):
                 elif path.startswith('/file/'):
                     _,_,token,filename=path.split('/',3);meta=filename.endswith('.metadata');entry=urls[token]
                     url=entry['url']+('.metadata' if meta else '');expected=None if meta else entry.get('sha256')
-                    source=transfer.get(url,expected=expected);size=source.stat().st_size
+                    if entry.get('local_path'):
+                        if meta:raise ValueError('Local wheel metadata sidecar unavailable')
+                        source=approved_local_wheel(entry)
+                    else:source=transfer.get(url,expected=expected)
+                    size=source.stat().st_size
                     begin,end=0,size-1;r=self.headers.get('Range')
                     if r:
                         x,y=r.removeprefix('bytes=').split('-');begin=int(x) if x else max(0,size-int(y));end=min(int(y),size-1) if y and x else size-1

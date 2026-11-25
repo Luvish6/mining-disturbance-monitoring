@@ -145,3 +145,7 @@ The headline tables are in [docs/reports/final-project-status.md](reports/final-
 | 24A | India discovery dashboard |
 | 24B | Generalised India screening |
 | 24C | Evidence tiers, final docs and paper |
+
+## Phase25D.2 ANTLR exception progress (2026-11-25)
+
+Approved one-time pure-Python ANTLR4.9.3 wheel built and hash-verified without executing setup.py. Setup then stopped on missing local HTTP HEAD support; fixed and covered by eight focused tests, not retried. No installation/checkpoint/smoke ran. Reuse existing wheel/receipt and counters; do not rebuild or reset budgets. [Progress and hashes](reports/phase25d2-antlr-progress.md). Resume only after resource gates; original limits persist.
