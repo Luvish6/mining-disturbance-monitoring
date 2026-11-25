@@ -110,20 +110,21 @@ def review_files(root):
     return files
 
 
-def handler(dist, files, authority):
+def handler(dist, files, authority, experimental=None):
     class Portal(BaseHTTPRequestHandler):
         def do_GET(self):
             if self.headers.get("Host") != authority:
                 self.send_error(403)
                 return
             path = self.path.split("?", 1)[0]
-            private = path.startswith(PREFIX)
+            experimental_route = path.startswith('/__experimental__/')
+            private = path.startswith(PREFIX) or experimental_route
             if private:
                 if (self.headers.get("Sec-Fetch-Site") != "same-origin"
                         or self.headers.get("Origin") not in (None, "http://" + authority)):
                     self.send_error(403)
                     return
-                result = files.get(path.removeprefix(PREFIX))
+                result = (experimental or {}).get(path.removeprefix('/__experimental__/')) if experimental_route else files.get(path.removeprefix(PREFIX))
             else:
                 path = dist / (path.lstrip("/") or "index.html")
                 path = path.resolve()
@@ -160,8 +161,13 @@ def main():
     except (OSError, ValueError, KeyError, TypeError, rasterio.errors.RasterioError) as exc:
         print(f"Private review unavailable: {exc}", flush=True)
         files = {}
+    from scripts.phase25_model_portal import experimental_files
+    try:experimental = experimental_files(root)
+    except (OSError,ValueError,KeyError,TypeError):
+        experimental = {}
+        print('Experimental model snapshot unavailable or invalid',flush=True)
     authority = f"127.0.0.1:{args.port}"
-    with ThreadingHTTPServer(("127.0.0.1", args.port), handler(dist, files, authority)) as server:
+    with ThreadingHTTPServer(("127.0.0.1", args.port), handler(dist, files, authority, experimental)) as server:
         print(f"Private portal: http://{authority}/#review", flush=True)
         server.serve_forever()
 
