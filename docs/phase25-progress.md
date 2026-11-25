@@ -27,3 +27,7 @@ The separately authorized, preregistered recovery pilot is complete: [report](re
 ## Phase25C boundary
 
 User-authorized offline packaging completed from5b360da. Four guarded parent AOIs produced12 TRAIN /4 VAL non-overlapping crops,52 source hashes rechecked unchanged, zero TEST payload access or acquisition. Labels remain retrospective shared-source pseudo states. VAL has no potential-disturbance support; independent Indian training and release remain NO-GO. Stop after the private pilot; no25D or training authorization.
+
+## Phase25C.1 boundary
+
+[Metadata-only readiness plan](reports/phase25c1-expansion-readiness.md):20 existing guarded development caches, target68 TRAIN/12 VAL crops (not built);17 missing core-context AOIs. Original30-sheet import stays pending with no admitted mining labels. No imagery/mask decoding, acquisition, fitting or TEST payload access. Stop before the proposed acquisition/replay pending explicit approval.

@@ -34,6 +34,10 @@ Phase 25A feasibility is complete; see [the focused report](reports/phase25a-fea
 
 [Report](reports/phase25c-private-pilot.md), [draft card](reports/phase25c-dataset-card.md), `scripts/phase25c_dataset.py` and `src/phase25/dataset.py`:16 non-overlapping32×32 patches /16,384 cells,29 feature slots,12 TRAIN patches from3 blocks and4 VAL patches from1 block. Frozen pseudo counts remain36 potential disturbance /4,837 potentially stable /11,511 uncertain. VAL has zero potential-disturbance cells and no recovered B1 context. Original scene/follow-up provenance remains incomplete. Private outputs: `outputs/phase25/datasets/25c-v1/`; all source hashes unchanged, no requests/training/TEST payload access. Loader requires explicit pseudo opt-in and refuses verified-reference promotion. **Private packaging GO; verified training/evaluation/release NO-GO. STOP after25C; no later phase without approval.**
 
+## Phase25C.1 expansion readiness — 2026-11-25
+
+[Report](reports/phase25c1-expansion-readiness.md), [metadata counts](reports/phase25c1-summary.json):20 eligible cache AOIs (17 TRAIN/3 VAL),14 additional TRAIN +2 additional VAL groups. Target80 non-overlapping crops is a plan, not a new dataset; pixel validity/positive support were not inspected.17 AOIs lack recovered core context. Private plan/contract in `outputs/phase25/datasets/25c1-plan-v1/`, proposal58 requests/30MB expected with60/100MB hard caps, NOT authorized. `src/phase25/review_import.py` and `scripts/phase25c1_readiness.py` support original30 neutral items, preserving originals and preventing interpretation agreement from becoming mining labels. Blank-sheet import:30 pending/zero admitted. **STOP for approval before acquisition or raster replay; no training, release or25D.**
+
 ## 2. Current state (end of Phase 24, commit after `c38cddb`)
 
 The headline tables are in [docs/reports/final-project-status.md](reports/final-project-status.md). In short:

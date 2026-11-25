@@ -1,0 +1,32 @@
+{
+  "acquisition_authorized": false,
+  "acquisition_contract_sha256": "b10e1f803bf38f5471c796a906e5e3947e820a297a3d434e0efdae7376c8a98f",
+  "by_split": {
+    "train": {
+      "added_aois": 14,
+      "aois": 17,
+      "planned_patches": 68
+    },
+    "validation": {
+      "added_aois": 2,
+      "aois": 3,
+      "planned_patches": 12
+    }
+  },
+  "context_cached_aois": 3,
+  "context_note": "Three TRAIN AOIs have B1 context receipts, not complete context; per-cell validity not rechecked in metadata-only task",
+  "eligible_aois": 20,
+  "estimated_body_bytes": 30000000,
+  "estimated_requests": 58,
+  "metadata_source_bytes": 71936,
+  "missing_context_aois": 17,
+  "pending_reviews": 30,
+  "plan_sha256": "e2fa7d831421bae8bd338060193f6104b66ec25524dec5417fd8abfc0e363d84",
+  "positive_validation_support": "UNMEASURED; no VAL outcome selection",
+  "rejected": 0,
+  "requests": 0,
+  "review_items": 30,
+  "source_identity": "INCOMPLETE original and follow-up IDs",
+  "unopened_cache_bytes": 9180160,
+  "verified_labels": 0
+}
