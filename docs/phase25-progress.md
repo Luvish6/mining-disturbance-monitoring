@@ -47,3 +47,7 @@ User-authorized offline packaging completed from5b360da. Four guarded parent AOI
 ## Phase25D.2 partial setup boundary
 
 [Progress](reports/phase25d2-setup-progress.md):RAM initially passed,empty isolated3.11 environment created;official dependency constraints require3.12. Resolution failed,no installs;nextRAM gate7.856GiB stopped before3.12 acquisition. Preserve D: cache/ledger44.40MB charged;model0,smoke unrun. Resume after RAM gate with corrected interpreter,never reset budgets.
+
+## Phase25D.2 Python3.12 compatibility boundary
+
+[Existing venv reused](reports/phase25d2-python312-progress.md);RAM gates passed. Wheel-only dependency resolution stops on official antlr4-python3-runtime4.9.* source-only release. No installs/model/smoke. Preserve cumulative transfer ledger;request narrowly scoped source-to-wheel approval rather than silently relaxing policy.

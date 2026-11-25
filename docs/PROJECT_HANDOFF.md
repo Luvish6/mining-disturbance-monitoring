@@ -54,6 +54,10 @@ Phase 25A feasibility is complete; see [the focused report](reports/phase25a-fea
 
 [Progress](reports/phase25d2-setup-progress.md),[receipt](reports/phase25d2-setup-progress.json):initialRAM8.089GiB passed;empty D: Python3.11.8 environment created. Official TerraTorch1.2.14/TorchGeo0.10 metadata requiresPython≥3.12;resolution failed before install. A laterRAM gate7.856GiB stopped before managed3.12 acquisition.151 metadata HTTP attempts,41.93MB body/44.40MB conservatively charged under12GiB;model0 bytes. No packages/checkpoint installed,smoke unrun,oldvenv/data/settings unchanged. Four offline tests passed. Resume only after≥8GiB RAM,using3.12 and the SAME D: ledger/cache;preserve empty3.11 bootstrap and recreate active env deliberately. **No further setup or GPU work until gates pass;no research training.**
 
+## Phase25D.2 Python3.12 reuse — 2026-11-25
+
+[Progress](reports/phase25d2-python312-progress.md),[counts](reports/phase25d2-python312-progress.json):user-supplied3.12.10 venv reused without recreation. RAM8.145/8.083GiB gates passed. Resolver now blocked by wheel-only policy:TerraTorch→Lightly→Hydra requires antlr4-python3-runtime4.9.*,no matching wheel. Stopped before installs,checkpoint or smoke. Same D: ledger/cache retained;model0 bytes. Six focused tests passed. **Next approval:one audited official pure-Python4.9.3 source-to-wheel build or verified compatible wheel;no generic source builds,model fallback or research training.**
+
 ## 2. Current state (end of Phase 24, commit after `c38cddb`)
 
 The headline tables are in [docs/reports/final-project-status.md](reports/final-project-status.md). In short:

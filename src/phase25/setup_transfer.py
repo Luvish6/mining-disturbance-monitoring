@@ -31,9 +31,10 @@ class Transfers:
         if target.exists():
             with target.open('rb') as f:actual=hashlib.file_digest(f,'sha256').hexdigest()
             if expected and actual!=expected:raise ValueError('Cached source hash mismatch')
-            if not any(r.get('state')=='COMPLETE' and r.get('sha256')==actual and r.get('host')==urlsplit(url).hostname for r in self.rows):raise ValueError('Unverified cache entry')
+            if not any(r.get('state')=='COMPLETE' and r.get('sha256')==actual and (r.get('key')==key or (not r.get('key') and r.get('host')==urlsplit(url).hostname)) for r in self.rows):raise ValueError('Unverified cache entry')
             return target
         with self.lock:
+            if target.exists():return self.get(url,kind,expected)
             original=url
             for hop in range(6):
                 host=urlsplit(url).hostname
@@ -94,35 +95,36 @@ def serve(transfer,torch_links,port=18765):
                             if not block:break
                             self.wfile.write(block)
                 elif path.startswith('/simple/'):
-                    name=canonicalize_name(path.strip('/').split('/')[-1])
-                    if name not in simple:
-                        if name in torch_links:files=torch_links[name]
-                        else:
-                            source=transfer.get('https://pypi.org/simple/'+name+'/')
-                            from html.parser import HTMLParser
-                            class Links(HTMLParser):
-                                def __init__(self):super().__init__();self.files=[]
-                                def handle_starttag(self,tag,attrs):
-                                    d=dict(attrs)
-                                    if tag=='a' and 'href' in d:self.files.append(d)
-                            parser=Links();parser.feed(source.read_text());files=[]
-                            for d in parser.files:
-                                url=d['href'];filename=urlsplit(url).path.rsplit('/',1)[-1]
-                                if compatible(filename):files.append(dict(filename=filename,url=url.split('#')[0],sha256=url.split('#sha256=')[-1] if '#sha256=' in url else None,requires_python=d.get('data-requires-python'),metadata=d.get('data-dist-info-metadata') or d.get('data-core-metadata')))
-                        links=[]
-                        import html
-                        for f in files:
-                            if not compatible(f['filename']):continue
-                            token=hashlib.sha256(f['url'].encode()).hexdigest();urls[token]=f
-                            href=f'http://127.0.0.1:{port}/file/{token}/'+quote(f['filename'])
-                            if f.get('sha256'):href+='#sha256='+f['sha256']
-                            attrs=''
-                            if f.get('requires_python'):attrs+=' data-requires-python="'+html.escape(f['requires_python'],quote=True)+'"'
-                            if f.get('metadata'):attrs+=' data-dist-info-metadata="'+str(f['metadata'])+'"'
-                            links.append('<a href="'+href+'"'+attrs+'>'+f['filename']+'</a>')
-                        mapping.write_text(json.dumps(urls),encoding='utf-8')
-                        simple[name]='\n'.join(links).encode()
-                    body=simple[name];self.send_response(200);self.send_header('Content-Type','text/html');self.send_header('Content-Length',str(len(body)));self.end_headers();self.wfile.write(body)
+                    with transfer.lock:
+                        name=canonicalize_name(path.strip('/').split('/')[-1])
+                        if name not in simple:
+                            if name in torch_links:files=torch_links[name]
+                            else:
+                                source=transfer.get('https://pypi.org/simple/'+name+'/')
+                                from html.parser import HTMLParser
+                                class Links(HTMLParser):
+                                    def __init__(self):super().__init__();self.files=[]
+                                    def handle_starttag(self,tag,attrs):
+                                        d=dict(attrs)
+                                        if tag=='a' and 'href' in d:self.files.append(d)
+                                parser=Links();parser.feed(source.read_text());files=[]
+                                for d in parser.files:
+                                    url=d['href'];filename=urlsplit(url).path.rsplit('/',1)[-1]
+                                    if compatible(filename):files.append(dict(filename=filename,url=url.split('#')[0],sha256=url.split('#sha256=')[-1] if '#sha256=' in url else None,requires_python=d.get('data-requires-python'),metadata=d.get('data-dist-info-metadata') or d.get('data-core-metadata')))
+                            links=[]
+                            import html
+                            for f in files:
+                                if not compatible(f['filename']):continue
+                                token=hashlib.sha256(f['url'].encode()).hexdigest();urls[token]=f
+                                href=f'http://127.0.0.1:{port}/file/{token}/'+quote(f['filename'])
+                                if f.get('sha256'):href+='#sha256='+f['sha256']
+                                attrs=''
+                                if f.get('requires_python'):attrs+=' data-requires-python="'+html.escape(f['requires_python'],quote=True)+'"'
+                                if f.get('metadata'):attrs+=' data-dist-info-metadata="'+str(f['metadata'])+'"'
+                                links.append('<a href="'+href+'"'+attrs+'>'+f['filename']+'</a>')
+                            temp=mapping.with_suffix('.tmp');temp.write_text(json.dumps(urls),encoding='utf-8');os.replace(temp,mapping)
+                            simple[name]='\n'.join(links).encode()
+                        body=simple[name];self.send_response(200);self.send_header('Content-Type','text/html');self.send_header('Content-Length',str(len(body)));self.end_headers();self.wfile.write(body)
                 elif path.startswith('/file/'):
                     _,_,token,filename=path.split('/',3);meta=filename.endswith('.metadata');entry=urls[token]
                     url=entry['url']+('.metadata' if meta else '');expected=None if meta else entry.get('sha256')

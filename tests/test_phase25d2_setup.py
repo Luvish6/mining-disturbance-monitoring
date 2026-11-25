@@ -51,3 +51,25 @@ def test_low_ram_prevents_any_bootstrap_transfer(monkeypatch):
     monkeypatch.setattr(setup.ctypes.windll.kernel32,'GlobalMemoryStatusEx',memory)
     monkeypatch.setattr(setup,'Transfers',lambda:pytest.fail('Transfer must not start below RAM gate'))
     with pytest.raises(RuntimeError,match='RAM_GATE'):setup.bootstrap312()
+
+
+def test_existing_venv_only_never_recreated(tmp_path,monkeypatch):
+    monkeypatch.setattr(setup,'ENV',tmp_path)
+    with pytest.raises(RuntimeError,match='no recreation'):setup.existing_python()
+    exe=tmp_path/'Scripts/python.exe';exe.parent.mkdir();exe.write_bytes(b'fixture')
+    monkeypatch.setattr(setup.subprocess,'check_output',lambda *a,**k:'Python 3.12.10\n')
+    assert setup.existing_python()==exe
+    monkeypatch.setattr(setup.subprocess,'check_output',lambda *a,**k:'Python 3.11.8\n')
+    with pytest.raises(RuntimeError,match='no substitution'):setup.existing_python()
+
+
+def test_redirect_cache_reuses_original_verified_identity(tmp_path,monkeypatch):
+    monkeypatch.setattr(transfer,'ROOT',tmp_path);t=transfer.Transfers()
+    class RedirectSession:
+        calls=0
+        def get(self,*a,**k):
+            self.calls+=1
+            return Response(status=302,location='https://files.pythonhosted.org/pkg') if self.calls==1 else Response()
+    t.session=RedirectSession();h=hashlib.sha256(b'abc').hexdigest()
+    p=t.get('https://pypi.org/pkg',expected=h)
+    assert t.get('https://pypi.org/pkg',expected=h)==p and t.session.calls==2
