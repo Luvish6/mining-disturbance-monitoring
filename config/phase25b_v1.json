@@ -1,0 +1,186 @@
+{
+  "schema": "minechange-india-features/1",
+  "version": "25b-v1",
+  "seed": 42,
+  "selection": {
+    "train": 3,
+    "validation": 1,
+    "order": "sha256(42:25B:<block_id>); no labels or predictions"
+  },
+  "seasons": {
+    "before": [
+      "2023-11-01",
+      "2024-04-01"
+    ],
+    "after": [
+      "2024-11-01",
+      "2025-04-01"
+    ],
+    "follow": [
+      "2025-11-01",
+      "2026-04-01"
+    ]
+  },
+  "calibration": {
+    "status": "UNCALIBRATED_EXPLORATORY",
+    "permitted_split": "train",
+    "independent_evaluation": false
+  },
+  "rules": {
+    "ndvi_drop": -0.3,
+    "bsi_increase": 0.1,
+    "min_observations": 2,
+    "sar_drop_max": 0.0,
+    "stable_ndvi_abs": 0.1,
+    "stable_bsi_abs": 0.05,
+    "stable_sar_abs_db": 1.0,
+    "require_persistence": true,
+    "steep_context_degrees": 30.0
+  },
+  "layers": [
+    {
+      "name": "vegetation_change",
+      "units": "1",
+      "kind": "continuous",
+      "source": "COPERNICUS/S2_SR_HARMONIZED",
+      "dates": "2023-11/2025-03",
+      "native_support": "10m sampled at30m",
+      "rights": "Copernicus attribution",
+      "role": "signal"
+    },
+    {
+      "name": "bare_ground_change",
+      "units": "1",
+      "kind": "continuous",
+      "source": "COPERNICUS/S2_SR_HARMONIZED",
+      "dates": "2023-11/2025-03",
+      "native_support": "10/20m sampled at30m",
+      "rights": "Copernicus attribution",
+      "role": "signal"
+    },
+    {
+      "name": "radar_change",
+      "units": "dB",
+      "kind": "continuous",
+      "source": "COPERNICUS/S1_GRD",
+      "dates": "2023-11/2025-03",
+      "native_support": "SAR support;30m output",
+      "rights": "Copernicus attribution",
+      "role": "signal"
+    },
+    {
+      "name": "slope",
+      "units": "degree",
+      "kind": "continuous",
+      "source": "USGS/SRTMGL1_003",
+      "dates": "2000-02",
+      "native_support": "30m",
+      "rights": "JPL/USGS use policy; cite",
+      "role": "context_only"
+    },
+    {
+      "name": "elevation",
+      "units": "m",
+      "kind": "continuous",
+      "source": "USGS/SRTMGL1_003",
+      "dates": "2000-02",
+      "native_support": "30m",
+      "rights": "JPL/USGS use policy; cite",
+      "role": "context_only"
+    },
+    {
+      "name": "land_cover",
+      "units": "class",
+      "kind": "categorical",
+      "source": "ESA/WorldCover/v200",
+      "dates": "2021",
+      "native_support": "10m",
+      "rights": "CC-BY-4.0",
+      "role": "context_only"
+    },
+    {
+      "name": "geology",
+      "units": "class",
+      "kind": "categorical",
+      "source": "GSI Bhukosh; exact product UNVERIFIED",
+      "dates": "UNVERIFIED",
+      "native_support": "UNVERIFIED",
+      "rights": "REQUIRES PROVIDER CONFIRMATION",
+      "role": "context_only"
+    },
+    {
+      "name": "mining_context",
+      "units": "m",
+      "kind": "continuous",
+      "source": "Maus v2; independently documented locations",
+      "dates": "historical; not change dates",
+      "native_support": "polygon scale/position product-dependent",
+      "rights": "Source/version rights must be checked",
+      "role": "context_only"
+    },
+    {
+      "name": "roads",
+      "units": "m",
+      "kind": "continuous",
+      "source": "OpenStreetMap historical roads",
+      "dates": "timestamped extract required",
+      "native_support": "vector; incomplete positional precision",
+      "rights": "ODbL; attribution/share-alike review",
+      "role": "context_only"
+    },
+    {
+      "name": "rainfall",
+      "units": "mm",
+      "kind": "continuous",
+      "source": "UCSB-CHG/CHIRPS/DAILY",
+      "dates": "matched seasonal/antecedent dates required",
+      "native_support": "0.05 degree (~5.6km)",
+      "rights": "Public domain; cite",
+      "role": "context_only"
+    },
+    {
+      "name": "surface_water",
+      "units": "percent",
+      "kind": "continuous",
+      "source": "JRC/GSW1_4/GlobalSurfaceWater",
+      "dates": "1984-2021",
+      "native_support": "30m",
+      "rights": "Copernicus; EC JRC/Google attribution",
+      "role": "context_only"
+    },
+    {
+      "name": "fire_history",
+      "units": "class",
+      "kind": "categorical",
+      "source": "MODIS/061/MCD64A1",
+      "dates": "monthly; match exact dates",
+      "native_support": "500m",
+      "rights": "LP DAAC MODIS unrestricted use; cite",
+      "role": "context_only"
+    }
+  ],
+  "safety": {
+    "reference_labels": false,
+    "mining_attribution": "UNKNOWN",
+    "operational_alerts": 0,
+    "missing": "NaN plus false per-layer mask, never zero-fill",
+    "no_resampling_without_explicit_opt_in": true
+  },
+  "sensitivity": [
+    {
+      "id": "less_restrictive",
+      "ndvi_drop": -0.25,
+      "bsi_increase": 0.075
+    },
+    {
+      "id": "frozen_base",
+      "ndvi_drop": -0.3,
+      "bsi_increase": 0.1
+    },
+    {
+      "id": "more_restrictive",
+      "ndvi_drop": -0.35,
+      "bsi_increase": 0.125
+    }
+  ]
+}

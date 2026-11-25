@@ -3,15 +3,19 @@
 | Phase | Actual status | Evidence / next gate |
 |---|---|---|
 | 25A | Complete: focused implementation inventory, verified literature, model/input/rights and hardware feasibility | [Report](reports/phase25a-feasibility.md), [evidence](reports/phase25a-evidence.json); 35 offline tests passed |
-| 25B | NOT STARTED | Await approval for cached-only feature and three-state pseudo-label design; acquisition requires separate approval |
+| 25B | COMPLETE, cached-only engineering | [Report](reports/phase25b-cached-features.md); four development AOIs, 36 potential-disturbance cells; eight unavailable layer families; no reference labels or accuracy |
 | 25C | NOT STARTED | Requires eligible unique patches, source rights, provenance and separate pseudo/reference manifests |
 | 25D | NOT STARTED | U-Net/modern comparison requires data and approved isolated TerraMind smoke test; no historical RF deletion |
 | 25E | NOT STARTED | Preserve existing portal; analyzer changes await approval |
 | 25F | NOT STARTED | No public dataset, DOI reservation or upload authorized |
 | 25G | NOT STARTED | Integration after preceding gates; no current result replaced |
 
-Updated 2026-11-25 from baseline 08604dea. No Earth Engine request, image/weight acquisition, research training, TEST payload access or new label in 25A. Pseudo-labels are not independent mining ground truth. Indian verified supervised training remains NO-GO, attribution UNKNOWN and operational alerts zero. Stop at this boundary for approval.
+Initial Phase 25A record (before cached-only 25B authorization), 2026-11-25, baseline 08604dea. No Earth Engine request, image/weight acquisition, research training, TEST payload access or new label in 25A. Pseudo-labels are not independent mining ground truth. Indian verified supervised training remains NO-GO, attribution UNKNOWN and operational alerts zero. Stop at this boundary for approval.
 
 ## Mandatory backup gate — VERIFIED 2026-11-25
 
-Stable tag `pre-minechange-india` is pushed at 08604dea. Existing `phase22-label-sources` is preserved; development is isolated on `phase25-minechange-india`. The full private project-parent snapshot passed size, inventory and SHA-256 verification for 72,005 files (7,918,850,848 bytes), zero mismatches. See [rollback instructions](reports/phase25-backup-rollback.md). Separate ignored Phase 25 directories are reserved; 25B is still NOT STARTED. No merge, acquisition or training approval is implied.
+Stable tag `pre-minechange-india` is pushed at 08604dea. Existing `phase22-label-sources` is preserved; development is isolated on `phase25-minechange-india`. The full private project-parent snapshot passed size, inventory and SHA-256 verification for 72,005 files (7,918,850,848 bytes), zero mismatches. See [rollback instructions](reports/phase25-backup-rollback.md). At the backup snapshot, separate ignored Phase 25 directories were reserved and 25B was NOT STARTED; its subsequent cached-only completion is recorded below. No merge, acquisition or training approval is implied.
+
+## Phase 25B boundary
+
+User authorized cached-only work after safeguards. Essential backup recheck passed for 8,765 files / 6,058,419,596 bytes. Four AOIs processed with no acquisition or research fitting; 19 focused and 382 full regression tests passed. Current twelve-slot stack has four populated domains and eight explicit gaps. Stop after 25B: await approval for missing-source/provenance recovery or 25C planning. No acquisition, training or public dataset release is authorized.
