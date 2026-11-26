@@ -1,0 +1,46 @@
+{
+  "dataset_sha256": "ce8279c4cab99b9295b2cafa31eff298fea24abeee648eaa64982606403a3106",
+  "patches": 82,
+  "train": 70,
+  "validation": 12,
+  "groups": {
+    "train": 17,
+    "validation": 3
+  },
+  "frontend_cases": 3936,
+  "max_score_error": 2.842170943040401e-14,
+  "thresholds": [
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90
+  ],
+  "minimum_cells": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "prerequisites": "Vegetation>=0.25 AND soil>=0.25 retained even when their weights are zero; core QA, coverage>=0.6 and competing margin>=10 unchanged",
+  "clusters": "4-neighbor within original patches; no boundary stitching; counts may split cross-patch objects",
+  "accuracy": "NOT ESTABLISHED: zero admitted independent mining labels; human disturbance reviews and source-derived rules are not mining ground truth",
+  "retrospective": "Uses 2025-26 follow-up; not prospective",
+  "selection": "No weights, thresholds or spatial groups selected using VAL",
+  "operational_alerts": 0,
+  "files": {
+    "ablation_comparison.png": "cd9f990e5794603b4f9489e56c0a69899d0413625a3b605e2745ab23f7644eee",
+    "blocks_default.csv": "fb4e77dc95ccce4d1bd8cacbd6e2c69698e10ce1766660517e4b317db0606d2d",
+    "block_sensitivity.csv": "50e761e96b1e1a1439f5b55aed5a38db16f48b20b7be52cea4accbc29bc56a99",
+    "patch_scores.csv": "e0666d580426a46513db3dabb5e1f5309b073a3e7e3512356f60b8ad54f51315",
+    "patch_sensitivity.csv": "c63c6f59e5f5330cae34b4f3a863430e9754f7ac0bc3017ce27e8e04dcee0db5",
+    "pooled_sensitivity.csv": "2e1c056d135c12b7b886ff68a0a2ef82495f93a0d3256455fcdad3fb0bf04be7",
+    "score_distributions.csv": "a17a168b853e85d46957739a11e434967f26088f88eb64e2473abd0182b1fab9",
+    "threshold_comparison.png": "aa0217d5a091d7ec77899ea8081b99d3fb225fcad867252f1b07cdfd64001eb1",
+    "weight_overlap.csv": "6eded881ca94d8ff42ec97e1cc6f2f196cd5a74259ab93d4bef6fd1bd63c3f9a"
+  },
+  "runtime_seconds": 76.39043720000336
+}
