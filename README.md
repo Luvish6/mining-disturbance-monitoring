@@ -85,7 +85,27 @@ python -B -m scripts.phase24b_india_screening --execute --approve --max-requests
 
 Acquisition takes an exclusive lock, reads the budget from the on-disk ledger before each AOI, stops at the caps in the config, and reuses the Phase 11C S1/S2 graph.
 
+## Current offline MineMind run
+
+Use the existing research Python environment and installed frontend dependencies. No CUDA, Earth Engine authentication, model fitting or new downloads are needed to launch cached results. From the project root in PowerShell:
+
+```powershell
+$python = if (Test-Path .\.venv\Scripts\python.exe) { '.\.venv\Scripts\python.exe' } elseif (Test-Path ..\.venv\Scripts\python.exe) { '..\.venv\Scripts\python.exe' } else { throw 'Activate the existing project environment first.' }
+npm --prefix frontend run build
+& $python -B -m scripts.phase8_planet_portal --without-planet --port 5188
+```
+
+Open `http://127.0.0.1:5188/#explorer-minemind`; use `#rivers-brahmani` for matched-date river/rainfall charts. Stop with Ctrl+C. The service binds to loopback only. Do not deploy or tunnel it. `--without-planet` prevents loading restricted Planet assets.
+
+The explorer serves frozen NDVI before/after maps (not RGB), screening-score and candidate overlays, uncertainty, provenance, and review-only GeoJSON/CSV. All attribution remains UNKNOWN and operational alerts stay zero. Phase15C remains primary; SSL/recovery results are ablations, not validated mining predictions. The later geographic comparison is a research deliverable and does not replace the frozen dashboard experiment.
+
+**Local data prerequisite:** ignored `outputs/` and `frontend/public/local/` snapshots are required; a fresh Git clone has no imagery/checkpoints. Restore only authorized local caches. Missing, changed or corrupt source receipts withdraw the MineMind snapshot instead of showing stale data. Do not acquire imagery just to launch the portal. `npm run dev` alone does not provide private `/__experimental__/` endpoints.
+
+Read the [consolidated methods/results](docs/reports/final-model-experiment-consolidation.md) and [offline reproducibility commands](docs/REPRODUCIBILITY.md). The saved-result exporter `python -B -m scripts.minemind_deliverables --output outputs/phase25/qa/minemind-research-deliverables-v2` creates exact comparison tables, provenance and a copy of the existing numeric-only research figure; it performs no acquisition, inference or fitting and refuses to overwrite a bundle.
+
 ## Dashboard
+
+The historical public-snapshot workflow below is retained for provenance. Use the current offline loopback run above for MineMind; do not rerun frozen experiments to launch it.
 
 ```powershell
 python -B -m scripts.phase13_data; python -B -m scripts.phase23_dashboard_data; python -B -m scripts.phase23_dashboard_geo
@@ -125,6 +145,6 @@ Pending human-review and field-data dependencies are listed in [docs/reports/fin
 
 ### PlanetScope licensing and reviewer access
 
-The Phase 23I 30-item reviewer package uses Copernicus Sentinel-2 only (older 30 m chips add Sentinel-1), not PlanetScope. Audit it offline with `python -B -m scripts.audit_review_package` before release. Review is still pending and does not establish mining labels.
+The Phase 23I 30-item reviewer package uses Copernicus Sentinel-2 only (older 30 m chips add Sentinel-1), not PlanetScope. Audit it offline with `python -B -m scripts.audit_review_package` before release. Integrated human reviews record disturbance observations; independent mining attribution and reference admission remain unresolved. They do not establish mining labels.
 
 Downloaded Planet raw scenes, pixel-preserving crops and the loopback Planet viewer are for the licensee's private project use. External reviewers must not access them under this E&R Basic license; they may independently obtain scenes under their own eligible licenses. Do not publish or tunnel the private service. A PNG/JPEG extension alone does not establish Permitted Imagery rights. Any proposed Planet figure or derivative must be non-reconstructable, meet the applicable terms and attribution conditions, and remain **REQUIRES PLANET CONFIRMATION** where those conditions are unresolved. See [the licensing audit](docs/reports/planet-licensing-audit.md).

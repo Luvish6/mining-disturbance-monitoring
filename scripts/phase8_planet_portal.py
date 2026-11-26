@@ -173,7 +173,7 @@ def main():
         print("MineMind snapshot unavailable or invalid; withdrawn",flush=True)
     authority = f"127.0.0.1:{args.port}"
     with ThreadingHTTPServer(("127.0.0.1", args.port), handler(dist, files, authority, experimental)) as server:
-        print(f"Private portal: http://{authority}/#review", flush=True)
+        print(f"Private portal: http://{authority}/" + ("#explorer-minemind" if args.without_planet else "#review"), flush=True)
         server.serve_forever()
 
 

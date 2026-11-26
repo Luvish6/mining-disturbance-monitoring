@@ -1,0 +1,16 @@
+{
+  "schema": "minemind-saved-results/1",
+  "source_metrics_sha256": {
+    "outputs/phase25/experiments/minemind-cached-v1/metrics.json": "e26ef7b82d94157b1774079d89530295dacb6bf2744b17343ff5143da61a2edc",
+    "outputs/phase25/experiments/minemind-learning-v1/metrics.json": "8a52ec0c48f5b75a34596ccf4c964d254b64966e67de8917a2f5ed2c8a9748ee",
+    "outputs/phase25/experiments/minemind-geographic-comparison-v1/metrics.json": "d27ea572a731306823ae7c3398e2a704b4fdff16d913bc50f3d0143d97926c88"
+  },
+  "rows": 32,
+  "figure_source_metrics_sha256": "d27ea572a731306823ae7c3398e2a704b4fdff16d913bc50f3d0143d97926c88",
+  "figure_sha256": "b9d5b7d8d17c13ba47f263b6e77b28747077e2c6dd31518991069fd0aca8ace6",
+  "metric_kind": "Unsupervised repeatability, not mining accuracy",
+  "new_training": false,
+  "new_acquisition": false,
+  "test_payload_access": false,
+  "operational_alerts": 0
+}

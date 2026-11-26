@@ -6,12 +6,28 @@ Run everything from the repository root with the project virtual environment: `p
 - **Ignored folders.** `outputs/` and `frontend/public/local/` are git-ignored.
 - **Committed results.** Committed reports in `docs/reports/` carry the hashes of the inputs they used.
 
+## Current MineMind application and saved-result export
+
+Use the [README offline launch](../README.md#current-offline-minemind-run). Build with `npm --prefix frontend run build`, then run `python -B -m scripts.phase8_planet_portal --without-planet --port 5188` in the existing environment. The local service supplies private allowlisted snapshots; Vite dev alone cannot supply those routes. Restore authorized ignored caches before launch; absent/stale assets fail closed. No acquisition/training is part of this procedure.
+
+```powershell
+python -B -m scripts.minemind_deliverables --output outputs/phase25/qa/minemind-research-deliverables-v2
+python -B -m pytest -q -p no:cacheprovider tests/test_minemind_deliverables.py tests/test_phase25_minemind.py tests/test_phase25_recovery_portal.py tests/test_phase12d_matched_brahmani.py
+npm --prefix frontend test
+npm --prefix frontend run build
+python -B scripts/audit_publication.py
+```
+
+The exporter verifies saved metric/artifact hashes; writes unrounded CSV, a Markdown results section and source checksums; and copies an already generated numeric-only figure. It does not load model weights, score images, access TEST payloads, contact Earth Engine or regenerate datasets. Use a new output directory to reproduce exports without overwriting historical bundles. Source experiments and their frozen configurations remain archived; do not rerun acquisition/training commands below for this finalization.
+
+**Cohorts are separate:** Gevra/Bhubaneswari original scene-disjoint replicas; TRAIN-only adaptive/temporal recovery on the same application cells; and new Haryana/Madhya Pradesh geographic development holdouts. Original calibration quotas and later TRAIN-only thresholds differ. Compare ranking measures within an identical-support cohort; do not compare unsupervised repeatability with supervised F1. The encoder remains pointwise, four original TRAIN blocks only; expanded reliability statistics are not expanded encoder training. Historical Maus footprints and follow-up-derived pseudo labels remain distinct from independently verified labels.
+
 ## Frozen design (do not change between runs)
 
 - **Seasons.** Before = [2023-11-01, 2024-04-01), after = [2024-11-01, 2025-04-01), and the persistence follow-up = [2025-11-01, 2026-04-01). Defined in `config/settings.py` and the preregistrations.
 - **Spatial validation.** 5 km spatial blocks (seed 42), with a 120 m TEST buffer.
   - Full-footprint guards: `scripts/phase22n_temporal.guards()` and `scripts/phase22q_multi_aoi.guard()`.
-  - TEST imagery, labels and predictions are never read. The 22H/22K metric JSONs record `test_sealed: true`.
+  - Indian frozen TEST imagery, labels and predictions remain sealed in this work. The 22H/22K metric JSONs record `test_sealed: true`. Previously authorized RGB benchmark TEST evaluations are archived separately and are not rescored.
 - **Candidate rule (22L).** NDVI change ≤ −0.30 and BSI change > +0.10.
 - **EE safeguards.** An exclusive lock plus a shared on-disk ledger (`phase22w_ablation.acquire_lock`, `ledger_usage`). The budget is re-read from disk before each request batch.
 

@@ -49,6 +49,37 @@ def export():
  (CACHE/'integrity.json').write_text(json.dumps({n:sha(CACHE/n) for n in assets},indent=2)+'\n',encoding='utf-8');print('MineMind snapshot:2sites/7methods/2replicas; Brahmani16pairs;Leshka12<25;0alerts')
 
 
+
+def snapshot_sources(root, data, files):
+ """Withdraw stale cached previews/exports without rerendering or model execution."""
+ root=Path(root)
+ if sha(root/RUN/'metrics.json')!=data['source_metrics_sha256'] or sha(root/'outputs/indian_ssl_observation_cache/verified_cache.json')!=data['cache_sha256']:
+  raise ValueError('MineMind frozen source receipt changed')
+ for site_id,site in data['sites'].items():
+  parent={'gevra':'indian_ssl_observation_cache','bhubaneswari':'indian_ssl_bhubaneswari_retry'}.get(site_id)
+  if parent is None:raise ValueError('Unverified MineMind site')
+  for method_id,method in site['methods'].items():
+   if method_id not in {'phase15c','ssl_both','ssl_sar','ssl_optical','physical_both','physical_sar','physical_optical'}:raise ValueError('Unverified MineMind method')
+   for replica in method['replicas']:
+    i=replica['id']
+    if i not in (1,2):raise ValueError('Invalid replica')
+    stem=f'minemind/{site_id}/{method_id}/r{i}'
+    if replica['geojson']!=stem+'.geojson' or replica['assets']!={k:stem+'_'+k+'.png' for k in ('before','after','score','candidates')}:raise ValueError('Swapped preview association')
+    if any(name not in files for name in replica['assets'].values()):raise ValueError('Missing preview asset')
+    geo=json.loads(files[replica['geojson']][1]);prov=geo['provenance']
+    if prov.get('model_validation')!='NOT_VALIDATED' or prov.get('operational_alerts')!=0 or prov['method']!=method_id or prov['threshold']!=method['threshold'] or prov['frozen_experiment_sha256']!=data['source_metrics_sha256'] or prov['bounds']!=site['bounds'] or prov['crs']!=site['crs'] or geo['features']!=replica['candidates']:raise ValueError('Candidate/map provenance mismatch')
+    if sha(root/RUN/site_id/method_id/f'r{i}.tif')!=replica['source_sha256']:raise ValueError('Stale model score raster')
+    folder=root/'outputs'/parent/f'{site_id}-r{i}';receipt=json.loads((folder/'receipt.json').read_bytes())
+    if prov['source_hashes']!=receipt['hashes'] or prov['scene_groups']!=receipt['scenes']:raise ValueError('Scene provenance changed')
+    if set(prov['source_hashes'])!={'features.tif','diagnostics.tif'}:raise ValueError('Unexpected source assets')
+    for name,digest in prov['source_hashes'].items():
+     if sha(folder/name)!=digest:raise ValueError('Stale satellite preview source')
+ river=root/'outputs/phase12d_brahmani/comparison.csv'
+ if sha(river)!=data['river_sha256'] or brahmani_snapshot(river)!=data['river'] or files['minemind/river.csv'][1]!=river.read_bytes():raise ValueError('Stale river comparison')
+ pilot=json.loads((root/'frontend/public/local/river.json').read_bytes())['pilot']
+ if pilot['common_pixels']!=12 or pilot['reportable'] or data['leshka']!={'common_cells':12,'minimum_cells':25,'status':'INSUFFICIENT_DATA'}:raise ValueError('River support gate changed')
+
+
 def minemind_files(root):
  cache=Path(root)/CACHE
  if not (cache/'integrity.json').exists():return {}
@@ -63,6 +94,7 @@ def minemind_files(root):
   for method in site['methods'].values():
    for r in method['replicas']:
     if any(c['properties']['status']!='REVIEW_REQUIRED' or c['properties']['evidence_status']!='UNKNOWN' or c['properties']['operational_alerts']!=0 for c in r['candidates']):raise ValueError('Candidate gate')
+ snapshot_sources(root,d,files)
  return files
 
 if __name__=='__main__':export()
