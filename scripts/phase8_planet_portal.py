@@ -112,6 +112,24 @@ def review_files(root):
 
 def handler(dist, files, authority, experimental=None):
     class Portal(BaseHTTPRequestHandler):
+        def do_POST(self):
+            if self.headers.get('Host')!=authority or self.headers.get('Sec-Fetch-Site')!='same-origin' or self.headers.get('Origin') not in (None,'http://'+authority):
+                self.send_error(403);return
+            if self.path not in ('/__studio__/inspect','/__studio__/export') or self.headers.get('Transfer-Encoding'):
+                self.send_error(404);return
+            try:
+                size=int(self.headers.get('Content-Length','0'))
+                if not 0<size<=(8_000_000 if self.path.endswith('inspect') else 65536):self.send_error(413);return
+                self.connection.settimeout(20);raw=self.rfile.read(size)
+                if len(raw)!=size:raise ValueError('Truncated upload')
+                from scripts.investigation_portal import studio_post
+                result=studio_post(Path(__file__).resolve().parents[1],self.path,raw,self.headers.get('X-Private-Rights')=='confirmed')
+                payload=json.dumps(result,allow_nan=False).encode()
+            except (OSError,ValueError,KeyError,TypeError,StopIteration,rasterio.errors.RasterioError) as e:
+                payload=json.dumps(dict(error=str(e) if isinstance(e,ValueError) else 'Required local data unavailable or incompatible')).encode();self.send_response(422)
+            else:self.send_response(200)
+            self.send_header('Content-Type','application/json');self.send_header('Content-Length',str(len(payload)));self.send_header('Cache-Control','no-store');self.send_header('X-Content-Type-Options','nosniff');self.send_header('Cross-Origin-Resource-Policy','same-origin');self.end_headers();self.wfile.write(payload)
+
         def do_GET(self):
             if self.headers.get("Host") != authority:
                 self.send_error(403)
@@ -171,6 +189,9 @@ def main():
     try:experimental.update(minemind_files(root))
     except (OSError,ValueError,KeyError,TypeError):
         print("MineMind snapshot unavailable or invalid; withdrawn",flush=True)
+    from scripts.investigation_portal import studio_files
+    try:experimental.update(studio_files(root))
+    except (OSError,ValueError,KeyError,TypeError):print('Investigation Studio unavailable; historical views preserved',flush=True)
     authority = f"127.0.0.1:{args.port}"
     with ThreadingHTTPServer(("127.0.0.1", args.port), handler(dist, files, authority, experimental)) as server:
         print(f"Private portal: http://{authority}/" + ("#explorer-minemind" if args.without_planet else "#review"), flush=True)

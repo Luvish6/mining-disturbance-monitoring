@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {calculate} from '../frontend/src/studio-math.ts';
+const matrix=v=>Array.from({length:4},()=>Array(4).fill(v));
+const part=()=>({contributions:[matrix(1),matrix(1),matrix(1),matrix(null),matrix(.5),matrix(.25),matrix(1)],valid:matrix(true),competitors:[matrix(null),matrix(0),matrix(0)]});
+test('Studio controls preserve missingness and exact contribution sums',()=>{const r=calculate(part(),[1,1,1,1,1,1,1],60);assert.equal(r.clusters.length,1);assert.ok(Math.abs(r.score[0]-79.1666666667)<1e-7);assert.ok(Math.abs(r.coverage[0]-6/7)<1e-9);assert.ok(Math.abs(r.contributions.reduce((s,a)=>s+a[0],0)-r.score[0])<1e-9);});
+test('No available evidence never becomes zero-risk confidence',()=>{const p=part();p.contributions=p.contributions.map(()=>matrix(null));const r=calculate(p,[1,1,1,1,1,1,1],10);assert.ok(r.score.every(Number.isNaN));assert.equal(r.clusters.length,0);});
+test('Competing evidence blocks automatic mining-like candidates',()=>{const p=part();p.competitors[0]=matrix(1);assert.equal(calculate(p,[1,1,1,0,0,0,0],40).clusters.length,0);});
+test('Four-neighbor component filter removes isolated cells',()=>{const p=part();p.valid=matrix(false);p.valid[0][0]=true;p.valid[1][1]=true;assert.equal(calculate(p,[1,1,1,0,0,0,0],40).clusters.length,0);});
+test('Raising display cutoff cannot increase retained candidate cells',()=>{const p=part();const low=calculate(p,[1,1,1,1,1,1,1],60),high=calculate(p,[1,1,1,1,1,1,1],90);assert.ok(high.mask.filter(Boolean).length<=low.mask.filter(Boolean).length);});

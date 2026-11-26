@@ -3,6 +3,7 @@ import {Crosshair, Layers, Minus, PanelLeft, Plus} from 'lucide-react';
 import './explorer.css';
 import {ExperimentalPredictions} from './experimental';
 import {MineMind} from './minemind';
+import {InvestigationStudio} from './studio';
 import {localSnapshot, useSnapshot} from './research-data';
 
 const bands = ['dVV', 'dVH', 'dNDVI', 'dNDTI'] as const;
@@ -98,7 +99,7 @@ function CandidateExplorer({toggle, initial, site}: {toggle: () => void; initial
   const [showSite, setShowSite] = useState(!!site && ['gevra','bhubaneswari'].includes(initial ?? ''));
   const selected = candidates.find(c=>c.state===activeState && c.id===id) ?? candidates.find(c=>c.state===activeState);
   return <>
-    <div className="toolbar"><Layers size={18}/><b>Satellite Explorer</b><button onClick={toggle}>Meghalaya tiles</button><a href="#explorer-experimental">Experimental U-Net</a><a href="#explorer-minemind">MineMind SSL</a><span className="badge neutral">Indian discovery leads</span></div>
+    <div className="toolbar"><Layers size={18}/><b>Satellite Explorer</b><button onClick={toggle}>Meghalaya tiles</button><a href="#explorer-experimental">Experimental U-Net</a><a href="#explorer-minemind">MineMind SSL</a><a href="#explorer-studio">Investigation Studio</a><span className="badge neutral">Indian discovery leads</span></div>
     <div className="explorer">
       <aside className="explorer-analysis">
         <label>State<select value={activeState} onChange={e=>{setState(e.target.value);setShowSite(false);}}>
@@ -199,11 +200,12 @@ export function Explorer({hash = ''}: {hash?: string}) {
     });
     ctx.putImageData(frame, 0, 0);
   }, [tile, layer, limit, categories, india]);
+  if (hash.startsWith('#explorer-studio')) return <InvestigationStudio/>;
   if (hash.startsWith('#explorer-minemind')) return <MineMind/>;
   if (hash.startsWith('#explorer-experimental')) return <ExperimentalPredictions/>;
   if (india) return <CandidateExplorer toggle={()=>setIndia(false)} initial={deep?.[1]} site={deep?.[2] === 'site'}/>;
   return <>
-    <div className="toolbar"><Layers size={18}/><b>Satellite Explorer</b><button onClick={()=>setIndia(true)}>Indian candidates</button><a href="#explorer-experimental">Experimental U-Net</a><a href="#explorer-minemind">MineMind SSL</a><span>/</span><span>Regional monitoring</span><span className="badge neutral">Exploratory</span></div>
+    <div className="toolbar"><Layers size={18}/><b>Satellite Explorer</b><button onClick={()=>setIndia(true)}>Indian candidates</button><a href="#explorer-experimental">Experimental U-Net</a><a href="#explorer-minemind">MineMind SSL</a><a href="#explorer-studio">Investigation Studio</a><span>/</span><span>Regional monitoring</span><span className="badge neutral">Exploratory</span></div>
     <div className={'explorer'+(collapsed?' analysis-closed':'')}>
       <aside className="explorer-analysis">
         <button className="explorer-toggle" aria-expanded={!collapsed} aria-label="Toggle analysis" onClick={()=>setCollapsed(!collapsed)}><PanelLeft size={17}/>{!collapsed && 'Analysis'}</button>

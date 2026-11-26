@@ -36,7 +36,7 @@ function App() {
   const evidence = hash.startsWith('#evidence');
   const exposure = hash === '#rivers-exposure';
   const meghalaya = hash === '#meghalaya';
-  const indianWorkspace = hash.startsWith('#explorer-minemind') || hash === '#rivers-brahmani';
+  const indianWorkspace = hash.startsWith('#explorer-minemind') || hash.startsWith('#explorer-studio') || hash === '#rivers-brahmani';
   const page = review?3:analytics?4:evidence?5:rivers?2:explorer?1:0;
   useEffect(() => {
     const route = () => setHash(location.hash);

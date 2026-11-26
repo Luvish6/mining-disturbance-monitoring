@@ -1,0 +1,198 @@
+{
+  "version": "MineChange-India-investigation-v3.1",
+  "dataset_path": "outputs/phase25/datasets/minechange-india-investigation-v3_1",
+  "dataset_manifest_sha256": "ce8279c4cab99b9295b2cafa31eff298fea24abeee648eaa64982606403a3106",
+  "patches": 82,
+  "splits": {
+    "validation": 12,
+    "train": 70
+  },
+  "source_features": {
+    "lithology": 358,
+    "leases": 16
+  },
+  "context_cells": {
+    "validation": {
+      "geology_cells": 12288,
+      "lease_cells": 71
+    },
+    "train": {
+      "geology_cells": 71680,
+      "lease_cells": 55
+    }
+  },
+  "summary": {
+    "train": {
+      "common_cells": 71521,
+      "equal_adaptive_spearman": 0.957322080919023,
+      "legacy_filtered_candidate_cells": 482,
+      "legacy_adaptive_jaccard": 0.24331145885916203,
+      "comparison": "Inherited shared-source NDVI/BSI/SAR rule; NOT ground truth or exact Phase15C"
+    },
+    "validation": {
+      "common_cells": 12286,
+      "equal_adaptive_spearman": 0.9657312828623678,
+      "legacy_filtered_candidate_cells": 105,
+      "legacy_adaptive_jaccard": 0.1590909090909091,
+      "comparison": "Inherited shared-source NDVI/BSI/SAR rule; NOT ground truth or exact Phase15C"
+    }
+  },
+  "sensitivity": [
+    {
+      "split": "train",
+      "weighting": "equal",
+      "threshold": 40,
+      "candidate_cells": 2799,
+      "clusters": 222
+    },
+    {
+      "split": "train",
+      "weighting": "equal",
+      "threshold": 60,
+      "candidate_cells": 1516,
+      "clusters": 125
+    },
+    {
+      "split": "train",
+      "weighting": "equal",
+      "threshold": 80,
+      "candidate_cells": 0,
+      "clusters": 0
+    },
+    {
+      "split": "train",
+      "weighting": "physical",
+      "threshold": 40,
+      "candidate_cells": 2776,
+      "clusters": 222
+    },
+    {
+      "split": "train",
+      "weighting": "physical",
+      "threshold": 60,
+      "candidate_cells": 2029,
+      "clusters": 166
+    },
+    {
+      "split": "train",
+      "weighting": "physical",
+      "threshold": 80,
+      "candidate_cells": 784,
+      "clusters": 53
+    },
+    {
+      "split": "train",
+      "weighting": "adaptive",
+      "threshold": 40,
+      "candidate_cells": 2765,
+      "clusters": 220
+    },
+    {
+      "split": "train",
+      "weighting": "adaptive",
+      "threshold": 60,
+      "candidate_cells": 1981,
+      "clusters": 163
+    },
+    {
+      "split": "train",
+      "weighting": "adaptive",
+      "threshold": 80,
+      "candidate_cells": 748,
+      "clusters": 50
+    },
+    {
+      "split": "validation",
+      "weighting": "equal",
+      "threshold": 40,
+      "candidate_cells": 971,
+      "clusters": 39
+    },
+    {
+      "split": "validation",
+      "weighting": "equal",
+      "threshold": 60,
+      "candidate_cells": 514,
+      "clusters": 25
+    },
+    {
+      "split": "validation",
+      "weighting": "equal",
+      "threshold": 80,
+      "candidate_cells": 0,
+      "clusters": 0
+    },
+    {
+      "split": "validation",
+      "weighting": "physical",
+      "threshold": 40,
+      "candidate_cells": 958,
+      "clusters": 40
+    },
+    {
+      "split": "validation",
+      "weighting": "physical",
+      "threshold": 60,
+      "candidate_cells": 666,
+      "clusters": 33
+    },
+    {
+      "split": "validation",
+      "weighting": "physical",
+      "threshold": 80,
+      "candidate_cells": 250,
+      "clusters": 19
+    },
+    {
+      "split": "validation",
+      "weighting": "adaptive",
+      "threshold": 40,
+      "candidate_cells": 958,
+      "clusters": 40
+    },
+    {
+      "split": "validation",
+      "weighting": "adaptive",
+      "threshold": 60,
+      "candidate_cells": 660,
+      "clusters": 33
+    },
+    {
+      "split": "validation",
+      "weighting": "adaptive",
+      "threshold": 80,
+      "candidate_cells": 236,
+      "clusters": 20
+    }
+  ],
+  "adaptive_weights": {
+    "pair": [
+      0.27653646144265015,
+      0.2754202612947265,
+      0.24977914197487938,
+      0.0,
+      0.03394004507820174,
+      0.0629049104160705,
+      0.10141917979347169
+    ],
+    "retrospective": [
+      0.2313094914245003,
+      0.23273130359293767,
+      0.21698242734698875,
+      0.14681972456341566,
+      0.02945199273357098,
+      0.0546703625359543,
+      0.08803469780263228
+    ]
+  },
+  "scales": {
+    "ndvi": 0.3,
+    "soil": 0.1,
+    "sar": 1.8411405086517334,
+    "rain": 125.82229614257812
+  },
+  "scope": "Descriptive sensitivity only; no model training,VAL tuning or independent mining accuracy",
+  "baseline_compatibility": "Frozen SSL requires original seasonal NDTI; V2 lacks that exact feature. No ratio-of-composite or fabricated channel substituted. Existing results retained in frozen workspace.",
+  "rights": "Private data; NGDR product-specific redistribution and Bhuvan approval unresolved",
+  "operational_alerts": 0
+}
