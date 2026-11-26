@@ -36,6 +36,7 @@ function App() {
   const evidence = hash.startsWith('#evidence');
   const exposure = hash === '#rivers-exposure';
   const meghalaya = hash === '#meghalaya';
+  const indianWorkspace = hash.startsWith('#explorer-minemind') || hash === '#rivers-brahmani';
   const page = review?3:analytics?4:evidence?5:rivers?2:explorer?1:0;
   useEffect(() => {
     const route = () => setHash(location.hash);
@@ -59,7 +60,7 @@ function App() {
     (tile.id + ' ' + region(tile)).toLowerCase().includes(query.trim().toLowerCase()));
   const inventory = data?.seasons[season];
   return <div className="app">
-    <header className="global"><div className="brand"><b>{page===0 && !meghalaya ? 'INDIA' : 'MEGHALAYA'}</b><small>Mining &amp; River Intelligence Portal</small></div>
+    <header className="global"><div className="brand"><b>{(page===0 && !meghalaya) || indianWorkspace ? 'INDIA' : 'MEGHALAYA'}</b><small>Mining &amp; River Intelligence Portal</small></div>
       {page===0 && meghalaya && <><label className="control"><MapPin size={16}/><select aria-label="Study area" value={district} onChange={e => setDistrict(e.target.value)}>
         <option value="All districts">Jaintia Hills, Meghalaya</option>{districts.map(name => <option key={name}>{name}</option>)}
       </select></label>
@@ -106,7 +107,7 @@ function App() {
         </div>
       </div>
     </>}</main>
-    <footer><span>RESEARCH PREVIEW / Frozen results — not real-time monitoring · Mining attribution UNKNOWN</span><span>Jaintia Hills, Meghalaya</span><span>Sentinel-1 / Sentinel-2</span></footer>
+    <footer><span>RESEARCH PREVIEW / Frozen results — not real-time monitoring · Mining attribution UNKNOWN</span><span>{indianWorkspace?'Indian regional research windows':'Jaintia Hills, Meghalaya'}</span><span>Sentinel-1 / Sentinel-2</span></footer>
   </div>;
 }
 createRoot(document.getElementById('root')!).render(<App/>);

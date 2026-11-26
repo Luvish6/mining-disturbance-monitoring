@@ -149,6 +149,7 @@ def handler(dist, files, authority, experimental=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=5188)
+    parser.add_argument("--without-planet",action="store_true",help="Skip all restricted Planet asset loading")
     args = parser.parse_args()
     if not 1 <= args.port <= 65535:
         parser.error("Specify a TCP port between 1 and 65535")
@@ -157,7 +158,7 @@ def main():
     if not (dist / "index.html").is_file():
         parser.error("Build the existing frontend first")
     try:
-        files = review_files(root)
+        files = {} if args.without_planet else review_files(root)
     except (OSError, ValueError, KeyError, TypeError, rasterio.errors.RasterioError) as exc:
         print(f"Private review unavailable: {exc}", flush=True)
         files = {}
@@ -166,6 +167,10 @@ def main():
     except (OSError,ValueError,KeyError,TypeError):
         experimental = {}
         print('Experimental model snapshot unavailable or invalid',flush=True)
+    from scripts.phase25_minemind_portal import minemind_files
+    try:experimental.update(minemind_files(root))
+    except (OSError,ValueError,KeyError,TypeError):
+        print("MineMind snapshot unavailable or invalid; withdrawn",flush=True)
     authority = f"127.0.0.1:{args.port}"
     with ThreadingHTTPServer(("127.0.0.1", args.port), handler(dist, files, authority, experimental)) as server:
         print(f"Private portal: http://{authority}/#review", flush=True)
