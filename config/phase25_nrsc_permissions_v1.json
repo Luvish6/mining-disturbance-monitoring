@@ -1,0 +1,16 @@
+{
+  "schema": "nrsc-permissions-review/1",
+  "checked_on": "2026-11-26",
+  "official_eula": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/registration.html",
+  "nrsc_licensing": "https://www.nrsc.gov.in/nrscnew/pnp_order_license.php",
+  "public_text_review": "Registered use/value-added applications supported;5mandcoarserdata available to registered users. Original-data commercial redistribution prohibited. Current policy not a blanket exact-product sharing grant.",
+  "private_research": "SUPPORTED_CONDITIONALLY_REGISTERED_LAWFUL_USE",
+  "reviewer_sharing": "BLOCKED_PENDING_EXACT_PRODUCT_TERMS_CONFIRMATION",
+  "public_redistribution": "BLOCKED_PENDING_EXACT_PRODUCT_TERMS_CONFIRMATION",
+  "commercial_raw_redistribution": "PROHIBITED_BY_CURRENT_EULA",
+  "product_specific_terms": "No license/order/accepted-terms record in the inspected twoLISS3ZIPdeliveries. No confirmation invented.",
+  "limits": "Do not import oldCartosat/NovaSAR/paid2022terms into these2024/25LISS3products. Current EULA does not establish terms accepted at download.",
+  "quality_disclaimer_url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi_resources/help/docs/Disclaimers_ProductQuality.pdf",
+  "quality_disclaimer_access": "Web fetch timed out; no product accuracy inferred",
+  "attribution": "NRSC/ISRO,Bhoonidhi,Resourcesat2LISSIII,actual acquisition dates; final product-specific wording unresolved"
+}
